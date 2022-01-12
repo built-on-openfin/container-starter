@@ -6,21 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Realm Example</title>
+    <link rel="stylesheet" href="../styles/app-styles.css"></link>
     <script src="../js/view-app.bundle.js"></script>
 </head>
 
 <body>
-    <h1>Security Realm Example</h1>
-    <h2>Security Realm Name: <span id="security-realm-name"></span></h2>
-    <div class="app-controls">
-        <p><span>Launch a new application in the same security realm</span><button class="launch-app-btn">Launch App</button></p>
-        <p><span>Launch a new application in a different security realm</span><button class="launch-outofrealm-btn">Launch App</button></p>
+    <div class="container">
+        <h1 class="title">Security Realm Example</h1>
+        <h2 class="subtitle">Security Realm Name: <span id="security-realm-name"></span></h2>
+        <div class="box">
+            <h4 class="title is-4">Launch a new application in the same security realm <button
+                    class="button is-link launch-app-btn">Launch App</button></h4>
+        </div>
+        <div class="box">
+            <h4 class="title is-4">Launch a new application in a different security realm <button
+                    class="button is-link launch-outofrealm-btn">Launch App</button></h4>
+        </div>
+        <div class="box">
+            <textarea name="send message" form="iab-message-form" id="iab-message" class="textarea is-link"></textarea>
+            <button class="button is-link" id="send-message">Send Message</button>
+        </div>
+        <div class="box content" id="message-log"></div>
     </div>
-    <div class="message-controls">
-        <textarea name="send message" form="iab-message-form" id="iab-message" cols="30" rows="10"></textarea>
-        <button id="send-message">Send Message</button>
-    </div>
-    <div id="message-log"></div>
 </body>
 
 </html>

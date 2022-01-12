@@ -1,5 +1,5 @@
 import { fin } from "openfin-adapter/src/mock";
-const platformIdentity = {
+const platformIdentity: OpenFin.ApplicationIdentity = {
     uuid: 'prod-main-platform',
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,30 +10,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-async function init() {
+async function init(): Promise<void> {
     const securityRealm = await getSecurityRealmInfo();
     sendIabMessage(securityRealm);
     messageLog(platformIdentity, securityRealm);
 }
 
-async function getSecurityRealmInfo() {
-    const runtimeInfo: OpenFin.RuntimeInfo = await fin.System.getRuntimeInfo();
-    const securityRealmName = document.querySelector('#security-realm-name');
-    securityRealmName.innerHTML += runtimeInfo.securityRealm;
-    return runtimeInfo.securityRealm;
+async function getSecurityRealmInfo(): Promise<string> {
+    try {
+        const runtimeInfo: OpenFin.RuntimeInfo = await fin.System.getRuntimeInfo();
+        const securityRealmName: HTMLHeadingElement = document.querySelector('#security-realm-name');
+        if(runtimeInfo.securityRealm) {
+            securityRealmName.innerHTML += runtimeInfo.securityRealm
+            return runtimeInfo.securityRealm
+        } else {
+            securityRealmName.innerHTML += "No Security Realm Present"
+        }
+    } catch (error) {
+        console.error("Error getting runtime info:", error)
+    }
 }
 
-async function sendIabMessage(realm) {
-    const sendMessageBtn = document.querySelector('#send-message');
+async function sendIabMessage(realm: string) {
+    const sendMessageBtn: HTMLButtonElement = document.querySelector('#send-message');
     sendMessageBtn.addEventListener('click', (e) => {
         e.preventDefault()
         const iabMessage: HTMLTextAreaElement = document.querySelector('#iab-message');
-        const messageText = iabMessage.value;
-        handleIabMessage(platformIdentity,messageText, realm)
+        const messageText: string = iabMessage.value;
+        handleIabMessage(platformIdentity, messageText, realm)
     })
 }
-
-async function handleIabMessage ({uuid},messageText, realm) {
+async function handleIabMessage({uuid}: OpenFin.ApplicationIdentity, messageText: string, realm: string): Promise<void> {
     try {
         await fin.InterApplicationBus.send({uuid: uuid}, '/openfin/sample/security-realm-example', {id: fin.me.identity, message: messageText, realmName: realm})
     } catch (error) {
@@ -41,7 +48,7 @@ async function handleIabMessage ({uuid},messageText, realm) {
     }
 }
 
-async function messageLog({uuid}, realm) {
+async function messageLog({uuid}: OpenFin.ApplicationIdentity, realm: string): Promise<void> {
     try {
         const messageLog = document.querySelector('#message-log')
         await fin.InterApplicationBus.subscribe({uuid: uuid}, '/openfin/sample/security-realm-example', ({id, message, realmName}) => {
