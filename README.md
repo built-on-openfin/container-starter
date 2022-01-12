@@ -16,6 +16,6 @@ This repository contains examples for common use cases and API implementations. 
 
 | **Example** | **Description** |
 | --- | --- |
-| [use-security-realms](how-to/use-security-realms/README.md) | This example shows you security realms work with multiple target environments |
+| [use-security-realms](./how-to/use-security-realms) | This example shows you security realms work with multiple target environments |
 
 ### Change log / Roadmap
