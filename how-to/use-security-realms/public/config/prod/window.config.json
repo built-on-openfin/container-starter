@@ -1,0 +1,20 @@
+{
+    "licenseKey":"64605fac-add3-48a0-8710-64b38e96a2dd",
+    "runtime": {
+      "version": "stable",
+      "arguments": "--v=1 --security-realm=PROD-MAIN"
+    },
+    "shortcut": {
+      "company": "OpenFin",
+      "description": "How to use security realms to isolate development environments",
+      "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+      "name": "How to use security realms"
+    },
+    "startup_app": {
+      "name": "prod-main-application",
+      "uuid": "prod-main-application",
+      "url": "http://localhost:8080/html/app.html",
+      "autoShow": true
+    }
+  }
+  

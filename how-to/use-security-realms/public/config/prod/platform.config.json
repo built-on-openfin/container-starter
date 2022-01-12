@@ -1,0 +1,80 @@
+{
+    "runtime": {
+      "arguments": "--v=1 --inspect --security-realm=PROD-MAIN",
+      "version": "stable"
+    },
+    "shortcut": {
+      "company": "OpenFin",
+      "description": "How to use security realms to isolate development environments",
+      "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+      "name": "How to use security realms"
+    },
+    "platform": {
+      "uuid": "prod-main-platform",
+      "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
+      "autoShow": true,
+      "providerUrl": "http://localhost:8080/html/platform-provider.html",
+      "permissions": {
+        "ExternalWindow": {
+          "wrap": true
+        },
+        "System": {
+          "getAllExternalWindows": true,
+          "launchExternalProcess": true,
+          "readRegistryValue": false,
+          "terminateExternalProcess": true
+        }
+      },
+      "defaultWindowOptions": {
+        "url": "http://localhost:8080/html/default-platform-window.html",
+        "contextMenu": true,
+        "defaultWidth": 900,
+        "defaultHeight": 720,
+        "defaultLeft": 0,
+        "defaultTop": 0,
+        "saveWindowState": false,
+        "backgroundThrottling": true,
+        "minHeight": 445,
+        "minWidth": 354,
+        "experimental": {
+          "analytics": true
+        }
+      },
+      "defaultViewOptions": {
+        "experimental": {
+          "childWindows": true,
+          "analytics": true
+        }
+      },
+      "commands": [
+        {
+          "command": "stack.nextTab",
+          "keys": "Ctrl+Tab"
+        }
+      ]
+    },
+    "snapshot": {
+      "windows": [
+        {
+          "layout": {
+            "content": [
+              {
+                "type": "stack",
+                "id": "no-drop-target",
+                "content": [
+                  {
+                    "type": "component",
+                    "componentName": "view",
+                    "componentState": {
+                      "processAffinity": "ps_1",
+                      "url": "http://localhost:8080/html/view-app.html"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
