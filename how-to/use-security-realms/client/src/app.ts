@@ -50,7 +50,7 @@ async function handleIabMessage({uuid}: OpenFin.ApplicationIdentity, messageText
 
 async function messageLog({uuid}: OpenFin.ApplicationIdentity, realm: string): Promise<void> {
     try {
-        const messageLog = document.querySelector('#message-log')
+        const messageLog: HTMLDivElement = document.querySelector('#message-log')
         await fin.InterApplicationBus.subscribe({uuid: uuid}, '/openfin/sample/security-realm-example', ({id, message, realmName}) => {
             messageLog.innerHTML += `<p>Received message from app with identity of {uuid: ${id.uuid}}</br><strong>MESSAGE:</strong> ${message}</br>REALM NAME: ${realmName}</p>`
         })    

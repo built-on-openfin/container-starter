@@ -20,8 +20,7 @@ async function init(): Promise<void> {
 
     const launchNewRealmBtn: HTMLButtonElement = document.querySelector('.launch-outofrealm-btn');
     launchNewRealmBtn.addEventListener('click', async () => {
-        const {identity} = await launchUat();
-        console.log("New App Launched with new Security Realm", identity)
+        await launchUat();
     })
 
 }
@@ -70,9 +69,8 @@ async function sendIabMessage(id: OpenFin.ApplicationIdentity, realm: string): P
     
 }
 
-async function handleIabMessage({ uuid }, messageText, realm): Promise<void> {
+async function handleIabMessage({uuid}: OpenFin.ApplicationIdentity, messageText: string, realm: string): Promise<void> {
     try {
-        console.log({ uuid, messageText, realm })
         await fin.InterApplicationBus.send({ uuid: uuid }, '/openfin/sample/security-realm-example', { id: fin.me.identity, message: messageText, realmName: realm })
     } catch (error) {
         alert(`Can not send message to app: ${uuid} in realm ${realm}`)
@@ -80,9 +78,9 @@ async function handleIabMessage({ uuid }, messageText, realm): Promise<void> {
 }
 
 
-async function messageLog({ uuid }, realm): Promise<void> {
+async function messageLog({uuid}: OpenFin.ApplicationIdentity, realm: string): Promise<void> {
     try {
-        const messageLog = document.querySelector('#message-log')
+        const messageLog: HTMLDivElement = document.querySelector('#message-log')
         await fin.InterApplicationBus.subscribe({ uuid: uuid }, '/openfin/sample/security-realm-example', ({ id, message, realmName }) => {
             messageLog.innerHTML += `<p>Received message from app with identity of {uuid: ${id.uuid}}</br><strong>MESSAGE:</strong> ${message}</br>REALM NAME: ${realmName}</p>`
         })
