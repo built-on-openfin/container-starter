@@ -31,6 +31,7 @@ Security realms can be enabled by specifying an OpenFin Container runtime argume
             - Security Realm: `"UAT-MAIN"`
             - Contains a platform view loaded from: `/html/app.html`
                 - Contains TypeScript written in `client/src` and loaded from: `../js/view-app.bundle.js`
+            - Contains an `appAsset` with a .NET adapter console application that subscribes to messages coming from applications in the `UAT-MAIN` security realm.
 
 ## Getting Started
 
@@ -65,10 +66,10 @@ At this point you should have something that looks like the image below.
 Now, from the platform view, launch the application using the button in the second box. 
 ![Same realm apps side by side](./assets/security-realm-full-convo.png)
 
-This is our UAT environment and is launched from `http://localhost:8080/config/uat/uat.config.json`, and is configured with a **different** security realm name than the initially launched manifest from `http://localhost:8080/config/prod/platform.config.json`. Type a message into our UAT application and press send. 
-![Out of realm application](./assets/out-of-realm-message.png)
+This is our UAT environment and is launched from `http://localhost:8080/config/uat/uat.config.json`, and is configured with a **different** security realm name than the initially launched manifest from `http://localhost:8080/config/prod/platform.config.json`. We are testing a new native feature so we added an `appAsset` that is only available in our UAT environment. Type a message into our UAT application and press send. 
+![Out of realm application](./assets/launch-uat.png)
 
-Although the content from both applications is the same html and JavaScript, because they have different security realms defined, The UAT application can not find an application identity to send the message to. 
-![Can't send message](./assets/caught-out-of-realm-message.png)
+Although the content from both applications is the same html and JavaScript, because they have different security realms defined, the application is restricted to the context of it's security realm. 
+![Full Picture](./assets/security-realm-full.png)
 
 
