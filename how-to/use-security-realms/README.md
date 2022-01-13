@@ -7,30 +7,29 @@ This repository demonstrates how to use OpenFin Runtime security realms to isola
 
 ## How it Works
 
-Security realms can be enabled by specifying a OpenFin Container runtime argument in an applications manifest.
+Security realms can be enabled by specifying an OpenFin Container runtime argument in an application's manifest.
 
 File and folder structure
 
-- Host: `http://localhost:8080`
 - Target Environments
     - PROD
         - Platform Manifest: `/config/prod/platform.config.json`
             - Security Realm: `"PROD-MAIN"`
             - Contains a platform view loaded from: `/html/view-app.html`
-                - Contains javascript written in `client/src` and loaded from: `../js/view-app.bundle.js`
+                - Contains TypeScript written in `client/src` and loaded from: `../js/view-app.bundle.js`
         - Application Manifest: `/config/prod/window.config.json`   
             - Security Realm: `"PROD-MAIN"`
             - Contains an window loaded from: `/html/app.html`
-                - Contains javascript written in `client/src` and loaded from: `../js/app.bundle.js`
+                - Contains TypeScript written in `client/src` and loaded from: `../js/app.bundle.js`
     - UAT 
         - Platform Manifest: `/config/uat/platform.config.json` 
             - Security Realm: `"UAT-MAIN"`
             - Contains a platform view loaded from: `/html/view-app.html`
-                - Contains javascript written in `client/src` and loaded from: `../js/view-app.bundle.js`
+                - Contains TypeScript written in `client/src` and loaded from: `../js/view-app.bundle.js`
         - Application Manifest: `/config/uat/window.config.json`   
             - Security Realm: `"UAT-MAIN"`
             - Contains a platform view loaded from: `/html/app.html`
-                - Contains javascript written in `client/src` and loaded from: `../js/view-app.bundle.js`
+                - Contains TypeScript written in `client/src` and loaded from: `../js/view-app.bundle.js`
 
 ## Getting Started
 
@@ -39,25 +38,38 @@ Follow the instructions below to get up and running!
 ### Installation
 
 1. `npm i` or `npm install`
-2. `npm run build`
-3. `npm run start`
-4. `npm run client` 
+2. `npm run build` build the client and server code 
+3. `npm run start` start the server 
+4. `npm run client` launch the application
+
+Once you have launched the PROD manifest (`http://localhost:8080/config/prod/platform.config.json`) you will see the a Platform window containing a single view with the following attributes.
+
+1. A button to launch an application in **the same** target environment and security realm
+2. A button to launch an application in **a different** target environment and security realm
+3. A textarea to enter a message. 
+
+Select the button in the box in the first box to demonstrate the behavior of applications communicating normally in the same security realm.
+![Starting the application](./assets/security-realm-initial-launch.png)
+
+You should now see a new application as seen below.
+![Launching app in the same realm](./assets/same-realm-app-launched.png)
 
 
-&lt;Paragraph> Implementation overview and high-level dependency explanation
+From the platform view, we can send a message to the launched application within the same security realm as the initially launched application something into the textarea and pressing send message in the third box. 
+![Writing a message to same realm app](./assets/security-realm-sending-message.png)
 
-Step by step installation instructions, if possible provide simple commands to achieve set up, build, and run tasks.
 
-OpenFin API’s used and in which Entities (Platform, App, Window, View)
+Success! you should see the message in the application launched from the platform view because they are in the same security realm and are running on the same runtime version. In the application that received the message from the platform view, you can send something back to the view for acknowledgement. 
+![Receiving a message and sending message to same realm app](./assets/security-realm-same-message.png)
 
-Include gifs for visual cues
+At this point you should have something that looks like the image below. 
+Now, from the platform view, launch the application using the button in the second box. 
+![Same realm apps side by side](./assets/security-realm-full-convo.png)
 
-### Feature Explanation
+This is our UAT environment and is launched from `http://localhost:8080/config/uat/uat.config.json`, and is configured with a **different** security realm name than the initially launched manifest from `http://localhost:8080/config/prod/platform.config.json`. Type a message into our UAT application and press send. 
+![Out of realm application](./assets/out-of-realm-message.png)
 
-Explain any complex behavior associated with the how-to example that requires multiple steps and outcomes.
+Although, the content from both applications is the same html and JavaScript, because they have different security realms defined. The UAT application can not find an application identity to send the message to. 
+![Can't send message](./assets/caught-out-of-realm-message.png)
 
-### Configuration Changes and detailed property explanation
 
-If the how-to example requires additional manifest or manifest-like changes provide a detailed property table to describe each properties type/behavior.
-
-### FAQ &lt;optional if necessary>
