@@ -45,6 +45,7 @@ async function launchProd(): Promise<OpenFin.Application> {
     const app = await fin.Application.startFromManifest('http://localhost:8080/config/prod/window.config.json')
     return app;
 }
+
 async function launchUat(): Promise<OpenFin.Application> {
     try {
         const app = await fin.Application.startFromManifest('http://localhost:8080/config/uat/window.config.json')
@@ -54,7 +55,7 @@ async function launchUat(): Promise<OpenFin.Application> {
     }
 }
 
-async function sendIabMessage(id: OpenFin.ApplicationIdentity, realm: string) {
+async function sendIabMessage(id: OpenFin.ApplicationIdentity, realm: string): Promise<void> {
     try {
         const sendMessageBtn: HTMLButtonElement = document.querySelector('#send-message');
         sendMessageBtn.addEventListener('click', (e) => {

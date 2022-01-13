@@ -31,7 +31,7 @@ async function getSecurityRealmInfo(): Promise<string> {
     }
 }
 
-async function sendIabMessage(realm: string) {
+async function sendIabMessage(realm: string): Promise<void> {
     const sendMessageBtn: HTMLButtonElement = document.querySelector('#send-message');
     sendMessageBtn.addEventListener('click', (e) => {
         e.preventDefault()

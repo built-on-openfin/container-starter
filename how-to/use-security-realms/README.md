@@ -2,16 +2,17 @@
 
 This repository demonstrates how to use OpenFin Runtime security realms to isolate application that have different target environments and enable interoperability between applications sharing the same target environment. 
 
-[Learn more about how security realms work!](https://developers.openfin.co/of-docs/docs/openfin-security#security-realms)
-
+Before diving in we recommend taking some time reading an [overview of how security realms work](https://developers.openfin.co/of-docs/docs/openfin-security#security-realms)
 
 ## How it Works
 
 Security realms can be enabled by specifying an OpenFin Container runtime argument in an application's manifest.
 
-File and folder structure
+## File and folder structure
 
-- Target Environments
+*The paths provided in this description are relative to the server host*: `http://localhost:8080`
+
+- Target Environments 
     - PROD
         - Platform Manifest: `/config/prod/platform.config.json`
             - Security Realm: `"PROD-MAIN"`
@@ -35,8 +36,6 @@ File and folder structure
 
 Follow the instructions below to get up and running!
 
-### Installation
-
 1. `npm i` or `npm install`
 2. `npm run build` build the client and server code 
 3. `npm run start` start the server 
@@ -55,11 +54,11 @@ You should now see a new application as seen below.
 ![Launching app in the same realm](./assets/same-realm-app-launched.png)
 
 
-From the platform view, we can send a message to the launched application within the same security realm as the initially launched application something into the textarea and pressing send message in the third box. 
+From the platform view, we can send a message to the launched application within the same security realm as the initially launched application. Go ahead and type something into the textarea and press send message in the third box. 
 ![Writing a message to same realm app](./assets/security-realm-sending-message.png)
 
 
-Success! you should see the message in the application launched from the platform view because they are in the same security realm and are running on the same runtime version. In the application that received the message from the platform view, you can send something back to the view for acknowledgement. 
+Success! You should now see the message in the application launched from the platform view, because they are in the same security realm and are running on the same runtime version. In the application that received the message from the platform view, you can send something back to the view for acknowledgement. 
 ![Receiving a message and sending message to same realm app](./assets/security-realm-same-message.png)
 
 At this point you should have something that looks like the image below. 
@@ -69,7 +68,7 @@ Now, from the platform view, launch the application using the button in the seco
 This is our UAT environment and is launched from `http://localhost:8080/config/uat/uat.config.json`, and is configured with a **different** security realm name than the initially launched manifest from `http://localhost:8080/config/prod/platform.config.json`. Type a message into our UAT application and press send. 
 ![Out of realm application](./assets/out-of-realm-message.png)
 
-Although, the content from both applications is the same html and JavaScript, because they have different security realms defined. The UAT application can not find an application identity to send the message to. 
+Although the content from both applications is the same html and JavaScript, because they have different security realms defined, The UAT application can not find an application identity to send the message to. 
 ![Can't send message](./assets/caught-out-of-realm-message.png)
 
 
