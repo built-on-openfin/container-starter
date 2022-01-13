@@ -1,6 +1,6 @@
 <img src="./assets/OpenFin-Container-Starter.png" width="100%"  alt="OpenFin Container Starter" />
 
-_Disclaimer: ℹ️ OpenFin OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a licence from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license. OpenFin Container is currently only supported on Windows._
+_Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a licence from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license. OpenFin Container is currently only supported on Windows._
 
 # OpenFin Container 
 
