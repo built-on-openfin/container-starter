@@ -1,6 +1,6 @@
 # OpenFin Container Starter
 
-![alt_text](./assets/OpenFin-Container-Starter.png "image_tooltip")
+<img src="./assets/OpenFin-Container-Starter.png" width="100%"  alt="OpenFin Container Starter" />
 
 OpenFin Container is a desktop runtime application environment that enables communication between all of your apps (web, legacy, third-party) for the enterprise desktop. It is built on top of Google Chromium and GitHub Electron and combines advanced interoperability, lightning-fast distribution, and robust security with an agile web development and deployment model.
 
@@ -18,4 +18,8 @@ This repository contains examples for common use cases and API implementations. 
 | --- | --- |
 | [use-security-realms](./how-to/use-security-realms) | This example shows you security realms work with multiple target environments |
 
-### Change log / Roadmap
+## Before you get started
+
+Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
+
+OpenFin Workspace is currently **only supported on Windows for production use**.
