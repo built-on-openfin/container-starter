@@ -9,7 +9,7 @@
     "build-client": "webpack build --config ./webpack.config.js --mode=development",
     "build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
     "start": "npm run server",
-    "client": "start fin://localhost:8080/manifest.fin.json",
+    "client": "start fin://localhost:8080/config/prod/platform.config.json",
     "server": "node ./server/build/index.js"
   },
   "author": "@adam-saland",
