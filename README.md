@@ -1,6 +1,6 @@
 <img src="./assets/OpenFin-Container-Starter.png" width="100%"  alt="OpenFin Container Starter" />
 
-_Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a licence from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license. OpenFin Container is currently only supported on Windows._
+_Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a licence from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license._
 
 # OpenFin Container
 
@@ -26,8 +26,4 @@ This repository contains examples for common use cases and API implementations. 
 
 Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
 
-OpenFin Container is currently **only supported on Windows for production use**.
 
----
-
-Read more about the [OpenFin Container](https://developers.openfin.co/of-docs/docs/container-overview#what-is-openfin-container)

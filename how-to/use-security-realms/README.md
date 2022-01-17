@@ -36,7 +36,7 @@ $ npm run build
 $ npm run start
 ```
 
-4. Start Your Workspace Platform (a basic app in this instance).
+4. Start the Platform application.
 
 ```bash
 $ npm run client
@@ -94,4 +94,4 @@ _The paths provided in this description are relative to the server host_: `http:
 
 ### A note about this example
 
-This is an example of how to use our APIs to configure OpenFin Workspace. It's purpose is to provide an example and provide suggestions. This is not a production application and shouldn't be treated as such. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use our APIs to configure OpenFin Container. It's purpose is to provide an example and provide suggestions. This is not a production application and shouldn't be treated as such. Please use this as a guide and provide feedback. Thanks!
