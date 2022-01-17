@@ -3,3 +3,12 @@
 #iab-message {
     margin-bottom: 4px;
 }
+
+#summary {
+    padding:10px;
+    padding-bottom: 0px;
+}
+body {
+    padding:10px;
+    padding-bottom: 0px;
+}

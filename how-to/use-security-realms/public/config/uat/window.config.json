@@ -4,12 +4,6 @@
         "version": "stable",
         "arguments": "--v=1 --security-realm=UAT-MAIN"
     },
-    "shortcut": {
-        "company": "OpenFin",
-        "description": "How to use security realms to isolate development environments",
-        "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-        "name": "How to use security realms"
-    },
     "startup_app": {
         "name": "uat-main-application",
         "uuid": "uat-main-application",
@@ -18,13 +12,12 @@
         "permissions": {
             "System": {
                 "launchExternalProcess": true,
-                "terminateExternalProcess": true,
                 "downloadAsset": true
             }
         }
     },
     "appAssets": [{
-        "src": "http://localhost:8080/appAssets/UseSecurityRealms.zip",
+        "src": "http://localhost:8080/assets/UseSecurityRealms.zip",
         "version": "0.0.0.1",
         "alias": "security-realms-native",
         "target": "UseSecurityRealms.exe",

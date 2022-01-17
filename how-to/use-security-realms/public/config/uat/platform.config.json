@@ -3,55 +3,15 @@
       "arguments": "--v=1 --inspect --security-realm=UAT-MAIN",
       "version": "stable"
     },
-    "shortcut": {
-      "company": "OpenFin",
-      "description": "How to use security realms to isolate development environments",
-      "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-      "name": "How to use security realms"
-    },
     "platform": {
       "uuid": "uat-main-platform",
-      "applicationIcon": "https://openfin.github.io/golden-prototype/favicon.ico",
-      "autoShow": true,
-      "providerUrl": "http://localhost:8080/html/platform-provider.html",
+      "applicationIcon": "http://localhost:8080/favicon.ico",
+      "autoShow": false,
       "permissions": {
-        "ExternalWindow": {
-          "wrap": true
-        },
         "System": {
-          "getAllExternalWindows": true,
-          "launchExternalProcess": true,
-          "readRegistryValue": false,
-          "terminateExternalProcess": true
+          "launchExternalProcess": true
         }
-      },
-      "defaultWindowOptions": {
-        "url": "http://localhost:8080/html/default-platform-window.html",
-        "contextMenu": true,
-        "defaultWidth": 900,
-        "defaultHeight": 720,
-        "defaultLeft": 0,
-        "defaultTop": 0,
-        "saveWindowState": false,
-        "backgroundThrottling": true,
-        "minHeight": 445,
-        "minWidth": 354,
-        "experimental": {
-          "analytics": true
-        }
-      },
-      "defaultViewOptions": {
-        "experimental": {
-          "childWindows": true,
-          "analytics": true
-        }
-      },
-      "commands": [
-        {
-          "command": "stack.nextTab",
-          "keys": "Ctrl+Tab"
-        }
-      ]
+      }
     },
     "snapshot": {
       "windows": [

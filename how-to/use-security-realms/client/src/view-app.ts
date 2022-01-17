@@ -8,21 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
+const topic = "/openfin/sample/security-realm-example";
+const rootPath = location.href.replace("/html/view-app.html", "/");
+
 async function init(): Promise<void> {
     const securityRealm = await getSecurityRealmInfo();
-
+    listenToTopicAndLogMessages(securityRealm);
+    setupSendButton(securityRealm);
     const launchAppBtn: HTMLButtonElement = document.querySelector('.launch-app-btn');
     launchAppBtn.addEventListener('click', async () => {
-        const {identity} = await launchProd();
-        sendIabMessage(identity, securityRealm);
-        messageLog(identity, securityRealm);
-    })
+        await launchProd();
+    });
 
     const launchNewRealmBtn: HTMLButtonElement = document.querySelector('.launch-outofrealm-btn');
     launchNewRealmBtn.addEventListener('click', async () => {
         await launchUat();
-    })
-
+    });
 }
 
 async function getSecurityRealmInfo(): Promise<string> {
@@ -41,52 +42,50 @@ async function getSecurityRealmInfo(): Promise<string> {
 }
 
 async function launchProd(): Promise<OpenFin.Application> {
-    const app = await fin.Application.startFromManifest('http://localhost:8080/config/prod/window.config.json')
+    const app = await fin.Application.startFromManifest(rootPath + 'config/prod/window.config.json');
     return app;
 }
 
 async function launchUat(): Promise<OpenFin.Application> {
     try {
-        const app = await fin.Application.startFromManifest('http://localhost:8080/config/uat/window.config.json')
+        const app = await fin.Application.startFromManifest(rootPath + 'config/uat/window.config.json');
         return app;   
     } catch (error) {
-        console.error("Error starting application", error)
+        console.error("Error starting application", error);
     }
 }
 
-async function sendIabMessage(id: OpenFin.ApplicationIdentity, realm: string): Promise<void> {
+async function setupSendButton(realm: string): Promise<void> {
     try {
         const sendMessageBtn: HTMLButtonElement = document.querySelector('#send-message');
         sendMessageBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const iabMessage: HTMLTextAreaElement = document.querySelector('#iab-message');
             const messageText: string = iabMessage.value;
-            handleIabMessage(id, messageText, realm)
+            publishMessageToTopic(messageText, realm);
         })    
     } catch(error) {
-        console.error("Error sending IAB message", error)
+        console.error("Error sending IAB message", error);
     }
-    
 }
 
-async function handleIabMessage({uuid}: OpenFin.ApplicationIdentity, messageText: string, realm: string): Promise<void> {
+async function publishMessageToTopic(messageText: string, realm: string): Promise<void> {
     try {
-        await fin.InterApplicationBus.send({ uuid: uuid }, '/openfin/sample/security-realm-example', { id: fin.me.identity, message: messageText, realmName: realm })
+        await fin.InterApplicationBus.publish(topic, { id: fin.me.identity, message: messageText, realmName: realm });
     } catch (error) {
-        alert(`Can not send message to app: ${uuid} in realm ${realm}`)
+        alert(`Can not publish message to topic: ${topic} in realm ${realm}`);
     }
 }
 
-
-async function messageLog({uuid}: OpenFin.ApplicationIdentity, realm: string): Promise<void> {
+async function listenToTopicAndLogMessages(realm: string): Promise<void> {
     try {
-        const messageLog: HTMLDivElement = document.querySelector('#message-log')
-        await fin.InterApplicationBus.subscribe({ uuid: uuid }, '/openfin/sample/security-realm-example', ({ id, message, realmName }) => {
+        const messageLog: HTMLDivElement = document.querySelector('#message-log');
+        await fin.InterApplicationBus.subscribe({ uuid: '*' }, topic, ({ id, message, realmName }) => {
             messageLog.innerHTML += `<p>Received message from app with identity of {uuid: ${id.uuid}}</br><strong>MESSAGE:</strong> ${message}</br>REALM NAME: ${realmName}</p>`
-        })
+        });
     } catch (error) {
         if (error) {
-            alert(`Can not receive message from app: ${uuid} to realm ${realm}`)
+            alert(`Can not receive message from topic: ${topic} to realm ${realm}`);
         }
     }
 }
