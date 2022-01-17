@@ -3,11 +3,11 @@
       "target": "es2021",
       "module": "ES2020",
       "sourceMap": true,
-      "rootDir": "./client/src",
+      "rootDir": "./src",
       "outDir": "build",
       "moduleResolution": "node",
       "skipLibCheck": false
     },
-    "include": ["./client/src/**/*.ts"]
+    "include": ["./src/**/*.ts"]
   }
   

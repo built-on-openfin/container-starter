@@ -4,6 +4,12 @@
         "version": "stable",
         "arguments": "--v=1 --security-realm=UAT-MAIN"
     },
+    "shortcut": {
+        "company": "OpenFin",
+        "description": "UAT Main Application",
+        "icon": "http://localhost:8080/favicon.ico",
+        "name": "UAT Main Application"
+    },
     "startup_app": {
         "name": "uat-main-application",
         "uuid": "uat-main-application",
@@ -16,11 +22,13 @@
             }
         }
     },
-    "appAssets": [{
-        "src": "http://localhost:8080/assets/UseSecurityRealms.zip",
-        "version": "0.0.0.1",
-        "alias": "security-realms-native",
-        "target": "UseSecurityRealms.exe",
-        "mandatory": true
-    }]
+    "appAssets": [
+        {
+            "src": "http://localhost:8080/assets/UseSecurityRealms.zip",
+            "version": "0.0.0.1",
+            "alias": "security-realms-native",
+            "target": "UseSecurityRealms.exe",
+            "mandatory": true
+        }
+    ]
 }

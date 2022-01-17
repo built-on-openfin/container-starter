@@ -22,4 +22,4 @@ This repository contains examples for common use cases and API implementations. 
 
 Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
 
-OpenFin Workspace is currently **only supported on Windows for production use**.
+OpenFin Container is currently **only supported on Windows for production use**.
