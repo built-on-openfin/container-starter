@@ -1,40 +1,45 @@
 {
-    "runtime": {
-      "arguments": "--v=1 --inspect --security-realm=PROD-MAIN",
-      "version": "stable"
-    },
-    "platform": {
-      "uuid": "prod-main-platform",
-      "applicationIcon": "http://localhost:8080/favicon.ico",
-      "autoShow": false,
-      "permissions": {
-        "System": {
-          "launchExternalProcess": true        
+  "runtime": {
+    "arguments": "--v=1 --inspect --security-realm=PROD-MAIN",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "PROD Main Platform",
+    "icon": "http://localhost:8080/favicon.ico",
+    "name": "PROD Main Platform"
+  },
+  "platform": {
+    "uuid": "prod-main-platform",
+    "autoShow": false,
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true
+      }
+    }
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:8080/html/view-app.html"
+                  }
+                }
+              ]
+            }
+          ]
         }
       }
-    },
-    "snapshot": {
-      "windows": [
-        {
-          "layout": {
-            "content": [
-              {
-                "type": "stack",
-                "id": "no-drop-target",
-                "content": [
-                  {
-                    "type": "component",
-                    "componentName": "view",
-                    "componentState": {
-                      "processAffinity": "ps_1",
-                      "url": "http://localhost:8080/html/view-app.html"
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ]
-    }
+    ]
   }
+}

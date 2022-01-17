@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run build-server & npm run build-client",
     "build-server": "tsc --project ./server",
-    "build-client": "webpack build --config ./webpack.config.js --mode=development",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
     "build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
     "start": "npm run server",
     "client": "start fin://localhost:8080/config/prod/platform.config.json",
