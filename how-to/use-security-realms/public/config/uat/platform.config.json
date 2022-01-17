@@ -1,0 +1,45 @@
+{
+  "runtime": {
+    "arguments": "--v=1 --inspect --security-realm=UAT-MAIN",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "UAT Main Platform",
+    "icon": "http://localhost:8080/favicon.ico",
+    "name": "UAT Main Platform"
+  },
+  "platform": {
+    "uuid": "uat-main-platform",
+    "autoShow": false,
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true
+      }
+    }
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:8080/html/app.html"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
