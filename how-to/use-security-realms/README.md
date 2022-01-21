@@ -2,21 +2,25 @@
 
 This repository demonstrates how to use OpenFin Runtime security realms to isolate application that have different target environments and enable interoperability between applications sharing the same target environment.
 
-Before diving in we recommend taking some time reading an [overview of how security realms work](https://developers.openfin.co/of-docs/docs/openfin-security#security-realms)
+Before diving in we recommend taking some time reading an [overview of how security realms work](https://developers.openfin.co/of-docs/docs/openfin-security#security-realms). 
 
 ---
 
 ## How it Works
 
-Security realms can be enabled by specifying an OpenFin Container runtime argument in an application's manifest.
+Security realms can be enabled by specifying the `--security-realm` argument in an application's manifest. The value is the name of the security realm.
+
 
 ![adding a security realm as a runtime argument](./assets/set-security-realm.gif)
 
+
 ---
 
-## Getting Started
+## Get Started
 
-Follow the instructions below to get up and running!
+Follow the instructions below to get up and running.
+
+### Set up the project
 
 1. Install dependencies. Note that these examples assume you are in the sub-directory for the example.
 
@@ -42,25 +46,29 @@ $ npm run start
 $ npm run client
 ```
 
-Once you have launched the PROD manifest (`http://localhost:8080/config/prod/platform.config.json`) you will see the a Platform window containing a single view with the following attributes.
+### Use the project interface
 
-1. A button to launch an application in **the same** target environment and security realm
-2. A button to launch an application in **a different** target environment and security realm
-3. A textarea to enter a message.
+1. Launch  the PROD manifest (`http://localhost:8080/config/prod/platform.config.json`). An OpenFin Platform window opens, containing a single view with the following features: 
 
-Select the button in the box in the first box to demonstrate the behavior of applications communicating normally in the same security realm. You should now see a new application as seen below.
+   - A button to launch an application in **the same** target environment and security realm
+   -  A button to launch an application in **a different** target environment and security realm
+   - A text area to enter a message.
+
+2. Click **Launch App** in the first box, to demonstrate the behavior of applications communicating normally in the same security realm. A new application starts, as shown in the following image.
 ![Starting the application](./assets/open-same-realm.gif)
 
-From the platform view, we can send a message to the launched application within the same security realm as the initially launched application. Go ahead and type something into the textarea and press send message in the third box.
+3. From the Platform window, you can send a message to the launched application within the same security realm as the initially launched application. Type something into the text area and press **Send Message To Topic**.
 ![Writing a message to same realm app](./assets/send-message-same-realm-1.gif)
 
-Success! You should now see the message in the application launched from the platform view, because they are in the same security realm and are running on the same runtime version. In the application that received the message from the platform view, you can send something back to the view for acknowledgement.
+   Success! The message appears in the application, because it is in the same security realm and is running on the same runtime version as the Platform view it was launched from. In the application, you can send a message back to the Platform view for acknowledgement.
 ![Receiving a message and sending message to same realm app](./assets/send-message-same-realm-2.gif)
 
-Now that we have established communication between two applications within the same security realm is possible go ahead and launch the application using the button in the second box. 
+4. Now launch the application using the **Launch App** button in the second box. 
 ![send message to native app](./assets/open-different-realm.gif)
 
-This is our UAT environment and is launched from `http://localhost:8080/config/uat/uat.config.json`, and is configured with a **different** security realm name than the initially launched manifest from `http://localhost:8080/config/prod/platform.config.json`. We are testing a new native feature so we added an `appAsset` that is only available in our UAT environment. Type a message into our UAT application and press send. Although the content from both applications is the same html and JavaScript, because they have different security realms defined, the application is restricted to the context of it's security realm.
+   This application represents a UAT environment and is launched from `http://localhost:8080/config/uat/uat.config.json`. It is configured with a *different* security realm name than the first application you launched, whose manifest is from `http://localhost:8080/config/prod/platform.config.json`. As an example, suppose you are testing a new native feature, so there is an `appAsset` value in the manifest that is only available in the UAT environment. 
+   
+5. Type a message into the UAT application and press **Send Message To Topic**. Although the content from both applications consists of the same HTML and JavaScript, each application is restricted to the context of its security realm, because they have different security realms defined. Therefore, the message does not go to the Platform view, but to a console window. 
 ![send message to native app](./assets/send-message-different-realm.gif)
 
 ---
@@ -94,4 +102,4 @@ _The paths provided in this description are relative to the server host_: `http:
 
 ### A note about this example
 
-This is an example of how to use our APIs to configure OpenFin Container. It's purpose is to provide an example and provide suggestions. This is not a production application and shouldn't be treated as such. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
