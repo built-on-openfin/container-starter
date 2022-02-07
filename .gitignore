@@ -104,3 +104,4 @@ dist
 .tern-port
 
 how-to/*/server/build
+how-to/*/server/build/*
