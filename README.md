@@ -6,13 +6,13 @@ _Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is f
 
 OpenFin Container is a desktop runtime application environment that enables communication between all of your apps (web, legacy, third-party) for the enterprise desktop. It is built on top of Google Chromium and GitHub Electron and combines advanced interoperability, lightning-fast distribution, and robust security with an agile web development and deployment model.
 
-[Learn more about the OpenFin Container](https://developers.openfin.co/of-docs/docs/container-overview)
+* [Learn more about the OpenFin Container](https://developers.openfin.co/of-docs/docs/container-overview)
 
 ---
 
 ## What can you do with this repository
 
-This repository contains examples for common use cases and API implementations. Each how-to example represents a specific use case and contains implemented api details, required manifest attributes, and any external dependencies necessary to run the how-to example.
+This repository contains examples for common use cases and API implementations. Each how-to example represents a specific use case and contains implemented API details, required manifest attributes, and any external dependencies necessary to run the how-to example.
 
 ## Examples
 
