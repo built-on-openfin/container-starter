@@ -10,8 +10,7 @@ This repository contains examples showing how to setup preload scripts as well a
 
   | Example         | Description |
 |---------------------|------------------------------------
-| [How To - Hello World](./hello-world) | This is an example of how to wire up preloads to the different parts of an OpenFin application. If you just want to know how to add a preload script then this is the simplest example (each preload simply console.logs a message)     
-| 
+| [How To - Use Preloads Basic](./basic) | This is an example of how to wire up preloads to the different entities of an OpenFin application. If you just want to know how to add a preload script then this is the simplest example (each preload simply console.logs a message)     
 
 ## Before you get started
 
