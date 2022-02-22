@@ -19,6 +19,7 @@ This repository contains examples for common use cases and API implementations. 
 | **Example**                                         | **Description**                                                               |
 | --------------------------------------------------- | ----------------------------------------------------------------------------- |
 | [use-security-realms](./how-to/use-security-realms) | This example shows you security realms work with multiple target environments |
+| [use-preloads](./how-to/use-preloads) | This example shows you a number of examples on how preload scripts can be used in your application |
 
 ---
 
