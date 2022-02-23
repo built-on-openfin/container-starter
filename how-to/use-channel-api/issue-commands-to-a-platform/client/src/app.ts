@@ -1,16 +1,15 @@
+import { fin } from 'openfin-adapter/src/mock';
 
-    async function initApp() {
-        let container = document.getElementById("context-container");
-        let fin = window["fin"];
-        if(fin !== undefined) {
-            let viewOptions = await fin.me.getOptions();
-            container.innerText = JSON.stringify(viewOptions.customData); 
-        }
-    }
-    if(document.readyState === "complete"){
+const me = fin.me as OpenFin.View;
+async function initApp() {
+    const container = document.getElementById("context-container");
+    const viewOptions = await me.getOptions();
+    container.innerText = JSON.stringify(viewOptions.customData);
+}
+if (document.readyState === "complete") {
+    initApp();
+} else {
+    window.addEventListener('load', () => {
         initApp();
-    } else {
-        window.addEventListener('load', () => {
-            initApp();
-        });
-    }
+    });
+}

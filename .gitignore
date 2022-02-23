@@ -105,3 +105,4 @@ dist
 
 how-to/*/server/build
 how-to/**/server/build
+how-to/**/**/*.bundle.js
