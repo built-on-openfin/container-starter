@@ -103,6 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-how-to/*/server/build
-how-to/**/server/build
-how-to/**/**/*.bundle.js
+how-to/**/build
+how-to/**/*.bundle.js
+.vscode
