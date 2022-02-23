@@ -25,7 +25,7 @@ async function launchPlatform(): Promise<void> {
 
 async function requestView(): Promise<void> {
     try {
-        let channelClient = await fin.InterApplicationBus.Channel.connect("platform-command", { 
+        const channelClient: OpenFin.ChannelClient = await fin.InterApplicationBus.Channel.connect("platform-command", { 
             payload: { token: "an example token"}
         });
 

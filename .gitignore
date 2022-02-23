@@ -104,5 +104,5 @@ dist
 .tern-port
 
 how-to/**/build
-how-to/**/*.bundle.js
 .vscode
+how-to/use-channel-api/issue-commands-to-a-platform/public/js/*.bundle.js
