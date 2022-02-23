@@ -6,6 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+
+# Bundle/builds
+
+**/*.bundle.js
+**/build
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -103,6 +109,4 @@ dist
 # TernJS port file
 .tern-port
 
-how-to/**/build
-.vscode
-how-to/use-channel-api/issue-commands-to-a-platform/public/js/*.bundle.js
+
