@@ -1,8 +1,8 @@
 import { fin } from "openfin-adapter/src/mock";
 
-async function init() {
+async function init(): Promise<void> {
     // create a channel to receive commands from external apps
-    let actionChannel = await fin.InterApplicationBus.Channel.create("platform-command");
+    const actionChannel: OpenFin.ChannelProvider = await fin.InterApplicationBus.Channel.create("platform-command");
     
     actionChannel.onConnection((identity, payload:any)=> {
         // on connection you can validate the identity and optionally specify that a payload to prove id needs to be passed
@@ -15,13 +15,13 @@ async function init() {
     // alternatively you could have a single command function exposed which could have an action type
     actionChannel.register("createView", async (payload, identity)=> {
         // there would likely be validation and additional logic here.
-        let platform = fin.Platform.getCurrentSync();
+        const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
         await platform.createView({ url: "http://localhost:8080/html/app.html", target:undefined, customData: payload });
     });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    let platform = fin.Platform.getCurrentSync();
+    const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
     platform.once("platform-api-ready", init.bind(this));
 });
 
