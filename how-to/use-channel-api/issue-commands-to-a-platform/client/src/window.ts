@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 async function init(): Promise<void> {
-   const launchPlatformButton = document.getElementById("launch-platform");
-   const requestViewButton = document.getElementById("request-view");
-   launchPlatformButton.onclick = launchPlatform;
-   requestViewButton.onclick = requestView;
+    const launchPlatformButton = document.getElementById("launch-platform");
+    const requestViewButton = document.getElementById("request-view");
+    launchPlatformButton.onclick = launchPlatform;
+    requestViewButton.onclick = requestView;
 }
 
 async function launchPlatform(): Promise<void> {
@@ -25,8 +25,8 @@ async function launchPlatform(): Promise<void> {
 
 async function requestView(): Promise<void> {
     try {
-        const channelClient: OpenFin.ChannelClient = await fin.InterApplicationBus.Channel.connect("platform-command", { 
-            payload: { token: "an example token"}
+        const channelClient: OpenFin.ChannelClient = await fin.InterApplicationBus.Channel.connect("platform-command", {
+            payload: { token: "an example token" }
         });
 
         channelClient.dispatch("createView", {

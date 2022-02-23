@@ -1,6 +1,7 @@
 import { fin } from 'openfin-adapter/src/mock';
 
 const me = fin.me as OpenFin.View;
+
 async function initApp() {
     const container = document.getElementById("context-container");
     const viewOptions = await me.getOptions();
