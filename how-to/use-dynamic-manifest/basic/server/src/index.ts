@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
                         "componentName": "view",
                         "componentState": {
                             "processAffinity": "ps_1",
-                            "url": "http://google.com"
+                             "url": "http://localhost:8080/html/app-dev.html"
                         }
                         }
                     ]
@@ -91,7 +91,7 @@ app.get('/', (req, res) => {
                         "componentName": "view",
                         "componentState": {
                             "processAffinity": "ps_1",
-                            "url": "http://localhost:8080/html/app.html"
+                            "url": "http://localhost:8080/html/app-staging.html"
                         }
                         }
                     ]
@@ -105,8 +105,12 @@ app.get('/', (req, res) => {
    }
 })
 
-app.get('/html/app.html', function(req, res) {
-  res.sendFile(path.join(__dirname, '../../public/html/app.html'));
+app.get('/html/app-dev.html', function(req, res) {
+  res.sendFile(path.join(__dirname, '../../public/html/app-dev.html'));
+});
+
+app.get('/html/app-staging.html', function(req, res) {
+  res.sendFile(path.join(__dirname, '../../public/html/app-staging.html'));
 });
 
 app.listen(port, () => {
