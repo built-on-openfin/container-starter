@@ -1,18 +1,23 @@
-# Use Preloads Hello World
+# Use dynamic manifest
 
-This repository demonstrates how to use OpenFin Runtime Preload capabilities to inject a script into the different parts of an OpenFin application. 
-
-Preload scripts can be defined in window and view options or as part of a manifest.
-
-The manifest in [public/config/platform.config.json](public/config/platform.config.json) shows how you can add a preload script to your platform provider, to all windows or to all views (using the default options setting).
+This repository demonstrates how to return different manifests depending on url query string.
 
 ---
 
 ## How it Works
 
-The preload script is injected into the page you are targeting. The sample checks to see if the page has finished loading (if it has it executes a function that simply logs out a message) and if hasn't then it adds an event listener in order to only execute some logic when the page is ready. The buttons on the view execute logic to show developer tools for each part of the OpenFin application that had preload scripts loaded.
+The index.ts file in the src folder is used by the express server to return different manifest json depending supplied query string.
 
+Query strings:
+    env=staging - staging environment
+    env=dev - dev environment
 ---
+Following npm commands in the package.json perform the above commands:
+npm run staging
+    "staging" :"start fin://localhost:8080/?env=staging"
+
+npm run dev
+    "dev" :"start fin://localhost:8080/?env=dev",
 
 ## Get Started
 
@@ -38,23 +43,21 @@ $ npm run build
 $ npm run start
 ```
 
-4. Start the Platform application.
+for proceeding steps start another terminal in the same location
 
-```bash
-$ npm run client
+4. Start the Platform staging application.
+
+$ npm run staging
 ```
 
-![installing, building and launching](./assets/constainer-starter-how-to-use-preload-hello-world-install.gif)
+5. Start the Platform dev application.
 
+```bash
+$ npm run dev
+```
 ### What you will see
 
-1. The default platform provider window (as the manifest sets autoshow to true to help with development)
-
-2. A platform window using the default template
-
-3. A view presenting some descriptive text and three buttons in order to show the developer tools for the platform provider, the default platform window and the view (to show that the individual preload scripts have loaded and console logged their message).
-
-![installing, building and launching](./assets/constainer-starter-how-to-use-preload-hello-world-run.gif)
+When dev is used the app-dev.html will open in a new window and the same for staging with app-staging.html.
 
 ---
 
