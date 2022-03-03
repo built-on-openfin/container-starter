@@ -4,7 +4,7 @@ const app = express();
 //app.use(express.static(path.join(__dirname, '../../public')));
 const port = 8080;
 
-app.get('/', (req, res) => {
+app.get('/manifest', (req, res) => {
    const env = req.query.env;
    if(env === 'dev'){
         res.json({

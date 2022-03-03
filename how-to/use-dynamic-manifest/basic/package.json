@@ -14,8 +14,8 @@
     "kill": "(npm run -s kill:fin || true) && (npm run -s kill:rvm || true)",
     "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
     "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T",
-    "dev" :"start fin://localhost:8080/?env=dev",
-    "staging" :"start fin://localhost:8080/?env=staging"
+    "dev" :"start fin://localhost:8080/manifest?env=dev",
+    "staging" :"start fin://localhost:8080/manifest?env=staging"
   },
   "author": "@johnman",
   "license": "MIT",
