@@ -17,7 +17,7 @@ npm run staging
     "staging" :"start fin://localhost:8080/?env=staging"
 
 npm run dev
-    "dev" :"start fin://localhost:8080/?env=dev",
+    "dev" :"start fin://localhost:8080/?env=dev"
 
 ## Get Started
 
