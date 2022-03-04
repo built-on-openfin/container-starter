@@ -1,22 +1,21 @@
 {
-  "name": "use-dynamic-manifest",
+  "name": "use-dynamic-manifest-basic",
   "version": "0.0.1",
-  "description": "A demonstration of how to use dynamic manifest",
+  "description": "A basic demonstration of how to use dynamic manifest",
   "main": "index.js",
   "scripts": {
     "build": "npm run build-server",
     "build-server": "tsc --project ./server",
-    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-    "build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
     "start": "npm run server",
     "server": "node ./server/build/index.js",
     "kill": "(npm run -s kill:fin || true) && (npm run -s kill:rvm || true)",
     "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
     "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T",
+    "client" :"start fin://localhost:8080/manifest?env=dev",
     "dev" :"start fin://localhost:8080/manifest?env=dev",
     "staging" :"start fin://localhost:8080/manifest?env=staging"
   },
-  "author": "@johnman",
+  "author": "@pj",
   "license": "MIT",
   "devDependencies": {
     "express": "^4.17.2",
