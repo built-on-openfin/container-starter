@@ -13,10 +13,45 @@ async function init(): Promise<void> {
 
     // an example of a command you wish to expose.
     // alternatively you could have a single command function exposed which could have an action type
-    actionChannel.register("createView", async (payload, identity) => {
+    actionChannel.register("createView", async (payload:any, identity) => {
         // there would likely be validation and additional logic here.
         const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-        await platform.createView({ url: "http://localhost:8080/html/app.html", target: undefined, customData: payload });
+        let targetWindow;
+        let targetView;
+        let viewOptions = { target : undefined} as OpenFin.ViewOptions;
+        Object.assign(viewOptions, payload.viewOptions);
+
+        if(payload.target !== undefined && payload.target.window !== undefined) {
+            targetWindow = {uuid: fin.me.identity.uuid, name: payload.target.window };
+        }
+
+        if(payload.target !== undefined && payload.target.view !== undefined) {
+            targetView = {uuid: fin.me.identity.uuid, name: payload.target.view };
+        }
+
+        let createdView = await platform.createView(viewOptions, targetWindow, targetView);
+        let currentWindow = await createdView.getCurrentWindow();
+    
+        if (currentWindow.identity.name === undefined || currentWindow.identity.name === fin.me.identity.uuid) {
+
+            let windowAllocation = new Promise<{view:string, window:string}>( (resolve,reject) => {
+                createdView.once("target-changed", async () => {
+                    let hostWindow = await createdView.getCurrentWindow();
+                    resolve( {
+                        view: createdView.identity.name,
+                        window: hostWindow.identity.name
+                    });
+              });
+            });
+
+            return await windowAllocation;
+           
+         } else {
+            return {
+                view: createdView.identity.name,
+                window: currentWindow.identity.name
+            };
+         }
     });
 }
 
