@@ -10,10 +10,11 @@ The main logic for the creation of the command channel can be found in [client/s
 
 ## How it Works
 
-The OpenFin window application launches and exposes two buttons.
+The OpenFin window application launches and exposes three buttons.
 
-* One button launches the target platform that complements the OpenFin window app
-* The second button triggers logic that connects to the command channel exposed by the platform and issues the createView command passing in fresh custom data
+* One button launches the target platform that complements the OpenFin window app and connects to the channel
+* The second button triggers logic that issues the createView command passing in fresh custom data and some view options
+* The third button issues the createView command but additionally passes in a target which is the last launched window/view
 
 The view that gets launched into the platform checks the customData that was passed to it and writes it out to the html document (for demonstration purposes). This could be an application view reading in passed context and using it to either fetch additional information or display it on the screen.
 
@@ -55,9 +56,11 @@ $ npm run client
 
 1. The OpenFin Window application launches
 
-2. A button on the OpenFin Window Application launch the platform
+2. A button on the OpenFin Window Application launch the platform and connect to the channel
 
-3. A second button on the OpenFin Window Application connects to the platform and issues a createView command.
+3. A second button on the OpenFin Window Application issues a createView command.
+
+4. A third button on the OpenFin Window Application issues a createView command and passes information related to the last launched view (which window it was attached to).
 
 ![run the application](./assets/container-starter-how-to-channel-api-issue-commands-to-a-platform-run.gif)
 

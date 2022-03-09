@@ -14,14 +14,16 @@ This is a basic window app to represent an external app issuing commands to a pl
 <p>
     The buttons below let you:
     <ul>
-        <li>Launch a platform app</li>
+        <li>Launch a platform app and connect to the command channel</li>
         <li>Send a command to the platform to launch a view and pass some data</li>
+        <li>Send a command to the platform to launch a view, pass some data and tell it to place the view near a specific window/view (in this case the last one launched)</li>
     </ul>
 </p>
 <p>When the platform is launched you will see the provider window show (it is generally hidden by default). Once shown you can issue the createView commands from this application.</p>
 <p>
     <button id="launch-platform">Launch Platform App</button> <br/>
     <button id="request-view">Tell Platform To Launch A View And Pass Data</button> <br/>
+    <button id="request-view-same-window">Tell Platform To Launch A View In The Same Window And Pass Data</button> <br/>
 </p>
 </body>
 
