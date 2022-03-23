@@ -1,0 +1,34 @@
+{
+    "startup_app": {
+        "name": "launch-app-asset",
+        "url": "http://localhost:8080/index.html",
+        "uuid": "launch-app-asset",
+        "applicationIcon": "http://localhost:8080/favicon.ico",
+        "autoShow": true,
+        "saveWindowState": true,
+        "permissions": {
+            "System": {
+                "launchExternalProcess": true,
+                "terminateExternalProcess": true,
+                "downloadAsset": true
+            }
+        }
+    },
+    "appAssets": [{
+        "src": "http://localhost:8080/assets/ProcessExplorer.zip",
+        "version": "16.42",
+        "alias": "procexp",
+        "target": "procexp.exe",
+        "mandatory": true
+    }],
+    "runtime": {
+        "arguments": "--remote-debugging-port=9090",
+        "version": "stable"
+    },
+    "shortcut": {
+        "company": "OpenFin",
+        "description": "Launch App Asset",
+        "icon": "http://localhost:8080/favicon.ico",
+        "name": "Launch App Asset"
+    }
+}

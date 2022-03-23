@@ -22,6 +22,7 @@ This repository contains examples for common use cases and API implementations. 
 | [use-preloads](./how-to/use-preloads) | This example shows you a number of examples on how preload scripts can be used in your application |
 | [use-channel-api](./how-to/use-channel-api) | This example shows you a number of examples on how to use the channel api for messaging |
 | [use-dynamic-manifest](./how-to/use-dynamic-manifest) | This example contains examples of generating a manifest file dyanamically |
+| [use-launch-external-process](./how-to/use-launch-external-process) | This example demonstrates how to launch a bundled application using the secure `launchExternalProcess` API |
 
 ---
 
