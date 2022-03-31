@@ -1,9 +1,14 @@
 # Add Analytics to your Application
 
-This application you are about to build and run, is a simple example of leveraging OpenFin's [System API](https://developer.openfin.co/docs/javascript/stable/System.html), along with ElasticSearch and Kibana, to show you how you can setup your own live metrics for your OpenFin enhanced applications. This is not a best practices guide, merely to show what's possible. 
+These are examples of leveraging OpenFin's [System API](https://developer.openfin.co/docs/javascript/stable/System.html), to show you how you can setup your own live metrics for your OpenFin enhanced applications. For a detailed perspective of implementation details please see our page on [OpenFin Web Analytics](https://developers.openfin.co/of-docs/docs/openfin-analytics-options).
 
-This example assumes you have already [set up your development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
+### PLEASE NOTE
+> These are demo applications for learning and are not meant for production use. Please use this as a way of seeing how you might approach adding analytics to your application. These examples assume you have already [set up your development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
 
-## Getting Started
+## Examples
 
-There are 2 steps to this process. One, getting Kibana and Elastic search installed, please see the [Elastic Search readme](ElasticSearch.md) file for the details on that. Secondly, see the [OpenFin Test Application readme](OpenFin.md) for details on running the test application. The test application will send CPU and Memory usage to ElasticSearch and we can use Kibana to create a dashboard to visualise this in realtime.
+| **Example**  | **Description**|
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [basic](./basic)       | This example demonstrates using the OpenFin System APIs for collecting common application metrics.                  |
+| [advanced](./advanced) | This example uses docker, kibana, and elastic search to demonstrate application metric ingestion and visualization. |
+
