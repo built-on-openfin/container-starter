@@ -1,0 +1,12 @@
+{
+    "startup_app": {
+        "name": "ChildWindow",
+        "url": "https://www.google.com",
+        "uuid": "ChildWindow",
+        "autoShow": true,
+        "runtime": {
+            "arguments": "",
+            "version": "12.69.43.21"
+        }
+    }
+}
