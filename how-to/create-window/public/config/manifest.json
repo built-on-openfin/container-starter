@@ -1,17 +1,17 @@
 {
     "devtools_port": 9090,
     "startup_app": {
-        "name": "OpenfinPOC",
-        "description": "OpenFin POC",
+        "name": "OpenMultipleWindows",
+        "description": "OpenMultipleWindows",
         "url": "http://www.google.com",
         "showTaskbarIcon": true,
         "taskbarIcon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
         "icon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
-        "uuid": "Openfin react-redux-parcel demo",
+        "uuid": "OpenMultipleWindows",
         "autoShow": true,
         "contextMenu": true,
-        "width": 500,
-        "height": 500,
+        "defaultHeight": 500,
+        "defaultwidth": 500,
         "frame": true,
         "defaultCentered": true,
         "resizable": true
@@ -22,7 +22,7 @@
     },
     "shortcut": {
         "company": "OpenFin",
-        "description": "Openfin POC",
-        "name": "Openfin POC"
+        "description": "Openfin Sample",
+        "name": "Openfin Sample"
     }
 }
