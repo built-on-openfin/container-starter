@@ -1,12 +1,28 @@
 {
+    "devtools_port": 9090,
     "startup_app": {
-        "name": "ChildWindow",
-        "url": "https://www.google.com",
-        "uuid": "ChildWindow",
+        "name": "OpenfinPOC",
+        "description": "OpenFin POC",
+        "url": "http://www.google.com",
+        "showTaskbarIcon": true,
+        "taskbarIcon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
+        "icon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
+        "uuid": "Openfin react-redux-parcel demo",
         "autoShow": true,
-        "runtime": {
-            "arguments": "",
-            "version": "12.69.43.21"
-        }
+        "contextMenu": true,
+        "width": 500,
+        "height": 500,
+        "frame": true,
+        "defaultCentered": true,
+        "resizable": true
+    },
+    "runtime": {
+        "arguments": "--enable-crash-reporting --no-sandbox",
+        "version": "stable"
+    },
+    "shortcut": {
+        "company": "OpenFin",
+        "description": "Openfin POC",
+        "name": "Openfin POC"
     }
 }
