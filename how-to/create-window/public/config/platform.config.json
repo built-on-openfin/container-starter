@@ -1,0 +1,35 @@
+{
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "stable"
+  },
+  "platform": {
+    "uuid": "how-to-open-windows",
+    "autoShow": true,
+    "icon":"http://localhost:8080/favicon.ico"
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:8080/html/app.html"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
