@@ -1,7 +1,7 @@
 {
-  "name": "use-preloads-hello-world",
+  "name": "application-window-creation",
   "version": "0.0.1",
-  "description": "A demonstration of how to configure preload scripts",
+  "description": "A demonstration of how to open openfin application windows",
   "main": "index.js",
   "scripts": {
     "build": "npm run build-server & npm run build-client",
@@ -15,7 +15,7 @@
     "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
     "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T"
   },
-  "author": "@johnman",
+  "author": "@pjsm41390 ",
   "license": "MIT",
   "devDependencies": {
     "express": "^4.17.2",
