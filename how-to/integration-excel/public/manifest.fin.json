@@ -19,20 +19,6 @@
           ]
         }
       }
-    },
-    "defaultWindowOptions": {
-      "permissions": {
-        "System": {
-          "launchExternalProcess": true,
-          "downloadAsset": true,
-          "openUrlWithBrowser": {
-            "enabled": true,
-            "protocols": [
-              "mailto"
-            ]
-          }
-        }
-      }
     }
   },
   "snapshot": {
@@ -107,18 +93,6 @@
                         "fdc3InteropApi": "1.2",
                         "interop": {
                           "currentContextGroup": "green"
-                        },
-                        "permissions": {
-                          "System": {
-                            "launchExternalProcess": true,
-                            "downloadAsset": true,
-                            "openUrlWithBrowser": {
-                              "enabled": true,
-                              "protocols": [
-                                "mailto"
-                              ]
-                            }
-                          }
                         }
                       },
                       "isClosable": true,
