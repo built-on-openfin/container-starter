@@ -15,30 +15,6 @@ export class AppMonitor {
         }
     }
 
-    formatDate(date) {
-        let formattedDate = `${date.getFullYear().toString().padStart(4, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-        console.log(formattedDate);
-        return formattedDate;
-    }
-
-    formatBytes(size, places) {
-        const KB = 1024;
-        const MB = KB * 1024;
-        const GB = MB * 1024;
-
-        if (size > GB) {
-            return (size / GB).toFixed(places) + "GB";
-        } else if (size > MB) {
-            return (size / MB).toFixed(places) + "MB";
-        } else if (size > KB) {
-            return (size / KB).toFixed(places) + "KB";
-        } else if (size === 0) {
-            return "0";
-        } else {
-            return size.toFixed(1) + "B";
-        }
-    }
-
     async getAppStats() {
         const {browserProcess, apps} = await fin.System.getAllProcessInfo();
         const currentApp = apps.find(
@@ -62,7 +38,7 @@ export class AppMonitor {
 
     createMessagePayload(additionalData) {
         return {
-            timestamp: new Date(), // 'yyyy/MM/DD HH:mm:ss' This is a format that Elastic will automatically recognise as a Date
+            timestamp: (new Date()).toISOString(), // 'yyyy/MM/DD HH:mm:ss' This is a format that Elastic will automatically recognise as a Date
             username: this.username,
             uuid: this.currentAppIdentity.uuid,
             ...additionalData,

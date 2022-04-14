@@ -15,7 +15,7 @@
     "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
     "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T"
   },
-  "author": "Phil Vogt",
+  "author": "Adam Saland",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"

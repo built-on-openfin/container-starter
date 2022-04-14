@@ -46,12 +46,12 @@ export class AppMonitor {
         );
 
         if (currentApp !== undefined && currentApp !== null) {
-            const primeNumberCalculator = currentApp.entities.find(
-                (entry) => entry.name === "prime_number_calculator"
+            const platformProviderWindow = currentApp.entities.find(
+                (entry) => entry.name === "analytics-example"
             );
 
-            const cpu = primeNumberCalculator.cpuUsage;
-            const memory = primeNumberCalculator.workingSetSize;
+            const cpu = platformProviderWindow.cpuUsage;
+            const memory = platformProviderWindow.workingSetSize;
             const browserCpu = browserProcess.cpuUsage;
             const browserWorkingMem = browserProcess.workingSetSize;
             return { cpu, memory, browserCpu, browserWorkingMem };

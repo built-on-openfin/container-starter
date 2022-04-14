@@ -20,7 +20,7 @@ If you do not have docker-compose please refer to the guide [here](Docker.md) to
 > docker-compose up
 ```
 
-<img src="./assets/docker-compose.gif" width="100%">
+<img src="../assets/docker-compose.gif" width="100%">
 
 After the docker container is built and ready, navigate to http://localhost:5601/app/kibana_overview#/ in a browser and ensure that kibana is running and served up correctly before moving on to the next steps. 
 
@@ -49,11 +49,11 @@ After Kibana is successfully up and running, we can move on to building the Open
 4. Start the client application
 ```bash
 > npm run client
-```
+````
 
 After starting the client application you should an application as seen below.
 
-<img src="./assets/LaunchedApp.png" width="100%">
+<img src="../assets/launched-app.png" width="100%">
 
 5. Next we need to create a simple index pattern for ElasticSearch, see [here](https://www.elastic.co/guide/en/kibana/current/index-patterns.html) for details. For this example, create an index that matches with the "post endpoint" as defined in `client/src/kibana-poster.ts`. 
    1. In the search elastic input type "Index Patterns" and navigate to "Kibana/Index Patterns". 
@@ -61,7 +61,7 @@ After starting the client application you should an application as seen below.
    3. Type in "openfin_example" to match the available index source.
    4. Select "timestamp" as the "Timestamp field" value.
 
-<img src="./assets/create-index-pattern.gif" width="100%">
+<img src="../assets/create-index-pattern.gif" width="100%">
 
 6. After creating the index pattern we can simulate a CPU spike and create a visualization for the specific platform view where the spike is coming from.
    1. In the Prime Calculator App click on the "calculate" button.
@@ -71,11 +71,11 @@ After starting the client application you should an application as seen below.
    5. Drag the "cpu" field, which has been derived from the payload created in the `client/src/monitor.ts` file, into "vertical axis" section. 
    6. Drag the "timestamp" into the "horizontal axis" section.
 
-<img src="./assets/create-dashboard.gif" width="100%">
+<img src="../assets/create-dashboard.gif" width="100%">
 
 7. From here, the tools used for data ingestion / processing can be used to generate dashboards. One example may be to produce comparative metrics or monitor anomalies in, or close to realtime. See below for a complete look at what can be done using this example!
 
-<img src="./assets/example-dashboard.gif" width="100%">
+<img src="../assets/example-dashboard.gif" width="100%">
 
 ### A note about this example
 

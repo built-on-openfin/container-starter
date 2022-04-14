@@ -6,7 +6,7 @@
         "version": "stable"
     },
     "platform": {
-        "uuid": "local-platform-container",
+        "uuid": "analytics-example",
         "applicationIcon": "http://localhost:8080/favicon.ico",
         "autoShow": true,
         "providerUrl": "http://localhost:8080/html/provider.html"
