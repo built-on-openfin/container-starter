@@ -55,13 +55,15 @@ After starting the client application you should an application as seen below.
 
 <img src="../assets/launched-app.png" width="100%">
 
-5. Next we need to create a simple index pattern for ElasticSearch, see [here](https://www.elastic.co/guide/en/kibana/current/index-patterns.html) for details. For this example, create an index that matches with the "post endpoint" as defined in `client/src/kibana-poster.ts`. 
-   1. In the search elastic input type "Index Patterns" and navigate to "Kibana/Index Patterns". 
-   2. Click on the "Create index pattern button"
+> Note: For step 5 if you are using Elastic Search & Kibana versions < 8.1.2 replace Data View(s) with Index Pattern(s)
+
+5. Next we need to create a simple Data View for ElasticSearch, see [here](https://www.elastic.co/guide/en/kibana/current/index-patterns.html) for details. For this example, create an index that matches with the "post endpoint" as defined in `client/src/kibana-poster.ts`. 
+   1. In the search elastic input type "Data Views" and navigate to "Kibana/Data Views". 
+   2. Click on the "Create data view button"
    3. Type in "openfin_example" to match the available index source.
    4. Select "timestamp" as the "Timestamp field" value.
 
-<img src="../assets/create-index-pattern.gif" width="100%">
+<img src="../assets/create-data-view.gif" width="100%">
 
 6. After creating the index pattern we can simulate a CPU spike and create a visualization for the specific platform view where the spike is coming from.
    1. In the Prime Calculator App click on the "calculate" button.
