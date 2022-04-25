@@ -23,7 +23,7 @@ This repository contains examples for common use cases and API implementations. 
 | [use-channel-api](./how-to/use-channel-api) | This example shows you a number of examples on how to use the channel api for messaging |
 | [use-dynamic-manifest](./how-to/use-dynamic-manifest) | This example contains examples of generating a manifest file dynamically |
 | [integration-excel](./how-to/integration-excel) | This example demonstrates how to integration with Excel using the OpenFin adaptor |
-
+| [popup-window](./how-to/popup-window/) | This example contains various examples of how to create popup windows |
 ---
 
 ## Before you get started

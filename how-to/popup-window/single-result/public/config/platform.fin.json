@@ -1,0 +1,34 @@
+{
+    "runtime": {
+      "arguments": "--v=1 --inspect",
+      "version": "stable"
+    },
+    "platform": {
+      "uuid": "how-to-popup-window-single-result",
+      "autoShow": true
+    },
+    "snapshot": {
+      "windows": [
+        {
+          "layout": {
+            "content": [
+              {
+                "type": "stack",
+                "id": "no-drop-target",
+                "content": [
+                  {
+                    "type": "component",
+                    "componentName": "view",
+                    "componentState": {
+                      "processAffinity": "ps_1",
+                      "url": "http://localhost:8080/html/app.html"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+}
