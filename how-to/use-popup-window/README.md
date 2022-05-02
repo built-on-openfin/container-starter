@@ -1,6 +1,6 @@
-# How To use popup windows
+# How To Use Popup Window
 
-This directory contains information related to creating popup windows using the popup APIs.
+This directory contains information related to using the popup window APIs: [Window.showPopupWindow](https://developer.openfin.co/docs/javascript/stable/tutorial-Window.showPopupWindow.html), [View.showPopupWindow](https://developer.openfin.co/docs/javascript/stable/tutorial-View.showPopupWindow.html) and [Window.dispatchPopupResult](https://developer.openfin.co/docs/javascript/stable/tutorial-Window.dispatchPopupResult.html).
 
 ## What you can do with this repository
 

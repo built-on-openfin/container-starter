@@ -1,7 +1,7 @@
 {
-  "name": "popup-window-single-result",
+  "name": "use-popup-window-multiple-results",
   "version": "0.0.1",
-  "description": "A demonstration of a single use popup window.",
+  "description": "A demonstration of a popup window that can return multiple results.",
   "main": "index.js",
   "scripts": {
     "build": "npm run build-server & npm run build-client",
@@ -18,7 +18,7 @@
   "author": "@connormccafferty",
   "license": "MIT",
   "devDependencies": {
-    "@openfin/core": "^25.68.26",
+    "@openfin/core": "^27.70.8",
     "@types/node": "^17.0.26",
     "express": "^4.17.2",
     "openfin-adapter": "^23.67.7",

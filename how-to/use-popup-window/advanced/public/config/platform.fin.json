@@ -1,10 +1,10 @@
 {
     "runtime": {
       "arguments": "--v=1 --inspect",
-      "version": "stable"
+      "version": "canary"
     },
     "platform": {
-      "uuid": "how-to-popup-window-single-result",
+      "uuid": "how-to-use-popup-window-advanced",
       "autoShow": true
     },
     "snapshot": {

@@ -8,18 +8,14 @@ function init() {
     const cancelButton = document.getElementById('btn-cancel');
 
     okButton.onclick = async () => {
-        await dispatchResult('ok');
+        await (fin.me as OpenFin.Window).dispatchPopupResult('ok');
     }
 
     confirmButton.onclick = async () => {
-        await dispatchResult('confirm');
+        await (fin.me as OpenFin.Window).dispatchPopupResult('confirm');
     }
 
     cancelButton.onclick = async () => {
-        await dispatchResult('cancel');
+        await (fin.me as OpenFin.Window).dispatchPopupResult('cancel');
     }
-}
-
-async function dispatchResult(result: string): Promise<void> {
-    await (fin.me as OpenFin.Window).dispatchPopupResult(result);
 }
