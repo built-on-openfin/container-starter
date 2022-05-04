@@ -1,4 +1,10 @@
-# Interact with the OpenFin Excel Adaptor
+# Integrate with Microsoft Excel
+
+This repository demonstrates how to use OpenFin’s Excel integration in order to interact with the Microsoft Excel native client application. The Excel integration API is an ES module provided via the [@openfin/excel](https://www.npmjs.com/package/@openfin/excel) NPM package.
+
+For further information about the Excel integration, refer to the developer [documentation](https://developers.openfin.co/of-docs/docs/excel-integration).
+
+---
 
 ## How it Works
 
