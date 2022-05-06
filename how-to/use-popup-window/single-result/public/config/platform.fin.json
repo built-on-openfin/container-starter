@@ -1,4 +1,5 @@
 {
+    "licenseKey": "openfin-demo-license-key",
     "runtime": {
       "arguments": "--v=1 --inspect",
       "version": "canary"
