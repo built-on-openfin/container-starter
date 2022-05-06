@@ -1,10 +1,10 @@
 # How To Use Popup Window | Advanced
 [![version](https://img.shields.io/badge/version-canary-yellow.svg)](https://shields.io/)
 
-**Note**: this feature is available only for development purposes and will be officially released in v26.
+**Note**: this feature is available for development purposes only and will be officially released in v26.
 ## How it Works
 
-The `client/src/app.ts` sets up a button that when clicked will show an existing window as a popup. This window will be hidden when the popup is dismissed and can continually be shown as different popups by changing the `url` passed to `showPopupWindow`.
+Once the app loads our `/app` view will create a hidden window with the `name` 'popup'. The `client/src/app.ts` sets up a button that when clicked will show that `name: 'popup'` window as a popup. This window will be hidden when the popup is dismissed and could be shown again with different content by changing the `url` passed to `showPopupWindow`.
 
 ---
 

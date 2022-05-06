@@ -1,4 +1,6 @@
-import { fin } from '@openfin/core';;
+import { fin } from '@openfin/core';
+
+const me = fin.me as OpenFin.Window;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -8,14 +10,14 @@ function init() {
     const cancelButton = document.getElementById('btn-cancel');
 
     okButton.onclick = async () => {
-        await (fin.me as OpenFin.Window).dispatchPopupResult('ok');
+        await me.dispatchPopupResult('ok');
     }
 
     confirmButton.onclick = async () => {
-        await (fin.me as OpenFin.Window).dispatchPopupResult('confirm');
+        await me.dispatchPopupResult('confirm');
     }
 
     cancelButton.onclick = async () => {
-        await (fin.me as OpenFin.Window).dispatchPopupResult('cancel');
+        await me.dispatchPopupResult('cancel');
     }
 }

@@ -1,4 +1,6 @@
-import { fin } from '@openfin/core';;
+import { fin } from '@openfin/core';
+
+const me = fin.me as OpenFin.Window;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -7,7 +9,7 @@ async function init() {
 }
 
 async function createGroupButtons() {
-    const { customData: contextGroups } = await (fin.me as OpenFin.Window).getOptions();
+    const { customData: contextGroups } = await me.getOptions();
     contextGroups.forEach(group => {
         let groupBtn = document.createElement('button');
         groupBtn.style.background = group.displayMetadata.color;
@@ -18,7 +20,7 @@ async function createGroupButtons() {
         groupBtn.style.marginRight = '1rem'
         console.log(group);
         groupBtn.onclick = async () => {
-            await (fin.me as OpenFin.Window).dispatchPopupResult(group);
+            await me.dispatchPopupResult(group);
         };
         document.body.append(groupBtn);
     });
