@@ -1,0 +1,28 @@
+{
+    "name": "openfin-container-starter",
+    "version": "0.0.1",
+    "description": "OpenFin Container Starter",
+    "scripts": {
+        "package-how-tos": "node ./scripts/package.js"
+    },
+    "how-tos": [
+        "create-window",
+        "integration-excel",
+        "use-channel-api/issue-commands-to-a-platform",
+        "use-dynamic-manifest/basic",
+        "use-popup-window/advanced",
+        "use-popup-window/modal",
+        "use-popup-window/multiple-results",
+        "use-popup-window/single-result",
+        "use-preloads/basic",
+        "use-preloads/restart-on-refresh",
+        "use-security-realms"
+    ],
+    "howToCustomFolder":"",
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "fs-extra": "^10.0.0",
+        "replace-in-file": "^6.3.2"
+    }
+}
