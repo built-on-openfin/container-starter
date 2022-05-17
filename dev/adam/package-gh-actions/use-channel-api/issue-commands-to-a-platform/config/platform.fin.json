@@ -6,8 +6,8 @@
   "platform": {
     "uuid": "how-to-use-channel-api-issue-commands-to-a-platform",
     "autoShow": true,
-    "providerUrl": "https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/use-channel-api/issue-commands-to-a-platform/html/provider.html",
-    "icon":"https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/use-channel-api/issue-commands-to-a-platform/favicon.ico"
+    "providerUrl": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-channel-api/issue-commands-to-a-platform/html/provider.html",
+    "icon":"https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-channel-api/issue-commands-to-a-platform/favicon.ico"
   },
   "snapshot": {
     "windows": [

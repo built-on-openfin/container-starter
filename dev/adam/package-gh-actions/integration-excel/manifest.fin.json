@@ -5,8 +5,8 @@
   },
   "platform": {
     "uuid": "integration-excel",
-    "applicationIcon": "https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/integration-excel/favicon.ico",
-    "providerUrl": "https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/integration-excel/provider/provider.html",
+    "applicationIcon": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/integration-excel/favicon.ico",
+    "providerUrl": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/integration-excel/provider/provider.html",
     "autoShow": false,
     "permissions": {
       "System": {
@@ -51,7 +51,7 @@
                       "type": "component",
                       "componentName": "view",
                       "componentState": {
-                        "url": "https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/integration-excel/views/excel.html",
+                        "url": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/integration-excel/views/excel.html",
                         "name": "excel-view",
                         "fdc3InteropApi": "1.2",
                         "interop": {
@@ -88,7 +88,7 @@
                       "type": "component",
                       "componentName": "view",
                       "componentState": {
-                        "url": "https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/integration-excel/views/fdc3monitor.html",
+                        "url": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/integration-excel/views/fdc3monitor.html",
                         "name": "fdc3-view",
                         "fdc3InteropApi": "1.2",
                         "interop": {
