@@ -1,4 +1,4 @@
-name: GitHub Demo Packaging
+name: GitHub Container Starter Packaging
 on: [push, workflow_dispatch]
 jobs:
   Build-Package-Container-Starter:
