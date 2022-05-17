@@ -1,0 +1,14 @@
+{
+  "licenseKey": "openfin-demo-license-key",
+  "runtime": {
+    "version": "stable",
+    "arguments": "--v=1"
+  },
+  "startup_app": {
+    "name": "issue-commands-to-platform",
+    "uuid": "issue-commands-to-platform",
+    "url": "https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/use-channel-api/issue-commands-to-a-platform/html/window.html",
+    "autoShow": true,
+    "icon":"https://built-on-openfin.github.io/workspace-starter/workspace/v0.0.1/use-channel-api/issue-commands-to-a-platform/favicon.ico"
+  }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Realm Example</title>
+    <link rel="stylesheet" href="../styles/app-styles.css"></link>
+    <script src="../js/view-app.bundle.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Security Realm Example</h1>
+        <h4 class="subtitle">Security Realm Name: <span id="security-realm-name"></span></h4>
+        <h4>Listening and Publishing To Topic: /openfin/sample/security-realm-example</h4>
+        <div class="box">
+            <h4 class="title is-4">Launch a new application in the same security realm</h4> <button
+                    class="button is-link launch-app-btn">Launch App</button>
+        </div>
+        <div class="box">
+            <h4 class="title is-4">Launch a new application in a different security realm</h4> <button
+                    class="button is-link launch-outofrealm-btn">Launch App</button>
+        </div>
+        <div class="box">
+            <textarea name="send message" form="iab-message-form" id="iab-message" class="textarea is-link"></textarea>
+            <button class="button is-link" id="send-message">Send Message To Topic</button>
+        </div>
+        <div class="box content" id="message-log"></div>
+    </div>
+</body>
+
+</html>
