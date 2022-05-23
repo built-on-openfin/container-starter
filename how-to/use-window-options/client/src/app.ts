@@ -1,8 +1,9 @@
 import OpenFin, { fin } from "@openfin/core";
 
-const defaultWindowOptions: OpenFin.WindowCreationOptions = {
+const defaultCommonOptions: OpenFin.WindowCreationOptions = {
     name: 'test-child',
     url: 'http://localhost:8080/html/preview.html',
+    icon: undefined,
     autoShow: true,
     alwaysOnTop: false,
     opacity: 1,
@@ -15,17 +16,46 @@ const defaultWindowOptions: OpenFin.WindowCreationOptions = {
     maxWidth: -1,
     minHeight: 0,
     maxHeight: -1,
+    defaultCentered: false,
     defaultLeft: 100,
     defaultTop: 100,
     defaultWidth: 800,
-    defaultHeight: 500
+    defaultHeight: 500,
+    aspectRatio: 0,
+    backgroundColor: undefined,
+    frame: true,
+    shadow: false
 }
 
-let windowOptions: OpenFin.WindowCreationOptions = {
-    ...defaultWindowOptions
+const defaultFramelessOptions: Partial<OpenFin.WindowCreationOptions> = {
+    shadow: false
+}
+
+const defaultResizeRegion: Partial<OpenFin.ResizeRegion> = {
+    size: 7,
+    bottomRightCorner: 9
+}
+
+type ResizeSides = { top: boolean, left: boolean; right: boolean; bottom: boolean };
+const defaultResizeRegionSides: Partial<ResizeSides> = {
+    left: true,
+    top: true,
+    right: true,
+    bottom: true
 };
 
-let previewWin: OpenFin.Window;
+const defaultCornerRounding: Partial<OpenFin.CornerRounding> = {
+    width: 0,
+    height: 0
+};
+
+let selectedCommonOptions: OpenFin.WindowCreationOptions = { ...defaultCommonOptions };
+let selectedFramelessOptions: Partial<OpenFin.WindowCreationOptions> = { ...defaultFramelessOptions };
+let selectedResizeRegion: Partial<OpenFin.ResizeRegion> = { ...defaultResizeRegion };
+let selectedResizeRegionSides: Partial<ResizeSides> = { ...defaultResizeRegionSides };
+let selectedCornerRounding: Partial<OpenFin.CornerRounding> = { ...defaultCornerRounding };
+
+let previewWindow: OpenFin.Window;
 
 document.addEventListener('DOMContentLoaded', () => {
     try {
@@ -38,117 +68,187 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initDom(): Promise<void> {
     const btnPreview = document.querySelector("#btnPreview");
     btnPreview.addEventListener("click", async () => {
-        if (previewWin) {
-            await previewWin.removeAllListeners();
-            await previewWin.close(true);
-            previewWin = undefined;
+        if (previewWindow) {
+            await previewWindow.removeAllListeners();
+            await previewWindow.close(true);
+            previewWindow = undefined;
         }
-        const previewOptions: OpenFin.WindowCreationOptions  = {
+        const previewOptions: OpenFin.WindowCreationOptions = {
             ...finalizeWindowOptions(),
-            name: window.crypto.randomUUID(),
-            taskbarIcon: "http://localhost:8080/favicon.ico"
+            name: window.crypto.randomUUID()
         };
-        console.log(previewOptions);
-        previewWin = await fin.Window.create(previewOptions);
-        await previewWin.addListener("closed", () => {
-            previewWin = undefined;
+        previewWindow = await fin.Window.create(previewOptions);
+        await previewWindow.addListener("closed", () => {
+            previewWindow = undefined;
         });
     });
 
     const btnReset = document.querySelector("#btnReset");
     btnReset.addEventListener("click", () => {
-        windowOptions = {
-            ...defaultWindowOptions
-        };
+        selectedCommonOptions = { ...defaultCommonOptions };
+        selectedFramelessOptions = { ...defaultFramelessOptions };
+        selectedResizeRegion = { ...defaultResizeRegion };
+        selectedResizeRegionSides = { ...defaultResizeRegionSides };
+        selectedCornerRounding = { ...defaultCornerRounding };
         populateForm();
         updatePreview();
     });
 
     const btnCopy = document.querySelector("#btnCopy");
     btnCopy.addEventListener("click", async () => {
-        await fin.Clipboard.writeText({ data: JSON.stringify(finalizeWindowOptions(), undefined, "\t") });
+        await fin.Clipboard.writeText({ data: createPreview() });
     });
 
+    const btnTheme = document.querySelector<HTMLButtonElement>("#btnTheme");
+    btnTheme.addEventListener("click", () => {
+        const hasLight = document.body.classList.contains("theme-light");
+
+        updateTheme(hasLight ? "dark" : "light");
+    });
+
+    updateTheme(localStorage.getItem("theme") ?? "dark")
     populateForm();
     updatePreview();
 }
 
+function updateTheme(theme: string) {
+    if (theme === "light") {
+        document.body.classList.add("theme-light");
+    } else {
+        document.body.classList.remove("theme-light");
+    }
+    const imgTheme = document.querySelector<HTMLImageElement>("#imgTheme");
+    imgTheme.src = `../images/${theme === "light" ? "dark" : "light"}.svg`;
+    localStorage.setItem("theme", theme);
+}
+
 function populateForm() {
-    connectInput("optionName", "name");
-    connectInput("optionUrl", "url");
-    connectCheckbox("optionAlwaysOnTop", "alwaysOnTop");
-    connectRange("optionOpacity", "opacity");
-    connectCheckbox("optionShowContextMenu", "contextMenu");
-    connectCheckbox("optionShowTaskbarIcon", "showTaskbarIcon");
-    connectCheckbox("optionResizable", "resizable", () => updateResizeState());
-    connectCheckbox("optionMinimizable", "minimizable");
-    connectCheckbox("optionMaximizable", "maximizable");
-    connectRange("optionMinWidth", "minWidth", () => updateResizeWidth());
-    connectRange("optionMaxWidth", "maxWidth", () => updateResizeWidth());
-    connectRange("optionMinHeight", "minHeight", () => updateResizeHeight());
-    connectRange("optionMaxHeight", "maxHeight", () => updateResizeHeight());
-    connectRange("optionDefaultLeft", "defaultLeft");
-    connectRange("optionDefaultTop", "defaultTop");
-    connectRange("optionDefaultWidth", "defaultWidth");
-    connectRange("optionDefaultHeight", "defaultHeight");
+    // Common options
+    connectInput(selectedCommonOptions, "optionName", "name");
+    connectInput(selectedCommonOptions, "optionUrl", "url");
+    connectInput(selectedCommonOptions, "optionIcon", "icon");
+    connectCheckbox(selectedCommonOptions, "optionAlwaysOnTop", "alwaysOnTop");
+    connectRange(selectedCommonOptions, "optionOpacity", "opacity");
+    connectCheckbox(selectedCommonOptions, "optionShowContextMenu", "contextMenu");
+    connectCheckbox(selectedCommonOptions, "optionShowTaskbarIcon", "showTaskbarIcon");
+    connectCheckbox(selectedCommonOptions, "optionResizable", "resizable", () => updateResizeState());
+    connectCheckbox(selectedCommonOptions, "optionMinimizable", "minimizable");
+    connectCheckbox(selectedCommonOptions, "optionMaximizable", "maximizable");
+    connectRange(selectedCommonOptions, "optionMinWidth", "minWidth", () => updateResizeWidth());
+    connectRange(selectedCommonOptions, "optionMaxWidth", "maxWidth", () => updateResizeWidth());
+    connectRange(selectedCommonOptions, "optionMinHeight", "minHeight", () => updateResizeHeight());
+    connectRange(selectedCommonOptions, "optionMaxHeight", "maxHeight", () => updateResizeHeight());
+    connectCheckbox(selectedCommonOptions, "optionDefaultCentered", "defaultCentered", () => updateDefaultPosition());
+    connectRange(selectedCommonOptions, "optionDefaultLeft", "defaultLeft");
+    connectRange(selectedCommonOptions, "optionDefaultTop", "defaultTop");
+    connectRange(selectedCommonOptions, "optionDefaultWidth", "defaultWidth");
+    connectRange(selectedCommonOptions, "optionDefaultHeight", "defaultHeight");
+    connectRange(selectedCommonOptions, "optionAspectRatio", "aspectRatio");
+    connectColor(selectedCommonOptions, "optionBackgroundColor", "backgroundColor");
+    connectCheckbox(selectedCommonOptions, "optionFrame", "frame", () => updateFramelessState());
+
+    // Frameless options
+    connectCheckbox(selectedFramelessOptions, "optionShadow", "shadow");
+    connectRange(selectedResizeRegion, "optionEdgeResizeSize", "size");
+    connectRange(selectedResizeRegion, "optionCornerResizeSize", "bottomRightCorner");
+    connectCheckbox(selectedResizeRegionSides, "optionResizeRegionSideLeft", "left");
+    connectCheckbox(selectedResizeRegionSides, "optionResizeRegionSideRight", "right");
+    connectCheckbox(selectedResizeRegionSides, "optionResizeRegionSideTop", "top");
+    connectCheckbox(selectedResizeRegionSides, "optionResizeRegionSideBottom", "bottom");
+
+    connectRange(selectedCornerRounding, "optionCornerRoundingWidth", "width");
+    connectRange(selectedCornerRounding, "optionCornerRoundingHeight", "height");
 
     updateResizeState();
+    updateFramelessState();
 }
 
 function updateResizeState() {
-    const resizable = (windowOptions.resizable ?? true);
+    const resizable = selectedCommonOptions.resizable ?? defaultCommonOptions.resizable;
     const widthElem: HTMLElement = document.querySelector("#resizeWidth");
-    widthElem.style.display = resizable ? "flex": "none";
+    widthElem.style.display = resizable ? "flex" : "none";
 
     const heightElem: HTMLElement = document.querySelector("#resizeHeight");
-    heightElem.style.display = resizable ? "flex": "none";
+    heightElem.style.display = resizable ? "flex" : "none";
 
     if (!resizable) {
-        delete windowOptions.minWidth;
-        delete windowOptions.maxWidth;
-        delete windowOptions.minHeight;
-        delete windowOptions.maxHeight;
+        delete selectedCommonOptions.minWidth;
+        delete selectedCommonOptions.maxWidth;
+        delete selectedCommonOptions.minHeight;
+        delete selectedCommonOptions.maxHeight;
     }
 }
 
+function updateFramelessState() {
+    const frame = selectedCommonOptions.frame ?? defaultCommonOptions.frame;
+    const sectionFrameless: HTMLElement = document.querySelector("#sectionFrameless");
+    sectionFrameless.style.display = frame ? "none" : "flex";
+}
+
 function updateResizeWidth() {
-    if (windowOptions.maxWidth !== -1 && windowOptions.maxWidth <= windowOptions.minWidth) {
-        windowOptions.maxWidth = windowOptions.minWidth + 50;
+    if (selectedCommonOptions.maxWidth !== -1 && selectedCommonOptions.maxWidth <= selectedCommonOptions.minWidth) {
+        selectedCommonOptions.maxWidth = selectedCommonOptions.minWidth + 50;
         const maxWidthElem: HTMLInputElement = document.querySelector("#optionMaxWidth");
-        maxWidthElem.valueAsNumber = windowOptions.maxWidth;
+        maxWidthElem.valueAsNumber = selectedCommonOptions.maxWidth;
         const maxWidthValueElem: HTMLElement = document.querySelector("#optionMaxWidthValue");
-        maxWidthValueElem.textContent = windowOptions.maxWidth.toString();
+        maxWidthValueElem.textContent = selectedCommonOptions.maxWidth.toString();
     }
 }
 
 function updateResizeHeight() {
-    if (windowOptions.maxHeight !== -1 && windowOptions.maxHeight <= windowOptions.minHeight) {
-        windowOptions.maxHeight = windowOptions.minHeight + 50;
+    if (selectedCommonOptions.maxHeight !== -1 && selectedCommonOptions.maxHeight <= selectedCommonOptions.minHeight) {
+        selectedCommonOptions.maxHeight = selectedCommonOptions.minHeight + 50;
         const maxHeightElem: HTMLInputElement = document.querySelector("#optionMaxHeight");
-        maxHeightElem.valueAsNumber = windowOptions.maxHeight;
+        maxHeightElem.valueAsNumber = selectedCommonOptions.maxHeight;
         const maxHeightValueElem: HTMLElement = document.querySelector("#optionMaxHeightValue");
-        maxHeightValueElem.textContent = windowOptions.maxHeight.toString();
+        maxHeightValueElem.textContent = selectedCommonOptions.maxHeight.toString();
     }
 }
 
-function setProperty<T, K extends keyof T>(obj: T, key: K, value: T[K]): void {
-    obj[key] = value;
+function updateDefaultPosition() {
+    const isCentered = selectedCommonOptions.defaultCentered ?? defaultCommonOptions.defaultCentered;
+
+    const defaultPositionElem: HTMLDivElement = document.querySelector("#defaultPosition");
+    defaultPositionElem.style.display = isCentered ? "none" : "flex";
+
+    const optionDefaultLeft: HTMLInputElement = document.querySelector("#optionDefaultLeft");
+    optionDefaultLeft.valueAsNumber = defaultCommonOptions.defaultLeft;
+    const optionDefaultLeftValue: HTMLSpanElement = document.querySelector("#optionDefaultLeftValue");
+    optionDefaultLeftValue.textContent = defaultCommonOptions.defaultLeft.toString();
+
+    const optionDefaultTop: HTMLInputElement = document.querySelector("#optionDefaultTop");
+    optionDefaultTop.valueAsNumber = defaultCommonOptions.defaultTop;
+    const optionDefaultTopValue: HTMLSpanElement = document.querySelector("#optionDefaultTopValue");
+    optionDefaultTopValue.textContent = defaultCommonOptions.defaultTop.toString();
+
+    if (isCentered) {
+        delete selectedCommonOptions.defaultLeft;
+        delete selectedCommonOptions.defaultTop;
+    }
 }
 
-function connectInput(fieldId: string, property: keyof OpenFin.WindowCreationOptions) {
-    const option: HTMLInputElement = document.querySelector(`#${fieldId}`);
-    option.value = windowOptions[property];
+function setProperty<T, K extends keyof T>(obj: Partial<T>, key: K, value: unknown): void {
+    obj[key] = value as T[K];
+}
+
+function getProperty<T, K extends keyof T, P>(obj: Partial<T>, key: K): P {
+    return obj[key] as unknown as P;
+}
+
+function connectInput<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K) {
+    const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
+    option.value = getProperty(selectedValues, property) ?? "";
     option.addEventListener("input", () => {
-        setProperty(windowOptions, property, option.value);
+        setProperty(selectedValues, property, option.value === "" ? undefined : option.value);
         updatePreview();
     });
 }
 
-function connectCheckbox(fieldId: string, property: keyof OpenFin.WindowCreationOptions, changed?: () => void) {
-    const option: HTMLInputElement = document.querySelector(`#${fieldId}`);
-    option.checked = windowOptions[property];
+function connectCheckbox<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K, changed?: () => void) {
+    const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
+    option.checked = getProperty(selectedValues, property);
     option.addEventListener("change", () => {
-        setProperty(windowOptions, property, option.checked);
+        setProperty(selectedValues, property, option.checked);
         if (changed) {
             changed();
         }
@@ -156,15 +256,31 @@ function connectCheckbox(fieldId: string, property: keyof OpenFin.WindowCreation
     });
 }
 
-function connectRange(fieldId: string, property: keyof OpenFin.WindowCreationOptions, changed?: () => void) {
-    const option: HTMLInputElement = document.querySelector(`#${fieldId}`);
-    const optionValue: HTMLInputElement = document.querySelector(`#${fieldId}Value`);
+function connectRange<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K, changed?: () => void) {
+    const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
+    const optionValue = document.querySelector<HTMLInputElement>(`#${fieldId}Value`);
 
-    option.valueAsNumber = windowOptions[property];
-    optionValue.textContent = windowOptions[property].toString();
+    option.valueAsNumber = getProperty(selectedValues, property);
+    optionValue.textContent = getProperty(selectedValues, property);
     option.addEventListener("input", () => {
-        setProperty(windowOptions, property, option.valueAsNumber);
+        setProperty(selectedValues, property, option.valueAsNumber);
         optionValue.textContent = option.valueAsNumber.toString();
+        if (changed) {
+            changed();
+        }
+        updatePreview();
+    });
+}
+
+function connectColor<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K, changed?: () => void) {
+    const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
+    const optionValue = document.querySelector<HTMLInputElement>(`#${fieldId}Value`);
+
+    option.value = getProperty(selectedValues, property);
+    optionValue.textContent = getProperty(selectedValues, property);
+    option.addEventListener("input", () => {
+        setProperty(selectedValues, property, option.value);
+        optionValue.textContent = option.value;
         if (changed) {
             changed();
         }
@@ -174,14 +290,44 @@ function connectRange(fieldId: string, property: keyof OpenFin.WindowCreationOpt
 
 function finalizeWindowOptions() {
     const finalWindowOptions: OpenFin.WindowCreationOptions = {
-        name: windowOptions.name,
-        url: windowOptions.url,
-        autoShow: windowOptions.autoShow
+        name: selectedCommonOptions.name,
+        url: selectedCommonOptions.url,
+        autoShow: selectedCommonOptions.autoShow
     };
 
-    for (const prop of Object.keys(windowOptions)) {
-        if (windowOptions[prop] !== defaultWindowOptions[prop]) {
-            finalWindowOptions[prop] = windowOptions[prop];
+    for (const prop of Object.keys(selectedCommonOptions)) {
+        if (selectedCommonOptions[prop] !== defaultCommonOptions[prop]) {
+            finalWindowOptions[prop] = selectedCommonOptions[prop];
+        }
+    }
+
+    if (!(selectedCommonOptions.frame ?? true)) {
+        for (const prop of Object.keys(selectedFramelessOptions)) {
+            if (selectedFramelessOptions[prop] !== defaultCommonOptions[prop]) {
+                finalWindowOptions[prop] = selectedFramelessOptions[prop];
+            }
+        }
+
+        for (const prop of Object.keys(selectedResizeRegion)) {
+            if (selectedResizeRegion[prop] !== defaultResizeRegion[prop]) {
+                finalWindowOptions.resizeRegion = finalWindowOptions.resizeRegion ?? {};
+                finalWindowOptions.resizeRegion[prop] = selectedResizeRegion[prop];
+            }
+        }
+
+        for (const prop of Object.keys(selectedResizeRegionSides)) {
+            if (selectedResizeRegionSides[prop] !== defaultResizeRegionSides[prop]) {
+                finalWindowOptions.resizeRegion = finalWindowOptions.resizeRegion ?? {};
+                finalWindowOptions.resizeRegion.sides = finalWindowOptions.resizeRegion.sides ?? {};
+                finalWindowOptions.resizeRegion.sides[prop] = selectedResizeRegionSides[prop];
+            }
+        }
+
+        for (const prop of Object.keys(selectedCornerRounding)) {
+            if (selectedCornerRounding[prop] !== defaultCornerRounding[prop]) {
+                finalWindowOptions.cornerRounding = finalWindowOptions.cornerRounding ?? {};
+                finalWindowOptions.cornerRounding[prop] = selectedCornerRounding[prop];
+            }
         }
     }
 
@@ -190,5 +336,9 @@ function finalizeWindowOptions() {
 
 function updatePreview() {
     const previewElem = document.querySelector("#preview");
-    previewElem.textContent = JSON.stringify(finalizeWindowOptions(), undefined, "  ");
+    previewElem.textContent = createPreview();
+}
+
+function createPreview() {
+    return `await fin.Window.create(${JSON.stringify(finalizeWindowOptions(), undefined, "  ")});`
 }

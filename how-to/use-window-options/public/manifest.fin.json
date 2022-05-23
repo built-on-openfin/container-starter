@@ -10,7 +10,9 @@
     "url": "http://localhost:8080/html/app.html",
     "icon": "http://localhost:8080/favicon.ico",
     "autoShow": true,
-    "defaultHeight": 1000,
-    "defaultWidth": 800
+    "defaultWidth": 1350,
+    "defaultHeight": 800,
+    "minWidth": 850,
+    "minHeight": 400
   }
 }

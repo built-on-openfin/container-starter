@@ -34,6 +34,34 @@
   <main class="row fill gap20">
     <p>This is the preview window.</p>
   </main>
+  <footer>
+    <div class="row spread">
+      <button id="btnCapture">Capture</button>
+      <button id="btnClosePreview">Close</button>
+    </div>
+  </footer>
+  <script>
+    const btnClosePreview = document.querySelector("#btnClosePreview");
+    btnClosePreview.addEventListener("click", async () => (await fin.Window.getCurrent()).close());
+
+    const btnCapture = document.querySelector("#btnCapture");
+    btnCapture.addEventListener("click", async () => {
+      console.log("SnapShot clicked");
+      const wnd = await fin.Window.getCurrent();
+
+      // Snapshot of a full visible window
+      let base64 = await wnd.getSnapshot();
+
+      const link = document.createElement("a");
+      link.setAttribute("href", "data:image/png;base64," + base64);
+      link.setAttribute("download", "openfin-window-settings.png");
+      link.click();
+    });
+
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("theme-light");
+    }
+  </script>
 </body>
 
 </html>
