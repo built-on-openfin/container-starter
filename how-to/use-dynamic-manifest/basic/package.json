@@ -7,6 +7,7 @@
     "build": "npm run build-server",
     "build-client": "echo no client",
     "build-server": "tsc --project ./server",
+    "build-client": "echo NO CLIENT BUILD PRESENT",
     "start": "npm run server",
     "server": "node ./server/build/index.js",
     "kill": "(npm run -s kill:fin || true) && (npm run -s kill:rvm || true)",
