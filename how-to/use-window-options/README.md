@@ -44,9 +44,18 @@ $ npm run client
 
 ![Use Window Options](./use-window-options.png)
 
-Preview
+2. Preview
 
 ![Use Window Options Preview](./use-window-options-preview.png)
+
+Alternate light mode views.
+
+![Use Window Options Light](./use-window-options-light.png)
+
+2. Preview
+
+![Use Window Options Preview Light](./use-window-options-preview-light.png)
+
 
 ---
 
