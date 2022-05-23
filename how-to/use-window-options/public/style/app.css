@@ -148,6 +148,8 @@ input[type="range"] {
   border-radius: 5px;
   border: 0;
   outline: 2px solid transparent;
+  background-color: var(--brand-background);
+  color: var(--brand-text);
 }
 
 fieldset > span {
@@ -169,6 +171,8 @@ input[type="text"] {
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
+  background-color: var(--brand-background);
+  color: var(--brand-text);
 }
 
 input[type="color"] {
