@@ -68,6 +68,7 @@ p {
 
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #6f7178aa;
@@ -114,7 +115,6 @@ button.image > img {
 
 pre {
   margin: 0;
-  white-space: pre-wrap;
   font-size: 12px;
   font-family: "Courier New", Courier, monospace;
 }
@@ -210,12 +210,20 @@ em {
   overflow: hidden;
 }
 
+.fill_2 {
+  flex: 2;
+}
+
 .scroll {
   overflow: auto;
 }
 
 .scroll-vertical {
   overflow-y: auto;
+}
+
+.scroll-horizontal {
+  overflow-x: auto;
 }
 
 .middle {

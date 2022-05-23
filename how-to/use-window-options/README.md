@@ -42,6 +42,12 @@ $ npm run client
 
 1. App showing the options you can choose when displaying OpenFin windows.
 
+![Use Window Options](./use-window-options.png)
+
+Preview
+
+![Use Window Options Preview](./use-window-options-preview.png)
+
 ---
 
 ### A note about this example
