@@ -7,8 +7,8 @@
   "startup_app": {
     "name": "issue-commands-to-platform",
     "uuid": "issue-commands-to-platform",
-    "url": "https://built-on-openfin.github.io/container-starter/main/use-channel-api/issue-commands-to-a-platform/html/window.html",
+    "url": "https://built-on-openfin.github.io/container-starter/dev/adam/package-gh-actions/use-channel-api/issue-commands-to-a-platform/html/window.html",
     "autoShow": true,
-    "icon":"https://built-on-openfin.github.io/container-starter/main/use-channel-api/issue-commands-to-a-platform/favicon.ico"
+    "icon":"https://built-on-openfin.github.io/container-starter/dev/adam/package-gh-actions/use-channel-api/issue-commands-to-a-platform/favicon.ico"
   }
 }

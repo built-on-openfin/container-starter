@@ -6,7 +6,7 @@
   "shortcut": {
     "company": "OpenFin",
     "description": "PROD Main Platform",
-    "icon": "https://built-on-openfin.github.io/container-starter/main/use-security-realms/favicon.ico",
+    "icon": "https://built-on-openfin.github.io/container-starter/dev/adam/package-gh-actions/use-security-realms/favicon.ico",
     "name": "PROD Main Platform"
   },
   "platform": {
@@ -32,7 +32,7 @@
                   "componentName": "view",
                   "componentState": {
                     "processAffinity": "ps_1",
-                    "url": "https://built-on-openfin.github.io/container-starter/main/use-security-realms/html/view-app.html"
+                    "url": "https://built-on-openfin.github.io/container-starter/dev/adam/package-gh-actions/use-security-realms/html/view-app.html"
                   }
                 }
               ]
