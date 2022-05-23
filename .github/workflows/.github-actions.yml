@@ -1,4 +1,4 @@
-name: GitHub Container Starter Packaging
+name: GitHub Demo Packaging
 on: [push, workflow_dispatch]
 jobs:
   Build-Package-Container-Starter:
@@ -19,9 +19,9 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: "14"
       - run: npm install
-      - run: npm run package-how-tos
+      - run: npm run package-how-tos -- ${{ steps.extract_branch.outputs.branch }}
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
