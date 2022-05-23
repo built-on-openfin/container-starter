@@ -6,22 +6,22 @@
   "platform": {
     "uuid": "how-to-use-preloads-hello-world",
     "autoShow": true,
-    "icon":"https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-preloads/basic/favicon.ico",
+    "icon":"https://built-on-openfin.github.io/container-starter/main/use-preloads/basic/favicon.ico",
     "preloadScripts": [
       {
-          "url": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-preloads/basic/js/preload-platform.bundle.js"
+          "url": "https://built-on-openfin.github.io/container-starter/main/use-preloads/basic/js/preload-platform.bundle.js"
       }],
     "defaultWindowOptions": {
         "preloadScripts": [
             {
-                "url": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-preloads/basic/js/preload-window.bundle.js"
+                "url": "https://built-on-openfin.github.io/container-starter/main/use-preloads/basic/js/preload-window.bundle.js"
             }
         ]
     },
     "defaultViewOptions": {
         "preloadScripts": [
             {
-                "url": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-preloads/basic/js/preload-view.bundle.js"
+                "url": "https://built-on-openfin.github.io/container-starter/main/use-preloads/basic/js/preload-view.bundle.js"
             }
         ]
     }
@@ -40,7 +40,7 @@
                   "componentName": "view",
                   "componentState": {
                     "processAffinity": "ps_1",
-                    "url": "https://built-on-openfin.github.io/container-starter/container-starter/v0.0.1/use-preloads/basic/html/app.html"
+                    "url": "https://built-on-openfin.github.io/container-starter/main/use-preloads/basic/html/app.html"
                   }
                 }
               ]
