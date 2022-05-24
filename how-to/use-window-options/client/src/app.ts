@@ -2,7 +2,7 @@ import OpenFin, { fin } from "@openfin/core";
 
 const defaultCommonOptions: OpenFin.WindowCreationOptions = {
     name: 'test-child',
-    url: 'http://localhost:8080/html/preview.html',
+    url: './preview.html',
     icon: undefined,
     autoShow: true,
     alwaysOnTop: false,
@@ -25,16 +25,16 @@ const defaultCommonOptions: OpenFin.WindowCreationOptions = {
     backgroundColor: undefined,
     frame: true,
     shadow: false
-}
+};
 
 const defaultFramelessOptions: Partial<OpenFin.WindowCreationOptions> = {
     shadow: false
-}
+};
 
 const defaultResizeRegion: Partial<OpenFin.ResizeRegion> = {
     size: 7,
     bottomRightCorner: 9
-}
+};
 
 type ResizeSides = { top: boolean, left: boolean; right: boolean; bottom: boolean };
 const defaultResizeRegionSides: Partial<ResizeSides> = {
