@@ -106,7 +106,7 @@ async function initDom(): Promise<void> {
         updateTheme(hasLight ? "dark" : "light");
     });
 
-    updateTheme(localStorage.getItem("theme") ?? "dark")
+    updateTheme(localStorage.getItem("use-window-options/theme") ?? "dark")
     populateForm();
     updatePreview();
 }
@@ -119,7 +119,7 @@ function updateTheme(theme: string) {
     }
     const imgTheme = document.querySelector<HTMLImageElement>("#imgTheme");
     imgTheme.src = `../images/${theme === "light" ? "dark" : "light"}.svg`;
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("use-window-options/theme", theme);
 }
 
 function populateForm() {
