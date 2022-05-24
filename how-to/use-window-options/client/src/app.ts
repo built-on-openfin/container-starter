@@ -75,12 +75,21 @@ async function initDom(): Promise<void> {
         }
         const previewOptions: OpenFin.WindowCreationOptions = {
             ...finalizeWindowOptions(),
-            name: window.crypto.randomUUID()
+            saveWindowState: false
         };
         previewWindow = await fin.Window.create(previewOptions);
         await previewWindow.addListener("closed", () => {
             previewWindow = undefined;
         });
+    });
+
+    const btnClosePreview = document.querySelector("#btnClosePreview");
+    btnClosePreview.addEventListener("click", async () => {
+        if (previewWindow) {
+            await previewWindow.removeAllListeners();
+            await previewWindow.close(true);
+            previewWindow = undefined;
+        }
     });
 
     const btnReset = document.querySelector("#btnReset");
