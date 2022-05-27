@@ -1,0 +1,79 @@
+{
+    "runtime": {
+        "arguments": "--v=1 --inspect",
+        "version": "beta"
+    },
+    "platform": {
+        "enableBeforeUnload": true,
+        "uuid": "platform-warn",
+        "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+        "autoShow": false,
+        "providerUrl": "http://localhost:5555/html/provider.html",
+        "apiDiagnostics": false,
+        "defaultWindowOptions": {
+            "contextMenu": true,
+            "url": "http://localhost:5555/html/window.html",
+            "defaultWidth": 900,
+            "defaultHeight": 720,
+            "defaultLeft": 0,
+            "defaultTop": 0,
+            "saveWindowState": false,
+            "backgroundThrottling": true,
+            "minHeight": 445,
+            "minWidth": 354,
+            "defaultCentered": true
+        }
+    },
+    "snapshot": {
+        "windows": [
+            {
+                "layout": {
+                    "content": [
+                        {
+                            "type": "column",
+                            "id": "no-drop-target",
+                            "content": [
+                                {
+                                    "type": "component",
+                                    "componentName": "view",
+                                    "componentState": {
+                                        "processAffinity": "ps_1",
+                                        "url": "http://localhost:5555/html/view.html?title=view1",
+                                        "name": "view1"
+                                    }
+                                },
+                                {
+                                    "type": "component",
+                                    "componentName": "view",
+                                    "componentState": {
+                                        "processAffinity": "ps_1",
+                                        "url": "http://localhost:5555/html/view.html?title=view2",
+                                        "name": "view2"
+                                    }
+                                },
+                                {
+                                    "type": "component",
+                                    "componentName": "view",
+                                    "componentState": {
+                                        "processAffinity": "ps_1",
+                                        "url": "http://localhost:5555/html/view.html?title=view3",
+                                        "name": "view3"
+                                    }
+                                },
+                                {
+                                    "type": "component",
+                                    "componentName": "view",
+                                    "componentState": {
+                                        "processAffinity": "ps_1",
+                                        "url": "http://localhost:5555/html/view.html?title=view4",
+                                        "name": "view4"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
