@@ -4,23 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const viewTitle = params.get('title');
     const viewHeader = document.querySelector('#view-title');
+    const addBtn = document.getElementById('add-listener');
+    const removeBtn = document.getElementById('remove-listener');
 
     document.title = viewTitle;
-
-    if (viewTitle === 'view1' || viewTitle === 'view3') {
-        viewHeader.innerHTML = `${viewTitle} - preventing unload`;
-    } else {
-        viewHeader.innerHTML = viewTitle;
-    }
+    viewHeader.innerHTML = viewTitle;
 
     const beforeUnloadListener = (e) => {
-        if (viewTitle === 'view1' || viewTitle === 'view3') {
-            e.preventDefault();
-            e.returnValue = '';
-        }
+        e.preventDefault();
+        e.returnValue = '';
     }
 
-    if (viewTitle !== 'view4') {
+    addBtn.addEventListener('click', () => {
         window.addEventListener('beforeunload', beforeUnloadListener);
-    }
+    });
+
+    removeBtn.addEventListener('click', () => {
+        window.removeEventListener('beforeunload', beforeUnloadListener);
+    });
 });

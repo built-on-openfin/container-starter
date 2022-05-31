@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = [
     {
-        watch: true,
         entry: './client/src/provider.ts',
         devtool: 'inline-source-map',
         module: {
@@ -23,7 +22,6 @@ module.exports = [
         },
     },
     {
-        watch: true,
         entry: './client/src/view.ts',
         devtool: 'inline-source-map',
         module: {
@@ -44,7 +42,6 @@ module.exports = [
         },
     },
     {   
-        watch: true,
         entry: './client/src/window.ts',
         devtool: 'inline-source-map',
         module: {
@@ -65,7 +62,6 @@ module.exports = [
         },
     },
     {
-        watch: true,
         entry: './client/src/dialog.ts',
         devtool: 'inline-source-map',
         module: {

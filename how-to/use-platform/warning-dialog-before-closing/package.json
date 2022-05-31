@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build-server & npm run build-client",
+    "watch": "npm run build-server & npm run watch-client",
     "build-server": "tsc --project ./server",
+    "watch-client": "webpack watch --config ./client/webpack.config.js --mode=development",
     "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
     "start": "npm run server",
     "platform": "start fin://localhost:5555/config/manifest.json",

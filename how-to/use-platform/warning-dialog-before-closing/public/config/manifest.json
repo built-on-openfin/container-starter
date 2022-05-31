@@ -14,7 +14,7 @@
             "contextMenu": true,
             "url": "http://localhost:5555/html/window.html",
             "defaultWidth": 900,
-            "defaultHeight": 720,
+            "defaultHeight": 900,
             "defaultLeft": 0,
             "defaultTop": 0,
             "saveWindowState": false,
@@ -34,40 +34,77 @@
                             "id": "no-drop-target",
                             "content": [
                                 {
-                                    "type": "component",
-                                    "componentName": "view",
-                                    "componentState": {
-                                        "processAffinity": "ps_1",
-                                        "url": "http://localhost:5555/html/view.html?title=view1",
-                                        "name": "view1"
-                                    }
+                                    "type": "row",
+                                    "content": [
+                                        {
+                                            "type": "stack",
+                                            "content": [
+                                                {
+                                                    "type": "component",
+                                                    "title": "view1",
+                                                    "componentName": "view",
+                                                    "componentState": {
+                                                        "url": "http://localhost:5555/html/view.html?title=view1",
+                                                        "name": "view1",
+                                                        "backgroundThrottling": true,
+                                                        "componentName": "view"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "stack",
+                                            "content": [
+                                                {
+                                                    "type": "component",
+                                                    "title": "view3",
+                                                    "componentName": "view",
+                                                    "componentState": {
+                                                        "url": "http://localhost:5555/html/view.html?title=view3",
+                                                        "name": "view3",
+                                                        "backgroundThrottling": true,
+                                                        "componentName": "view"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 {
-                                    "type": "component",
-                                    "componentName": "view",
-                                    "componentState": {
-                                        "processAffinity": "ps_1",
-                                        "url": "http://localhost:5555/html/view.html?title=view2",
-                                        "name": "view2"
-                                    }
-                                },
-                                {
-                                    "type": "component",
-                                    "componentName": "view",
-                                    "componentState": {
-                                        "processAffinity": "ps_1",
-                                        "url": "http://localhost:5555/html/view.html?title=view3",
-                                        "name": "view3"
-                                    }
-                                },
-                                {
-                                    "type": "component",
-                                    "componentName": "view",
-                                    "componentState": {
-                                        "processAffinity": "ps_1",
-                                        "url": "http://localhost:5555/html/view.html?title=view4",
-                                        "name": "view4"
-                                    }
+                                    "type": "row",
+                                    "content": [
+                                        {
+                                            "type": "stack",
+                                            "content": [
+                                                {
+                                                    "type": "component",
+                                                    "title": "view2",
+                                                    "componentName": "view",
+                                                    "componentState": {
+                                                        "url": "http://localhost:5555/html/view.html?title=view2",
+                                                        "name": "view2",
+                                                        "componentName": "view"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "stack",
+                                            "content": [
+                                                {
+                                                    "type": "component",
+                                                    "title": "view4",
+                                                    "componentName": "view",
+                                                    "componentState": {
+                                                        "url": "http://localhost:5555/html/view.html?title=view4",
+                                                        "name": "view4",
+                                                        "backgroundThrottling": true,
+                                                        "componentName": "view"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         }

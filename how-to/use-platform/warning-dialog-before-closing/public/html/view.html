@@ -19,11 +19,27 @@
             display: flex;
             flex-direction: column;
         }
+
+        #btn-div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        button {
+            display: inline-block;
+            width: auto;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <h1 id="view-title">View</h1>
+    <div id="main-div">
+        <h1 id="view-title">View</h1>
+        <div id="btn-div">
+            <button id="add-listener">Add Listener</button>
+            <button id="remove-listener">Remove Listener</button>
+        </div>
     </div>
 </body>
 
