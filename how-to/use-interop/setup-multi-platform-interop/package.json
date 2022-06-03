@@ -1,0 +1,28 @@
+{
+  "name": "setup-cross-platform-interop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build-server & npm run build-client",
+    "build-server": "tsc --project ./server",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "start": "npm run server",
+    "platform1": "start fin://localhost:5555/config/platform1.json",
+    "platform2": "start fin://localhost:5555/config/platform2.json",
+    "server": "node ./server/build/index.js",
+    "kill": "(npm run -s kill:fin || true) && (npm run -s kill:rvm || true)",
+    "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
+    "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "@openfin/core": "latest",
+    "openfin-adapter": "^25.69.8",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}
