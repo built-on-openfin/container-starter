@@ -21,7 +21,6 @@ const changeContextGroup = async (event: Event): Promise<void> => {
 
 const addContextGroupButtons = async (): Promise<void> => {
     const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
-    // <link rel="stylesheet" href="../styles/frame-styles.css"></link>
     const windowFrameStyleSheet: CSSStyleSheet = document.styleSheets[0];
     const buttonsWrapper: HTMLElement = document.getElementById('buttons-wrapper');
 
