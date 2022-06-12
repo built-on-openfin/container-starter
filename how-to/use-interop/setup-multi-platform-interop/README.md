@@ -1,8 +1,8 @@
-# Use security realms
+# Use Cross Platform Interop
 
 This repository demonstrates how to use OpenFin's interop overrides to enable context sharing from two different Platform Applications
 
-Before diving in we recommend taking some time familiarize yourself with the concepts and terms found in the [interoperability overview](https://developers.openfin.co/of-docs/docs/interoperability-overview) section of out documentation. 
+Before diving in we recommend taking some time familiarize yourself with the concepts and terms found in the [interoperability overview](https://developers.openfin.co/of-docs/docs/interoperability-overview) section of our documentation. 
 
 ---
 
