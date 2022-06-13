@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Window Options Example</title>
+  <meta name="description"
+        content="" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1" />
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com" />
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin="" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+  <link rel="stylesheet"
+        href="../style/app.css" />
+  <script src="../js/app.bundle.js"></script>
+</head>
+
+<body class="col fill gap20">
+  <header class="row spread middle">
+    <div class="col">
+      <h1>Window Options Example</h1>
+      <h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
+    </div>
+    <div class="row middle gap20">
+      <button id="btnTheme"
+              class="image">
+        <img src="../images/light.svg"
+             alt="Theme"
+             id="imgTheme" />
+      </button>
+      <image src="../images/icon-blue.png"
+             alt="OpenFin"
+             height="40px"></image>
+    </div>
+  </header>
+  <main class="row fill gap20">
+    <div class="row fill gap40">
+      <div class="fill_2 col gap20">
+        <form class="col gap40 scroll-vertical">
+          <div id="sectionCommon"
+               class="formSection col gap10">
+            <h2>Common</h2>
+            <fieldset>
+              <label for="optionName">Name</label>
+              <input type="text"
+                     id="optionName" />
+            </fieldset>
+            <fieldset>
+              <label for="optionUrl">Url</label>
+              <input type="text"
+                     id="optionUrl" />
+            </fieldset>
+            <fieldset>
+              <label for="optionIcon">Icon</label>
+              <input type="text"
+                     id="optionIcon" />
+            </fieldset>
+            <fieldset>
+              <label for="optionAlwaysOnTop">Always On Top</label>
+              <input type="checkbox"
+                     id="optionAlwaysOnTop" />
+            </fieldset>
+            <fieldset>
+              <label for="optionOpacity">Opacity</label>
+              <input type="range"
+                     id="optionOpacity"
+                     min="0.1"
+                     max="1"
+                     step="0.1" />
+              <span id="optionOpacityValue"></span>
+            </fieldset>
+            <fieldset>
+              <label for="optionShowContextMenu">Show Context Menu</label>
+              <input type="checkbox"
+                     id="optionShowContextMenu" />
+            </fieldset>
+            <fieldset>
+              <label for="optionShowTaskbarIcon">Show Taskbar Icon</label>
+              <input type="checkbox"
+                     id="optionShowTaskbarIcon" />
+            </fieldset>
+            <div class="row wrap">
+              <fieldset class="fill">
+                <label for="optionMinimizable">Minimizable</label>
+                <input type="checkbox"
+                       id="optionMinimizable" />
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionMaximizable">Maximizable</label>
+                <input type="checkbox"
+                       id="optionMaximizable" />
+              </fieldset>
+            </div>
+            <fieldset>
+              <label for="optionResizable">Resizable</label>
+              <input type="checkbox"
+                     id="optionResizable" />
+            </fieldset>
+            <div class="row wrap"
+                 id="resizeWidth">
+              <fieldset class="fill">
+                <label for="optionMinWidth">Min Width</label>
+                <input type="range"
+                       id="optionMinWidth"
+                       min="600"
+                       max="1000"
+                       step="10" />
+                <span id="optionMinWidthValue"></span>
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionMaxWidth">Max Width</label>
+                <input type="range"
+                       id="optionMaxWidth"
+                       min="600"
+                       max="2000"
+                       step="10" />
+                <span id="optionMaxWidthValue"></span>
+              </fieldset>
+            </div>
+            <div class="row wrap"
+                 id="resizeHeight">
+              <fieldset class="fill">
+                <label for="optionMinHeight">Min Height</label>
+                <input type="range"
+                       id="optionMinHeight"
+                       min="600"
+                       max="1000"
+                       step="10" />
+                <span id="optionMinHeightValue"></span>
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionMaxHeight">Max Height</label>
+                <input type="range"
+                       id="optionMaxHeight"
+                       min="600"
+                       max="2000"
+                       step="10" />
+                <span id="optionMaxHeightValue"></span>
+              </fieldset>
+            </div>
+            <fieldset>
+              <label for="optionDefaultCentered">Default Centered</label>
+              <input type="checkbox"
+                     id="optionDefaultCentered" />
+            </fieldset>
+            <div class="row wrap"
+                 id="defaultPosition">
+              <fieldset class="fill">
+                <label for="optionDefaultLeft">Default Left</label>
+                <input type="range"
+                       id="optionDefaultLeft"
+                       min="0"
+                       max="1000"
+                       step="10" />
+                <span id="optionDefaultLeftValue"></span>
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionDefaultTop">Default Top</label>
+                <input type="range"
+                       id="optionDefaultTop"
+                       min="0"
+                       max="1000"
+                       step="10" />
+                <span id="optionDefaultTopValue"></span>
+              </fieldset>
+            </div>
+            <div class="row wrap">
+              <fieldset class="fill">
+                <label for="optionDefaultWidth">Default Width</label>
+                <input type="range"
+                       id="optionDefaultWidth"
+                       min="50"
+                       max="1000"
+                       step="10" />
+                <span id="optionDefaultWidthValue"></span>
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionDefaultHeight">Default Height</label>
+                <input type="range"
+                       id="optionDefaultHeight"
+                       min="50"
+                       max="1000"
+                       step="10" />
+                <span id="optionDefaultHeightValue"></span>
+              </fieldset>
+            </div>
+            <fieldset>
+              <label for="optionAspectRatio">Aspect Ratio</label>
+              <input type="range"
+                     id="optionAspectRatio"
+                     min="0"
+                     max="10"
+                     step="0.1" />
+              <span id="optionAspectRatioValue"></span>
+            </fieldset>
+            <div class="row spread wrap gap10 middle">
+              <fieldset class="fill">
+                <label for="optionBackgroundColor">Background Color</label>
+                <input type="color"
+                       id="optionBackgroundColor" />
+                <span id="optionBackgroundColorValue"></span>
+              </fieldset>
+              <em class="fill">Only used during content load</em>
+            </div>
+            <fieldset>
+              <label for="optionFrame">Show Window Frame</label>
+              <input type="checkbox"
+                     id="optionFrame" />
+            </fieldset>
+          </div>
+
+          <div id="sectionFrameless"
+               class="formSection col gap10">
+            <h2>Frameless</h2>
+            <fieldset>
+              <label for="optionShadow">Shadow</label>
+              <input type="checkbox"
+                     id="optionShadow" />
+            </fieldset>
+            <div class="row wrap">
+              <fieldset class="fill">
+                <label for="optionEdgeResizeSize">Edge Resize Size</label>
+                <input type="range"
+                       id="optionEdgeResizeSize"
+                       min="1"
+                       max="20"
+                       step="1" />
+                <span id="optionEdgeResizeSizeValue"></span>
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionCornerResizeSize">Corner Resize Size</label>
+                <input type="range"
+                       id="optionCornerResizeSize"
+                       min="1"
+                       max="20"
+                       step="1" />
+                <span id="optionCornerResizeSizeValue"></span>
+              </fieldset>
+            </div>
+            <div class="row wrap">
+              <fieldset class="fill">
+                <label for="optionResizeRegionSideLeft">Resize from Left</label>
+                <input type="checkbox"
+                       id="optionResizeRegionSideLeft" />
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionResizeRegionSideRight">Resize from Right</label>
+                <input type="checkbox"
+                       id="optionResizeRegionSideRight" />
+              </fieldset>
+            </div>
+            <div class="row wrap">
+              <fieldset class="fill">
+                <label for="optionResizeRegionSideTop">Resize from Top</label>
+                <input type="checkbox"
+                       id="optionResizeRegionSideTop" />
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionResizeRegionSideBottom">Resize from Bottom</label>
+                <input type="checkbox"
+                       id="optionResizeRegionSideBottom" />
+              </fieldset>
+            </div>
+            <div class="row wrap">
+              <fieldset class="fill">
+                <label for="optionCornerRoundingWidth">Corner Rounding Width</label>
+                <input type="range"
+                       id="optionCornerRoundingWidth"
+                       min="0"
+                       max="50"
+                       step="1" />
+                <span id="optionCornerRoundingWidthValue"></span>
+              </fieldset>
+              <fieldset class="fill">
+                <label for="optionCornerRoundingHeight">Corner Rounding Height</label>
+                <input type="range"
+                       id="optionCornerRoundingHeight"
+                       min="0"
+                       max="50"
+                       step="1" />
+                <span id="optionCornerRoundingHeightValue"></span>
+              </fieldset>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="col fill gap20">
+        <h2>Preview</h2>
+        <pre id="preview"
+             class="fill scroll-horizontal"></pre>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="row spread">
+      <div class="row gap10">
+        <button id="btnPreview">Preview</button>
+        <button id="btnClosePreview">Close Preview</button>
+        <button id="btnCopy">Copy to Clipboard</button>
+        <button id="btnReset">Reset to Defaults</button>
+      </div>
+      <div class="row gap10">
+        <a href="https://cdn.openfin.co/docs/javascript/stable/tutorial-Window.create.html"
+           target="_blank">Tutorial</a>
+        <a href="https://cdn.openfin.co/docs/javascript/stable/Window.html#~options"
+           target="_blank">API Docs</a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
