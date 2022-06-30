@@ -63,8 +63,8 @@ async function init(): Promise<void> {
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-	// const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-	// await platform.once("platform-api-ready", async () => init());
+	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
+	await platform.once("platform-api-ready", async () => init());
 });
 
 fin.Platform.init({
