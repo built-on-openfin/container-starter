@@ -1,4 +1,5 @@
 # How To Use Popup Window
+
 [![version](https://img.shields.io/badge/version-canary-yellow.svg)](https://shields.io/)
 
 **Note**: this feature is available for development purposes only and will be officially released in v26.
@@ -11,12 +12,12 @@ This repository contains examples of the different sorts of popup windows that c
 
 ### Examples
 
-  | Example         | Description |
-|---------------------|------------------------------------
-| [How To - Single Result](./single-result) | This is an example of a popup window that will either return a single result or be dismissed based on user interaction.
-| [How to - Multiple Results](./multiple-results) | This is an example of a popup window that can dispatch many results to its caller.
-| [How to - Modal](./modal) | This is an example of using a modal window as a popup.
-| [How to - Advanced](./advanced) | This is an example where a window is provisioned to later be shown as various different popup windows. 
+| Example                                         | Description                                                                                                             |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| [How To - Single Result](./single-result)       | This is an example of a popup window that will either return a single result or be dismissed based on user interaction. |
+| [How to - Multiple Results](./multiple-results) | This is an example of a popup window that can dispatch many results to its caller.                                      |
+| [How to - Modal](./modal)                       | This is an example of using a modal window as a popup.                                                                  |
+| [How to - Advanced](./advanced)                 | This is an example where a window is provisioned to later be shown as various different popup windows.                  |
 
 ## Before you get started
 

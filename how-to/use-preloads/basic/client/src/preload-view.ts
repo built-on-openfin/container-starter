@@ -1,14 +1,13 @@
 if (window !== window.top) {
-    console.log("We don't want to load execute when running in an iframe.");   
+	console.log("We don't want to load execute when running in an iframe.");
+} else if (document.readyState === "complete") {
+	initViewPreload().catch(() => {});
 } else {
-    function initViewPreload() {
-        console.log("View preload loaded.");
-    }
-    if(document.readyState === "complete"){
-        initViewPreload();
-    } else {
-        window.addEventListener('load', () => {
-            initViewPreload();
-        });
-    }
+	window.addEventListener("load", async () => {
+		await initViewPreload();
+	});
+}
+
+async function initViewPreload() {
+	console.log("View preload loaded.");
 }

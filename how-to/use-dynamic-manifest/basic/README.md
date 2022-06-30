@@ -9,15 +9,17 @@ This repository demonstrates how to return different manifests depending on url 
 The index.ts file in the src folder is used by the express server to return different manifest json depending supplied query string.
 
 Query strings:
-    env=staging - staging environment
-    env=dev - dev environment
+env=staging - staging environment
+env=dev - dev environment
+
 ---
+
 Following npm commands in the package.json perform the above commands:
 npm run staging
-    "staging" :"start fin://localhost:8080/?env=staging"
+"staging" :"start fin://localhost:5050/?env=staging"
 
 npm run dev
-    "dev" :"start fin://localhost:8080/?env=dev"
+"dev" :"start fin://localhost:5050/?env=dev"
 
 ## Get Started
 
@@ -48,13 +50,15 @@ for proceeding steps start another terminal in the same location
 4. Start the Platform staging application.
 
 $ npm run staging
-```
+
+````
 
 5. Start the Platform dev application.
 
 ```bash
 $ npm run dev
-```
+````
+
 ### What you will see
 
 When dev is used the app-dev.html will open in a new window and the same for staging with app-staging.html.
