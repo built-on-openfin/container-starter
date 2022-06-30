@@ -1,23 +1,23 @@
-import { fin } from '@openfin/core';
+import { fin } from "@openfin/core";
 
 const me = fin.me as OpenFin.Window;
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener("DOMContentLoaded", init);
 
 function init() {
-    const okButton = document.getElementById('btn-ok');
-    const confirmButton = document.getElementById('btn-confirm');
-    const cancelButton = document.getElementById('btn-cancel');
+	const okButton = document.querySelector("#btn-ok");
+	const confirmButton = document.querySelector("#btn-confirm");
+	const cancelButton = document.querySelector("#btn-cancel");
 
-    okButton.onclick = async () => {
-        await me.dispatchPopupResult('ok');
-    }
+	okButton.addEventListener("click", async () => {
+		await me.dispatchPopupResult("ok");
+	});
 
-    confirmButton.onclick = async () => {
-        await me.dispatchPopupResult('confirm');
-    }
+	confirmButton.addEventListener("click", async () => {
+		await me.dispatchPopupResult("confirm");
+	});
 
-    cancelButton.onclick = async () => {
-        await me.dispatchPopupResult('cancel');
-    }
+	cancelButton.addEventListener("click", async () => {
+		await me.dispatchPopupResult("cancel");
+	});
 }

@@ -56,7 +56,6 @@ Alternate light mode views.
 
 ![Use Window Options Preview Light](./use-window-options-preview-light.png)
 
-
 ---
 
 ### A note about this example

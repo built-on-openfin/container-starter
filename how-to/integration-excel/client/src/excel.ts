@@ -1,217 +1,225 @@
-import { Cell, ExcelApplication, ExcelWorkbook, ExcelWorksheet, getExcelApplication } from '@openfin/excel';
 import { getCurrentChannel } from "@finos/fdc3";
+import { Cell, ExcelApplication, ExcelWorkbook, ExcelWorksheet, getExcelApplication } from "@openfin/excel";
 
 const knownInstruments = ["TSLA", "MSFT", "AAPL"];
 
 let excel: ExcelApplication | undefined;
-let openWorkbooks: {
-    book: ExcelWorkbook;
-    name: string;
-}[] | undefined;
+let openWorkbooks:
+	| {
+			book: ExcelWorkbook;
+			name: string;
+	  }[]
+	| undefined;
 let selectedWorkbookIndex: number | undefined;
-let openWorksheets: {
-    sheet: ExcelWorksheet;
-    name: string;
-}[] | undefined;
+let openWorksheets:
+	| {
+			sheet: ExcelWorksheet;
+			name: string;
+	  }[]
+	| undefined;
 let selectedWorksheetIndex: number | undefined;
 
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        init();
-    } catch (error) {
-        console.error(error);
-    }
-})
+document.addEventListener("DOMContentLoaded", async () => {
+	try {
+		await init();
+	} catch (error) {
+		console.error(error);
+	}
+});
 
 async function init(): Promise<void> {
-    try {
-        excel = await getExcelApplication();
+	try {
+		excel = await getExcelApplication();
 
-        await populateWorkbooks();
+		await populateWorkbooks();
 
-        const refreshWorkbookButton = document.getElementById("workbook-refresh");
-        refreshWorkbookButton.addEventListener("click", () => populateWorkbooks());
+		const refreshWorkbookButton = document.querySelector("#workbook-refresh");
+		refreshWorkbookButton.addEventListener("click", async () => populateWorkbooks());
 
-        const refreshWorksheetButton = document.getElementById("worksheet-refresh");
-        refreshWorksheetButton.addEventListener("click", () => populateWorksheets());
+		const refreshWorksheetButton = document.querySelector("#worksheet-refresh");
+		refreshWorksheetButton.addEventListener("click", async () => populateWorksheets());
 
-        const openWorkbooksSelect = document.getElementById("workbooks");
-        openWorkbooksSelect.addEventListener("change", async (e) => await selectWorkbook((e.target as any).value))
+		const openWorkbooksSelect = document.querySelector("#workbooks");
+		openWorkbooksSelect.addEventListener("change", async (e) =>
+			selectWorkbook((e.target as unknown as { value: string }).value)
+		);
 
-        const openWorksheetsSelect = document.getElementById("worksheets");
-        openWorksheetsSelect.addEventListener("change", async (e) => await selectWorksheet((e.target as any).value))
-    } catch (err) {
-        showError(err);
-    }
+		const openWorksheetsSelect = document.querySelector("#worksheets");
+		openWorksheetsSelect.addEventListener("change", async (e) =>
+			selectWorksheet((e.target as unknown as { value: string }).value)
+		);
+	} catch (err) {
+		showError(err);
+	}
 }
 
 function showError(err) {
-    const errDom = document.getElementById("error");
-    errDom.innerHTML = err.message;
+	const errDom = document.querySelector("#error");
+	errDom.innerHTML = err.message;
 }
 
 async function populateWorkbooks(): Promise<void> {
-    if (excel) {
-        selectedWorkbookIndex = undefined;
-        const refreshButton: HTMLButtonElement = document.getElementById("workbook-refresh") as HTMLButtonElement;
-        refreshButton.disabled = true;
+	if (excel) {
+		selectedWorkbookIndex = undefined;
+		const refreshButton: HTMLButtonElement = document.querySelector("#workbook-refresh");
+		refreshButton.disabled = true;
 
-        const select = document.getElementById("workbooks") as HTMLSelectElement;
-        select.disabled = true;
-        select.innerHTML = "";
+		const select = document.querySelector<HTMLSelectElement>("#workbooks");
+		select.disabled = true;
+		select.innerHTML = "";
 
-        openWorkbooks = [];
+		openWorkbooks = [];
 
-        try {
-            const workbooks = await excel.getWorkbooks();
+		try {
+			const workbooks = await excel.getWorkbooks();
 
-            for (const book of workbooks) {
-                const name = await book.getName();
-                openWorkbooks.push({
-                    book,
-                    name
-                })
-            }
+			for (const book of workbooks) {
+				const name = await book.getName();
+				openWorkbooks.push({
+					book,
+					name
+				});
+			}
 
-            const option = document.createElement("option");
-            option.innerHTML = "----Select workbook----";
-            option.value = "";
-            option.selected = true;
-            option.disabled = true;
-            select.appendChild(option);
+			const optionEmpty = document.createElement("option");
+			optionEmpty.innerHTML = "----Select workbook----";
+			optionEmpty.value = "";
+			optionEmpty.selected = true;
+			optionEmpty.disabled = true;
+			select.append(optionEmpty);
 
-            for (const openWorkbook of openWorkbooks) {
-                const option = document.createElement("option");
-                option.innerHTML = openWorkbook.name;
-                option.value = openWorkbook.name
-                select.appendChild(option);
-            }
-        } catch (err) {
-            console.error(err);
-            showError(err);
-        } finally {
-            select.disabled = false;
-            refreshButton.disabled = false;
-        }
-    }
+			for (const openWorkbook of openWorkbooks) {
+				const option = document.createElement("option");
+				option.innerHTML = openWorkbook.name;
+				option.value = openWorkbook.name;
+				select.append(option);
+			}
+		} catch (err) {
+			console.error(err);
+			showError(err);
+		} finally {
+			select.disabled = false;
+			refreshButton.disabled = false;
+		}
+	}
 }
 
 async function selectWorkbook(name: string): Promise<void> {
-    const newWorkbookIndex = openWorkbooks.findIndex(w => w.name === name);
+	const newWorkbookIndex = openWorkbooks.findIndex((w) => w.name === name);
 
-    if (newWorkbookIndex !== selectedWorkbookIndex) {
-        selectedWorkbookIndex = newWorkbookIndex;
-        if (newWorkbookIndex >= 0) {
-            await openWorkbooks[selectedWorkbookIndex].book.activate();
-        }
-    }
+	if (newWorkbookIndex !== selectedWorkbookIndex) {
+		selectedWorkbookIndex = newWorkbookIndex;
+		if (newWorkbookIndex >= 0) {
+			await openWorkbooks[selectedWorkbookIndex].book.activate();
+		}
+	}
 
-    await populateWorksheets();
+	await populateWorksheets();
 }
 
 async function populateWorksheets(): Promise<void> {
-    if (excel) {
-        selectedWorksheetIndex = undefined;
-        const refreshButton: HTMLButtonElement = document.getElementById("worksheet-refresh") as HTMLButtonElement;
-        refreshButton.disabled = true;
+	if (excel) {
+		selectedWorksheetIndex = undefined;
+		const refreshButton: HTMLButtonElement = document.querySelector("#worksheet-refresh");
+		refreshButton.disabled = true;
 
-        const cellContainer = document.getElementById("cell-container");
-        cellContainer.style.display = "none";
+		const cellContainer = document.querySelector<HTMLElement>("#cell-container");
+		cellContainer.style.display = "none";
 
-        const select = document.getElementById("worksheets") as HTMLSelectElement;
-        select.disabled = true;
-        select.innerHTML = "";
+		const select = document.querySelector<HTMLSelectElement>("#worksheets");
+		select.disabled = true;
+		select.innerHTML = "";
 
-        openWorksheets = [];
+		openWorksheets = [];
 
-        const workbook = openWorkbooks[selectedWorkbookIndex];
-        if (workbook) {
-            try {
-                const sheets = await workbook.book.getWorksheets();
+		const workbook = openWorkbooks[selectedWorkbookIndex];
+		if (workbook) {
+			try {
+				const sheets = await workbook.book.getWorksheets();
 
-                for (const sheet of sheets) {
-                    const name = await sheet.getName();
-                    openWorksheets.push({
-                        sheet,
-                        name
-                    })
-                }
+				for (const sheet of sheets) {
+					const name = await sheet.getName();
+					openWorksheets.push({
+						sheet,
+						name
+					});
+				}
 
-                const option = document.createElement("option");
-                option.innerHTML = "----Select worksheet----";
-                option.value = "";
-                option.selected = true;
-                option.disabled = true;
-                select.appendChild(option);
+				const optionEmpty = document.createElement("option");
+				optionEmpty.innerHTML = "----Select worksheet----";
+				optionEmpty.value = "";
+				optionEmpty.selected = true;
+				optionEmpty.disabled = true;
+				select.append(optionEmpty);
 
-                for (const openWorksheet of openWorksheets) {
-                    const option = document.createElement("option");
-                    option.innerHTML = openWorksheet.name;
-                    option.value = openWorksheet.name
-                    select.appendChild(option);
-                }
-            } catch (err) {
-                console.error(err);
-                showError(err);
-            } finally {
-                select.disabled = false;
-                refreshButton.disabled = false;
-            }
-        }
-    }
+				for (const openWorksheet of openWorksheets) {
+					const option = document.createElement("option");
+					option.innerHTML = openWorksheet.name;
+					option.value = openWorksheet.name;
+					select.append(option);
+				}
+			} catch (err) {
+				console.error(err);
+				showError(err);
+			} finally {
+				select.disabled = false;
+				refreshButton.disabled = false;
+			}
+		}
+	}
 }
 
 async function selectWorksheet(name: string): Promise<void> {
-    const newWorksheetIndex = openWorksheets.findIndex(w => w.name === name);
+	const newWorksheetIndex = openWorksheets.findIndex((w) => w.name === name);
 
-    if (newWorksheetIndex !== selectedWorksheetIndex) {
-        const oldWorksheet = openWorksheets[selectedWorksheetIndex];
-        if (oldWorksheet) {
-            await oldWorksheet.sheet.removeEventListener(handleCellChange)
-        }
+	if (newWorksheetIndex !== selectedWorksheetIndex) {
+		const oldWorksheet = openWorksheets[selectedWorksheetIndex];
+		if (oldWorksheet) {
+			await oldWorksheet.sheet.removeEventListener(handleCellChange);
+		}
 
-        selectedWorksheetIndex = newWorksheetIndex;
-        if (selectedWorksheetIndex >= 0) {
-            await openWorksheets[selectedWorksheetIndex].sheet.activate();
-            await openWorksheets[selectedWorksheetIndex].sheet.addEventListener("change", handleCellChange);
-            document.getElementById("cell-container").style.display = "block";
-        }
-    }
+		selectedWorksheetIndex = newWorksheetIndex;
+		if (selectedWorksheetIndex >= 0) {
+			await openWorksheets[selectedWorksheetIndex].sheet.activate();
+			await openWorksheets[selectedWorksheetIndex].sheet.addEventListener("change", handleCellChange);
+			document.querySelector<HTMLElement>("#cell-container").style.display = "block";
+		}
+	}
 }
 
 async function handleCellChange(cells: Cell[]): Promise<void> {
-    const cellContainer = document.getElementById("cell-changes-container");
-    cellContainer.innerHTML = JSON.stringify(cells);
+	const cellContainer = document.querySelector("#cell-changes-container");
+	cellContainer.innerHTML = JSON.stringify(cells);
 
-    for (const cell of cells) {
-        if (knownInstruments.includes(cell.value)) {
-            await broadcastInstrument(cell.value);
-        }
-    }
+	for (const cell of cells) {
+		if (knownInstruments.includes(cell.value)) {
+			await broadcastInstrument(cell.value);
+		}
+	}
 }
 
 async function broadcastInstrument(instrument: string): Promise<void> {
-    const broadcastContainer = document.getElementById("broadcast-container");
-    broadcastContainer.style.display = "block";
+	const broadcastContainer = document.querySelector<HTMLElement>("#broadcast-container");
+	broadcastContainer.style.display = "block";
 
-    const broadcastElement = document.getElementById("broadcast-instrument");
-    if (window.fdc3) {
-        try {
-            const fdcInstrument = {
-                type: "fdc3.instrument",
-                id: {
-                    ticker: instrument
-                }
-            };
+	const broadcastElement = document.querySelector("#broadcast-instrument");
+	if (window.fdc3) {
+		try {
+			const fdcInstrument = {
+				type: "fdc3.instrument",
+				id: {
+					ticker: instrument
+				}
+			};
 
-            const channel = await getCurrentChannel();
-            channel.broadcast(fdcInstrument);
+			const channel = await getCurrentChannel();
+			channel.broadcast(fdcInstrument);
 
-            broadcastElement.innerText = instrument;
-        } catch (err) {
-            broadcastElement.innerText = err.message;
-        }
-    } else {
-        broadcastElement.innerText = "No FD3 Channel available";
-    }
+			broadcastElement.textContent = instrument;
+		} catch (err) {
+			broadcastElement.textContent = err.message;
+		}
+	} else {
+		broadcastElement.textContent = "No FD3 Channel available";
+	}
 }

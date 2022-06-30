@@ -1,10 +1,10 @@
 # Use Preloads Restart On Refresh
 
-This repository demonstrates how to use OpenFin preload scripts to navigate to the originally loaded url in a view if the user navigates away and then reloads/refreshes the page. 
+This repository demonstrates how to use OpenFin preload scripts to navigate to the originally loaded url in a view if the user navigates away and then reloads/refreshes the page.
 
 Preload scripts can be defined in window and view options or as part of a manifest. This example defines the view level preload via the manifest.
 
-The manifest in [public/config/platform.config.json](public/config/platform.config.json) shows how you can add a preload script to all views (using the default options setting).
+The manifest in [public/manifest.fin.json](public/manifest.fin.json) shows how you can add a preload script to all views (using the default options setting).
 
 ---
 

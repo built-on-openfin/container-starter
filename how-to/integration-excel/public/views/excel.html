@@ -1,60 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Integrate with Excel</title>
+		<script src="../js/excel.bundle.js"></script>
+		<link rel="stylesheet" href="./app.css" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible"
-          content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Integrate with Excel</title>
-    <script src="../js/excel.bundle.js"></script>
-    <link rel="stylesheet" href="./app.css">
-</head>
+	<body>
+		<main class="container">
+			<h1>Integrate with Excel</h1>
+			<hr />
+			<p>Open any Workbook in Excel to start viewing changes to it's cells.</p>
+			<p>
+				After selecting a worksheet enter any of the known instruments into a cell e.g. TSLA, MSFT, APPL -
+				this should send an FDC message for that instrument.
+			</p>
+			<div id="error"></div>
 
-<body>
-    <main class="container">
-        <h1>Integrate with Excel</h1>
-        <hr />
-        <p>Open any Workbook in Excel to start viewing changes to it's cells.</p>
-        <p>After selecting a worksheet enter any of the known instruments into a cell e.g. TSLA, MSFT, APPL - this should send an FDC message for that instrument.</p>
-        <div id="error"></div>
+			<div class="section-container">
+				<div class="row">
+					<div>Workbooks</div>
+					<select id="workbooks" disabled>
+						<option disabled selected>----Select workbook----</option>
+					</select>
+					<button id="workbook-refresh" disabled>Refresh</button>
+				</div>
 
-        <div class="section-container">
-            <div class="row">
-                <div>Workbooks</div>
-                <select id="workbooks"
-                        disabled>
-                    <option disabled
-                            selected>----Select workbook----</option>
-                </select>
-                <button id="workbook-refresh"
-                        disabled>Refresh</button>
-            </div>
+				<div class="row">
+					<div>Worksheets</div>
+					<select id="worksheets" disabled>
+						<option disabled selected>----Select worksheet----</option>
+					</select>
+					<button id="worksheet-refresh" disabled>Refresh</button>
+				</div>
 
-            <div class="row">
-                <div>Worksheets</div>
-                <select id="worksheets"
-                        disabled>
-                    <option disabled
-                            selected>----Select worksheet----</option>
-                </select>
-                <button id="worksheet-refresh"
-                        disabled>Refresh</button>
-            </div>
-
-            <div id="cell-container">
-                <h2>Cell Changes</h2>
-                <pre id="cell-changes-container">
-                </pre>
-            </div>
-            <div class="row"
-                 id="broadcast-container">
-                <div>Broadcast Instrument</div>
-                <div id="broadcast-instrument"></div>
-            </div>
-        </div>
-    </main>
-</body>
-
+				<div id="cell-container">
+					<h2>Cell Changes</h2>
+					<pre id="cell-changes-container"></pre>
+				</div>
+				<div class="row" id="broadcast-container">
+					<div>Broadcast Instrument</div>
+					<div id="broadcast-instrument"></div>
+				</div>
+			</div>
+		</main>
+	</body>
 </html>

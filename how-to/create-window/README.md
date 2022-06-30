@@ -4,10 +4,9 @@
 
 ## How it Works
 
-The app.ts listens for button clicks and creates with a dynamic openfin window or from a manifest. 
+The app.ts listens for button clicks and creates with a dynamic openfin window or from a manifest.
 
-The manifest is located in the config folder along with the manifest for this sample application.
----
+## The manifest is located in the config folder along with the manifest for this sample application.
 
 ## Get Started
 

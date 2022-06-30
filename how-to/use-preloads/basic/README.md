@@ -1,10 +1,10 @@
 # Use Preloads Hello World
 
-This repository demonstrates how to use OpenFin Runtime Preload capabilities to inject a script into the different parts of an OpenFin application. 
+This repository demonstrates how to use OpenFin Runtime Preload capabilities to inject a script into the different parts of an OpenFin application.
 
 Preload scripts can be defined in window and view options or as part of a manifest.
 
-The manifest in [public/config/platform.config.json](public/config/platform.config.json) shows how you can add a preload script to your platform provider, to all windows or to all views (using the default options setting).
+The manifest in [public/manifest.fin.json](public/manifest.fin.json) shows how you can add a preload script to your platform provider, to all windows or to all views (using the default options setting).
 
 ---
 

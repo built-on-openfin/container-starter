@@ -1,4 +1,5 @@
 # How To Use Popup Window | Single Result
+
 [![version](https://img.shields.io/badge/version-canary-yellow.svg)](https://shields.io/)
 
 **Note**: this feature is available for development purposes only and will be officially released in v26.

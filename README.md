@@ -6,7 +6,7 @@ _Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is f
 
 OpenFin Container is a desktop runtime application environment that enables communication between all of your apps (web, legacy, third-party) for the enterprise desktop. It is built on top of Google Chromium and GitHub Electron and combines advanced interoperability, lightning-fast distribution, and robust security with an agile web development and deployment model.
 
-* [Learn more about the OpenFin Container](https://developers.openfin.co/of-docs/docs/container-overview)
+- [Learn more about the OpenFin Container](https://developers.openfin.co/of-docs/docs/container-overview)
 
 ---
 
@@ -16,19 +16,18 @@ This repository contains examples for common use cases and API implementations. 
 
 ## Examples
 
-| **Example**                                         | **Description**                                                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [use-security-realms](./how-to/use-security-realms) | This example shows you security realms work with multiple target environments |
-| [use-preloads](./how-to/use-preloads) | This example shows you a number of examples on how preload scripts can be used in your application |
-| [use-channel-api](./how-to/use-channel-api) | This example shows you a number of examples on how to use the channel api for messaging |
-| [use-dynamic-manifest](./how-to/use-dynamic-manifest) | This example contains examples of generating a manifest file dynamically |
-| [integration-excel](./how-to/integration-excel) | This example demonstrates how to integration with Excel using the OpenFin adaptor |
-| [use-popup-window](./how-to/use-popup-window/) | This example contains various examples of how to use popup windows |
-| [use-window-options](./how-to/use-window-options/) | This example demonstrates the options available for opening windows |
+| **Example**                                           | **Description**                                                                                    |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [use-security-realms](./how-to/use-security-realms)   | This example shows you security realms work with multiple target environments                      |
+| [use-preloads](./how-to/use-preloads)                 | This example shows you a number of examples on how preload scripts can be used in your application |
+| [use-channel-api](./how-to/use-channel-api)           | This example shows you a number of examples on how to use the channel api for messaging            |
+| [use-dynamic-manifest](./how-to/use-dynamic-manifest) | This example contains examples of generating a manifest file dynamically                           |
+| [integration-excel](./how-to/integration-excel)       | This example demonstrates how to integration with Excel using the OpenFin adaptor                  |
+| [use-popup-window](./how-to/use-popup-window/)        | This example contains various examples of how to use popup windows                                 |
+| [use-window-options](./how-to/use-window-options/)    | This example demonstrates the options available for opening windows                                |
+
 ---
 
 ## Before you get started
 
 Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
-
-

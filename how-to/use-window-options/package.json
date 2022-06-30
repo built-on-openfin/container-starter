@@ -1,30 +1,31 @@
 {
-  "name": "use-window-options",
-  "version": "0.0.1",
-  "description": "A demonstration of the different options available when opening windows",
-  "main": "index.js",
-  "scripts": {
-    "build": "npm run build-server & npm run build-client",
-    "build-server": "tsc --project ./server",
-    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-    "build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
-    "start": "npm run server",
-    "client": "node ./scripts/launch.mjs",
-    "server": "node ./server/build/index.js",
-    "kill": "node ./scripts/kill.mjs"
-  },
-  "author": "martyn.janes@openfin.co",
-  "license": "MIT",
-  "devDependencies": {
-    "express": "^4.17.2",
-    "openfin-adapter": "^23.67.7",
-    "source-map-loader": "^3.0.1",
-    "ts-loader": "^9.2.6",
-    "typescript": "^4.5.4",
-    "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1"
-  },
-  "dependencies": {
-    "@openfin/core": "^25.68.26"
-  }
+	"name": "use-window-options",
+	"version": "0.0.1",
+	"description": "A demonstration of the different options available when opening windows",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm run build-server & npm run build-client",
+		"build-server": "tsc --project ./server",
+		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+		"build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
+		"start": "npm run server",
+		"client": "npm --prefix ../common/ run client",
+		"server": "node ./server/build/index.js",
+		"kill": "npm --prefix ../common/ run kill",
+		"setup": "cd ../../ && npm install && cd how-to/use-window-options && npm run build",
+		"validate": "npm --prefix ../../ run validate"
+	},
+	"author": "martyn.janes@openfin.co",
+	"license": "MIT",
+	"devDependencies": {
+		"express": "^4.17.2",
+		"source-map-loader": "^3.0.1",
+		"ts-loader": "^9.2.6",
+		"typescript": "^4.5.4",
+		"webpack": "^5.65.0",
+		"webpack-cli": "^4.9.1"
+	},
+	"dependencies": {
+		"@openfin/core": "^27.70.8"
+	}
 }
