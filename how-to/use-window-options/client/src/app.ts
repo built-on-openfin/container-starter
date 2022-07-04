@@ -114,27 +114,8 @@ async function initDom(): Promise<void> {
 		await fin.Clipboard.writeText({ data: createPreview() });
 	});
 
-	const btnTheme = document.querySelector<HTMLButtonElement>("#btnTheme");
-	btnTheme.addEventListener("click", () => {
-		const hasLight = document.body.classList.contains("theme-light");
-
-		updateTheme(hasLight ? "dark" : "light");
-	});
-
-	updateTheme(localStorage.getItem("use-window-options/theme") ?? "dark");
 	populateForm();
 	updatePreview();
-}
-
-function updateTheme(theme: string) {
-	if (theme === "light") {
-		document.body.classList.add("theme-light");
-	} else {
-		document.body.classList.remove("theme-light");
-	}
-	const imgTheme = document.querySelector<HTMLImageElement>("#imgTheme");
-	imgTheme.src = `../images/${theme === "light" ? "dark" : "light"}.svg`;
-	localStorage.setItem("use-window-options/theme", theme);
 }
 
 function populateForm() {

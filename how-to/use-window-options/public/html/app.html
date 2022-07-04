@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../common/style/app.css" />
 		<script src="../js/app.bundle.js"></script>
+		<script src="../common/components/fin-toggle-class.js"></script>
 	</head>
 
 	<body class="col fill gap20">
@@ -15,11 +16,9 @@
 				<h1>Window Options Example</h1>
 				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
 			</div>
-			<div class="row middle gap20">
-				<button id="btnTheme" class="image">
-					<img src="../images/light.svg" alt="Theme" id="imgTheme" />
-				</button>
-				<image src="../images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			<div class="row middle gap10">
+				<button is="fin-toggle-class" title="Change style"></button>
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
 			</div>
 		</header>
 		<main class="row fill gap20">
