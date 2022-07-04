@@ -2,7 +2,14 @@ import express from "express";
 import path from "path";
 
 const app = express();
+
+const mainPath = path.join(__dirname, "..", "..", "public");
+const commonPath = path.join(__dirname, "..", "..", "..", "..", "common", "public");
 const port = 5050;
+
+console.log(`Main Path / = ${mainPath}`);
+console.log(`Common Path /common = ${commonPath}`);
+console.log("Root path checks both the main and common directories.");
 
 app.get("/manifest", (req, res) => {
 	const env = req.query.env;
@@ -108,6 +115,9 @@ app.get("/html/app-staging.html", (req, res) => {
 app.get("/favicon.ico", (req, res) => {
 	res.sendFile(path.join(__dirname, "../../public/favicon.ico"));
 });
+
+app.use(express.static(mainPath));
+app.use("/common", express.static(commonPath));
 
 app.listen(port, () => {
 	console.log("server is listening on port", port);

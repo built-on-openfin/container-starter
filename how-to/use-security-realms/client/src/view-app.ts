@@ -15,12 +15,12 @@ async function init(): Promise<void> {
 	const securityRealm = await getSecurityRealmInfo();
 	await listenToTopicAndLogMessages(securityRealm);
 	await setupSendButton(securityRealm);
-	const launchAppBtn: HTMLButtonElement = document.querySelector(".launch-app-btn");
+	const launchAppBtn: HTMLButtonElement = document.querySelector("#launch-app-btn");
 	launchAppBtn.addEventListener("click", async () => {
 		await launchProd();
 	});
 
-	const launchNewRealmBtn: HTMLButtonElement = document.querySelector(".launch-outofrealm-btn");
+	const launchNewRealmBtn: HTMLButtonElement = document.querySelector("#launch-outofrealm-btn");
 	launchNewRealmBtn.addEventListener("click", async () => {
 		await launchUat();
 	});
@@ -85,7 +85,7 @@ async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	try {
 		const messageLog: HTMLDivElement = document.querySelector("#message-log");
 		await fin.InterApplicationBus.subscribe({ uuid: "*" }, topic, ({ id, message, realmName }) => {
-			messageLog.innerHTML += `<p>Received message from app with identity of {uuid: ${id.uuid}}</br><strong>MESSAGE:</strong> ${message}</br>REALM NAME: ${realmName}</p>`;
+			messageLog.innerHTML += `Received message from app with identity of {uuid: ${id.uuid}}\n\nRealm Name: ${realmName}\nMessage: ${message}\n\n`;
 		});
 	} catch (error) {
 		if (error) {

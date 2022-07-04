@@ -23,6 +23,10 @@ async function init(): Promise<void> {
 async function launchPlatform(): Promise<void> {
 	try {
 		await fin.System.launchManifest("http://localhost:5050/platform.fin.json");
+	} catch (error) {
+		console.error("Error launching target platform app:", error);
+	}
+	try {
 		channelClient = await fin.InterApplicationBus.Channel.connect("platform-command", {
 			payload: { token: "an example token" }
 		});

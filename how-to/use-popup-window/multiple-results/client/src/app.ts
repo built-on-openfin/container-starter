@@ -29,15 +29,9 @@ async function createPopupWindow(event): Promise<void> {
 }
 
 function renderPopupResult(result: OpenFin.PopupResult): void {
-	resetPopupResult();
-	const resultEl = document.createElement("pre");
-	resultEl.textContent = JSON.stringify(result, null, 2);
-	document.querySelector("#popup-result").append(resultEl);
+	document.querySelector("#popup-result").textContent = JSON.stringify(result, undefined, 2);
 }
 
 function resetPopupResult(): void {
-	const popupResultEl = document.querySelector("#popup-result");
-	if (popupResultEl.firstChild) {
-		popupResultEl.firstChild.remove();
-	}
+	document.querySelector("#popup-result").textContent = "";
 }
