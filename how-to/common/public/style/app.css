@@ -163,6 +163,7 @@ footer a {
 	text-decoration: none;
 	outline: 0;
 	white-space: nowrap;
+    transition: border-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 button:disabled {
 	opacity: 0.5;
@@ -193,8 +194,9 @@ button.image > img {
 	height: 32px;
 }
 button.secondary {
-	background-color: #ffffff;
-	color: var(--brand-primary);
+	background-color: var(--brand-input-background);
+	color: var(--brand-text);
+    border-color: var(--brand-input-border);
 }
 button.secondary:not(:disabled):not(:read-only):hover {
 	background-color: #eeeeee;
