@@ -215,6 +215,10 @@ td button {
 	padding: 5px 10px;
 	font-size: 10px;
 }
+td button.plain {
+	width: auto;
+	height: auto;
+}
 
 button.center {
 	text-align: center;
