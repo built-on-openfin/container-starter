@@ -1,4 +1,4 @@
-<img src="./assets/OpenFin-Container-Starter.png" width="100%"  alt="OpenFin Container Starter" />
+![OpenFin Container Starter](./assets/OpenFin-Container-Starter.png)
 
 _Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a licence from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license._
 
@@ -18,6 +18,7 @@ This repository contains examples for common use cases and API implementations. 
 
 | **Example**                                           | **Description**                                                                                    |
 | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [create-window](./how-to/create-window)               | This example shows how to create a dynamic window or from a manifest.                              |
 | [use-security-realms](./how-to/use-security-realms)   | This example shows you security realms work with multiple target environments                      |
 | [use-preloads](./how-to/use-preloads)                 | This example shows you a number of examples on how preload scripts can be used in your application |
 | [use-channel-api](./how-to/use-channel-api)           | This example shows you a number of examples on how to use the channel api for messaging            |
