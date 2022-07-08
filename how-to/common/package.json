@@ -2,7 +2,7 @@
 	"name": "openfin-container--common",
 	"version": "0.0.1",
 	"description": "Used to provide a common directory to host assets that apply across examples",
-    "author": "john.mandia@openfin.co",
+	"author": "john.mandia@openfin.co",
 	"contributors": [
 		"martyn.janes@openfin.co"
 	],
