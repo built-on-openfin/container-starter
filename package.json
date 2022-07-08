@@ -11,7 +11,13 @@
 	],
 	"packageExclude": [],
 	"howToCustomFolder": "",
-	"author": "",
+	"contributors": [
+		"adam.saland@openfin.co",
+        "connor.mccafferty@openfin.co",
+		"john.mandia@openfin.co",
+		"martyn.janes@openfin.co",
+		"pj.singh@openfin.co"
+	],
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"eslint": "^8.19.0",
