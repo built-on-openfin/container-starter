@@ -6,13 +6,9 @@ Preload scripts can be defined in window and view options or as part of a manife
 
 The manifest in [public/manifest.fin.json](public/manifest.fin.json) shows how you can add a preload script to your platform provider, to all windows or to all views (using the default options setting).
 
----
-
 ## How it Works
 
 The preload script is injected into the page you are targeting. The sample checks to see if the page has finished loading (if it has it executes a function that simply logs out a message) and if hasn't then it adds an event listener in order to only execute some logic when the page is ready. The buttons on the view execute logic to show developer tools for each part of the OpenFin application that had preload scripts loaded.
-
----
 
 ## Get Started
 
@@ -22,29 +18,29 @@ Follow the instructions below to get up and running.
 
 1. Install dependencies. Note that these examples assume you are in the sub-directory for the example.
 
-```bash
-$ npm install
+```shell
+npm install
 ```
 
 2. Build the project.
 
-```bash
-$ npm run build
+```shell
+npm run build
 ```
 
 3. Start the test server in a new window.
 
-```bash
-$ npm run start
+```shell
+npm run start
 ```
 
 4. Start the Platform application.
 
-```bash
-$ npm run client
+```shell
+npm run client
 ```
 
-![installing, building and launching](./assets/constainer-starter-how-to-use-preload-hello-world-install.gif)
+![installing, building and launching](./assets/container-starter-how-to-use-preload-hello-world-install.gif)
 
 ### What you will see
 
@@ -54,9 +50,7 @@ $ npm run client
 
 3. A view presenting some descriptive text and three buttons in order to show the developer tools for the platform provider, the default platform window and the view (to show that the individual preload scripts have loaded and console logged their message).
 
-![installing, building and launching](./assets/constainer-starter-how-to-use-preload-hello-world-run.gif)
-
----
+![installing, building and launching](./assets/container-starter-how-to-use-preload-hello-world-run.gif)
 
 ### A note about this example
 
