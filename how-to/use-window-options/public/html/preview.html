@@ -5,13 +5,8 @@
 		<title>Window Options Preview</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="../style/app.css" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../common/components/fin-toggle-class.js"></script>
 	</head>
 
 	<body class="col fill gap20">
@@ -20,8 +15,9 @@
 				<h1>Window Options Preview</h1>
 				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
 			</div>
-			<div class="row middle gap20">
-				<image src="../images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			<div class="row middle gap10">
+				<button is="fin-toggle-class" title="Change style"></button>
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
 			</div>
 		</header>
 		<main class="row fill gap20">
@@ -51,17 +47,13 @@
 				link.click();
 			});
 
-			function updateTheme() {
-				if (localStorage.getItem('use-window-options/theme') === 'light') {
-					document.body.classList.add('theme-light');
-				} else {
-					document.body.classList.remove('theme-light');
+			(async () => {
+				const options = await fin.me.getOptions();
+				if (!options.frame) {
+					const header = document.querySelector('header > div');
+					header.classList.add('drag');
 				}
-			}
-
-			window.addEventListener('storage', (event) => updateTheme());
-
-			updateTheme();
+			})();
 		</script>
 	</body>
 </html>

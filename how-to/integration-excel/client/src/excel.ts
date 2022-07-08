@@ -1,7 +1,7 @@
 import { getCurrentChannel } from "@finos/fdc3";
 import { Cell, ExcelApplication, ExcelWorkbook, ExcelWorksheet, getExcelApplication } from "@openfin/excel";
 
-const knownInstruments = ["TSLA", "MSFT", "AAPL"];
+const KNOWN_INSTRUMENTS = ["TSLA", "MSFT", "AAPL"];
 
 let excel: ExcelApplication | undefined;
 let openWorkbooks:
@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function init(): Promise<void> {
 	try {
+		const resultsContainer = document.querySelector<HTMLElement>("#results-container");
+		resultsContainer.style.display = "none";
+
 		excel = await getExcelApplication();
 
 		await populateWorkbooks();
@@ -123,9 +126,6 @@ async function populateWorksheets(): Promise<void> {
 		const refreshButton: HTMLButtonElement = document.querySelector("#worksheet-refresh");
 		refreshButton.disabled = true;
 
-		const cellContainer = document.querySelector<HTMLElement>("#cell-container");
-		cellContainer.style.display = "none";
-
 		const select = document.querySelector<HTMLSelectElement>("#worksheets");
 		select.disabled = true;
 		select.innerHTML = "";
@@ -182,27 +182,26 @@ async function selectWorksheet(name: string): Promise<void> {
 		if (selectedWorksheetIndex >= 0) {
 			await openWorksheets[selectedWorksheetIndex].sheet.activate();
 			await openWorksheets[selectedWorksheetIndex].sheet.addEventListener("change", handleCellChange);
-			document.querySelector<HTMLElement>("#cell-container").style.display = "block";
+
+			const resultsContainer = document.querySelector<HTMLElement>("#results-container");
+			resultsContainer.style.display = "flex";
 		}
 	}
 }
 
 async function handleCellChange(cells: Cell[]): Promise<void> {
 	const cellContainer = document.querySelector("#cell-changes-container");
-	cellContainer.innerHTML = JSON.stringify(cells);
+	cellContainer.innerHTML = JSON.stringify(cells, undefined, "  ");
 
 	for (const cell of cells) {
-		if (knownInstruments.includes(cell.value)) {
+		if (KNOWN_INSTRUMENTS.includes(cell.value)) {
 			await broadcastInstrument(cell.value);
 		}
 	}
 }
 
 async function broadcastInstrument(instrument: string): Promise<void> {
-	const broadcastContainer = document.querySelector<HTMLElement>("#broadcast-container");
-	broadcastContainer.style.display = "block";
-
-	const broadcastElement = document.querySelector("#broadcast-instrument");
+	const broadcastElement = document.querySelector<HTMLInputElement>("#broadcast-instrument");
 	if (window.fdc3) {
 		try {
 			const fdcInstrument = {
@@ -215,9 +214,9 @@ async function broadcastInstrument(instrument: string): Promise<void> {
 			const channel = await getCurrentChannel();
 			channel.broadcast(fdcInstrument);
 
-			broadcastElement.textContent = instrument;
+			broadcastElement.value = instrument;
 		} catch (err) {
-			broadcastElement.textContent = err.message;
+			broadcastElement.value = err.message;
 		}
 	} else {
 		broadcastElement.textContent = "No FD3 Channel available";

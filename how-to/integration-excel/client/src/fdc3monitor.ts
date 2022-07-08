@@ -14,8 +14,8 @@ async function init(): Promise<void> {
 
 		appChannel.addContextListener(null, (ctx) => {
 			if (ctx.type === "fdc3.instrument") {
-				const receiveElement = document.querySelector("#received-instrument");
-				receiveElement.textContent = ctx.id.ticker;
+				const receiveElement = document.querySelector<HTMLInputElement>("#received-instrument");
+				receiveElement.value = ctx.id.ticker;
 			}
 		});
 	} catch (err) {
