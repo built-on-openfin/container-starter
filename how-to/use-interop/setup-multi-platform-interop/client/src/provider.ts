@@ -47,7 +47,7 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
             const platformContextGroups: PlatformContextGroups = await platformInteropClient.getContextGroups();
             
             // These context group by differ from platformContextGroups -- we need to see what externalContextGroup are defined and create a client
-            const externalContextGroupPromises: ExternalContextGroups = externalContextGroups.map(async (externalContextGroupInfo: ExternalContextGroup): Promise<ExternalClientMap> => {
+            const externalContextGroupPromises: Promise<ExternalClientMap>[] = externalContextGroups.map(async (externalContextGroupInfo: ExternalContextGroup): Promise<ExternalClientMap> => {
                 // check to see if a Platform Client's context group has any of the channels as a externalContextGroup
                 const hasPlatformContextGroup: boolean = platformContextGroups.some(({ id }: PlatformContextGroup) => id === externalContextGroupInfo.id);
                 
@@ -83,31 +83,32 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 
                 if (this.externalClients.has(state.contextGroupId)) {
                     const colorClient: ColorInteropClient = this.externalClients.get(state.contextGroupId);
-                    colorClient.setContext(context);
+                    await colorClient.setContext(context);
                 }
         }
 
-        async setContext({ context }: { context: ExternalContext }, clientIdentity: OpenFin.ClientIdentity): Promise<void> {
+        async setContext(payload: { context: ExternalContext }, clientIdentity: OpenFin.ClientIdentity): Promise<void> {
             // create a new context object for interop setContext calls from the interop object within the Platform Client's windows or views.
+            const {context} = payload;
+            console.log({value: context, message: "CONTEXT"})
             if(context._clientInfo) {
                 const { _clientInfo: { uuid } } = context;
                 // set context on external broker
                 if((uuid !== fin.me.uuid && uuid !== this.externalBroker) || uuid === this.externalBroker) {
                     const newContext = context;
                     delete newContext._clientInfo;
-                    await super.setContext({...context, context: newContext}, clientIdentity)
-                } else {
-                    // set context on the Platform client
-                    const newContext = { ...context, _clientInfo: { uuid: fin.me.uud } };
-                    this.setContextOnExternalClient(newContext, clientIdentity);
-                    super.setContext(context, clientIdentity);
+                    await super.setContext({...payload, context: newContext}, clientIdentity)
                 }
+            }  else {
+                // set context on the Platform client
+                console.log({value: context, message: "CONTEXT"})
+                const newContext = { ...context, _clientInfo: { uuid: fin.me.uuid } };
+                await this.setContextOnExternalClient(newContext, clientIdentity);
+                await super.setContext(payload, clientIdentity);
             }
         }
     }
     return new Override(provider, options, ...args);
 }
 
-const platformConfig = fin.me.uuid === 'platform-1' ? { interopOverride } : null;
-
-fin.Platform.init(platformConfig);
+fin.Platform.init({interopOverride});

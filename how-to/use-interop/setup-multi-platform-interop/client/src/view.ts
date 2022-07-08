@@ -25,7 +25,7 @@ const handleCountryChange = ({ id }: InteropClientContext) => {
 
 const handleInteropChange: InteropContextHandler = (context: InteropClientContext) => {
     const { type } = context;
-
+    console.log("HANDLING INTEROP CHANGE")
     switch (type) {
         case 'instrument':
             handleInstrumentChange(context);
@@ -43,6 +43,7 @@ const handleInteropChange: InteropContextHandler = (context: InteropClientContex
 fin.me.interop.addContextHandler(handleInteropChange);
 
 window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM CONTENT LOADED')
     const submitTicker: HTMLButtonElement = document.querySelector('#ticker-submit');
     submitTicker.onclick = setInstrumentContext;
 
