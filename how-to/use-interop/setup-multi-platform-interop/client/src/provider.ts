@@ -30,6 +30,7 @@ function interopOverride(
 			super(overrideProvider, overrideOpts, ...overrideArgs);
 			this.externalBroker = "platform-2";
 			this.externalClients = new Map();
+			this.initializeBrokers().catch((error) => console.error(error));
 		}
 
 		public async initializeBrokers(): Promise<void> {
@@ -133,7 +134,6 @@ function interopOverride(
 		}
 	}
 	const override = new Override(provider, options, args);
-	this.initializeBrokers().catch((error) => console.error(error));
 	return override;
 }
 
