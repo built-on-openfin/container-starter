@@ -4,14 +4,21 @@
 	"description": "OpenFin Container Starter",
 	"scripts": {
 		"prettier": "prettier --config .prettierrc --write .",
-		"eslint": "eslint . --ext .js,.mjs,.ts"
+		"eslint": "eslint . --ext .js,.mjs,.ts",
+		"validate": "npm run prettier & npm run eslint"
 	},
 	"workspaces": [
 		"how-to/**/*"
 	],
 	"packageExclude": [],
 	"howToCustomFolder": "",
-	"author": "",
+	"contributors": [
+		"adam.saland@openfin.co",
+		"connor.mccafferty@openfin.co",
+		"john.mandia@openfin.co",
+		"martyn.janes@openfin.co",
+		"pj.singh@openfin.co"
+	],
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"eslint": "^8.19.0",

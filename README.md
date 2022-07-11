@@ -1,14 +1,12 @@
 ![OpenFin Container Starter](./assets/OpenFin-Container-Starter.png)
 
-_Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a licence from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license._
+_Disclaimer: ℹ️ OpenFin Container is a commercial product and this repo is for evaluation purposes. Use of the OpenFin Container and OpenFin Container components is only granted pursuant to a license from OpenFin (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license._
 
 # OpenFin Container
 
 OpenFin Container is a desktop runtime application environment that enables communication between all of your apps (web, legacy, third-party) for the enterprise desktop. It is built on top of Google Chromium and GitHub Electron and combines advanced interoperability, lightning-fast distribution, and robust security with an agile web development and deployment model.
 
 - [Learn more about the OpenFin Container](https://developers.openfin.co/of-docs/docs/container-overview)
-
----
 
 ## What can you do with this repository
 
@@ -26,8 +24,6 @@ This repository contains examples for common use cases and API implementations. 
 | [integration-excel](./how-to/integration-excel)       | This example demonstrates how to integration with Excel using the OpenFin adaptor                  |
 | [use-popup-window](./how-to/use-popup-window/)        | This example contains various examples of how to use popup windows                                 |
 | [use-window-options](./how-to/use-window-options/)    | This example demonstrates the options available for opening windows                                |
-
----
 
 ## Before you get started
 

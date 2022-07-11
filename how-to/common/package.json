@@ -2,7 +2,10 @@
 	"name": "openfin-container--common",
 	"version": "0.0.1",
 	"description": "Used to provide a common directory to host assets that apply across examples",
-	"author": "",
+	"author": "john.mandia@openfin.co",
+	"contributors": [
+		"martyn.janes@openfin.co"
+	],
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",
