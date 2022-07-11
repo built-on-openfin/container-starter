@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Context Setter</title>
+		<style>
+			body {
+				color: #f4f5f8;
+				background-color: #111118;
+				font-family: Arial, Helvetica, sans-serif;
+				display: flex;
+				justify-content: center;
+			}
+			#main-div {
+				display: flex;
+				flex-direction: column;
+			}
+			#context-setter {
+				display: flex;
+				flex-direction: column;
+				margin-top: 100px;
+			}
+		</style>
+		<script type="module" src="../js/view.bundle.js"></script>
+	</head>
+
+	<body>
+		<div id="main-div">
+			<div id="context-setter">
+				<fieldset>
+					<p>INSTRUMENT</p>
+					<p id="ticker">I am context-sensitive</p>
+					<p>COUNTRY</p>
+					<p id="country">I am context-sensitive</p>
+					<div>
+						<input id="ticker-input" type="text" placeholder="Enter ticker" autofocus />
+						<button id="ticker-submit">Set Intrument Context</button>
+					</div>
+					<div>
+						<input id="country-input" type="text" placeholder="Enter country code" autofocus />
+						<button id="country-submit">Set Country Context</button>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</body>
+</html>

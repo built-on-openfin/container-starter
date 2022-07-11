@@ -4,7 +4,8 @@
 	"description": "OpenFin Container Starter",
 	"scripts": {
 		"prettier": "prettier --config .prettierrc --write .",
-		"eslint": "eslint . --ext .js,.mjs,.ts"
+		"eslint": "eslint . --ext .js,.mjs,.ts",
+		"validate": ""
 	},
 	"workspaces": [
 		"how-to/**/*"
