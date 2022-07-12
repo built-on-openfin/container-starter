@@ -3,40 +3,38 @@
 	"version": "0.0.1",
 	"description": "OpenFin Container Starter",
 	"scripts": {
-	  "prettier": "prettier --config .prettierrc --write .",
-	  "eslint": "eslint . --ext .js,.mjs,.ts",
-	  "validate": "npm run prettier & npm run eslint"
+		"prettier": "prettier --config .prettierrc --write .",
+		"eslint": "eslint . --ext .js,.mjs,.ts",
+		"validate": "npm run prettier & npm run eslint"
 	},
 	"workspaces": [
-	  "how-to/**/*"
+		"how-to/**/*"
 	],
-	"packageExclude": [
-	  
-	],
+	"packageExclude": [],
 	"howToCustomFolder": "",
 	"contributors": [
-	  "adam.saland@openfin.co",
-	  "connor.mccafferty@openfin.co",
-	  "john.mandia@openfin.co",
-	  "martyn.janes@openfin.co",
-	  "pj.singh@openfin.co"
+		"adam.saland@openfin.co",
+		"connor.mccafferty@openfin.co",
+		"john.mandia@openfin.co",
+		"martyn.janes@openfin.co",
+		"pj.singh@openfin.co"
 	],
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-	  "eslint": "^8.19.0",
-	  "eslint-config-airbnb": "^19.0.4",
-	  "eslint-config-airbnb-typescript": "^17.0.0",
-	  "eslint-config-prettier": "^8.5.0",
-	  "eslint-plugin-import": "^2.26.0",
-	  "eslint-plugin-prettier": "^4.0.0",
-	  "eslint-plugin-promise": "^6.0.0",
-	  "eslint-plugin-simple-import-sort": "^7.0.0",
-	  "eslint-plugin-unicorn": "^42.0.0",
-	  "eslint-plugin-unused-imports": "^2.0.0",
-	  "fast-glob": "^3.2.11",
-	  "fs-extra": "^10.0.0",
-	  "prettier": "^2.6.2",
-	  "replace-in-file": "^6.3.2",
-	  "yargs": "^17.5.1"
+		"eslint": "^8.19.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-airbnb-typescript": "^17.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-simple-import-sort": "^7.0.0",
+		"eslint-plugin-unicorn": "^42.0.0",
+		"eslint-plugin-unused-imports": "^2.0.0",
+		"fast-glob": "^3.2.11",
+		"fs-extra": "^10.0.0",
+		"prettier": "^2.6.2",
+		"replace-in-file": "^6.3.2",
+		"yargs": "^17.5.1"
 	}
-  }
+}
