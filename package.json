@@ -1,6 +1,6 @@
 {
 	"name": "openfin-container-starter",
-	"version": "26.102",
+	"version": "26.102.0",
 	"description": "OpenFin Container Starter",
 	"scripts": {
 		"package-how-tos": "node ./scripts/package.js --legacy",
