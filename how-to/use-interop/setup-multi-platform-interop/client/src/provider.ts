@@ -75,7 +75,7 @@ function interopOverride(
 						const colorClient: ColorInteropClient = fin.Interop.connectSync(this.externalBroker, {});
 						await colorClient.joinContextGroup(externalContextGroupInfo.id);
 
-						// When a context is set on the colorClient join the  appropriate channel and set the context on the platform's client
+						// When a context is set on the colorClient join the  appropriate channel and set the context on the PlatformInteropClient
 						await colorClient.addContextHandler(async (context: ExternalContext): Promise<void> => {
 							await platformInteropClient.joinContextGroup(externalContextGroupInfo.id);
 							const newContext = context._clientInfo?.uuid
@@ -120,8 +120,6 @@ function interopOverride(
 				const {
 					_clientInfo: { uuid }
 				} = context;
-				console.log("UUID @ line 123", uuid);
-				console.log("CONTEXT @ line 124", context);
 				// set context on external broker
 				if ((uuid !== fin.me.uuid && uuid !== this.externalBroker) || uuid === this.externalBroker) {
 					const newContext = context;
