@@ -137,7 +137,7 @@ function interopOverride(
 		}
 	}
 
-    return new Override(provider, options, ...args);
+	return new Override(provider, options, ...args);
 }
 
 fin.Platform.init({ interopOverride }).catch((error) => console.error(error));

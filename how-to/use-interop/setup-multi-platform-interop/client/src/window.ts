@@ -34,17 +34,21 @@ const addContextGroupButtons = async (): Promise<void> => {
 	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
 	const windowFrameStyleSheet: CSSStyleSheet = document.styleSheets[0];
 	const buttonsWrapper: HTMLElement = document.querySelector("#buttons-wrapper");
-    for (const systemChannel of contextGroups) {
-        windowFrameStyleSheet.insertRule(`.${systemChannel.displayMetadata.name}-channel { border-left: 2px solid ${systemChannel.displayMetadata.color} !important;}`);
-        windowFrameStyleSheet.insertRule(`#${systemChannel.displayMetadata.name}-button:after { background-color: ${systemChannel.displayMetadata.color}}`);
-        const newButton = document.createElement("div");
-        newButton.classList.add("button");
-        newButton.classList.add("channel-button");
-        newButton.id = `${systemChannel.displayMetadata.name}-button`;
-        newButton.title = systemChannel.displayMetadata.name;
-        newButton.addEventListener("click", changeContextGroup);
-        buttonsWrapper.prepend(newButton);
-    }
+	for (const systemChannel of contextGroups) {
+		windowFrameStyleSheet.insertRule(
+			`.${systemChannel.displayMetadata.name}-channel { border-left: 2px solid ${systemChannel.displayMetadata.color} !important;}`
+		);
+		windowFrameStyleSheet.insertRule(
+			`#${systemChannel.displayMetadata.name}-button:after { background-color: ${systemChannel.displayMetadata.color}}`
+		);
+		const newButton = document.createElement("div");
+		newButton.classList.add("button");
+		newButton.classList.add("channel-button");
+		newButton.id = `${systemChannel.displayMetadata.name}-button`;
+		newButton.title = systemChannel.displayMetadata.name;
+		newButton.addEventListener("click", changeContextGroup);
+		buttonsWrapper.prepend(newButton);
+	}
 };
 
 const maxOrRestore = async (): Promise<void> => {
