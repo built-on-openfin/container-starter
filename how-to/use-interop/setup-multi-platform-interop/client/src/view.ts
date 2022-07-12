@@ -18,10 +18,10 @@ const setCountryContext = async () => {
 };
 
 const handleInstrumentChange = ({ id }: InteropClientContext) => {
-	document.querySelector("#ticker").textContent = id.ticker;
+	document.querySelector("#ticker").textContent = `Current Context: ${id.ticker}`;
 };
 const handleCountryChange = ({ id }: InteropClientContext) => {
-	document.querySelector("#country").textContent = id["ISO-3"];
+	document.querySelector("#country").textContent = `Current Context: ${id["ISO-3"]}`;
 };
 
 const handleInteropChange: InteropContextHandler = (context: InteropClientContext) => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import OpenFin, { fin } from "@openfin/core";
 import {
 	ExternalClientMap,
@@ -25,7 +26,7 @@ function interopOverride(
 		constructor(
 			overrideProvider: OpenFin.ChannelProvider,
 			overrideOpts: OpenFin.InteropBrokerOptions,
-			overrideArgs: unknown[]
+			...overrideArgs: unknown[]
 		) {
 			super(overrideProvider, overrideOpts, ...overrideArgs);
 			this.externalBroker = "platform-2";
@@ -101,10 +102,10 @@ function interopOverride(
 			// The <state> variable here represents a client instance calls made from the interop object within the Platform Client's windows or views.
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-expect-error
-			const state: { contextGroupId: string } = this.getClientState(clientIdentity);
-
-			if (this.externalClients.has(state.contextGroupId)) {
-				const colorClient: ColorInteropClient = this.externalClients.get(state.contextGroupId);
+			const state = this.getClientState(clientIdentity);
+			const ctxGroupId = state.contextGroupId as string;
+			if (this.externalClients.has(ctxGroupId)) {
+				const colorClient: ColorInteropClient = this.externalClients.get(ctxGroupId);
 				await colorClient.setContext(context);
 			}
 		}
@@ -119,6 +120,8 @@ function interopOverride(
 				const {
 					_clientInfo: { uuid }
 				} = context;
+				console.log("UUID @ line 123", uuid);
+				console.log("CONTEXT @ line 124", context);
 				// set context on external broker
 				if ((uuid !== fin.me.uuid && uuid !== this.externalBroker) || uuid === this.externalBroker) {
 					const newContext = context;
@@ -133,8 +136,8 @@ function interopOverride(
 			}
 		}
 	}
-	const override = new Override(provider, options, args);
-	return override;
+
+    return new Override(provider, options, ...args);
 }
 
 fin.Platform.init({ interopOverride }).catch((error) => console.error(error));

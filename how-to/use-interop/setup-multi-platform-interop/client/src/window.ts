@@ -14,8 +14,8 @@ openfinApplication
 	.catch((error) => console.error(error));
 
 const changeContextGroup = async (event: Event): Promise<void> => {
-	const selectedColorElement: HTMLElement = event.currentTarget as HTMLElement;
-	const color: string = selectedColorElement.dataset.title;
+	const selectedColorElement: HTMLElement = event.target as HTMLElement;
+	const color: string = selectedColorElement.title;
 	await fin.me.interop.joinContextGroup(color, lastFocusedView);
 	document
 		.querySelector(`#tab-${lastFocusedView.name}`)
@@ -34,19 +34,17 @@ const addContextGroupButtons = async (): Promise<void> => {
 	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
 	const windowFrameStyleSheet: CSSStyleSheet = document.styleSheets[0];
 	const buttonsWrapper: HTMLElement = document.querySelector("#buttons-wrapper");
-	for (const {
-		displayMetadata: { name, color }
-	} of contextGroups) {
-		windowFrameStyleSheet.insertRule(`.${name}-channel { border-left: 2px solid ${color} !important;}`);
-		windowFrameStyleSheet.insertRule(`#${name}-button:after { background-color: ${color}}`);
-		const newButton: HTMLElement = document.createElement("div");
-		newButton.classList.add("button");
-		newButton.classList.add("channel-button");
-		newButton.id = `${name}-button`;
-		newButton.dataset.title = name;
-		newButton.addEventListener("click", changeContextGroup);
-		buttonsWrapper.prepend(newButton);
-	}
+    for (const systemChannel of contextGroups) {
+        windowFrameStyleSheet.insertRule(`.${systemChannel.displayMetadata.name}-channel { border-left: 2px solid ${systemChannel.displayMetadata.color} !important;}`);
+        windowFrameStyleSheet.insertRule(`#${systemChannel.displayMetadata.name}-button:after { background-color: ${systemChannel.displayMetadata.color}}`);
+        const newButton = document.createElement("div");
+        newButton.classList.add("button");
+        newButton.classList.add("channel-button");
+        newButton.id = `${systemChannel.displayMetadata.name}-button`;
+        newButton.title = systemChannel.displayMetadata.name;
+        newButton.addEventListener("click", changeContextGroup);
+        buttonsWrapper.prepend(newButton);
+    }
 };
 
 const maxOrRestore = async (): Promise<void> => {
