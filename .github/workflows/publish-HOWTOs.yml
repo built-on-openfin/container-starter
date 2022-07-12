@@ -76,7 +76,7 @@ jobs:
           target-folder: ${{ github.ref_name }} # Target folder to deploy to
 
   publish-aws:
-    if: ${{ startsWith(github.ref_name, 'workspace/') }}
+    if: ${{ startsWith(github.ref_name, 'container/') }}
     name: Publish HOWTOs (AWS s3 CDN)
     needs: build
     runs-on: ubuntu-latest
