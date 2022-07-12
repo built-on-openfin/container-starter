@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import OpenFin, { fin } from "@openfin/core";
 import {
-	ExternalClientMap,
-	ExternalInteropClient,
-	ExternalContextGroups,
 	PlatformInteropClient,
 	PlatformContextGroups,
-	ExternalContextGroup,
-	ColorInteropClient,
 	PlatformContextGroup,
+	ColorInteropClient,
+	ExternalInteropClient,
+	ExternalClientMap,
+	ExternalContextGroup,
+	ExternalContextGroups,
 	ExternalContext
 } from "./shapes";
 
