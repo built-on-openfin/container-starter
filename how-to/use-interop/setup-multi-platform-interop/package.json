@@ -16,11 +16,11 @@
 		"setup": "cd ../../../ && npm install && cd how-to/use-interop/setup-multi-platform-interop && npm run build",
 		"validate": "npm --prefix ../../../ run validate"
 	},
-	"license": "ISC",
+	"author": "adam.saland@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"dependencies": {
 		"express": "^4.18.1",
-		"@openfin/core": "latest",
-		"openfin-adapter": "^25.69.8",
+		"@openfin/core": "26.70.16",
 		"ts-loader": "^9.3.0",
 		"typescript": "^4.6.4",
 		"webpack": "^5.72.1",

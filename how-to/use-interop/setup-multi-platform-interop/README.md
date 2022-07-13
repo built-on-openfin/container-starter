@@ -4,13 +4,9 @@ This repository demonstrates how to use OpenFin's interop overrides to enable co
 
 Before diving in we recommend taking some time familiarize yourself with the concepts and terms found in the [interoperability overview](https://developers.openfin.co/of-docs/docs/interoperability-overview) section of our documentation.
 
----
-
 ## How it Works
 
 The interop object, made available through OpenFin views and windows, is programmatically accessible through the concept of platform provider overrides. A platform provider override enables a developer to implement additional logic from objects defined on an instance of an OpenFin window or view entity. In this case specifically, we will be focusing on the `interopOverride` implementing additional logic related to the `interop` object on a Platform's window and view entities.
-
----
 
 ## Get Started
 
@@ -20,32 +16,32 @@ Follow the instructions below to get up and running.
 
 1. Install dependencies. Note that these examples assume you are in the sub-directory for the example.
 
-```bash
-$ npm install
+```shell
+npm install
 ```
 
 2. Build the project.
 
-```bash
-$ npm run build
+```shell
+npm run build
 ```
 
 3. Start the test server in a new window.
 
-```bash
-$ npm run start
+```shell
+npm run start
 ```
 
 4. Start the first Platform application.
 
-```bash
-$ npm run platform1
+```shell
+npm run platform1
 ```
 
 5. Start the second Platform application.
 
-```bash
-$ npm run platform2
+```shell
+npm run platform2
 ```
 
 ### Use the project interface
