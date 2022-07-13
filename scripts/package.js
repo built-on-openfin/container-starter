@@ -56,10 +56,10 @@ function packageHOWTOs(args) {
 	if (packageJson.packageExclude) {
 		workspaces = workspaces.filter((item) => !packageJson.packageExclude.includes(item));
 	}
-	console.log('WORKSPACES', workspaces);
+
 	for (let i = 0; i < workspaces.length; i++) {
 		const workspace = workspaces[i];
-		const howto = workspace.split('/')[1];
+		let howto = workspace.split('/')[1];
 
 		if (args.legacy) {
 			execSync('npm run build-client', {
@@ -69,18 +69,15 @@ function packageHOWTOs(args) {
 		}
 
 		const sourceDir = [workspace, 'public'].join('/');
-		const targetDir = [publishDir, howto].join('/');
+		let targetDir;
 
 		if (fs.existsSync(sourceDir)) {
-			fs.copySync(sourceDir, targetDir);
-		} else {
-			const nestedDirs = fg.sync(`${workspace}/*/public`, { onlyDirectories: true });
-			for (let j = 0; j < nestedDirs.length; j++) {
-				const nestedDir = nestedDirs[j];
-				const targetNestedDir = nestedDir.split('/')[2];
-				const targetPublishDir = [publishDir, howto, targetNestedDir].join('/');
-				fs.copySync(nestedDir, targetPublishDir);
-			}
+            const parts = sourceDir.split("/");
+            if (parts.length === 4) {
+                howto += `-${parts[2]}`;
+            }
+            targetDir = [publishDir, howto].join('/');
+            fs.copySync(sourceDir, targetDir);
 		}
 
 		try {
