@@ -72,12 +72,12 @@ function packageHOWTOs(args) {
 		let targetDir;
 
 		if (fs.existsSync(sourceDir)) {
-            const parts = sourceDir.split("/");
-            if (parts.length === 4) {
-                howto += `-${parts[2]}`;
-            }
-            targetDir = [publishDir, howto].join('/');
-            fs.copySync(sourceDir, targetDir);
+			const parts = sourceDir.split('/');
+			if (parts.length === 4) {
+				howto += `-${parts[2]}`;
+			}
+			targetDir = [publishDir, howto].join('/');
+			fs.copySync(sourceDir, targetDir);
 		}
 
 		try {
