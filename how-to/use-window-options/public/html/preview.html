@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Window Options Preview</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/common/style/app.css" />
+		<script src="/common/components/fin-toggle-class.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Window Options Preview</h1>
+				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
+			</div>
+			<div class="row middle gap10">
+				<button is="fin-toggle-class" title="Change style"></button>
+				<image src="/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<p>This is the preview window.</p>
+		</main>
+		<footer>
+			<div class="row spread">
+				<button id="btnCapture">Capture</button>
+				<button id="btnClosePreview">Close</button>
+			</div>
+		</footer>
+		<script>
+			const btnClosePreview = document.querySelector('#btnClosePreview');
+			btnClosePreview.addEventListener('click', async () => (await fin.Window.getCurrent()).close());
+
+			const btnCapture = document.querySelector('#btnCapture');
+			btnCapture.addEventListener('click', async () => {
+				console.log('SnapShot clicked');
+				const wnd = await fin.Window.getCurrent();
+
+				// Snapshot of a full visible window
+				let base64 = await wnd.getSnapshot();
+
+				const link = document.createElement('a');
+				link.setAttribute('href', 'data:image/png;base64,' + base64);
+				link.setAttribute('download', 'openfin-window-settings.png');
+				link.click();
+			});
+
+			(async () => {
+				const options = await fin.me.getOptions();
+				if (!options.frame) {
+					const header = document.querySelector('header > div');
+					header.classList.add('drag');
+				}
+			})();
+		</script>
+	</body>
+</html>

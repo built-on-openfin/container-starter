@@ -1,17 +1,17 @@
-import { fin } from "openfin-adapter/src/mock";
+import { fin } from "@openfin/core";
 
 async function init(): Promise<void> {
-    console.log("Platform Init");
+	console.log("Platform Init");
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-    platform.once("platform-api-ready", init.bind(this));
+window.addEventListener("DOMContentLoaded", async () => {
+	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
+	await platform.once("platform-api-ready", async () => init());
 });
 
 fin.Platform.init({
-    overrideCallback: async (Provider) => {
-        class Override extends Provider { }
-        return new Override();
-    }
-});
+	overrideCallback: async (Provider) => {
+		class Override extends Provider {}
+		return new Override();
+	}
+}).catch(() => {});

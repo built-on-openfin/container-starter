@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Launched View</title>
+		<link rel="stylesheet" href="/common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Launched View</title>
-    <script src="../js/app.bundle.js"></script>
-</head>
-
-<body>
-<p>  
-    This is a basic example showing how a view can be launched from another application and passed context:
-</p>
-<p>
-    The following data was passed:
-</p>
-<p id="context-container">
-
-</p>
-
-</body>
-
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Launched View</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="col left gap10">
+			<p>
+				This is a basic example showing how a view can be launched from another application and passed
+				context:
+			</p>
+			<p>The following data was passed:</p>
+			<p id="context-container"></p>
+		</main>
+	</body>
 </html>
