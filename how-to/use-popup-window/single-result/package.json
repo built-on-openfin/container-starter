@@ -16,7 +16,7 @@
 		"validate": "npm --prefix ../../../ run validate"
 	},
 	"author": "connor.mccafferty@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD"
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"@openfin/core": "^27.70.8",
 		"@types/node": "^17.0.26",
