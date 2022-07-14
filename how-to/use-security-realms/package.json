@@ -16,7 +16,7 @@
 		"validate": "npm --prefix ../../ run validate"
 	},
 	"author": "adam.saland@openfin.co",
-	"license": "MIT",
+	"license": "SEE LICENSE IN LICENSE.MD"
 	"devDependencies": {
 		"express": "^4.17.2",
 		"source-map-loader": "^3.0.1",
