@@ -21,6 +21,7 @@ Follow the instructions below to get up and running.
 ```shell
 npm run setup
 ```
+
 2. Build the project.
 
 ```shell
