@@ -63,7 +63,7 @@ From two different Platforms: add a view from a window's context group in platfo
 
 > NOTE: the logic and documentation for how two different platforms are able to share context is provided in `client/src/provider.ts`
 
-## ![multi platform context sharing](../assets/multi-platform-context-sharing.gif)
+![multi platform context sharing](../assets/multi-platform-context-sharing.gif)
 
 ### A note about this example
 
