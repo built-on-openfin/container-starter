@@ -1,5 +1,5 @@
 import OpenFin, { fin } from "@openfin/core";
-import { PlatformContextGroups } from "./shapes";
+import { PlatformContextGroups, PlatformContextGroup } from "./shapes";
 
 export const CONTAINER_ID = "layout-container";
 const openfinWindow: OpenFin.Window = fin.Window.getCurrentSync();
@@ -17,15 +17,11 @@ const changeContextGroup = async (event: Event): Promise<void> => {
 	const selectedColorElement: HTMLElement = event.target as HTMLElement;
 	const color: string = selectedColorElement.title;
 	await fin.me.interop.joinContextGroup(color, lastFocusedView);
+	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
 	document
 		.querySelector(`#tab-${lastFocusedView.name}`)
 		.classList.remove(
-			"red-channel",
-			"green-channel",
-			"pink-channel",
-			"orange-channel",
-			"purple-channel",
-			"yellow-channel"
+			...contextGroups.map(({ displayMetadata }: PlatformContextGroup) => `${displayMetadata.name}-channel`)
 		);
 	document.querySelector(`#tab-${lastFocusedView.name}`).classList.add(`${color}-channel`);
 };
