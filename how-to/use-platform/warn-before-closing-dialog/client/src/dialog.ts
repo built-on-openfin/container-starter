@@ -1,4 +1,4 @@
-import { fin } from 'openfin-adapter/src/mock';
+import { fin } from '@openfin/core';
 
 function populatePreventedViews(views) {
     views.forEach(view => {

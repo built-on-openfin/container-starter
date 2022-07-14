@@ -20,15 +20,13 @@
             flex-direction: column;
         }
 
-        #btn-div {
+        #input-div {
             display: flex;
-            flex-direction: column;
         }
 
-        button {
-            display: inline-block;
-            width: auto;
-            text-align: center;
+        input {
+            margin: 10px;
+            width: 200px;
         }
     </style>
 </head>
@@ -36,9 +34,12 @@
 <body>
     <div id="main-div">
         <h1 id="view-title">View</h1>
-        <div id="btn-div">
-            <button id="add-listener">Add Listener</button>
-            <button id="remove-listener">Remove Listener</button>
+        <p>
+            Type in the field below and try close the View or Window. A dialog will pop up indicating that this view may have unsaved changes.
+        </p>
+        <div id="input-div">
+            <p>Test Input</p>
+            <input type="text" name="test" id="test-input">
         </div>
     </div>
 </body>

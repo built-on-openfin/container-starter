@@ -1,6 +1,4 @@
-import { fin } from 'openfin-adapter/src/mock';
-
-export const CONTAINER_ID = 'layout-container';
+import { fin } from '@openfin/core';
 
 const ofWin = fin.Window.getCurrentSync();
 
@@ -33,7 +31,7 @@ const setupTitleBar = () => {
 };
 
 window.addEventListener('DOMContentLoaded', async () => {
-    await fin.Platform.Layout.init({ containerId: CONTAINER_ID });
+    await fin.Platform.Layout.init();
     setupTitleBar();
 });
 

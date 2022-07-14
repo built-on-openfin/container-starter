@@ -24,6 +24,8 @@ This repository contains examples for common use cases and API implementations. 
 | [use-dynamic-manifest](./how-to/use-dynamic-manifest) | This example contains examples of generating a manifest file dynamically |
 | [integration-excel](./how-to/integration-excel) | This example demonstrates how to integration with Excel using the OpenFin adaptor |
 | [use-popup-window](./how-to/use-popup-window/) | This example contains various examples of how to use popup windows |
+| [use-popup-window](./how-to/use-popup-window/) | This example contains various examples of how to use popup windows |
+| [use-platform](./how-to/use-platform/) | This example contains various examples of how to use Platform |
 ---
 
 ## Before you get started
