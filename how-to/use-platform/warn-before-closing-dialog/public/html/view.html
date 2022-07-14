@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View</title>
+    <script type="module" src="../js/view.bundle.js"></script>
+    <style>
+        body {
+            color: #F4F5F8;
+            background-color: #111118;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+        }
+
+        #main-div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #input-div {
+            display: flex;
+        }
+
+        input {
+            margin: 10px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-div">
+        <h1 id="view-title">View</h1>
+        <p>
+            Type in the field below and try close the View or Window. A dialog will pop up indicating that this view may have unsaved changes.
+        </p>
+        <div id="input-div">
+            <p>Test Input</p>
+            <input type="text" name="test" id="test-input">
+        </div>
+    </div>
+</body>
+
+</html>

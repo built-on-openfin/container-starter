@@ -1,0 +1,28 @@
+{
+    "name": "warn-before-closing-dialog",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "npm run build-server & npm run build-client",
+        "watch": "npm run build-server & npm run watch-client",
+        "build-server": "tsc --project ./server",
+        "watch-client": "webpack watch --config ./client/webpack.config.js --mode=development",
+        "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+        "start": "npm run server",
+        "platform": "start fin://localhost:5555/config/manifest.json",
+        "server": "node ./server/build/index.js",
+        "kill": "(npm run -s kill:fin || true) && (npm run -s kill:rvm || true)",
+        "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
+        "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "@openfin/core": "^26.70.16",
+        "express": "^4.18.1",
+        "ts-loader": "^9.3.0",
+        "typescript": "^4.6.4",
+        "webpack": "^5.72.1",
+        "webpack-cli": "^4.9.2"
+    }
+}
