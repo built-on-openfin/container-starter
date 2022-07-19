@@ -10,10 +10,10 @@ Follow the instructions below to get up and running.
 
 ### Set up the project
 
-1. Install dependencies. Note that these examples assume you are in the sub-directory for the example.
+1. Install dependencies and do the initial build. Note that these examples assume you are in the sub-directory for the example.
 
 ```shell
-npm install
+npm run setup
 ```
 
 2. Build the project.

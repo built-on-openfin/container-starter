@@ -13,6 +13,6 @@
 		"build": "echo Nothing to build"
 	},
 	"devDependencies": {
-		"openfin-adapter": "^23.67.7"
+		"openfin-adapter": "^26.70.16"
 	}
 }
