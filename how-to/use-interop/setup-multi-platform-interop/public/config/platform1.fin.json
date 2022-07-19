@@ -36,7 +36,7 @@
 									"type": "component",
 									"componentName": "view",
 									"componentState": {
-										"url": "https://built-on-openfin.github.io/workspace-starter/main/common/views/interop/context/interop-broadcast-view.html"
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v1.0.0/interop/interop-api/context/interop-broadcast-view.html"
 									}
 								}
 							]
