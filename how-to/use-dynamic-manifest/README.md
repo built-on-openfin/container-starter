@@ -8,9 +8,9 @@ This repository contains examples showing how a service could be used to return 
 
 ### Examples
 
-| Example                   | Description                                                                                                                          |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| [How To - Basic](./basic) | This is an example of an expressjs server returning a different manifest based on an environment being specified using a querystring |
+| Example                   | Description                                                                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| [How To - Basic](./basic) | This is an example of an expressjs server returning a different manifest based on an environment being specified using a query string |
 
 ## Before you get started
 

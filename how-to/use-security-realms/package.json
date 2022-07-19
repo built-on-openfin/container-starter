@@ -15,8 +15,8 @@
 		"setup": "cd ../../ && npm install && cd how-to/use-security-realms && npm run build",
 		"validate": "npm --prefix ../../ run validate"
 	},
-	"author": "@adam-saland",
-	"license": "MIT",
+	"author": "adam.saland@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"express": "^4.17.2",
 		"source-map-loader": "^3.0.1",

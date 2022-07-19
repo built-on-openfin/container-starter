@@ -6,8 +6,6 @@ The application issuing the command is a traditional OpenFin window application 
 
 The main logic for the creation of the command channel can be found in [client/src/provider.ts](client/src/provider.ts).
 
----
-
 ## How it Works
 
 The OpenFin window application launches and exposes three buttons.
@@ -18,36 +16,34 @@ The OpenFin window application launches and exposes three buttons.
 
 The view that gets launched into the platform checks the customData that was passed to it and writes it out to the html document (for demonstration purposes). This could be an application view reading in passed context and using it to either fetch additional information or display it on the screen.
 
----
-
 ## Get Started
 
 Follow the instructions below to get up and running.
 
 ### Set up the project
 
-1. Install dependencies. Note that these examples assume you are in the sub-directory for the example.
+1. Install dependencies and do the initial build. Note that these examples assume you are in the sub-directory for the example.
 
-```bash
-$ npm install
+```shell
+npm run setup
 ```
 
 2. Build the project.
 
-```bash
-$ npm run build
+```shell
+npm run build
 ```
 
 3. Start the test server in a new window.
 
-```bash
-$ npm run start
+```shell
+npm run start
 ```
 
 4. Start the OpenFin Window application.
 
-```bash
-$ npm run client
+```shell
+npm run client
 ```
 
 ![installing, building and launching](./assets/container-starter-how-to-channel-api-issue-commands-to-a-platform-install.gif)
@@ -63,8 +59,6 @@ $ npm run client
 4. A third button on the OpenFin Window Application issues a createView command and passes information related to the last launched view (which window it was attached to).
 
 ![run the application](./assets/container-starter-how-to-channel-api-issue-commands-to-a-platform-run.gif)
-
----
 
 ### A note about this example
 

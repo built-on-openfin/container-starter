@@ -4,15 +4,11 @@ This repository demonstrates how to use OpenFin Runtime security realms to isola
 
 Before diving in we recommend taking some time reading an [overview of how security realms work](https://developers.openfin.co/of-docs/docs/openfin-security#security-realms).
 
----
-
 ## How it Works
 
 Security realms can be enabled by specifying the `--security-realm` argument in an application's manifest. The value is the name of the security realm.
 
 ![adding a security realm as a runtime argument](./assets/set-security-realm.gif)
-
----
 
 ## Get Started
 
@@ -20,28 +16,28 @@ Follow the instructions below to get up and running.
 
 ### Set up the project
 
-1. Install dependencies. Note that these examples assume you are in the sub-directory for the example.
+1. Install dependencies and do the initial build. Note that these examples assume you are in the sub-directory for the example.
 
-```bash
-$ npm install
+```shell
+npm run setup
 ```
 
 2. Build the project.
 
-```bash
-$ npm run build
+```shell
+npm run build
 ```
 
 3. Start the test server in a new window.
 
-```bash
-$ npm run start
+```shell
+npm run start
 ```
 
 4. Start the Platform application.
 
-```bash
-$ npm run client
+```shell
+npm run client
 ```
 
 ### Use the project interface
@@ -69,8 +65,6 @@ $ npm run client
 5. Type a message into the UAT application and press **Send Message To Topic**. Although the content from both applications consists of the same HTML and JavaScript, each application is restricted to the context of its security realm, because they have different security realms defined. Therefore, the message does not go to the Platform view, but to a console window.
    ![send message to native app](./assets/send-message-different-realm.gif)
 
----
-
 ## File and folder structure
 
 _The paths provided in this description are relative to the server host_: `http://localhost:5050`
@@ -95,8 +89,6 @@ _The paths provided in this description are relative to the server host_: `http:
       - Contains a platform view loaded from: `/html/app.html`
         - Contains TypeScript written in `client/src` and loaded from: `../js/view-app.bundle.js`
       - Contains an `appAsset` with a .NET adapter console application that subscribes to messages coming from applications in the `UAT-MAIN` security realm.
-
----
 
 ### A note about this example
 

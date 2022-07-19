@@ -15,8 +15,8 @@
 		"setup": "cd ../../ && npm install && cd how-to/create-window && npm run build",
 		"validate": "npm --prefix ../../ run validate"
 	},
-	"author": "@pjsm41390 ",
-	"license": "MIT",
+	"author": "pj.singh@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"express": "^4.17.2",
 		"source-map-loader": "^3.0.1",

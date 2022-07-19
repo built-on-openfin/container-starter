@@ -15,8 +15,8 @@
 		"setup": "cd ../../../ && npm install && cd how-to/use-popup-window/modal && npm run build",
 		"validate": "npm --prefix ../../../ run validate"
 	},
-	"author": "@connormccafferty",
-	"license": "MIT",
+	"author": "connor.mccafferty@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"@openfin/core": "^27.70.8",
 		"@types/node": "^17.0.26",

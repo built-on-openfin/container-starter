@@ -15,8 +15,8 @@
 		"setup": "cd ../../../ && npm install && cd how-to/use-channel-api/issue-commands-to-a-platform && npm run build",
 		"validate": "npm --prefix ../../../ run validate"
 	},
-	"author": "@johnman",
-	"license": "MIT",
+	"author": "john.mandia@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"express": "^4.17.2",
 		"source-map-loader": "^3.0.1",
