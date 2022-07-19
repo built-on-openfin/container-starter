@@ -1,0 +1,14 @@
+{
+	"licenseKey": "openfin-demo-license-key",
+	"runtime": {
+		"version": "26.102.70.16",
+		"arguments": "--v=1"
+	},
+	"startup_app": {
+		"name": "issue-commands-to-platform",
+		"uuid": "issue-commands-to-platform",
+		"url": "https://built-on-openfin.github.io/container-starter/dev/adam/use-interop/use-channel-api-issue-commands-to-a-platform/html/window.html",
+		"autoShow": true,
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/use-interop/use-channel-api-issue-commands-to-a-platform/favicon.ico"
+	}
+}
