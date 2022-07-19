@@ -24,6 +24,7 @@ This repository contains examples for common use cases and API implementations. 
 | [integration-excel](./how-to/integration-excel)       | This example demonstrates how to integration with Excel using the OpenFin adaptor                  |
 | [use-popup-window](./how-to/use-popup-window/)        | This example contains various examples of how to use popup windows                                 |
 | [use-window-options](./how-to/use-window-options/)    | This example demonstrates the options available for opening windows                                |
+| [use-interop](./how-to/use-interop/)                  | This example contains various implementations and use cases for the Interop API                    |
 
 ## Before you get started
 
