@@ -6,7 +6,7 @@
 	"platform": {
 		"uuid": "platform-2",
 		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-		"autoShow": true,
+		"autoShow": false,
 		"apiDiagnostics": false,
 		"defaultWindowOptions": {
 			"url": "http://localhost:5050/html/window.html",
