@@ -41,7 +41,7 @@ npm run client
 5. Start the second Platform application.
 
 ```shell
-npm run client2
+npm run secondclient
 ```
 
 ### Use the project interface

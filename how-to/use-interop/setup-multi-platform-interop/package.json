@@ -10,7 +10,7 @@
 		"build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
 		"start": "npm run server",
 		"client": "npm --prefix ../../common/ run client",
-		"client2": "npm --prefix ../../common/ run client http://localhost:5050/manifest2.fin.json",
+		"secondclient": "npm --prefix ../../common/ run client http://localhost:5050/manifest2.fin.json",
 		"server": "node ./server/build/index.js",
 		"kill": "npm --prefix ../../common/ run kill",
 		"setup": "cd ../../../ && npm install && cd how-to/use-interop/setup-multi-platform-interop && npm run build",
