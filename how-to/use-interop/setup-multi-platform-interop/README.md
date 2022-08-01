@@ -35,13 +35,13 @@ npm run start
 4. Start the first Platform application.
 
 ```shell
-npm run platform1
+npm run client
 ```
 
 5. Start the second Platform application.
 
 ```shell
-npm run platform2
+npm run secondclient
 ```
 
 ### Use the project interface
