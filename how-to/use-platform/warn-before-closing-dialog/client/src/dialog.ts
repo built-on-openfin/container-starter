@@ -35,7 +35,8 @@ function populate() {
 
 async function handleClose(userDecision) {
     try {
-        await fin.InterApplicationBus.publish('user-decision', userDecision);
+        const client = await fin.InterApplicationBus.Channel.connect('userDecisionProvider');
+        await client.dispatch('get-user-decision', userDecision);
         window.close();
     } catch (error) {
         console.log(error);
