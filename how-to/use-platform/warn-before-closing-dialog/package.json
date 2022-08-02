@@ -11,10 +11,12 @@
         "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
         "start": "npm run server",
         "platform": "start fin://localhost:5555/config/manifest.json",
+        "client": "npm --prefix ../../common/ run client",
         "server": "node ./server/build/index.js",
-        "kill": "(npm run -s kill:fin || true) && (npm run -s kill:rvm || true)",
+        "kill": "npm --prefix ../../common/ run kill",
         "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
-        "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T"
+        "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T",
+        "validate": "npm --prefix ../../../ run validate"
     },
     "license": "ISC",
     "dependencies": {
