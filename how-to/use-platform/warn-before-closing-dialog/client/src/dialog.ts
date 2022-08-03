@@ -2,6 +2,7 @@ import { fin } from '@openfin/core';
 
 function populatePreventedViews(views) {
     views.forEach(view => {
+        console.log('add view', view);
         const viewP = document.createElement('p');
         viewP.innerHTML = view.name;
         document.querySelector('#views').appendChild(viewP);
@@ -56,14 +57,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     populate();
-
-    const rect = document.body.getBoundingClientRect();
-    const bounds = await fin.me.getBounds();
-
-    fin.me.setBounds({
-        width: bounds.width,
-        top: bounds.top,
-        left: bounds.left,
-        height: Math.round(rect.height) + 40
-    });
 });

@@ -38,7 +38,7 @@ npm run platform
 
 You will see 4 Views. Each View has an input field. Whenever you type in one of these fields a before unload handler is set on its View. If you try to close the View or the Window you will see a dialog warning you of any potential unsaved changes.
 
-![warn before closing dialog](./public/assets/openfin_J62gQuDq6c.gif)
+![warn before closing dialog](./public/assets/openfin_ZDKIEer6PC.gif)
 
 > NOTE: the logic and documentation is provided in `client/src/provider.ts`
 

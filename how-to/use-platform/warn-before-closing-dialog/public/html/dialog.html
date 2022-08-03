@@ -8,28 +8,19 @@
     <title>View(s) preventing closing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="module" src="../js/dialog.bundle.js"></script>
+    <link rel="stylesheet" href="/common/style/app.css" />
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            background-color: #2A292F;
-            color: #F4F5F8;
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0px;
-            box-shadow: 5px 10px #2A292F;
-        }
-
         #main-div {
-            margin: 5px;
+            justify-content: space-between;
         }
     </style>
 </head>
 
 <body>
-    <div id="main-div">
+    <div id="main-div" class="col fill gap20">
         <div id="text"></div>
         <div id="views"></div>
-        <div>
+        <div id="button-div">
             <button id="okay">OK</button>
             <button id="cancel">Cancel</button>
         </div>

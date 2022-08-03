@@ -8,10 +8,15 @@ const launchDialog = async (viewsPreventingUnload, windowId, closeType): Promise
     
     return new Promise(async (resolve, reject) => {
         try {
-            const provider = await fin.InterApplicationBus.Channel.create('userDecisionProvider');;
+            const dialogWindow = fin.Window.wrapSync({ uuid: fin.me.identity.uuid, name: 'before-unload-dialog' });
+            
+            const provider = await fin.InterApplicationBus.Channel.create('userDecisionProvider');
+
+            dialogWindow.on('closed', () => {
+                provider.destroy();
+            });
 
             provider.register('get-user-decision', (continueWithClose: boolean) => {
-                provider.destroy();
                 resolve(continueWithClose);
             });
 
@@ -20,12 +25,13 @@ const launchDialog = async (viewsPreventingUnload, windowId, closeType): Promise
                 url, 
                 modalParentIdentity: windowId, 
                 frame: true, 
-                defaultHeight: closeType === 'window' ? 230 : 150,
+                defaultHeight: closeType === 'window' ? 240 : 200,
                 defaultWidth: 400, 
                 saveWindowState: false,
                 defaultCentered: true,
                 maximizable: false,
-                minimizable: false
+                minimizable: false,
+                resizable: false
             });
         } catch (error) {
             reject(error);

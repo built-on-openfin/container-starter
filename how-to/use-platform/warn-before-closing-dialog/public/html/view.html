@@ -7,32 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>View</title>
     <script type="module" src="../js/view.bundle.js"></script>
-    <style>
-        body {
-            color: #F4F5F8;
-            background-color: #111118;
-            font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-        }
-
-        #main-div {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #input-div {
-            display: flex;
-        }
-
-        input {
-            margin: 10px;
-            width: 200px;
-        }
-    </style>
+    <link rel="stylesheet" href="/common/style/app.css" />
 </head>
 
-<body>
-    <div id="main-div">
+<body class="col fill gap20">
+    <div id="main-div" class="col fill gap20">
         <h1 id="view-title">View</h1>
         <p>
             Type in the field below and try close the View or Window. A dialog will pop up indicating that this view may have unsaved changes.
