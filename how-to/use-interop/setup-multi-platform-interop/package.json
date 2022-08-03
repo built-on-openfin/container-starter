@@ -1,0 +1,29 @@
+{
+	"name": "setup-cross-platform-interop",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "npm run build-server & npm run build-client",
+		"build-server": "tsc --project ./server",
+		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+		"build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
+		"start": "npm run server",
+		"client": "npm --prefix ../../common/ run client",
+		"secondclient": "npm --prefix ../../common/ run client http://localhost:5050/manifest2.fin.json",
+		"server": "node ./server/build/index.js",
+		"kill": "npm --prefix ../../common/ run kill",
+		"setup": "cd ../../../ && npm install && cd how-to/use-interop/setup-multi-platform-interop && npm run build",
+		"validate": "npm --prefix ../../../ run validate"
+	},
+	"author": "adam.saland@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
+	"devDependencies": {
+		"@openfin/core": "^27.70.8",
+		"express": "^4.18.1",
+		"ts-loader": "^9.3.0",
+		"typescript": "^4.6.4",
+		"webpack": "^5.72.1",
+		"webpack-cli": "^4.9.2"
+	}
+}
