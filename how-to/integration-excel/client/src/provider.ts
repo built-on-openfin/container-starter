@@ -1,5 +1,3 @@
-import { fin } from "@openfin/core";
-
 async function init(): Promise<void> {
 	console.log("Platform Init");
 }

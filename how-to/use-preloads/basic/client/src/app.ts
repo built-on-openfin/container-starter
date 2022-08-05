@@ -1,5 +1,3 @@
-import { fin } from "@openfin/core";
-
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		await init();
