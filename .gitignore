@@ -9,4 +9,9 @@ how-to/*/package-lock.json
 **/*.bundle.js
 **/build
 
+# Uploads
+
+**/public/uploads/runtimelogs/*.log
+**/public/uploads/applogs/*.zip
+
 ./public*/
