@@ -2,8 +2,6 @@
 
 ## How it Works
 
-## How it works
-
 ### Collecting **Runtime Debug Logs**
 
 1. The dropdown seen below is populated by the resolved Promise's name attribute returned by the [getLogList](https://cdn.openfin.co/docs/javascript/stable/System.html#getLogList) API.
