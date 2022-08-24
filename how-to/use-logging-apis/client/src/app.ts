@@ -22,7 +22,7 @@ async function initDom(): Promise<void> {
 	const upload: HTMLFormElement = document.querySelector("#upload-form");
 	upload.addEventListener("submit", uploadHandler);
 	const sendAppLogBtn: HTMLButtonElement = document.querySelector("#send-app-log");
-	sendAppLogBtn.addEventListener("click", async (e) => sendApplicationLogs(e));
+	sendAppLogBtn.addEventListener("click", sendApplicationLogs);
 }
 
 async function uploadHandler(submitEvent) {
@@ -36,7 +36,7 @@ async function uploadHandler(submitEvent) {
 	formData.append("file", debugLogFile);
 	formData.append("filename", fileName);
 	formData.append("uuid", fin.me.uuid);
-	const uploadState = await fetch("http://localhost:5050/upload", {
+	const uploadState = await fetch("http://localhost:5050/uploads", {
 		method: "POST",
 		body: formData
 	});
@@ -48,10 +48,16 @@ async function uploadHandler(submitEvent) {
 	logPreview.textContent += logs;
 }
 
-async function sendApplicationLogs(e) {
+/**
+ * @function sendApplicationLogs
+ * @description
+ * Sends a message to the OpenFin RVM to send the application logs.
+ */
+
+async function sendApplicationLogs() {
 	try {
-		e.preventDefault();
-		await fin.Application.getCurrentSync().sendApplicationLog();
+		const appLogResponse = await fin.Application.getCurrentSync().sendApplicationLog();
+		console.log(`Log ID: ${appLogResponse.logId}`);
 	} catch {
 		// swallow unnecessary errors.
 	}

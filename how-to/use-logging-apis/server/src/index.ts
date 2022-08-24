@@ -17,7 +17,7 @@ app.use("/common", express.static(commonPath));
 /** LOGGING SERVER CONFIGURATION */
 const APP_LOG_DESTINATION = path.join(mainPath, "uploads/", "applogs");
 const RUNTIME_DEBUG_LOG_DESTINATION = path.join(mainPath, "uploads/", "runtimelogs");
-const RUNTIME_DEBUG_LOG_ENDPOINT = "/upload";
+const RUNTIME_DEBUG_LOG_ENDPOINT = "/uploads";
 const APP_LOG_ENDPOINT = "/api/v1/logs";
 
 const multerStorage = multer.diskStorage({
