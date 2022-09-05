@@ -23,10 +23,9 @@
 		<main class="row gap20">
 			<div class="fill col gap10 scroll-vertical">
 				<h3>Excel</h3>
-				<p>Open any Workbook in Excel to start viewing changes to it's cells.</p>
+				<p>Open Excel and select Workbook and Worksheet below to start view changes to it's cells.</p>
 				<p>
-					After selecting a worksheet enter any of the known instruments into a cell e.g. TSLA, MSFT, APPL -
-					this should send an FDC message for that instrument.
+					This example application listens for cell changes and when the value is TSLA, MSFT or AAPL it will create an fdc3.instrument context object with the value as the ticker and broadcast it. 
 				</p>
 				<div class="error" id="error"></div>
 				<div class="col gap20">
