@@ -1,4 +1,3 @@
-import OpenFin, { fin } from "@openfin/core";
 import {
 	PlatformInteropClient,
 	PlatformContextGroups,

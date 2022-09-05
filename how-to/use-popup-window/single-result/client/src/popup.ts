@@ -1,4 +1,4 @@
-import { fin } from "@openfin/core";
+export {};
 
 const me = fin.me as OpenFin.Window;
 

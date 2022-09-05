@@ -1,4 +1,3 @@
-import OpenFin, { fin } from "@openfin/core";
 import { PlatformContextGroups, PlatformContextGroup } from "./shapes";
 
 export const CONTAINER_ID = "layout-container";

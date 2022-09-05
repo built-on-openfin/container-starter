@@ -1,4 +1,3 @@
-import OpenFin from "@openfin/core";
 export type ExternalClientMap = Map<OpenFin.ApplicationIdentity["uuid"], OpenFin.InteropClient>;
 export type ExternalInteropClient = OpenFin.InteropClient;
 export type ExternalContextGroup = OpenFin.ContextGroupInfo;
