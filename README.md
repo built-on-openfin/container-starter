@@ -25,6 +25,7 @@ This repository contains examples for common use cases and API implementations. 
 | [use-popup-window](./how-to/use-popup-window/)        | This example contains various examples of how to use popup windows                                 |
 | [use-window-options](./how-to/use-window-options/)    | This example demonstrates the options available for opening windows                                |
 | [use-interop](./how-to/use-interop/)                  | This example contains various implementations and use cases for the Interop API                    |
+| [use-a-manifest](./how-to/use-a-manifest/)            | This example contains various examples of how to use the OpenFin manifest                          |
 
 ## Before you get started
 
