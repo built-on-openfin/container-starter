@@ -8,9 +8,9 @@ This repository contains examples showing how to configure your application diff
 
 ### Examples
 
-| Example                                             | Description                                                                                                                                                                                                                            |
-| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [How To - Create a single page platform](./create-a-single-page-platform)              | This is an example of how start your move to a platform by creating a basic platform manifest that defines a single view to load a site's primary url and hides the tab to make this platform app have a single frame. |
+| Example                                                                   | Description                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [How To - Create a single page platform](./create-a-single-page-platform) | This is an example of how start your move to a platform by creating a basic platform manifest that defines a single view to load a site's primary url and hides the tab to make this platform app have a single frame. |
 
 ## Before you get started
 
