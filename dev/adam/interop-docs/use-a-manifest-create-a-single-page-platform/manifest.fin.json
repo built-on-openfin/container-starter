@@ -1,0 +1,45 @@
+{
+	"licenseKey": "openfin-demo-license-key",
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "26.102.70.16",
+		"autoShow": false
+	},
+	"platform": {
+		"uuid": "how-to-use-a-manifest-create-a-single-page-platform",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/interop-docs/use-a-manifest-create-a-single-page-platform/favicon.ico"
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"defaultWidth": 800,
+				"defaultHeight": 600,
+				"defaultLeft": 0,
+				"defaultTop": 0,
+				"saveWindowState": false,
+				"backgroundThrottling": true,
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"width": 100,
+							"isClosable": false,
+							"reorderEnabled": false,
+							"hasHeaders": false,
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/container-starter/dev/adam/interop-docs/common/style/style.html"
+									},
+									"title": "view"
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
