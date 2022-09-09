@@ -10,7 +10,7 @@ import type {
 	ExternalContext
 } from "./shapes";
 /**
- * @function interopOverride function passed to Platform.init as an InitOption... (i can find where this is later)
+ * @function interopOverride function passed to Platform.init as an InitOption
  * @param InteropBroker class used to extend the custom override subclass.
  * @param provider channel provider for the initialized platform.
  * @param options default options specified in the manifest attribute "platform.interopBrokerConfiguration".
