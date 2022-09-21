@@ -26,6 +26,7 @@ This repository contains examples for common use cases and API implementations. 
 | [use-window-options](./how-to/use-window-options/)    | This example demonstrates the options available for opening windows                                |
 | [use-interop](./how-to/use-interop/)                  | This example contains various implementations and use cases for the Interop API                    |
 | [use-a-manifest](./how-to/use-a-manifest/)            | This example contains various examples of how to use the OpenFin manifest                          |
+| [use-content-creation-rules](./how-to/use-content-creation-rules/)| This example demonstrates how content creation rules can be applied                                |
 
 ## Before you get started
 

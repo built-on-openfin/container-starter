@@ -2,7 +2,7 @@
 
 ## How it Works
 
-This example demonstrates how to use [content creation rules]() to specify the behavior for new windows created using the web native `window.open` call.
+This example demonstrates how to use [content creation rules](https://developers.openfin.co/of-docs/docs/content-creation-rules) to specify the behavior for new windows created using the web native `window.open` call.
 
 Below is the content creation rule set defined in the [platform manifest](./public/manifest.fin.json) `"platform.defaultViewOptions"` object.
 
