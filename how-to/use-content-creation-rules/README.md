@@ -43,9 +43,9 @@ Follow the instructions below to get up and running.
 
 3. Start the test server in a new window.
 
-    ```shell
-    npm run start
-    ```
+   ```shell
+   npm run start
+   ```
 
 4. Start the Platform application.
 
