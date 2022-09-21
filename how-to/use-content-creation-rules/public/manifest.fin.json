@@ -43,10 +43,6 @@
 					{
 						"behavior": "view",
 						"match": ["*://*.google.com/*"]
-					},
-					{
-						"behavior": "view",
-						"match": "<all_urls>"
 					}
 				]
 			}
