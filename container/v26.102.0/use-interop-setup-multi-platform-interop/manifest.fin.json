@@ -6,7 +6,7 @@
 	"platform": {
 		"uuid": "platform-1",
 		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-		"autoShow": true,
+		"autoShow": false,
 		"providerUrl": "https://built-on-openfin.github.io/container-starter/container/v26.102.0/use-interop-setup-multi-platform-interop/html/provider.html",
 		"apiDiagnostics": false,
 		"defaultWindowOptions": {
