@@ -1,4 +1,5 @@
 window.addEventListener("DOMContentLoaded", async () => {
+	const platform = fin.Platform.getCurrentSync();
 	const me = fin.me as OpenFin.Window;
 	const CONTAINER_ID = "layout-container";
 	await fin.Platform.Layout.init({ containerId: CONTAINER_ID });
@@ -25,14 +26,19 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 		return me.restore();
 	}
-	const p = fin.Platform.getCurrentSync();
 	await me.on("child-view-created", async (e) => {
-		const viewOptions = { url: e.childOptions.url, target: fin.me.identity };
-		await p.createView(viewOptions as OpenFin.PlatformViewCreationOptions, fin.me.identity);
+		const viewOptions: OpenFin.PlatformViewCreationOptions = {
+			url: e.childOptions.url,
+			target: fin.me.identity
+		};
+		await platform.createView(viewOptions, fin.me.identity);
 	});
 
 	await me.on("view-child-view-created", async (e) => {
-		const viewOptions = { url: e.childOptions.url, target: fin.me.identity };
-		await p.createView(viewOptions as OpenFin.PlatformViewCreationOptions, fin.me.identity);
+		const viewOptions: OpenFin.PlatformViewCreationOptions = {
+			url: e.childOptions.url,
+			target: fin.me.identity
+		};
+		await platform.createView(viewOptions, fin.me.identity);
 	});
 });
