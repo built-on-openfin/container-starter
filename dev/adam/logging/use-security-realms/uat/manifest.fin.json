@@ -1,0 +1,45 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect --security-realm=UAT-MAIN",
+		"version": "26.102.70.16"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "UAT Main Platform",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/logging/use-security-realms/favicon.ico",
+		"name": "UAT Main Platform"
+	},
+	"platform": {
+		"uuid": "uat-main-platform",
+		"autoShow": false,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/adam/logging/use-security-realms/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
