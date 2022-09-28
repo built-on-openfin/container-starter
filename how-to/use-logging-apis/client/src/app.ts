@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
+/**
+ * @function initDom
+ * @description
+ * Populates DOM with the UI elements and adds listeners obtaining selected/submitted options.
+ */
+
 async function initDom(): Promise<void> {
 	const logListElement: HTMLSelectElement = document.querySelector("#log-list");
 	await createLogDropDown(logListElement);
@@ -25,7 +31,17 @@ async function initDom(): Promise<void> {
 	sendAppLogBtn.addEventListener("click", sendApplicationLogs);
 }
 
-async function uploadHandler(submitEvent) {
+/**
+ * @function uploadHandler
+ * @param submitEvent form submit event.
+ * @description
+ * 1. Creates a FormData object.
+ * 2. Creates a File object from the string of the Runtime debug log file contents.
+ * 3. Populates the FormData object with necessary parameters to be read by the server.
+ * 4. Uploads the created runtime debug log file to a server endpoint.
+ */
+
+async function uploadHandler(submitEvent: Event) {
 	submitEvent.preventDefault();
 	if (!fileName) {
 		fileName = "debug.log";
@@ -62,11 +78,25 @@ async function sendApplicationLogs() {
 		// swallow unnecessary errors.
 	}
 }
+
+/**
+ * @function getLogFromName
+ * @param name file name of the runtime debug log to retrieve.
+ * @description
+ * Retrieves the runtime debug log from a filename.
+ */
+
 async function getLogFromName(name: string): Promise<string> {
 	const log = await fin.System.getLog({ name });
 	return log;
 }
 
+/**
+ * @function createLogDropDown
+ * @param parentElement HTML Element to append the log filename HTMLOptionElement to.
+ * @description
+ * Creates an HTMLOptionElement for each of the Runtime debug logs.
+ */
 async function createLogDropDown(parentElement: HTMLSelectElement) {
 	const logList: OpenFin.LogInfo[] = await fin.System.getLogList();
 

@@ -20,6 +20,9 @@ const RUNTIME_DEBUG_LOG_DESTINATION = path.join(mainPath, "uploads/", "runtimelo
 const RUNTIME_DEBUG_LOG_ENDPOINT = "/uploads";
 const APP_LOG_ENDPOINT = "/api/v1/logs";
 
+/**
+ * Multer Storage configuration: https://www.npmjs.com/package/multer
+ */
 const multerStorage = multer.diskStorage({
 	destination: (_req, file, cb) => {
 		if (file.fieldname === "logFile") {
@@ -39,7 +42,12 @@ const multerStorage = multer.diskStorage({
 	}
 });
 
+// multer upload object
 const upload = multer({ storage: multerStorage });
+
+/**
+ * Server route for runtime debug log files.
+ */
 
 app.route(RUNTIME_DEBUG_LOG_ENDPOINT).post(upload.single("file"), async (req, res) => {
 	console.log({
@@ -48,6 +56,10 @@ app.route(RUNTIME_DEBUG_LOG_ENDPOINT).post(upload.single("file"), async (req, re
 	});
 	res.json(req.file);
 });
+
+/**
+ * Server route REQUIRED for processing the HTTP POST request sent by the RVM
+ */
 
 app.route(APP_LOG_ENDPOINT).post(upload.single("logFile"), (req, res) => {
 	res.statusCode = 200;
