@@ -59,7 +59,7 @@ async function uploadHandler(submitEvent: Event) {
 
 	const uploadStateJson = await uploadState.json();
 	const uploadStateJsonString = JSON.stringify(uploadStateJson, null, 5);
-	const logs = `${new Date(Date.now()).toLocaleTimeString()}: ${uploadStateJsonString}\n`;
+	const logs = `${new Date().toLocaleTimeString()}: ${uploadStateJsonString}\n`;
 	const logPreview: HTMLPreElement = document.querySelector("#preview");
 	logPreview.textContent += logs;
 }
