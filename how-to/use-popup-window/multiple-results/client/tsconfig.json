@@ -8,7 +8,9 @@
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "node"
+		"importsNotUsedAsValues": "error",
+		"moduleResolution": "node",
+		"types": ["../../../common/types/fin"]
 	},
 	"include": ["./src/**/*.ts"]
 }

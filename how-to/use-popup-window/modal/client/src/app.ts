@@ -1,4 +1,4 @@
-import { fin } from "@openfin/core";
+export {};
 
 document.addEventListener("DOMContentLoaded", init);
 

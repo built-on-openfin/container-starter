@@ -1,5 +1,3 @@
-import OpenFin, { fin } from "@openfin/core";
-
 const defaultCommonOptions: OpenFin.WindowCreationOptions = {
 	name: "test-child",
 	url: "./preview.html",

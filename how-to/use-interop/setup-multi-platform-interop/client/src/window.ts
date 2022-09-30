@@ -1,5 +1,4 @@
-import OpenFin, { fin } from "@openfin/core";
-import { PlatformContextGroups, PlatformContextGroup } from "./shapes";
+import type { PlatformContextGroups, PlatformContextGroup } from "./shapes";
 
 export const CONTAINER_ID = "layout-container";
 const openfinWindow: OpenFin.Window = fin.Window.getCurrentSync();
