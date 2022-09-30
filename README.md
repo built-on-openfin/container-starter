@@ -27,6 +27,7 @@ This repository contains examples for common use cases and API implementations. 
 | [use-interop](./how-to/use-interop/)                               | This example contains various implementations and use cases for the Interop API                    |
 | [use-a-manifest](./how-to/use-a-manifest/)                         | This example contains various examples of how to use the OpenFin manifest                          |
 | [use-content-creation-rules](./how-to/use-content-creation-rules/) | This example demonstrates how content creation rules can be applied                                |
+| [use-logging-apis](./how-to/use-logging-apis/)                     | This example shows how to use OpenFin APIs to retrieve logs and send them to a server.             |
 
 ## Before you get started
 
