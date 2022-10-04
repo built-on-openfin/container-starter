@@ -1,15 +1,6 @@
 {
 	"applicationSettings": {
-		"http://localhost:8080/app.json": {
-			"permissions": {
-				"System": {
-					"launchExternalProcess": true,
-					"terminateExternalProcess": true,
-					"downloadAsset": true
-				}
-			}
-		},
-		"default": {
+		"https://built-on-openfin.github.io/container-starter/dev/adam/lep/use-launch-external-process/manifest.fin.json": {
 			"permissions": {
 				"System": {
 					"launchExternalProcess": true,
