@@ -1,15 +1,6 @@
 {
 	"applicationSettings": {
-		"http://localhost:8080/app.json": {
-			"permissions": {
-				"System": {
-					"launchExternalProcess": true,
-					"terminateExternalProcess": true,
-					"downloadAsset": true
-				}
-			}
-		},
-		"default": {
+		"http://localhost:5050/manifest.fin.json": {
 			"permissions": {
 				"System": {
 					"launchExternalProcess": true,

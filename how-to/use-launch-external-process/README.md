@@ -35,6 +35,8 @@ Follow the instructions below to get up and running.
    npm run client
    ```
 
+![Launch External Process Demo](./public/assets/lep-demo.gif)
+
 ## App asset breakdown
 
 This is an example shape as it related to the top level application manifest property as seen [here](https://developers.openfin.co/of-docs/docs/application-configuration#section-appassets-properties).

@@ -12,12 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		listener: (result) => {
 			console.log("result", result);
 			if (result.exitCode === 1) {
-				console.log("Process Explorer");
+				console.log("Successfully exited DotNetCore.exe");
 			}
 		}
 	};
-
-	fin.System.launchExternalProcess(lepOptions)
-		.then((data) => console.log("successfully launched DotNetCore.exe:", data))
-		.catch(console.error);
+	const lepBtn = document.querySelector("#lep-button");
+	lepBtn.addEventListener("click", async () => {
+		fin.System.launchExternalProcess(lepOptions)
+			.then((data) => console.log("successfully launched DotNetCore.exe:", data))
+			.catch(console.error);
+	});
 });

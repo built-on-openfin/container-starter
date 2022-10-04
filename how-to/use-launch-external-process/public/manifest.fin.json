@@ -4,9 +4,9 @@
 	},
 	"startup_app": {
 		"name": "launch-app-asset",
-		"url": "http://localhost:5050/index.html",
+		"url": "http://localhost:5050/app.html",
 		"uuid": "launch-app-asset",
-		"applicationIcon": "http://localhost:5050/favicon.ico",
+		"icon": "http://localhost:5050/common/images/icon-blue.png",
 		"autoShow": true,
 		"saveWindowState": true,
 		"permissions": {
@@ -29,7 +29,7 @@
 	"shortcut": {
 		"company": "OpenFin",
 		"description": "Launch App Asset",
-		"icon": "http://localhost:5050/favicon.ico",
+		"icon": "http://localhost:5050/common/images/icon-blue.png",
 		"name": "Launch App Asset"
 	}
 }
