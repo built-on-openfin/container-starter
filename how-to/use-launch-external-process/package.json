@@ -1,8 +1,8 @@
 {
-  "name": "launch-external-process",
-  "version": "0.0.1",
-  "description": "An example of how to use launch external process",
-  "main": "index.js",
+	"name": "launch-external-process",
+	"version": "0.0.1",
+	"description": "An example of how to use launch external process",
+	"main": "index.js",
 	"scripts": {
 		"build": "npm run build-server & npm run build-client",
 		"build-server": "tsc --project ./server",
