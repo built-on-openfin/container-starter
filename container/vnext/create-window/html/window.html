@@ -23,8 +23,13 @@
 
 			<script>
 				(async () => {
+					const loaded = Date.now();
 					const viewOptions = await fin.me.getOptions();
-					document.querySelector('#custom-data').textContent = JSON.stringify(viewOptions.customData);
+					document.querySelector('#custom-data').textContent = `Request Timestamp: ${
+						viewOptions?.customData?.dateNow
+					} Load Timestamp: ${loaded} Total load time in milliseconds: ${
+						Number.parseInt(loaded, 10) - Number.parseInt(viewOptions?.customData?.dateNow)
+					});`;
 				})();
 			</script>
 		</main>
