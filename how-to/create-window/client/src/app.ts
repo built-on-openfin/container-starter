@@ -1,5 +1,3 @@
-import { fin } from "@openfin/core";
-
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		await init();
@@ -41,6 +39,18 @@ async function openDataWindow() {
 	return fin.Window.create(winOption);
 }
 
+async function openDataPlatformWindow() {
+	const viewOption = {
+		name: "childview-data",
+		url: "http://localhost:5050/html/window.html",
+		customData: {
+			dateNow: Date.now()
+		},
+		target: undefined
+	};
+	await fin.Platform.getCurrentSync().createView(viewOption);
+}
+
 async function init(): Promise<void> {
 	const btn = document.querySelector("#btn-open-dynamic-window");
 	btn.addEventListener("click", async (e: Event) => openDynamicApplicationWindow());
@@ -50,4 +60,7 @@ async function init(): Promise<void> {
 
 	const btn2 = document.querySelector("#btn-open-data-window");
 	btn2.addEventListener("click", async (e: Event) => openDataWindow());
+
+	const btn3 = document.querySelector("#btn-open-data-platform-window");
+	btn3.addEventListener("click", openDataPlatformWindow);
 }
