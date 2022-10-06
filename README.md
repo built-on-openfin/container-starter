@@ -29,6 +29,7 @@ This repository contains examples for common use cases and API implementations. 
 | [use-content-creation-rules](./how-to/use-content-creation-rules/)   | This example demonstrates how content creation rules can be applied                                |
 | [use-logging-apis](./how-to/use-logging-apis/)                       | This example shows how to use OpenFin APIs to retrieve logs and send them to a server.             |
 | [use-launch-external-process](./how-to/use-launch-external-process/) | This example demonstrates how to use the launch external process secure api.                       |
+| [use-platform](./how-to/use-platform/)                | This example contains various examples of how to use Platform
 
 ## Before you get started
 
