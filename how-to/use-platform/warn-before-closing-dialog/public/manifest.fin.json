@@ -1,7 +1,7 @@
 {
     "runtime": {
         "arguments": "--v=1 --inspect",
-        "version": "stable"
+        "version": "26.102.70.16"
     },
     "platform": {
         "enableBeforeUnload": true,
@@ -12,7 +12,7 @@
         "apiDiagnostics": false,
         "defaultWindowOptions": {
             "contextMenu": true,
-            "url": "http://localhost:5050/html/window.html",
+            "url": "http://localhost:5050/common/components/default-platform-window.html",
             "defaultWidth": 900,
             "defaultHeight": 900,
             "defaultLeft": 0,

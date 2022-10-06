@@ -9,22 +9,22 @@
         "build-server": "tsc --project ./server",
         "watch-client": "webpack watch --config ./client/webpack.config.js --mode=development",
         "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+        "build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
         "start": "npm run server",
-        "platform": "start fin://localhost:5555/config/manifest.json",
         "client": "npm --prefix ../../common/ run client",
         "server": "node ./server/build/index.js",
         "kill": "npm --prefix ../../common/ run kill",
-        "kill:fin": "cmd.exe /c taskkill /F /IM OpenFin.exe /T",
-        "kill:rvm": "cmd.exe /c taskkill /F /IM OpenFinRVM.exe /T",
+        "setup": "cd ../../../ && npm install && cd how-to/use-platform/warn-before-closing-dialog && npm run build",
         "validate": "npm --prefix ../../../ run validate"
     },
     "license": "ISC",
-    "dependencies": {
-        "@openfin/core": "^26.70.16",
-        "express": "^4.18.1",
-        "ts-loader": "^9.3.0",
-        "typescript": "^4.6.4",
-        "webpack": "^5.72.1",
-        "webpack-cli": "^4.9.2"
-    }
+	"devDependencies": {
+		"@openfin/core": "^27.70.8",
+		"express": "^4.17.2",
+		"source-map-loader": "^3.0.1",
+		"ts-loader": "^9.2.6",
+		"typescript": "^4.5.4",
+		"webpack": "^5.65.0",
+		"webpack-cli": "^4.9.1"
+	}
 }
