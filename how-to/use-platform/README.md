@@ -8,10 +8,9 @@ This repository contains examples on various topics related to Platform.
 
 ### Examples
 
-  | Example         | Description |
-|---------------------|------------------------------------
-| [How To - Warn Before Closing Dialog](./warn-before-closing-dialog/) | This repository demonstrates how to implement your own warning dialog for when Views have set a before unload handler.
-
+| Example                                                              | Description                                                                                                            |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| [How To - Warn Before Closing Dialog](./warn-before-closing-dialog/) | This repository demonstrates how to implement your own warning dialog for when Views have set a before unload handler. |
 
 ## Before you get started
 
