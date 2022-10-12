@@ -8,6 +8,7 @@
 		"build-server": "tsc --project ./server",
 		"start": "npm run server",
 		"client": "npm --prefix ../../common/ run client",
+		"secondclient": "npm --prefix ../../common/ run secondclient",
 		"server": "node ./server/build/index.js",
 		"kill": "npm --prefix ../../common/ run kill",
 		"setup": "cd ../../../ && npm install && cd how-to/use-a-manifest/create-a-single-page-platform && npm run build",

@@ -10,6 +10,7 @@
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",
 		"client": "node ./scripts/launch.mjs",
+		"secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
 		"build": "echo Nothing to build"
 	},
 	"devDependencies": {
