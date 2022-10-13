@@ -7,16 +7,18 @@
 	},
 	"platform": {
 		"uuid": "how-to-use-a-manifest-create-a-single-page-platform",
-		"icon": "https://built-on-openfin.github.io/container-starter/main/use-a-manifest-create-a-single-page-platform/favicon.ico"
+		"icon": "https://built-on-openfin.github.io/container-starter/main/use-a-manifest-create-a-single-page-platform/favicon.ico",
+		"defaultWindowOptions": {
+			"stylesheetUrl": "https://built-on-openfin.github.io/container-starter/main/use-a-manifest-create-a-single-page-platform/window-override.css"
+		}
 	},
 	"snapshot": {
 		"windows": [
 			{
 				"defaultWidth": 800,
 				"defaultHeight": 600,
-				"defaultLeft": 0,
-				"defaultTop": 0,
-				"saveWindowState": false,
+				"defaultCentered": true,
+				"saveWindowState": true,
 				"backgroundThrottling": true,
 				"layout": {
 					"content": [
