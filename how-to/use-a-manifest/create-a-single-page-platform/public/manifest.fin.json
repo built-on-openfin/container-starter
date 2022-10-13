@@ -7,16 +7,18 @@
 	},
 	"platform": {
 		"uuid": "how-to-use-a-manifest-create-a-single-page-platform",
-		"icon": "http://localhost:5050/favicon.ico"
+		"icon": "http://localhost:5050/favicon.ico",
+		"defaultWindowOptions": {
+			"stylesheetUrl": "http://localhost:5050/window-override.css"
+		}
 	},
 	"snapshot": {
 		"windows": [
 			{
 				"defaultWidth": 800,
 				"defaultHeight": 600,
-				"defaultLeft": 0,
-				"defaultTop": 0,
-				"saveWindowState": false,
+				"defaultCentered": true,
+				"saveWindowState": true,
 				"backgroundThrottling": true,
 				"layout": {
 					"content": [

@@ -40,6 +40,22 @@ npm run client
 
 ![Single Page Platform](./single-page-platform.png)
 
+## If you wish to remove the padding from around the view
+
+In [manifest.fin.json](./public/manifest.fin.json) we include a path to a css file that should be injected into the default platform window (within default window options) [window-override.css](./public/window-override.css). The css is commented out but includes instructions on how you can show the padding around the single view and how you can remove that padding using css.
+
+## Is there any other way of launching a single window under a platform?
+
+Yes you could include a single classic window in the snapshot within the manifest instead of a window with a layout.
+
+You can see an example of this here: [second.manifest.fin.json](./public/second.manifest.fin.json).
+
+You can run this platform using the following command:
+
+```shell
+npm run secondclient
+```
+
 ### A note about this example
 
 This is an example of how to use OpenFin manifests to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
