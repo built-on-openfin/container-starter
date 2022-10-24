@@ -22,6 +22,26 @@ module.exports = [
 		}
 	},
 	{
+		entry: './client/src/provider-tray.ts',
+		devtool: 'inline-source-map',
+		module: {
+			rules: [
+				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: /node_modules/
+				}
+			]
+		},
+		resolve: {
+			extensions: ['.tsx', '.ts', '.js']
+		},
+		output: {
+			filename: 'platform-tray.bundle.js',
+			path: path.resolve(__dirname, '..', 'public', 'js')
+		}
+	},
+	{
 		entry: './client/src/excel.ts',
 		devtool: 'inline-source-map',
 		module: {

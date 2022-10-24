@@ -36,6 +36,11 @@ async function init(): Promise<void> {
 
 		await populateWorkbooks();
 
+		const openExcelButton = document.querySelector("#open-excel");
+		openExcelButton.addEventListener("click", async () => {
+			await openExcel();
+		});
+
 		const refreshWorkbookButton = document.querySelector("#workbook-refresh");
 		refreshWorkbookButton.addEventListener("click", async () => populateWorkbooks());
 
@@ -51,6 +56,11 @@ async function init(): Promise<void> {
 		openWorksheetsSelect.addEventListener("change", async (e) =>
 			selectWorksheet((e.target as unknown as { value: string }).value)
 		);
+
+		const setValueButton = document.querySelector("#set-value");
+		setValueButton.addEventListener("click", async () => {
+			await setCellValue();
+		});
 	} catch (err) {
 		showError(err);
 	}
@@ -59,6 +69,18 @@ async function init(): Promise<void> {
 function showError(err) {
 	const errDom = document.querySelector("#error");
 	errDom.innerHTML = err.message;
+}
+
+async function openExcel(): Promise<void> {
+	try {
+		// Open the select work book and sheet
+		// if anything throws an exception just open a new workbook
+		await selectWorkbook(openWorkbooks[selectedWorkbookIndex].name);
+		await selectWorksheet(openWorksheets[selectedWorksheetIndex].name);
+	} catch {
+		await excel.createWorkbook();
+		await populateWorkbooks();
+	}
 }
 
 async function populateWorkbooks(): Promise<void> {
@@ -185,6 +207,10 @@ async function selectWorksheet(name: string): Promise<void> {
 
 			const resultsContainer = document.querySelector<HTMLElement>("#results-container");
 			resultsContainer.style.display = "flex";
+
+			document.querySelector<HTMLInputElement>("#cell-location").disabled = false;
+			document.querySelector<HTMLInputElement>("#cell-value").disabled = false;
+			document.querySelector<HTMLInputElement>("#set-value").disabled = false;
 		}
 	}
 }
@@ -197,6 +223,15 @@ async function handleCellChange(cells: Cell[]): Promise<void> {
 		if (KNOWN_INSTRUMENTS.includes(cell.value)) {
 			await broadcastInstrument(cell.value);
 		}
+	}
+}
+
+async function setCellValue(): Promise<void> {
+	if (openWorksheets && selectedWorksheetIndex !== undefined) {
+		const cellLocation = document.querySelector<HTMLInputElement>("#cell-location");
+		const cellValue = document.querySelector<HTMLInputElement>("#cell-value");
+
+		await openWorksheets[selectedWorksheetIndex].sheet.setCellValues(cellLocation.value, [[cellValue.value]]);
 	}
 }
 

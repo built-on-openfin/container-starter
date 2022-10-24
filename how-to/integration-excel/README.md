@@ -46,6 +46,16 @@ A window that contains two views, the Excel integration and the FDC monitor.
 
 ![Excel Integration](integration-excel.gif)
 
+### View in panel
+
+An additional version of the view which is shown in a panel on the right of your screen, and is launched from a tray icon.
+
+```shell
+npm run secondclient
+```
+
+![Excel Integration Panel](integration-excel-panel.png)
+
 ### A note about this example
 
 This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
