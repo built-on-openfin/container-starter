@@ -1,0 +1,82 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "26.102.71.7"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Content Creation Rules",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/martyn/excel-panel/use-content-creation-rules/favicon.ico",
+		"name": "Content Creation Rules"
+	},
+	"platform": {
+		"uuid": "use-content-creation-rules",
+		"name": "use-content-creation-rules",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/martyn/excel-panel/use-content-creation-rules/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/martyn/excel-panel/use-content-creation-rules/html/platform-provider.html",
+		"waitForPageLoad": false,
+		"defaultWindowOptions": {
+			"waitForPageLoad": false,
+			"url": "https://built-on-openfin.github.io/container-starter/dev/martyn/excel-panel/use-content-creation-rules/html/default-platform-window.html",
+			"icon": "https://built-on-openfin.github.io/container-starter/dev/martyn/excel-panel/use-content-creation-rules/favicon.ico",
+			"contextMenu": true,
+			"defaultWidth": 600,
+			"defaultHeight": 600,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"backgroundThrottling": true,
+			"minHeight": 445,
+			"minWidth": 308
+		},
+		"defaultViewOptions": {
+			"experimental": {
+				"childWindows": true
+			},
+			"contentCreation": {
+				"rules": [
+					{
+						"behavior": "view",
+						"match": ["*://cdn.openfin.co/*"]
+					},
+					{
+						"behavior": "view",
+						"match": ["*://*.google.com/*"]
+					}
+				]
+			}
+		},
+		"commands": [
+			{
+				"command": "stack.nextTab",
+				"keys": "Ctrl+Tab"
+			}
+		]
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"name": "component_A1",
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/martyn/excel-panel/use-content-creation-rules/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
