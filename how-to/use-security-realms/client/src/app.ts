@@ -1,4 +1,4 @@
-import { fin } from "@openfin/core";
+export {};
 
 const topic = "/openfin/sample/security-realm-example";
 

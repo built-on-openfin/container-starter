@@ -1,5 +1,4 @@
-import OpenFin, { fin } from "@openfin/core";
-import { PlatformContextGroups, PlatformContextGroup } from "./shapes";
+import type { PlatformContextGroups, PlatformContextGroup } from "./shapes";
 
 export const CONTAINER_ID = "layout-container";
 const openfinWindow: OpenFin.Window = fin.Window.getCurrentSync();
@@ -12,6 +11,13 @@ openfinApplication
 		lastFocusedView = viewEvent.viewIdentity;
 	})
 	.catch((error) => console.error(error));
+
+/**
+ * @function changeContextGroup
+ * @param event - DOM click event that is passed in to the button click event from `addContextGroupButtons` local `newButton` variable
+ * @description
+ * Joins a context group by passing in the top-level variable `lastFocusedView` as the `target` parameter of the `joinContextGroup` function.
+ */
 
 const changeContextGroup = async (event: Event): Promise<void> => {
 	const selectedColorElement: HTMLElement = event.target as HTMLElement;
@@ -26,6 +32,13 @@ const changeContextGroup = async (event: Event): Promise<void> => {
 	document.querySelector(`#tab-${lastFocusedView.name}`).classList.add(`${color}-channel`);
 };
 
+/**
+ * @function addContextGroupButtons
+ * @description
+ * 1. Retrieves a Platform's interop context groups.
+ * 2. Iterates all context groups and creates a corresponding button per context group (color channel).
+ * 3. Adds a click listener to each button with the `changeContextGroup` function as the listener callback.
+ */
 const addContextGroupButtons = async (): Promise<void> => {
 	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
 	const windowFrameStyleSheet: CSSStyleSheet = document.styleSheets[0];

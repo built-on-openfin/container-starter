@@ -1,4 +1,4 @@
-import { fin } from "@openfin/core";
+export {};
 
 async function init(): Promise<void> {
 	// create a channel to receive commands from external apps

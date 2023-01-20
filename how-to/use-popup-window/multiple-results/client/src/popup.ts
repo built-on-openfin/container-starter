@@ -1,5 +1,3 @@
-import { fin } from "@openfin/core";
-
 const me = fin.me as OpenFin.Window;
 
 document.addEventListener("DOMContentLoaded", init);

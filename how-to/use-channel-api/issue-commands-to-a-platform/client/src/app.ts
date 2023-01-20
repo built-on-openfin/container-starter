@@ -1,10 +1,8 @@
-import { fin } from "@openfin/core";
-
-const me = fin.me as OpenFin.View;
+export {};
 
 async function initApp(): Promise<void> {
 	const container = document.querySelector("#context-container");
-	const viewOptions = await me.getOptions();
+	const viewOptions = await fin.me.getOptions();
 	container.textContent = JSON.stringify(viewOptions.customData);
 }
 

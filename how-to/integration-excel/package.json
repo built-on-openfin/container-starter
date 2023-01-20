@@ -10,6 +10,7 @@
 		"build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
 		"start": "npm run server",
 		"client": "npm --prefix ../common/ run client",
+		"secondclient": "npm --prefix ../common/ run secondclient",
 		"server": "node ./server/build/index.js",
 		"kill": "npm --prefix ../common/ run kill",
 		"setup": "cd ../../ && npm install && cd how-to/integration-excel && npm run build",

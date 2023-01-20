@@ -12,7 +12,8 @@ module.exports = {
 		'plugin:unicorn/recommended'
 	],
 	globals: {
-		fin: 'readonly'
+		fin: 'readonly',
+		OpenFin: 'readonly'
 	},
 	ignorePatterns: [
 		'**/dist/*',
@@ -20,7 +21,9 @@ module.exports = {
 		'**/*.bundle.js',
 		'**/build/**/*.js',
 		'preload.js',
-		'**/wc-fin/*.js'
+		'**/wc-fin/*.js',
+		'**/3rd-party/*',
+		'**/*.d.ts'
 	],
 	parserOptions: {
 		ecmaVersion: 2020,
@@ -225,7 +228,7 @@ module.exports = {
 		'no-self-compare': ['error'],
 		'no-sequences': ['error'],
 		'no-setter-return': ['off'],
-		'no-shadow': ['error'],
+		'no-shadow': ['off'],
 		'no-shadow-restricted-names': ['error'],
 		'no-sparse-arrays': ['error'],
 		'no-tabs': ['off', { allowIndentationTabs: true }],
@@ -388,6 +391,12 @@ module.exports = {
 	},
 	overrides: [
 		{
+			files: ['*.js', '*.cjs', '*.mjs'],
+			rules: {
+				'no-shadow': ['error']
+			}
+		},
+		{
 			extends: [
 				'plugin:@typescript-eslint/recommended',
 				'plugin:@typescript-eslint/recommended-requiring-type-checking'
@@ -484,6 +493,7 @@ module.exports = {
 				'@typescript-eslint/no-non-null-assertion': ['error'],
 				'@typescript-eslint/no-parameter-properties': ['error'],
 				'@typescript-eslint/no-require-imports': ['error'],
+				'@typescript-eslint/no-shadow': ['error'],
 				'@typescript-eslint/no-this-alias': ['error'],
 				'@typescript-eslint/no-throw-literal': ['error'],
 				'@typescript-eslint/no-type-alias': ['off'],
@@ -521,13 +531,7 @@ module.exports = {
 				'@typescript-eslint/prefer-string-starts-ends-with': ['error'],
 				'@typescript-eslint/prefer-ts-expect-error': ['error'],
 				'@typescript-eslint/promise-function-async': ['error'],
-				'@typescript-eslint/quotes': [
-					'error',
-					'double',
-					{
-						allowTemplateLiterals: true
-					}
-				],
+				'@typescript-eslint/quotes': ['error', 'double'],
 				'@typescript-eslint/require-array-sort-compare': ['off'],
 				'@typescript-eslint/require-await': ['off'],
 				'@typescript-eslint/restrict-plus-operands': ['error'],
