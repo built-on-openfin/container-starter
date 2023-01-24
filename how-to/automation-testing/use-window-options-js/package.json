@@ -4,11 +4,7 @@
 	"description": "OpenFin Container Starter Automation Tests",
 	"scripts": {
 		"build": "echo Nothing to build",
-		"test-local-mocha": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js",
-		"test-local-jasmine": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js --framework jasmine",
-		"test-local-jest": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js --framework jest",
-		"test-offline": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js --offline --storageFolder=./offline-storage",
-		"test-local-mocha-selenium": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js --driver=selenium"
+		"test-local-mocha": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js"
 	},
 	"author": "ameet.jayawant@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
