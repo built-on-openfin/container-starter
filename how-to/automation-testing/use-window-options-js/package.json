@@ -1,6 +1,6 @@
 {
 	"name": "automation-testing-use-launch-external-process-js",
-	"version": "27.104.71.29",
+	"version": "26.102.70.16",
 	"description": "OpenFin Container Starter Automation Tests",
 	"scripts": {
 		"build": "echo Nothing to build",
