@@ -51,13 +51,10 @@ describe('Create a Window', () => {
 	it('Can get a list of windows', async () => {
 		const windows = await WebDriver.getWindows();
 		expect(windows.length).to.greaterThan(0);
-        console.log(windows);
+		console.log(windows);
 	});
 
-
-
-
-    it('Can exit the runtime', async () => {
+	it('Can exit the runtime', async () => {
 		const found = await WebDriver.switchToWindow('url', providerWindowUrl);
 		expect(found).to.equal(true);
 		const fin = await OpenFinProxy.fin();

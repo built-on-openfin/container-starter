@@ -145,7 +145,7 @@ describe('Use Window Options', () => {
 		expect(style3.fontSize).to.equal('12px');
 	});
 
-    it('Can exit the runtime', async () => {
+	it('Can exit the runtime', async () => {
 		const found = await WebDriver.switchToWindow('url', providerWindowUrl);
 		expect(found).to.equal(true);
 		const fin = await OpenFinProxy.fin();

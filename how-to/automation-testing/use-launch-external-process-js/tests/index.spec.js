@@ -74,10 +74,10 @@ describe('Launch External Process', () => {
 		expect(elem).to.exist;
 
 		await WebDriver.actions([
-            { type: 'mouseMove', origin: elem },
-            { type: 'mouseClick', button: MouseButton.Left },
-            { type: 'pause', duration: 2000 }
-        ]);
+			{ type: 'mouseMove', origin: elem },
+			{ type: 'mouseClick', button: MouseButton.Left },
+			{ type: 'pause', duration: 2000 }
+		]);
 	});
 
 	it('Can exit the runtime', async () => {
