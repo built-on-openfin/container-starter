@@ -1,6 +1,6 @@
 {
 	"name": "automation-testing-create-window-js",
-	"version": "26.102.70.16",
+	"version": "1.0.0",
 	"description": "OpenFin Container Starter Automation Tests",
 	"scripts": {
 		"build": "echo Nothing to build",
