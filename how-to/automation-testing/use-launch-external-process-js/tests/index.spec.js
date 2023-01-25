@@ -1,9 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"] */
 
-const { MouseButton,
-	OpenFinProxy,
-	OpenFinSystem,
-	WebDriver } = require('@openfin/automation-helpers');
+const { MouseButton, OpenFinProxy, OpenFinSystem, WebDriver } = require('@openfin/automation-helpers');
 const { expect } = require('chai');
 const { By } = require('selenium-webdriver');
 
@@ -33,8 +30,8 @@ describe('Launch External Process', () => {
 		let i;
 		let countOfDots;
 		countOfDots = 0;
-		for(i = 0; i < version.length; i++) {
-			if(version[i] === ".") {
+		for (i = 0; i < version.length; i++) {
+			if (version[i] === '.') {
 				countOfDots++;
 			}
 		}
@@ -44,7 +41,7 @@ describe('Launch External Process', () => {
 	it('The runtime version should be set', async () => {
 		const fin = await OpenFinProxy.fin();
 		const app = await fin.Application.getCurrent();
-		const manifest = await app.getManifest()
+		const manifest = await app.getManifest();
 		const manifestVersion = manifest.runtime.version;
 		const version = await fin.System.getVersion();
 		expect(version).to.equal(manifestVersion);

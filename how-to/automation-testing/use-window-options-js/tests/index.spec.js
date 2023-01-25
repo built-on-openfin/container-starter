@@ -37,8 +37,8 @@ describe('Use Window Options', () => {
 		let i;
 		let countOfDots;
 		countOfDots = 0;
-		for(i = 0; i < version.length; i++) {
-			if(version[i] === ".") {
+		for (i = 0; i < version.length; i++) {
+			if (version[i] === '.') {
 				countOfDots++;
 			}
 		}
@@ -48,7 +48,7 @@ describe('Use Window Options', () => {
 	it('The runtime version should be set', async () => {
 		const fin = await OpenFinProxy.fin();
 		const app = await fin.Application.getCurrent();
-		const manifest = await app.getManifest()
+		const manifest = await app.getManifest();
 		const manifestVersion = manifest.runtime.version;
 		const version = await fin.System.getVersion();
 		expect(version).to.equal(manifestVersion);

@@ -1,8 +1,6 @@
 /* eslint linebreak-style: ["error", "windows"] */
 
-const { OpenFinProxy,
-	OpenFinSystem,
-	WebDriver } = require('@openfin/automation-helpers');
+const { OpenFinProxy, OpenFinSystem, WebDriver } = require('@openfin/automation-helpers');
 const { expect } = require('chai');
 
 let providerWindowUrl;
@@ -31,8 +29,8 @@ describe('Create a Window', () => {
 		let i;
 		let countOfDots;
 		countOfDots = 0;
-		for(i = 0; i < version.length; i++) {
-			if(version[i] === ".") {
+		for (i = 0; i < version.length; i++) {
+			if (version[i] === '.') {
 				countOfDots++;
 			}
 		}
@@ -42,7 +40,7 @@ describe('Create a Window', () => {
 	it('The runtime version should be set', async () => {
 		const fin = await OpenFinProxy.fin();
 		const app = await fin.Application.getCurrent();
-		const manifest = await app.getManifest()
+		const manifest = await app.getManifest();
 		const manifestVersion = manifest.runtime.version;
 		const version = await fin.System.getVersion();
 		expect(version).to.equal(manifestVersion);

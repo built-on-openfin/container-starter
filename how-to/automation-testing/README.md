@@ -17,4 +17,3 @@ open a terminal window
 cd container-starter\how-to\automation\create-window-js
 npm install
 npm run test-local-mocha
-
