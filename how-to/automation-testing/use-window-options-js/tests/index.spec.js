@@ -1,20 +1,13 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable prefer-template */
-/* eslint-disable linebreak-style */
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
-/* eslint-disable linebreak-style */
+/* eslint linebreak-style: ["error", "windows"] */
+
 const {
 	MouseButton,
 	OpenFinHome,
-	OpenFinNotifications,
 	OpenFinProxy,
 	OpenFinSystem,
 	WebDriver,
 	WebDriverKeys
 } = require('@openfin/automation-helpers');
-const { NativeDriver, NativeDriverKeys } = require('@openfin/automation-native');
 const { expect } = require('chai');
 const { By } = require('selenium-webdriver');
 
@@ -38,10 +31,27 @@ describe('Use Window Options', () => {
 		expect(providerWindowUrl).not.be.undefined;
 	});
 
-	it('The runtime version should be set', async () => {
+	it('The runtime version is formatted correctly', async () => {
 		const fin = await OpenFinProxy.fin();
 		const version = await fin.System.getVersion();
-		expect(version).to.equal('26.102.70.16');
+		let i;
+		let countOfDots;
+		countOfDots = 0;
+		for(i = 0; i < version.length; i++) {
+			if(version[i] === ".") {
+				countOfDots++;
+			}
+		}
+		expect(countOfDots).to.equal(3); // xx.xx.xx.xx
+	});
+
+	it('The runtime version should be set', async () => {
+		const fin = await OpenFinProxy.fin();
+		const app = await fin.Application.getCurrent();
+		const manifest = await app.getManifest()
+		const manifestVersion = manifest.runtime.version;
+		const version = await fin.System.getVersion();
+		expect(version).to.equal(manifestVersion);
 	});
 
 	it('The identity should be set', async () => {
