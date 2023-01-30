@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Window App - Example</title>
+		<link rel="stylesheet" href="https://built-on-openfin.github.io/container-starter/dev/ameet/how-to-okta-integration/common/style/app.css" />
+		<script src="../js/window.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Issue Commands To a Platform</h1>
+				<h1 class="tag">Use the channel API to send command to a platform.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="https://built-on-openfin.github.io/container-starter/dev/ameet/how-to-okta-integration/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="col left gap10">
+			<p>
+				This is a basic window app to represent an external app issuing commands to a platform to launch a
+				view. This app could be a java or a .net application as well as a web based application.
+			</p>
+			<p>The buttons below let you:</p>
+			<ul>
+				<li>Launch a platform app and connect to the command channel</li>
+				<li>Send a command to the platform to launch a view and pass some data</li>
+				<li>
+					Send a command to the platform to launch a view, pass some data and tell it to place the view near a
+					specific window/view (in this case the last one launched)
+				</li>
+			</ul>
+			<p>
+				When the platform is launched you will see the provider window show (it is generally hidden by
+				default). Once shown you can issue the createView commands from this application.
+			</p>
+			<button id="launch-platform">Launch Platform App</button>
+			<button id="request-view">Tell Platform To Launch A View And Pass Data</button>
+			<button id="request-view-same-window">
+				Tell Platform To Launch A View In The Same Window And Pass Data
+			</button>
+		</main>
+	</body>
+</html>
