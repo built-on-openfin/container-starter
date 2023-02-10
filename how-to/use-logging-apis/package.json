@@ -18,7 +18,7 @@
 	"author": "martyn.janes@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "^29.73.14",
+		"@openfin/core": "^28.72.17",
 		"@types/multer": "^1.4.7",
 		"@types/node": "^18.13.0",
 		"body-parser": "^1.20.1",
