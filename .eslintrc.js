@@ -23,7 +23,9 @@ module.exports = {
 		'preload.js',
 		'**/wc-fin/*.js',
 		'**/3rd-party/*',
-		'**/*.d.ts'
+		'**/*.d.ts',
+		'**/settings.schema.json',
+		'**/reports/*'
 	],
 	parserOptions: {
 		ecmaVersion: 2020,
@@ -220,7 +222,15 @@ module.exports = {
 		'no-restricted-globals': ['error'],
 		'no-restricted-imports': ['error'],
 		'no-restricted-properties': ['error'],
-		'no-restricted-syntax': ['error'],
+		'no-restricted-syntax': [
+			'error',
+			{
+				selector:
+					":matches(MemberExpression[object.name='crypto'][property.name='randomUUID'],MemberExpression[object.object.name='window'][object.property.name='crypto'][property.name='randomUUID'])",
+				message:
+					'window.crypto.randomUUID is not allowed because it is not available in non-secure contexts, use randomUUID from the uuid module instead'
+			}
+		],
 		'no-return-assign': ['error'],
 		'no-return-await': ['off'],
 		'no-script-url': ['error'],
@@ -340,6 +350,7 @@ module.exports = {
 		'unicorn/no-for-loop': ['off'],
 		'unicorn/no-hex-escape': ['error'],
 		'unicorn/no-keyword-prefix': ['off'],
+		'unicorn/no-negated-condition': ['off'],
 		'unicorn/no-nested-ternary': ['error'],
 		'unicorn/no-new-buffer': ['error'],
 		'unicorn/no-null': ['off'],
@@ -374,12 +385,14 @@ module.exports = {
 		'unicorn/prefer-starts-ends-with': ['error'],
 		'unicorn/prefer-string-slice': ['error'],
 		'unicorn/prefer-switch': ['off'],
+		'unicorn/prefer-top-level-await': ['off'],
 		'unicorn/prefer-ternary': ['off'],
 		'unicorn/prefer-text-content': ['error'],
 		'unicorn/prefer-trim-start-end': ['error'],
 		'unicorn/prefer-type-error': ['error'],
 		'unicorn/prevent-abbreviations': ['off'],
 		'unicorn/string-content': ['off'],
+		'unicorn/switch-case-braces': ['off'],
 		'unicorn/throw-new-error': ['error'],
 		'use-isnan': ['error'],
 		'valid-typeof': ['off'],
@@ -428,7 +441,7 @@ module.exports = {
 				'@typescript-eslint/func-call-spacing': ['error'],
 				'@typescript-eslint/indent': ['off'],
 				'@typescript-eslint/init-declarations': ['off'],
-				'@typescript-eslint/keyword-spacing': ['error'],
+				'@typescript-eslint/keyword-spacing': ['off'],
 				'@typescript-eslint/lines-between-class-members': ['error'],
 				'@typescript-eslint/member-delimiter-style': ['error'],
 				'@typescript-eslint/member-ordering': ['error'],
@@ -522,7 +535,12 @@ module.exports = {
 				'@typescript-eslint/prefer-function-type': ['error'],
 				'@typescript-eslint/prefer-includes': ['error'],
 				'@typescript-eslint/prefer-namespace-keyword': ['error'],
-				'@typescript-eslint/prefer-nullish-coalescing': ['error'],
+				'@typescript-eslint/prefer-nullish-coalescing': [
+					'error',
+					{
+						allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: true
+					}
+				],
 				'@typescript-eslint/prefer-optional-chain': ['error'],
 				'@typescript-eslint/prefer-readonly': ['error'],
 				'@typescript-eslint/prefer-readonly-parameter-types': ['off'],
