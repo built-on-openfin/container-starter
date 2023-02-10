@@ -4,13 +4,20 @@ const fs = require('fs-extra');
 const replace = require('replace-in-file');
 const yargs = require('yargs');
 const packageJson = require('../package.json');
+
+const DEFAULT_PORT = '5050';
+const DEFAULT_FOLDER = 'container-starter';
+const DEFAULT_PATH = 'container';
+const ENV_NAME = 'PKG_HOWTOS';
+
 const URLBaseMap = new Map([
 	['github', 'https://built-on-openfin.github.io'],
 	['aws', 'https://samples.openfin.co']
 ]);
+
 args = yargs(process.argv.slice(2))
 	.usage('$0 [args]')
-	.env('PKG_HOWTOS')
+	.env(ENV_NAME)
 	.option('l', {
 		alias: 'location',
 		choices: Array.from(URLBaseMap.keys()),
@@ -22,7 +29,7 @@ args = yargs(process.argv.slice(2))
 		alias: 'path',
 		default: '',
 		type: 'string',
-		description: 'Path under which the HOWTOs should be placed in the publish location.'
+		description: `Path under which the ${ENV_NAME.replace('PKG_', '').toLowerCase()} should be placed in the publish location.`
 	})
 	.options('legacy', {
 		default: false,
@@ -32,7 +39,7 @@ args = yargs(process.argv.slice(2))
 	.help()
 	.alias('help', 'h').argv;
 
-function packageHOWTOs(args) {
+function packageItems(args) {
 	let publishDir = `public-${args.location}`;
 
 	if (args.legacy) {
@@ -42,10 +49,10 @@ function packageHOWTOs(args) {
 	}
 
 	const baseURL = URLBaseMap.get(args.location);
-	let hostFolder = args.path ? args.path : `container/v${packageJson.version}`;
+	let hostFolder = args.path || `${DEFAULT_PATH}/v${packageJson.version}`;
 
-	if (packageJson.howToCustomFolder !== undefined && packageJson.howToCustomFolder !== '') {
-		hostFolder = packageJson.howToCustomFolder;
+	if (packageJson.packageCustomFolder !== undefined && packageJson.packageCustomFolder !== '') {
+		hostFolder = packageJson.packageCustomFolder;
 	}
 
 	// Make a publish location specific copy to allow multiple package runs
@@ -59,7 +66,7 @@ function packageHOWTOs(args) {
 
 	for (let i = 0; i < workspaces.length; i++) {
 		const workspace = workspaces[i];
-		let howto = workspace.split('/')[1];
+		let item = workspace.split('/')[1];
 
 		if (args.legacy) {
 			execSync('npm run build-client', {
@@ -74,18 +81,18 @@ function packageHOWTOs(args) {
 		if (fs.existsSync(sourceDir)) {
 			const parts = sourceDir.split('/');
 			if (parts.length === 4) {
-				howto += `-${parts[2]}`;
+				item += `-${parts[2]}`;
 			}
-			targetDir = [publishDir, howto].join('/');
+			targetDir = [publishDir, item].join('/');
 			fs.copySync(sourceDir, targetDir);
 		}
 
 		try {
-			const commonUrl = [baseURL, 'container-starter', hostFolder, 'common'].join('/');
+			const commonUrl = [baseURL, DEFAULT_FOLDER, hostFolder, 'common'].filter(Boolean).join('/');
 			const commonOptions = [
 				{
 					files: `${targetDir}/**/*.json`,
-					from: /http:\/\/localhost:5050\/common/g,
+					from: new RegExp(`http://localhost:${DEFAULT_PORT}/common`, 'g'),
 					to: commonUrl
 				},
 				{
@@ -101,10 +108,10 @@ function packageHOWTOs(args) {
 				console.log(`Common URLs replaced with: ${commonUrl}`);
 			}
 
-			const rootUrl = [baseURL, 'container-starter', hostFolder, howto].join('/');
+			const rootUrl = [baseURL, DEFAULT_FOLDER, hostFolder, item].filter(Boolean).join('/');
 			const options = {
 				files: `${targetDir}/**/*.json`,
-				from: /http:\/\/localhost:5050/g,
+				from: new RegExp(`http://localhost:${DEFAULT_PORT}`, 'g'),
 				to: rootUrl
 			};
 
@@ -118,4 +125,4 @@ function packageHOWTOs(args) {
 	console.log(`Packages prepared for publishing in: ${publishDir}/`);
 }
 
-packageHOWTOs(args);
+packageItems(args);
