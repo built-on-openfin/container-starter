@@ -1,9 +1,5 @@
 # How To Use Popup Window | Single Result
 
-[![version](https://img.shields.io/badge/version-canary-yellow.svg)](https://shields.io/)
-
-**Note**: this feature is available for development purposes only and will be officially released in v26.
-
 ## How it Works
 
 The `client/src/app.ts` sets up a button that when clicked will create a simple one use popup window. Once one of the buttons in the popup is clicked (see `client/src/popup.ts`) or blurred the popup will close and the result will be displayed in the view.

@@ -1,9 +1,5 @@
 # How To Use Popup Window
 
-[![version](https://img.shields.io/badge/version-canary-yellow.svg)](https://shields.io/)
-
-**Note**: this feature is available for development purposes only and will be officially released in v26.
-
 This directory contains information related to using the popup window APIs: [Window.showPopupWindow](https://developer.openfin.co/docs/javascript/stable/tutorial-Window.showPopupWindow.html), [View.showPopupWindow](https://developer.openfin.co/docs/javascript/stable/tutorial-View.showPopupWindow.html) and [Window.dispatchPopupResult](https://developer.openfin.co/docs/javascript/stable/tutorial-Window.dispatchPopupResult.html).
 
 ## What you can do with this repository
