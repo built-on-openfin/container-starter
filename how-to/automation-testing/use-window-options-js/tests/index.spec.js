@@ -1,5 +1,3 @@
-/* eslint linebreak-style: ["error", "windows"] */
-
 const {
 	MouseButton,
 	OpenFinHome,

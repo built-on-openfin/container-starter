@@ -15,4 +15,3 @@ how-to/*/package-lock.json
 **/public/uploads/applogs/*.zip
 
 ./public*/
-package-lock.old.json

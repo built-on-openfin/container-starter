@@ -1,5 +1,3 @@
-/* eslint linebreak-style: ["error", "windows"] */
-
 const { OpenFinProxy, OpenFinSystem, WebDriver } = require('@openfin/automation-helpers');
 const { expect } = require('chai');
 
