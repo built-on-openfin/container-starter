@@ -15,3 +15,4 @@ how-to/*/package-lock.json
 **/public/uploads/applogs/*.zip
 
 ./public*/
+updatable-packages.txt

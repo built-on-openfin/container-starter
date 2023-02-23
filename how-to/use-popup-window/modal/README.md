@@ -1,9 +1,5 @@
 # How To Use Popup Window | Modal
 
-[![version](https://img.shields.io/badge/version-canary-yellow.svg)](https://shields.io/)
-
-**Note**: this feature is available for development purposes only and will be officially released in v26.
-
 ## How it Works
 
 The `client/src/app.ts` sets up a button that when clicked will create a popup window that is a modal by passing the platform window identity as `initialOptions.modalParentIdentity`.
