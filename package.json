@@ -29,6 +29,25 @@
 	],
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
+
+		"eslint": "^8.32.0",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-airbnb-typescript": "^17.0.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-simple-import-sort": "^7.0.0",
+		"eslint-plugin-unicorn": "^42.0.0",
+		"eslint-plugin-unused-imports": "^2.0.0",
+		"fast-glob": "^3.2.11",
+		"fs-extra": "^10.0.0",
+		"markdownlint-cli": "^0.32.2",
+		"prettier": "^2.6.2",
+		"replace-in-file": "^6.3.2",
+		"yargs": "^17.5.1"
+
 		"eslint": "8.33.0",
 		"eslint-config-airbnb": "19.0.4",
 		"eslint-config-airbnb-typescript": "17.0.0",
@@ -45,5 +64,6 @@
 		"prettier": "2.8.4",
 		"replace-in-file": "6.3.5",
 		"yargs": "17.6.2"
+
 	}
 }
