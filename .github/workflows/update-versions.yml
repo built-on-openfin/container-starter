@@ -24,7 +24,7 @@ jobs:
         run: |
           find . -type f \( -name "*.manifest.*.json" -o -name "manifest.*.json" \) -exec sed -i "s/\"runtime\":\s*{\s*\"version\":\s*\".*\"\s*}/\"runtime\":{\"version\":\"${{ github.event.inputs.manifestVersion }}\"}/g" {} \;
       - name: Create Branch
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         run: |
           git checkout -b ${{ github.event.inputs.branchVersion }}
           git push origin ${{ github.event.inputs.branchVersion }}
