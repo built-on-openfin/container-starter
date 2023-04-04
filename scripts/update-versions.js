@@ -27,7 +27,13 @@ for (const fileNamePattern of fileNamePatterns) {
                 const json = JSON.parse(data);
 
                 // Modify target key
-                json[targetKey].version = replacementValue;
+                if((targetKey === "runtime") && json[targetKey].version) {
+                    json[targetKey].version = replacementValue;
+                }
+
+                if((targetKey === "devDependencies") && json[targetKey]["openfin-adapter"]) {
+                    json[targetKey]["openfin-adapter"] = replacementValue
+                }
 
                 // Write updated JSON object back to file
                 fs.writeFile(file, JSON.stringify(json, null, 2), (writeError) => {

@@ -17,12 +17,16 @@ jobs:
   create-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Replace Package Version
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Update Runtime Version
       - run: |
-          find . -name "package.json" -type f -exec sed -i "s/\"version\": \".*\"/\"version\": \"${{ github.event.inputs.packageVersion }}\"/g" {} \;
-      - name: Replace Manifest Version
-      - run: |
-          find . -type f \( -name "*.manifest.*.json" -o -name "manifest.*.json" \) -exec sed -i "s/\"runtime\":\s*{\s*\"version\":\s*\".*\"\s*}/\"runtime\":{\"version\":\"${{ github.event.inputs.manifestVersion }}\"}/g" {} \;
+          node ./scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ github.events.inputs.manifestVersion }}
+      - name: Update Package & Adapter Version
+      - run: | 
+          node ./scripts/update-versions.js package.json devDependencies ${{ github.events.inputs.packageVersion }}
       - name: Create Branch
       - uses: actions/checkout@v2
       - run: |
