@@ -35,6 +35,10 @@ for (const fileNamePattern of fileNamePatterns) {
                     json[targetKey]["openfin-adapter"] = replacementValue
                 }
 
+                if((targetKey === "devDependencies") && json[targetKey]["@openfin/core"]) {
+                    json[targetKey]["@openfin/core"] = replacementValue
+                }
+
                 // Write updated JSON object back to file
                 fs.writeFile(file, JSON.stringify(json, null, 2), (writeError) => {
                     if (writeError) {
