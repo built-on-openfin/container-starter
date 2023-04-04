@@ -25,8 +25,11 @@ jobs:
       - run: |
           node ./scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ github.events.inputs.manifestVersion }}
       - name: Update Package & Adapter Version
-      - run: | 
+      - run: |
           node ./scripts/update-versions.js package.json devDependencies ${{ github.events.inputs.packageVersion }}
+      - name: Update main repo version
+      - run: |
+          node ./scripts/update-versions.js package.json version ${{ github.events.inputs.packageVersion }}
       - name: Create Branch
       - uses: actions/checkout@v2
       - run: |
