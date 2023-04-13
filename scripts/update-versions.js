@@ -1,5 +1,5 @@
+const fg = require('fast-fg');
 const fs = require('fs');
-const glob = require('glob');
 
 // Get command line arguments
 // Get command line arguments
@@ -8,7 +8,7 @@ const targetKey = process.argv[process.argv.length - 2];
 const replacementValue = process.argv[process.argv.length - 1];
 for (const fileNamePattern of fileNamePatterns) {
 	// Find matching JSON files in current directory and all subdirectories
-	glob(
+	fg.sync(
 		`**/${fileNamePattern}`,
 		{ nodir: true, recursive: true, ignore: '**/node_modules/**' },
 		(matchError, files) => {
