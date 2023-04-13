@@ -31,6 +31,8 @@ jobs:
       - name: Update main repo version
         run: node ./scripts/update-versions.js package.json version ${{ github.events.inputs.packageVersion }}
 
-      - name: Create Branch
+      - name: Setup Checkout Actions
         uses: actions/checkout@v2
+
+      - name: Create New Branch 
         run: git checkout -b ${{ github.event.inputs.branchVersion }} && git push origin ${{ github.event.inputs.branchVersion }}
