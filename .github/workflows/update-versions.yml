@@ -36,6 +36,11 @@ jobs:
 
       - name: Update main repo version
         run: node scripts/update-versions.js package.json version ${{ inputs.packageVersion }}
-
+      
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "adam.saland@openfin.co"
+      
       - name: Create New Branch 
         run: git checkout -b ${{ inputs.branchVersion }} && git add --all && git commit -m "bump version to ${{ inputs.branchVersion }}" && git push origin ${{ inputs.branchVersion }}
