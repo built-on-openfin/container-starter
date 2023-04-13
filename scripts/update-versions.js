@@ -1,4 +1,4 @@
-const fg = require('fast-fg');
+const fg = require('fast-glob');
 const fs = require('fs');
 
 // Get command line arguments
