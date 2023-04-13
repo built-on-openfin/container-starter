@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Update Runtime Version
-        run: node scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ inputs.manifestVersion }}
+        run: node scripts/update-versions.js *.manifest.*.json manifest.*.json *.fin.json runtime ${{ inputs.manifestVersion }}
 
       - name: Update Package & Adapter Version
         run: node scripts/update-versions.js package.json devDependencies ${{ inputs.packageVersion }}
