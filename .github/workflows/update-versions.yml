@@ -18,20 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js
-      - uses: actions/setup-node@v3
-      - with:
+        uses: actions/setup-node@v3
+        with:
           node-version: 16
+
       - name: Update Runtime Version
-      - run: |
-          node ./scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ github.events.inputs.manifestVersion }}
+        run: node ./scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ github.events.inputs.manifestVersion }}
+
       - name: Update Package & Adapter Version
-      - run: |
-          node ./scripts/update-versions.js package.json devDependencies ${{ github.events.inputs.packageVersion }}
+        run: node ./scripts/update-versions.js package.json devDependencies ${{ github.events.inputs.packageVersion }}
+
       - name: Update main repo version
-      - run: |
-          node ./scripts/update-versions.js package.json version ${{ github.events.inputs.packageVersion }}
+        run: node ./scripts/update-versions.js package.json version ${{ github.events.inputs.packageVersion }}
+
       - name: Create Branch
-      - uses: actions/checkout@v2
-      - run: |
-          git checkout -b ${{ github.event.inputs.branchVersion }}
-          git push origin ${{ github.event.inputs.branchVersion }}
+        uses: actions/checkout@v2
+        run: git checkout -b ${{ github.event.inputs.branchVersion }} && git push origin ${{ github.event.inputs.branchVersion }}
