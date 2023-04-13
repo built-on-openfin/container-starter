@@ -38,4 +38,4 @@ jobs:
         run: node scripts/update-versions.js package.json version ${{ inputs.packageVersion }}
 
       - name: Create New Branch 
-        run: git checkout -b ${{ github.event.inputs.branchVersion }} && git push origin ${{ inputs.branchVersion }}
+        run: git checkout -b ${{ inputs.branchVersion }} && git add --all && git commit -m "bump version to ${{ inputs.branchVersion }}" && git push origin ${{ inputs.branchVersion }}
