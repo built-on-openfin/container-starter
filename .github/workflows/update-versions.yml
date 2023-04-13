@@ -29,19 +29,13 @@ jobs:
         run: npm ci
 
       - name: Update Runtime Version
-        run: node scripts/update-versions.js *.manifest.*.json manifest.*.json runtime $INPUT
-        env:
-          INPUT: ${{ inputs.manifestVersion }}
+        run: node scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ inputs.manifestVersion }}
 
       - name: Update Package & Adapter Version
-        run: node scripts/update-versions.js package.json devDependencies $INPUT
-        env:
-          INPUT: ${{ inputs.packageVersion }}
+        run: node scripts/update-versions.js package.json devDependencies ${{ inputs.packageVersion }}
 
       - name: Update main repo version
-        run: node scripts/update-versions.js package.json version $INPUT
-        env:
-          INPUT: ${{ inputs.packageVersion }}
+        run: node scripts/update-versions.js package.json version ${{ inputs.packageVersion }}
 
       - name: Create New Branch 
-        run: git checkout -b ${{ github.event.inputs.branchVersion }} && git push origin ${{ github.event.inputs.branchVersion }}
+        run: git checkout -b ${{ github.event.inputs.branchVersion }} && git push origin ${{ inputs.branchVersion }}
