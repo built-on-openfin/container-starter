@@ -8,6 +8,7 @@
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
+		"ignoreDeprecations": "5.0",
 		"importsNotUsedAsValues": "error",
 		"moduleResolution": "node"
 	},
