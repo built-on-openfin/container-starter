@@ -13,7 +13,8 @@
 		"markdownlint": "markdownlint **/*.md --ignore **/node_modules/**",
 		"validate": "npm run prettier & npm run eslint & npm run markdownlint",
 		"list-update-packages": "npx --yes npm-check-updates --deep > updatable-packages.txt",
-		"update-packages": "npx --yes npm-check-updates --upgrade --deep -x openfin/core"
+		"update-packages": "npx --yes npm-check-updates --upgrade --deep -x openfin/core",
+		"remove-packages": "npx --yes rimraf --glob **/node_modules && npx rimraf ./package-lock.json"
 	},
 	"workspaces": [
 		"how-to/**"
@@ -47,5 +48,25 @@
 		"prettier": "^2.8.4",
 		"replace-in-file": "^6.3.5",
 		"yargs": "^17.7.1"
+	},
+	"overrides": {
+		"tsutils": {
+			"typescript": "4.9.5"
+		},
+		"ts-loader": {
+			"typescript": "4.9.5"
+		},
+		"ts-jest": {
+			"typescript": "4.9.5"
+		},
+		"ts-node": {
+			"typescript": "4.9.5"
+		},
+		"puppeteer-core": {
+			"typescript": "4.9.5"
+		},
+		"parse-bmfont-xml": {
+			"xml2js": "0.5.0"
+		}
 	}
 }
