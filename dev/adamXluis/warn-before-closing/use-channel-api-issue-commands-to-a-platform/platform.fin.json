@@ -1,0 +1,12 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "26.102.70.16"
+	},
+	"platform": {
+		"uuid": "how-to-use-channel-api-issue-commands-to-a-platform",
+		"autoShow": true,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adamXluis/warn-before-closing/use-channel-api-issue-commands-to-a-platform/html/provider.html",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adamXluis/warn-before-closing/use-channel-api-issue-commands-to-a-platform/favicon.ico"
+	}
+}
