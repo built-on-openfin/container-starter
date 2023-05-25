@@ -37,12 +37,10 @@ const launchDialog = async (viewsPreventingUnload, windowId, closeType): Promise
 	return new Promise(handleUserDecisionPromise);
 };
 
-// eslint-disable-next-line max-len
 const overrideCallback = (
 	PlatformProvider: OpenFin.Constructor<OpenFin.PlatformProvider>
 ): OpenFin.PlatformProvider => {
 	class beforeUnloadDialogOverride extends PlatformProvider {
-		// eslint-disable-next-line max-len
 		public async getUserDecisionForBeforeUnload(
 			payload: OpenFin.ViewsPreventingUnloadPayload
 		): Promise<OpenFin.BeforeUnloadUserDecision> {
