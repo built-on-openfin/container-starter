@@ -31,7 +31,10 @@ jobs:
       - name: Update Runtime Version
         run: node scripts/update-versions.js *.manifest.*.json manifest.*.json *.fin.json runtime ${{ inputs.manifestVersion }}
 
-      - name: Update Package & Adapter Version
+      - name: Update Core Version
+        run: node scripts/update-versions.js package.json dependencies ${{ inputs.packageVersion }}
+
+      - name: Update Adapter Version
         run: node scripts/update-versions.js package.json devDependencies ${{ inputs.packageVersion }}
 
       - name: Update main repo version
