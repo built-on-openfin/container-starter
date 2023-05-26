@@ -30,7 +30,7 @@ for (const fileNamePattern of fileNamePatterns) {
 				json[targetKey].version = replacementValue;
 			}
 
-			if ((targetKey === 'devDependencies' && json[targetKey]['openfin-adapter'])) {
+			if (targetKey === 'devDependencies' && json[targetKey]['openfin-adapter']) {
 				json[targetKey]['openfin-adapter'] = replacementValue;
 			}
 
