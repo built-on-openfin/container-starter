@@ -24,17 +24,17 @@ for (const fileNamePattern of fileNamePatterns) {
 
 			// Parse JSON object
 			const json = JSON.parse(data);
-
+			console.log(json[targetKey])
 			// Modify target key
 			if (targetKey === 'runtime' && json[targetKey].version) {
 				json[targetKey].version = replacementValue;
 			}
 
-			if (targetKey === 'devDependencies' && json[targetKey]['openfin-adapter']) {
+			if ((targetKey === 'devDependencies' && json[targetKey]['openfin-adapter'])) {
 				json[targetKey]['openfin-adapter'] = replacementValue;
 			}
 
-			if (targetKey === 'dependencies' && json[targetKey]['@openfin/core'] !== undefined) {
+			if (targetKey === 'dependencies' && json[targetKey] !== undefined) {
 				json[targetKey]['@openfin/core'] = replacementValue;
 			}
 
