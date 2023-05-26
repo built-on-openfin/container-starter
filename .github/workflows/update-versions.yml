@@ -14,24 +14,33 @@ on:
         required: true
 
 jobs:
-  create-branch:
+  update-versions:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Checkout Actions
+        uses: actions/checkout@v3
+
       - name: Setup Node.js
-      - uses: actions/setup-node@v3
-      - with:
+        uses: actions/setup-node@v3
+        with:
           node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Update Runtime Version
-      - run: |
-          node ./scripts/update-versions.js *.manifest.*.json manifest.*.json runtime ${{ github.events.inputs.manifestVersion }}
+        run: node scripts/update-versions.js *.manifest.*.json manifest.*.json *.fin.json runtime ${{ inputs.manifestVersion }}
+
       - name: Update Package & Adapter Version
-      - run: |
-          node ./scripts/update-versions.js package.json devDependencies ${{ github.events.inputs.packageVersion }}
+        run: node scripts/update-versions.js package.json devDependencies ${{ inputs.packageVersion }}
+
       - name: Update main repo version
-      - run: |
-          node ./scripts/update-versions.js package.json version ${{ github.events.inputs.packageVersion }}
-      - name: Create Branch
-      - uses: actions/checkout@v2
-      - run: |
-          git checkout -b ${{ github.event.inputs.branchVersion }}
-          git push origin ${{ github.event.inputs.branchVersion }}
+        run: node scripts/update-versions.js package.json version ${{ inputs.packageVersion }}
+
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "adam.saland@openfin.co"
+
+      - name: Create New Branch
+        run: git checkout -b ${{ inputs.branchVersion }} && git add --all && git commit -m "bump version to ${{ inputs.branchVersion }}" && git push origin ${{ inputs.branchVersion }}
