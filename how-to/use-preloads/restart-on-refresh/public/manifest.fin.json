@@ -1,42 +1,42 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect",
-		"version": "26.102.70.16"
-	},
-	"platform": {
-		"uuid": "how-to-use-preloads-restart-on-refresh",
-		"autoShow": false,
-		"icon": "http://localhost:5050/favicon.ico",
-		"defaultViewOptions": {
-			"preloadScripts": [
-				{
-					"url": "http://localhost:5050/js/preload-view.bundle.js"
-				}
-			]
-		}
-	},
-	"snapshot": {
-		"windows": [
-			{
-				"layout": {
-					"content": [
-						{
-							"type": "stack",
-							"id": "no-drop-target",
-							"content": [
-								{
-									"type": "component",
-									"componentName": "view",
-									"componentState": {
-										"processAffinity": "ps_1",
-										"url": "https://www.google.com/search?q=openfin+preload+scripts"
-									}
-								}
-							]
-						}
-					]
-				}
-			}
-		]
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "27.104.71.29"
+  },
+  "platform": {
+    "uuid": "how-to-use-preloads-restart-on-refresh",
+    "autoShow": false,
+    "icon": "http://localhost:5050/favicon.ico",
+    "defaultViewOptions": {
+      "preloadScripts": [
+        {
+          "url": "http://localhost:5050/js/preload-view.bundle.js"
+        }
+      ]
+    }
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "https://www.google.com/search?q=openfin+preload+scripts"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,28 +1,28 @@
 {
-	"name": "use-preloads-restart-on-refresh",
-	"version": "0.0.1",
-	"description": "A demonstration of how to configure preload scripts to restart on refresh of a view",
-	"main": "index.js",
-	"scripts": {
-		"build": "npm run build-server & npm run build-client",
-		"build-server": "tsc --project ./server",
-		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-		"build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
-		"start": "npm run server",
-		"client": "npm --prefix ../../common/ run client",
-		"server": "node ./server/build/index.js",
-		"kill": "npm --prefix ../../common/ run kill",
-		"setup": "cd ../../../ && npm install && cd how-to/use-preloads/restart-on-refresh && npm run build",
-		"validate": "npm --prefix ../../../ run validate"
-	},
-	"author": "john.mandia@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"express": "^4.18.2",
-		"source-map-loader": "^4.0.1",
-		"ts-loader": "^9.4.2",
-		"typescript": "^4.9.5",
-		"webpack": "^5.75.0",
-		"webpack-cli": "^5.0.1"
-	}
+  "name": "use-preloads-restart-on-refresh",
+  "version": "0.0.1",
+  "description": "A demonstration of how to configure preload scripts to restart on refresh of a view",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build-server & npm run build-client",
+    "build-server": "tsc --project ./server",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "build-client-prod": "webpack build --config ./client/webpack.config.js --mode=production",
+    "start": "npm run server",
+    "client": "npm --prefix ../../common/ run client",
+    "server": "node ./server/build/index.js",
+    "kill": "npm --prefix ../../common/ run kill",
+    "setup": "cd ../../../ && npm install && cd how-to/use-preloads/restart-on-refresh && npm run build",
+    "validate": "npm --prefix ../../../ run validate"
+  },
+  "author": "john.mandia@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "express": "^4.18.2",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
 }
