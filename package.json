@@ -1,72 +1,72 @@
 {
-	"name": "openfin-container-starter",
-	"version": "26.102.0",
-	"description": "OpenFin Container Starter",
-	"scripts": {
-		"build": "npm run build --workspaces",
-		"package-how-tos": "node ./scripts/package.js --legacy",
-		"package": "node ./scripts/package.js",
-		"package-for-github": "node ./scripts/package.js --location github",
-		"package-for-aws": "node ./scripts/package.js --location aws",
-		"prettier": "prettier --config .prettierrc --write .",
-		"eslint": "eslint . --ext .js,.mjs,.ts",
-		"markdownlint": "markdownlint **/*.md --ignore **/node_modules/**",
-		"validate": "npm run prettier & npm run eslint & npm run markdownlint",
-		"list-update-packages": "npx --yes npm-check-updates --deep > updatable-packages.txt",
-		"update-packages": "npx --yes npm-check-updates --upgrade --deep -x openfin/core",
-		"remove-packages": "npx --yes rimraf --glob **/node_modules && npx rimraf ./package-lock.json"
-	},
-	"workspaces": [
-		"how-to/**"
-	],
-	"packageExclude": [],
-	"packageCustomFolder": "",
-	"contributors": [
-		"adam.saland@openfin.co",
-		"connor.mccafferty@openfin.co",
-		"john.mandia@openfin.co",
-		"martyn.janes@openfin.co",
-		"pj.singh@openfin.co"
-	],
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"eslint": "^8.35.0",
-		"eslint-config-airbnb": "^19.0.4",
-		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-airbnb-typescript": "^17.0.0",
-		"eslint-config-prettier": "^8.6.0",
-		"eslint-plugin-import": "^2.27.5",
-		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-plugin-promise": "^6.1.1",
-		"eslint-plugin-simple-import-sort": "^10.0.0",
-		"eslint-plugin-unicorn": "^45.0.2",
-		"eslint-plugin-unused-imports": "^2.0.0",
-		"fast-glob": "^3.2.12",
-		"fs-extra": "^11.1.0",
-		"glob": "^10.0.0",
-		"markdownlint-cli": "^0.33.0",
-		"prettier": "^2.8.4",
-		"replace-in-file": "^6.3.5",
-		"yargs": "^17.7.1"
-	},
-	"overrides": {
-		"tsutils": {
-			"typescript": "4.9.5"
-		},
-		"ts-loader": {
-			"typescript": "4.9.5"
-		},
-		"ts-jest": {
-			"typescript": "4.9.5"
-		},
-		"ts-node": {
-			"typescript": "4.9.5"
-		},
-		"puppeteer-core": {
-			"typescript": "4.9.5"
-		},
-		"parse-bmfont-xml": {
-			"xml2js": "0.5.0"
-		}
-	}
+  "name": "openfin-container-starter",
+  "version": "26.71.8",
+  "description": "OpenFin Container Starter",
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "package-how-tos": "node ./scripts/package.js --legacy",
+    "package": "node ./scripts/package.js",
+    "package-for-github": "node ./scripts/package.js --location github",
+    "package-for-aws": "node ./scripts/package.js --location aws",
+    "prettier": "prettier --config .prettierrc --write .",
+    "eslint": "eslint . --ext .js,.mjs,.ts",
+    "markdownlint": "markdownlint **/*.md --ignore **/node_modules/**",
+    "validate": "npm run prettier & npm run eslint & npm run markdownlint",
+    "list-update-packages": "npx --yes npm-check-updates --deep > updatable-packages.txt",
+    "update-packages": "npx --yes npm-check-updates --upgrade --deep -x openfin/core",
+    "remove-packages": "npx --yes rimraf --glob **/node_modules && npx rimraf ./package-lock.json"
+  },
+  "workspaces": [
+    "how-to/**"
+  ],
+  "packageExclude": [],
+  "packageCustomFolder": "",
+  "contributors": [
+    "adam.saland@openfin.co",
+    "connor.mccafferty@openfin.co",
+    "john.mandia@openfin.co",
+    "martyn.janes@openfin.co",
+    "pj.singh@openfin.co"
+  ],
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-unicorn": "^45.0.2",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^11.1.0",
+    "glob": "^10.0.0",
+    "markdownlint-cli": "^0.33.0",
+    "prettier": "^2.8.4",
+    "replace-in-file": "^6.3.5",
+    "yargs": "^17.7.1"
+  },
+  "overrides": {
+    "tsutils": {
+      "typescript": "4.9.5"
+    },
+    "ts-loader": {
+      "typescript": "4.9.5"
+    },
+    "ts-jest": {
+      "typescript": "4.9.5"
+    },
+    "ts-node": {
+      "typescript": "4.9.5"
+    },
+    "puppeteer-core": {
+      "typescript": "4.9.5"
+    },
+    "parse-bmfont-xml": {
+      "xml2js": "0.5.0"
+    }
+  }
 }
