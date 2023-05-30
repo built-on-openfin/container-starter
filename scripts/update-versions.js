@@ -24,7 +24,7 @@ for (const fileNamePattern of fileNamePatterns) {
 
 			// Parse JSON object
 			const json = JSON.parse(data);
-			console.log(json[targetKey])
+			console.log(json[targetKey]);
 			// Modify target key
 			if (targetKey === 'runtime' && json[targetKey].version) {
 				json[targetKey].version = replacementValue;
