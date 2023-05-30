@@ -1,0 +1,84 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "27.104.71.29"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Context Menus",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/v27/use-context-menus/favicon.ico",
+		"name": "Context Menus"
+	},
+	"platform": {
+		"uuid": "use-context-menus",
+		"name": "use-context-menus",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/v27/use-context-menus/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adam/v27/use-context-menus/html/platform-provider.html",
+		"waitForPageLoad": false,
+		"defaultWindowOptions": {
+			"waitForPageLoad": false,
+			"url": "https://built-on-openfin.github.io/container-starter/dev/adam/v27/use-context-menus/html/default-platform-window.html",
+			"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/v27/use-context-menus/favicon.ico",
+			"contextMenu": true,
+			"defaultWidth": 600,
+			"defaultHeight": 600,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"backgroundThrottling": true,
+			"minHeight": 445,
+			"minWidth": 308
+		},
+		"defaultViewOptions": {
+			"spellCheck": true,
+			"contextMenuOptions": {
+				"template": [
+					"spellCheck",
+					"separator",
+					"cut",
+					"copy",
+					"paste",
+					"separator",
+					"reload",
+					"navigateForward",
+					"navigateBack",
+					"separator",
+					"inspect",
+					"print"
+				]
+			}
+		},
+		"commands": [
+			{
+				"command": "stack.nextTab",
+				"keys": "Ctrl+Tab"
+			}
+		]
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"name": "component_A1",
+										"processAffinity": "ps_1",
+										"url": "https://developers.openfin.co/of-docs/docs/openfin-windows#context-menus"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

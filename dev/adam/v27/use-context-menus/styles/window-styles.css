@@ -1,0 +1,21 @@
+body {
+    padding: 0;
+}
+
+#title-bar {
+    margin: 0;
+}
+
+div.title-bar-draggable {
+    margin: 0 0;
+}
+
+#app-menu {
+    -webkit-app-region: drag;
+}
+#app-menu button {
+    -webkit-app-region: none;
+    color: rgb(194, 190, 190);
+    font-size: 14px;
+    background-image: none;
+}
