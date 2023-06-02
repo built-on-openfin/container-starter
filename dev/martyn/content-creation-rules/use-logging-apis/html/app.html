@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>How to collect debug logs</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://built-on-openfin.github.io/container-starter/dev/martyn/content-creation-rules/common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+		<script src="https://built-on-openfin.github.io/container-starter/dev/martyn/content-creation-rules/common/components/fin-toggle-class.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>How to collect logs.</h1>
+				<h1 class="tag">Demonstrate how to use logging APIs</h1>
+			</div>
+			<div class="row middle gap10">
+				<button is="fin-toggle-class" title="Change style"></button>
+				<image src="https://built-on-openfin.github.io/container-starter/dev/martyn/content-creation-rules/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="row fill gap40">
+				<div class="fill col gap20">
+					<form
+						action="/upload"
+						id="upload-form"
+						method="post"
+						enctype="multipart/form-data"
+						class="col gap40 scroll-vertical"
+					>
+						<div class="formSection col gap10">
+							<h2>Select a debug log.</h2>
+							<fieldset>
+								<select id="log-list"></select>
+							</fieldset>
+							<button type="submit">Upload Debug Log</button>
+						</div>
+					</form>
+					<h2>Upload your applications log.</h2>
+					<button id="send-app-log">Send Application Logs</button>
+				</div>
+			</div>
+			<div class="col fill_2 gap20">
+				<h2>Preview</h2>
+				<pre id="preview" class="fill scroll-horizontal"></pre>
+			</div>
+		</main>
+		<footer>
+			<div class="row spread">
+				<div class="row gap10">
+					<a href="https://cdn.openfin.co/docs/javascript/stable/tutorial-System.getLog.html" target="_blank">
+						Tutorial
+					</a>
+					<a href="https://cdn.openfin.co/docs/javascript/stable/System.html#getLog" target="_blank">
+						API Docs
+					</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
