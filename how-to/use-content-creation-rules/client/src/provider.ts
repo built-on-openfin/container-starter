@@ -1,1 +1,3 @@
-fin.Platform.init().catch((e) => console.error(e));
+document.addEventListener("DOMContentLoaded", async () => {
+	await fin.Platform.init();
+});
