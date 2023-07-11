@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
 	const openView = document.querySelector("#open-view");
-	openView.addEventListener("click", (e) => {
-		const win = window.open("https://www.google.com");
-		logWindowResult(win);
-	});
+	if (openView) {
+		openView.addEventListener("click", (e) => {
+			const win = window.open("https://www.google.com");
+			logWindowResult(win);
+		});
+	}
 
 	const openViewTarget = document.querySelector("#open-view-target");
 	const viewTargets = [
@@ -13,16 +15,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 	];
 
 	let viewTargetIndex = 0;
-	openViewTarget.addEventListener("click", (e) => {
-		const win = window.open(viewTargets[viewTargetIndex++ % viewTargets.length], "examples", "blah=foo");
-		logWindowResult(win);
-	});
+	if (openViewTarget) {
+		openViewTarget.addEventListener("click", (e) => {
+			const win = window.open(viewTargets[viewTargetIndex++ % viewTargets.length], "examples", "blah=foo");
+			logWindowResult(win);
+		});
+	}
 
 	const openWindow = document.querySelector("#open-window");
-	openWindow.addEventListener("click", (e) => {
-		const win = window.open("https://www.bing.com");
-		logWindowResult(win);
-	});
+	if (openWindow) {
+		openWindow.addEventListener("click", (e) => {
+			const win = window.open("https://www.bing.com");
+			logWindowResult(win);
+		});
+	}
 
 	const openWindowTarget = document.querySelector("#open-window-target");
 	const windowTargets = [
@@ -32,29 +38,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 	];
 
 	let windowTargetIndex = 0;
-	openWindowTarget.addEventListener("click", (e) => {
-		const win = window.open(windowTargets[windowTargetIndex++ % windowTargets.length], "examples2");
-		logWindowResult(win);
-	});
+	if (openWindowTarget) {
+		openWindowTarget.addEventListener("click", (e) => {
+			const win = window.open(windowTargets[windowTargetIndex++ % windowTargets.length], "examples2");
+			logWindowResult(win);
+		});
+	}
 
 	const openBrowser = document.querySelector("#open-browser");
-	openBrowser.addEventListener("click", (e) => {
-		const win = window.open("https://www.microsoft.com");
-		logWindowResult(win);
-	});
+	if (openBrowser) {
+		openBrowser.addEventListener("click", (e) => {
+			const win = window.open("https://www.microsoft.com");
+			logWindowResult(win);
+		});
+	}
 
 	const openBlocked = document.querySelector("#open-blocked");
-	openBlocked.addEventListener("click", (e) => {
-		const win = window.open("https://www.apple.com");
-		logWindowResult(win);
-	});
+	if (openBlocked) {
+		openBlocked.addEventListener("click", (e) => {
+			const win = window.open("https://www.apple.com");
+			logWindowResult(win);
+		});
+	}
 });
 
-function logWindowResult(win: WindowProxy): void {
+function logWindowResult(win: WindowProxy | null): void {
 	try {
-		win.addEventListener("DOMContentLoaded", () => {
-			console.log("Window Location", win.location);
-		});
+		if (win) {
+			win.addEventListener("DOMContentLoaded", () => {
+				console.log("Window Location", win.location);
+			});
+		}
 	} catch (err) {
 		console.error("Error logging window results", err);
 	}

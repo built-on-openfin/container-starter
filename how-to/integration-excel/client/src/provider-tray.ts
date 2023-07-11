@@ -45,10 +45,12 @@ async function init(): Promise<void> {
 					includeInSnapshot: false,
 					showTaskbarIcon: false,
 					saveWindowState: false,
-					defaultTop: foundMonitor.availableRect.top,
-					defaultLeft: foundMonitor.availableRect.right - winWidth,
+					defaultTop: foundMonitor?.availableRect.top,
+					defaultLeft: foundMonitor ? foundMonitor?.availableRect?.right - winWidth : undefined,
 					defaultWidth: winWidth,
-					defaultHeight: foundMonitor.availableRect.bottom - foundMonitor.availableRect.top,
+					defaultHeight: foundMonitor
+						? foundMonitor.availableRect.bottom - foundMonitor.availableRect.top
+						: undefined,
 					url: "http://localhost:5050/views/excel.html",
 					frame: false,
 					autoShow: true,
@@ -68,7 +70,7 @@ async function init(): Promise<void> {
 
 				win = await fin.Window.create(winOption);
 			}
-		} else {
+		} else if (win) {
 			await win.hide();
 		}
 
@@ -76,6 +78,9 @@ async function init(): Promise<void> {
 	});
 }
 
-function pointInRect({ left, top, right, bottom }, { x, y }): boolean {
-	return x > left && x < right && y > top && y < bottom;
+function pointInRect(
+	rect: { left: number; top: number; right: number; bottom: number },
+	pt: { x: number; y: number }
+): boolean {
+	return pt.x > rect.left && pt.x < rect.right && pt.y > rect.top && pt.y < rect.bottom;
 }

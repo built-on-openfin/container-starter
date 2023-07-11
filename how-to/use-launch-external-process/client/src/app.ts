@@ -17,9 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	};
 	const lepBtn = document.querySelector("#lep-button");
-	lepBtn.addEventListener("click", async () => {
-		fin.System.launchExternalProcess(lepOptions)
-			.then((data) => console.log("successfully launched DotNetCore.exe:", data))
-			.catch(console.error);
-	});
+	if (lepBtn) {
+		lepBtn.addEventListener("click", async () => {
+			fin.System.launchExternalProcess(lepOptions)
+				.then((data) => console.log("successfully launched DotNetCore.exe:", data))
+				.catch(console.error);
+		});
+	}
 });

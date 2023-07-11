@@ -11,9 +11,15 @@ async function init(): Promise<void> {
 	const showWindowDevToolsButton = document.querySelector("#window-devtools");
 	const showViewDevToolsButton = document.querySelector("#view-devtools");
 
-	showPlatformDevToolsButton.addEventListener("click", showPlatformDevTools);
-	showWindowDevToolsButton.addEventListener("click", showWindowDevTools);
-	showViewDevToolsButton.addEventListener("click", showViewDevTools);
+	if (showPlatformDevToolsButton) {
+		showPlatformDevToolsButton.addEventListener("click", showPlatformDevTools);
+	}
+	if (showWindowDevToolsButton) {
+		showWindowDevToolsButton.addEventListener("click", showWindowDevTools);
+	}
+	if (showViewDevToolsButton) {
+		showViewDevToolsButton.addEventListener("click", showViewDevTools);
+	}
 }
 
 async function showPlatformDevTools(): Promise<void> {

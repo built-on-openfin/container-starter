@@ -15,51 +15,53 @@ async function init(): Promise<void> {
 
 	// an example of a command you wish to expose.
 	// alternatively you could have a single command function exposed which could have an action type
-	actionChannel.register(
-		"createView",
-		async (
-			payload: { target: { window?: string; view?: string }; viewOptions: OpenFin.ViewOptions },
-			identity
-		) => {
-			// there would likely be validation and additional logic here.
-			const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-			let targetWindow: OpenFin.Identity;
-			let targetView: OpenFin.Identity;
-			const viewOptions = { target: undefined } as OpenFin.ViewOptions;
-			Object.assign(viewOptions, payload.viewOptions);
+	actionChannel.register("createView", async (unknownPayload: unknown, identity) => {
+		const payload = unknownPayload as {
+			target: { window?: string; view?: string };
+			viewOptions: OpenFin.ViewOptions;
+		};
+		// there would likely be validation and additional logic here.
+		const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
+		let targetWindow: OpenFin.Identity | undefined;
+		let targetView: OpenFin.Identity | undefined;
+		const viewOptions: Partial<OpenFin.ViewOptions> = { target: undefined };
+		Object.assign(viewOptions, payload.viewOptions);
 
-			if (payload.target?.window !== undefined) {
-				targetWindow = { uuid: fin.me.identity.uuid, name: payload.target.window };
-			}
-
-			if (payload.target?.view !== undefined) {
-				targetView = { uuid: fin.me.identity.uuid, name: payload.target.view };
-			}
-
-			const createdView = await platform.createView(viewOptions, targetWindow, targetView);
-			const currentWindow = await createdView.getCurrentWindow();
-
-			if (currentWindow.identity.name === undefined || currentWindow.identity.name === fin.me.identity.uuid) {
-				const windowAllocation = new Promise<{ view: string; window: string }>((resolve, reject) => {
-					createdView
-						.once("target-changed", async () => {
-							const hostWindow = await createdView.getCurrentWindow();
-							resolve({
-								view: createdView.identity.name,
-								window: hostWindow.identity.name
-							});
-						})
-						.catch(() => {});
-				});
-
-				return windowAllocation;
-			}
-			return {
-				view: createdView.identity.name,
-				window: currentWindow.identity.name
-			};
+		if (payload.target?.window !== undefined) {
+			targetWindow = { uuid: fin.me.identity.uuid, name: payload.target.window };
 		}
-	);
+
+		if (payload.target?.view !== undefined) {
+			targetView = { uuid: fin.me.identity.uuid, name: payload.target.view };
+		}
+
+		const createdView = await platform.createView(
+			viewOptions as OpenFin.ViewOptions,
+			targetWindow,
+			targetView
+		);
+		const currentWindow = await createdView.getCurrentWindow();
+
+		if (currentWindow.identity.name === undefined || currentWindow.identity.name === fin.me.identity.uuid) {
+			const windowAllocation = new Promise<{ view: string; window: string }>((resolve, reject) => {
+				createdView
+					.once("target-changed", async () => {
+						const hostWindow = await createdView.getCurrentWindow();
+						resolve({
+							view: createdView.identity.name,
+							window: hostWindow.identity.name
+						});
+					})
+					.catch(() => {});
+			});
+
+			return windowAllocation;
+		}
+		return {
+			view: createdView.identity.name,
+			window: currentWindow.identity.name
+		};
+	});
 }
 
 window.addEventListener("DOMContentLoaded", async () => {

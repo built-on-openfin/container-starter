@@ -18,8 +18,8 @@ import type {
  */
 function interopOverride(
 	InteropBroker: OpenFin.Constructor<OpenFin.InteropBroker>,
-	provider?: OpenFin.ChannelProvider,
-	options?: OpenFin.InteropBrokerOptions,
+	provider: OpenFin.ChannelProvider,
+	options: OpenFin.InteropBrokerOptions,
 	...args: unknown[]
 ): OpenFin.InteropBroker {
 	/**
@@ -87,38 +87,39 @@ function interopOverride(
 			const platformContextGroups: PlatformContextGroups = await platformInteropClient.getContextGroups();
 
 			// Array of ExternalClientMap Promises
-			const externalContextGroupPromises: Promise<ExternalClientMap>[] = externalContextGroups.map(
-				async (externalContextGroupInfo: ExternalContextGroup): Promise<ExternalClientMap> => {
-					// check to see if a Platform Client's context group has any of the channels as a externalContextGroup
-					const hasPlatformContextGroup: boolean = platformContextGroups.some(
-						({ id }: PlatformContextGroup) => id === externalContextGroupInfo.id
-					);
+			const externalContextGroupPromises: Promise<ExternalClientMap | undefined>[] =
+				externalContextGroups.map(
+					async (externalContextGroupInfo: ExternalContextGroup): Promise<ExternalClientMap | undefined> => {
+						// check to see if a Platform Client's context group has any of the channels as a externalContextGroup
+						const hasPlatformContextGroup: boolean = platformContextGroups.some(
+							({ id }: PlatformContextGroup) => id === externalContextGroupInfo.id
+						);
 
-					if (hasPlatformContextGroup) {
-						const colorClient: ColorInteropClient = fin.Interop.connectSync(this.externalBroker, {});
-						await colorClient.joinContextGroup(externalContextGroupInfo.id);
-						/**
-						 * @function contextHandler
-						 * @param context object passed from the setContext method.
-						 * @remarks
-						 * If the newContext variable has a _clientInfo object with a uuid return the context as is
-						 * because it is initially set on the platformInteropClient's broker.
-						 * otherwise copy the context attributes and values to a new object containing
-						 * a _clientInfo attribute with the uuid of the connected externalBroker.
-						 */
-						const contextHandler = async (context: ExternalContext): Promise<void> => {
-							await platformInteropClient.joinContextGroup(externalContextGroupInfo.id);
-							const newContext = context._clientInfo?.uuid
-								? context
-								: { ...context, _clientInfo: { uuid: this.externalBroker } };
-							await platformInteropClient.setContext(newContext);
-						};
-						await colorClient.addContextHandler(contextHandler);
-						// return the connected context group and corresponded color client.
-						return this.externalClients.set(externalContextGroupInfo.id, colorClient);
+						if (hasPlatformContextGroup) {
+							const colorClient: ColorInteropClient = fin.Interop.connectSync(this.externalBroker, {});
+							await colorClient.joinContextGroup(externalContextGroupInfo.id);
+							/**
+							 * @function contextHandler
+							 * @param context object passed from the setContext method.
+							 * @remarks
+							 * If the newContext variable has a _clientInfo object with a uuid return the context as is
+							 * because it is initially set on the platformInteropClient's broker.
+							 * otherwise copy the context attributes and values to a new object containing
+							 * a _clientInfo attribute with the uuid of the connected externalBroker.
+							 */
+							const contextHandler = async (context: ExternalContext): Promise<void> => {
+								await platformInteropClient.joinContextGroup(externalContextGroupInfo.id);
+								const newContext = context._clientInfo?.uuid
+									? context
+									: { ...context, _clientInfo: { uuid: this.externalBroker } };
+								await platformInteropClient.setContext(newContext);
+							};
+							await colorClient.addContextHandler(contextHandler);
+							// return the connected context group and corresponded color client.
+							return this.externalClients.set(externalContextGroupInfo.id, colorClient);
+						}
 					}
-				}
-			);
+				);
 			try {
 				await Promise.all(externalContextGroupPromises);
 			} catch (error) {
@@ -142,8 +143,10 @@ function interopOverride(
 			const state = this["getClientState"](clientIdentity);
 			const ctxGroupId = state.contextGroupId as string;
 			if (this.externalClients.has(ctxGroupId)) {
-				const colorClient: ColorInteropClient = this.externalClients.get(ctxGroupId);
-				await colorClient.setContext(context);
+				const colorClient = this.externalClients.get(ctxGroupId);
+				if (colorClient) {
+					await colorClient.setContext(context);
+				}
 			}
 		}
 

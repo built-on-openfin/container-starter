@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", init);
 
 function init(): void {
 	const showPopupButton = document.querySelector("#btn-show-popup");
-	showPopupButton.addEventListener("click", createPopupWindow);
+	if (showPopupButton) {
+		showPopupButton.addEventListener("click", createPopupWindow);
+	}
 }
 
 async function createPopupWindow(): Promise<void> {
@@ -29,9 +31,15 @@ async function createPopupWindow(): Promise<void> {
 }
 
 function renderPopupResult(result: OpenFin.PopupResult): void {
-	document.querySelector("#popup-result").textContent = JSON.stringify(result, undefined, 2);
+	const res = document.querySelector("#popup-result");
+	if (res) {
+		res.textContent = JSON.stringify(result, undefined, 2);
+	}
 }
 
 function resetPopupResult(): void {
-	document.querySelector("#popup-result").textContent = "No result";
+	const res = document.querySelector("#popup-result");
+	if (res) {
+		res.textContent = "No result";
+	}
 }

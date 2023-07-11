@@ -14,37 +14,45 @@ async function init(): Promise<void> {
 	const securityRealm = await getSecurityRealmInfo();
 	if (securityRealm === "UAT-MAIN") {
 		const summary = document.querySelector("#summary");
-		summary.textContent =
-			"This UAT instance of the application will automatically launch a .net console application that is tied to the UAT security realm and will not receive messages from the PROD realm.";
+		if (summary) {
+			summary.textContent =
+				"This UAT instance of the application will automatically launch a .net console application that is tied to the UAT security realm and will not receive messages from the PROD realm.";
+		}
 		const id = await launchNativeApp();
 		console.log(id);
 	}
-	await setupSendButton(securityRealm);
-	await listenToTopicAndLogMessages(securityRealm);
+	await setupSendButton(securityRealm ?? "");
+	await listenToTopicAndLogMessages(securityRealm ?? "");
 }
 
-async function getSecurityRealmInfo(): Promise<string> {
+async function getSecurityRealmInfo(): Promise<string | undefined> {
 	try {
 		const runtimeInfo: OpenFin.RuntimeInfo = await fin.System.getRuntimeInfo();
-		const securityRealmName: HTMLHeadingElement = document.querySelector("#security-realm-name");
-		if (runtimeInfo.securityRealm) {
-			securityRealmName.innerHTML += runtimeInfo.securityRealm;
-			return runtimeInfo.securityRealm;
+		const securityRealmName = document.querySelector("#security-realm-name");
+		if (securityRealmName) {
+			if (runtimeInfo.securityRealm) {
+				securityRealmName.innerHTML += runtimeInfo.securityRealm;
+				return runtimeInfo.securityRealm;
+			}
+			securityRealmName.innerHTML += "No Security Realm Present";
 		}
-		securityRealmName.innerHTML += "No Security Realm Present";
 	} catch (error) {
 		console.error("Error getting runtime info:", error);
 	}
 }
 
 async function setupSendButton(realm: string): Promise<void> {
-	const sendMessageBtn: HTMLButtonElement = document.querySelector("#send-message");
-	sendMessageBtn.addEventListener("click", async (e) => {
-		e.preventDefault();
-		const iabMessage: HTMLTextAreaElement = document.querySelector("#iab-message");
-		const messageText: string = iabMessage.value;
-		await publishMessageToTopic(messageText, realm);
-	});
+	const sendMessageBtn = document.querySelector("#send-message");
+	if (sendMessageBtn) {
+		sendMessageBtn.addEventListener("click", async (e) => {
+			e.preventDefault();
+			const iabMessage = document.querySelector<HTMLTextAreaElement>("#iab-message");
+			if (iabMessage) {
+				const messageText: string = iabMessage.value;
+				await publishMessageToTopic(messageText, realm);
+			}
+		});
+	}
 }
 async function publishMessageToTopic(messageText: string, realm: string): Promise<void> {
 	try {
@@ -61,10 +69,16 @@ async function publishMessageToTopic(messageText: string, realm: string): Promis
 
 async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	try {
-		const messageLog: HTMLDivElement = document.querySelector("#message-log");
-		await fin.InterApplicationBus.subscribe({ uuid: "*" }, topic, ({ id, message, realmName }) => {
-			messageLog.innerHTML += `Received message from app with identity of {uuid: ${id.uuid}}\n\nRealm Name: ${realmName}\nMessage: ${message}`;
-		});
+		const messageLog = document.querySelector("#message-log");
+		if (messageLog) {
+			await fin.InterApplicationBus.subscribe(
+				{ uuid: "*" },
+				topic,
+				(payload: { id: { uuid: string }; message: string; realmName: string }) => {
+					messageLog.innerHTML += `Received message from app with identity of {uuid: ${payload.id.uuid}}\n\nRealm Name: ${payload.realmName}\nMessage: ${payload.message}`;
+				}
+			);
+		}
 	} catch (error) {
 		if (error) {
 			// eslint-disable-next-line no-alert

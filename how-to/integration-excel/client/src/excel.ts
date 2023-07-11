@@ -36,154 +36,120 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function init(): Promise<void> {
 	try {
 		const resultsContainer = document.querySelector<HTMLElement>("#results-container");
-		resultsContainer.style.display = "none";
+		if (resultsContainer) {
+			resultsContainer.style.display = "none";
+		}
 
 		excel = await getExcelApplication();
 
 		await populateWorkbooks();
 
 		const openExcelButton = document.querySelector("#open-excel");
-		openExcelButton.addEventListener("click", async () => {
-			await openExcel();
-		});
+		if (openExcelButton) {
+			openExcelButton.addEventListener("click", async () => {
+				await openExcel();
+			});
+		}
 
 		const refreshWorkbookButton = document.querySelector("#workbook-refresh");
-		refreshWorkbookButton.addEventListener("click", async () => populateWorkbooks());
+		if (refreshWorkbookButton) {
+			refreshWorkbookButton.addEventListener("click", async () => populateWorkbooks());
+		}
 
 		const refreshWorksheetButton = document.querySelector("#worksheet-refresh");
-		refreshWorksheetButton.addEventListener("click", async () => populateWorksheets());
+		if (refreshWorksheetButton) {
+			refreshWorksheetButton.addEventListener("click", async () => populateWorksheets());
+		}
 
 		const openWorkbooksSelect = document.querySelector("#workbooks");
-		openWorkbooksSelect.addEventListener("change", async (e) =>
-			selectWorkbook((e.target as unknown as { value: string }).value)
-		);
+		if (openWorkbooksSelect) {
+			openWorkbooksSelect.addEventListener("change", async (e) =>
+				selectWorkbook((e.target as unknown as { value: string }).value)
+			);
+		}
 
 		const openWorksheetsSelect = document.querySelector("#worksheets");
-		openWorksheetsSelect.addEventListener("change", async (e) =>
-			selectWorksheet((e.target as unknown as { value: string }).value)
-		);
+		if (openWorksheetsSelect) {
+			openWorksheetsSelect.addEventListener("change", async (e) =>
+				selectWorksheet((e.target as unknown as { value: string }).value)
+			);
+		}
 
 		const setValueButton = document.querySelector("#set-value");
-		setValueButton.addEventListener("click", async () => {
-			await setCellValue();
-		});
+		if (setValueButton) {
+			setValueButton.addEventListener("click", async () => {
+				await setCellValue();
+			});
+		}
 	} catch (err) {
 		showError(err);
 	}
 }
 
-function showError(err): void {
+function showError(err: unknown): void {
 	const errDom = document.querySelector("#error");
-	errDom.innerHTML = err.message;
+	if (errDom) {
+		errDom.innerHTML = err instanceof Error ? err.message : JSON.stringify(err);
+	}
 }
 
 async function openExcel(): Promise<void> {
 	try {
-		// Open the select work book and sheet
-		// if anything throws an exception just open a new workbook
-		await selectWorkbook(openWorkbooks[selectedWorkbookIndex].name);
-		await selectWorksheet(openWorksheets[selectedWorksheetIndex].name);
+		if (
+			openWorkbooks &&
+			selectedWorkbookIndex !== undefined &&
+			openWorksheets &&
+			selectedWorksheetIndex !== undefined
+		) {
+			// Open the select work book and sheet
+			// if anything throws an exception just open a new workbook
+			await selectWorkbook(openWorkbooks[selectedWorkbookIndex].name);
+			await selectWorksheet(openWorksheets[selectedWorksheetIndex].name);
+		}
 	} catch {
-		await excel.createWorkbook();
-		await populateWorkbooks();
+		if (excel) {
+			await excel.createWorkbook();
+			await populateWorkbooks();
+		}
 	}
 }
 
 async function populateWorkbooks(): Promise<void> {
 	if (excel) {
 		selectedWorkbookIndex = undefined;
-		const refreshButton: HTMLButtonElement = document.querySelector("#workbook-refresh");
-		refreshButton.disabled = true;
-
+		const refreshButton = document.querySelector<HTMLButtonElement>("#workbook-refresh");
 		const select = document.querySelector<HTMLSelectElement>("#workbooks");
-		select.disabled = true;
-		select.innerHTML = "";
 
-		openWorkbooks = [];
+		if (refreshButton && select) {
+			refreshButton.disabled = true;
 
-		try {
-			const workbooks = await excel.getWorkbooks();
+			select.disabled = true;
+			select.innerHTML = "";
 
-			for (const book of workbooks) {
-				const name = await book.getName();
-				openWorkbooks.push({
-					book,
-					name
-				});
-			}
+			openWorkbooks = [];
 
-			const optionEmpty = document.createElement("option");
-			optionEmpty.innerHTML = "----Select workbook----";
-			optionEmpty.value = "";
-			optionEmpty.selected = true;
-			optionEmpty.disabled = true;
-			select.append(optionEmpty);
-
-			for (const openWorkbook of openWorkbooks) {
-				const option = document.createElement("option");
-				option.innerHTML = openWorkbook.name;
-				option.value = openWorkbook.name;
-				select.append(option);
-			}
-		} catch (err) {
-			console.error(err);
-			showError(err);
-		} finally {
-			select.disabled = false;
-			refreshButton.disabled = false;
-		}
-	}
-}
-
-async function selectWorkbook(name: string): Promise<void> {
-	const newWorkbookIndex = openWorkbooks.findIndex((w) => w.name === name);
-
-	if (newWorkbookIndex !== selectedWorkbookIndex) {
-		selectedWorkbookIndex = newWorkbookIndex;
-		if (newWorkbookIndex >= 0) {
-			await openWorkbooks[selectedWorkbookIndex].book.activate();
-		}
-	}
-
-	await populateWorksheets();
-}
-
-async function populateWorksheets(): Promise<void> {
-	if (excel) {
-		selectedWorksheetIndex = undefined;
-		const refreshButton: HTMLButtonElement = document.querySelector("#worksheet-refresh");
-		refreshButton.disabled = true;
-
-		const select = document.querySelector<HTMLSelectElement>("#worksheets");
-		select.disabled = true;
-		select.innerHTML = "";
-
-		openWorksheets = [];
-
-		const workbook = openWorkbooks[selectedWorkbookIndex];
-		if (workbook) {
 			try {
-				const sheets = await workbook.book.getWorksheets();
+				const workbooks = await excel.getWorkbooks();
 
-				for (const sheet of sheets) {
-					const name = await sheet.getName();
-					openWorksheets.push({
-						sheet,
+				for (const book of workbooks) {
+					const name = await book.getName();
+					openWorkbooks.push({
+						book,
 						name
 					});
 				}
 
 				const optionEmpty = document.createElement("option");
-				optionEmpty.innerHTML = "----Select worksheet----";
+				optionEmpty.innerHTML = "----Select workbook----";
 				optionEmpty.value = "";
 				optionEmpty.selected = true;
 				optionEmpty.disabled = true;
 				select.append(optionEmpty);
 
-				for (const openWorksheet of openWorksheets) {
+				for (const openWorkbook of openWorkbooks) {
 					const option = document.createElement("option");
-					option.innerHTML = openWorksheet.name;
-					option.value = openWorksheet.name;
+					option.innerHTML = openWorkbook.name;
+					option.value = openWorkbook.name;
 					select.append(option);
 				}
 			} catch (err) {
@@ -197,37 +163,119 @@ async function populateWorksheets(): Promise<void> {
 	}
 }
 
-async function selectWorksheet(name: string): Promise<void> {
-	const newWorksheetIndex = openWorksheets.findIndex((w) => w.name === name);
+async function selectWorkbook(name: string): Promise<void> {
+	if (openWorkbooks) {
+		const newWorkbookIndex = openWorkbooks.findIndex((w) => w.name === name);
 
-	if (newWorksheetIndex !== selectedWorksheetIndex) {
-		const oldWorksheet = openWorksheets[selectedWorksheetIndex];
-		if (oldWorksheet) {
-			await oldWorksheet.sheet.removeEventListener(handleCellChange);
+		if (newWorkbookIndex !== selectedWorkbookIndex) {
+			selectedWorkbookIndex = newWorkbookIndex;
+			if (newWorkbookIndex >= 0) {
+				await openWorkbooks[selectedWorkbookIndex].book.activate();
+			}
 		}
 
-		selectedWorksheetIndex = newWorksheetIndex;
-		if (selectedWorksheetIndex >= 0) {
-			await openWorksheets[selectedWorksheetIndex].sheet.activate();
-			await openWorksheets[selectedWorksheetIndex].sheet.addEventListener("change", handleCellChange);
+		await populateWorksheets();
+	}
+}
 
-			const resultsContainer = document.querySelector<HTMLElement>("#results-container");
-			resultsContainer.style.display = "flex";
+async function populateWorksheets(): Promise<void> {
+	if (excel) {
+		selectedWorksheetIndex = undefined;
+		const refreshButton = document.querySelector<HTMLButtonElement>("#worksheet-refresh");
+		const select = document.querySelector<HTMLSelectElement>("#worksheets");
 
-			document.querySelector<HTMLInputElement>("#cell-location").disabled = false;
-			document.querySelector<HTMLInputElement>("#cell-value").disabled = false;
-			document.querySelector<HTMLInputElement>("#set-value").disabled = false;
+		if (select && refreshButton && openWorkbooks && selectedWorkbookIndex !== undefined) {
+			refreshButton.disabled = true;
+
+			select.disabled = true;
+			select.innerHTML = "";
+
+			openWorksheets = [];
+
+			const workbook = openWorkbooks[selectedWorkbookIndex];
+			if (workbook) {
+				try {
+					const sheets = await workbook.book.getWorksheets();
+
+					for (const sheet of sheets) {
+						const name = await sheet.getName();
+						openWorksheets.push({
+							sheet,
+							name
+						});
+					}
+
+					const optionEmpty = document.createElement("option");
+					optionEmpty.innerHTML = "----Select worksheet----";
+					optionEmpty.value = "";
+					optionEmpty.selected = true;
+					optionEmpty.disabled = true;
+					select.append(optionEmpty);
+
+					for (const openWorksheet of openWorksheets) {
+						const option = document.createElement("option");
+						option.innerHTML = openWorksheet.name;
+						option.value = openWorksheet.name;
+						select.append(option);
+					}
+				} catch (err) {
+					console.error(err);
+					showError(err);
+				} finally {
+					select.disabled = false;
+					refreshButton.disabled = false;
+				}
+			}
+		}
+	}
+}
+
+async function selectWorksheet(name: string): Promise<void> {
+	if (openWorksheets && selectedWorksheetIndex !== undefined) {
+		const newWorksheetIndex = openWorksheets.findIndex((w) => w.name === name);
+
+		if (newWorksheetIndex !== selectedWorksheetIndex) {
+			const oldWorksheet = openWorksheets[selectedWorksheetIndex];
+			if (oldWorksheet) {
+				await oldWorksheet.sheet.removeEventListener(handleCellChange);
+			}
+
+			selectedWorksheetIndex = newWorksheetIndex;
+			if (selectedWorksheetIndex >= 0) {
+				await openWorksheets[selectedWorksheetIndex].sheet.activate();
+				await openWorksheets[selectedWorksheetIndex].sheet.addEventListener("change", handleCellChange);
+
+				const resultsContainer = document.querySelector<HTMLElement>("#results-container");
+				if (resultsContainer) {
+					resultsContainer.style.display = "flex";
+				}
+
+				const cellLocation = document.querySelector<HTMLInputElement>("#cell-location");
+				if (cellLocation) {
+					cellLocation.disabled = false;
+				}
+				const cellValue = document.querySelector<HTMLInputElement>("#cell-value");
+				if (cellValue) {
+					cellValue.disabled = false;
+				}
+				const setValue = document.querySelector<HTMLInputElement>("#set-value");
+				if (setValue) {
+					setValue.disabled = false;
+				}
+			}
 		}
 	}
 }
 
 async function handleCellChange(cells: Cell[]): Promise<void> {
 	const cellContainer = document.querySelector("#cell-changes-container");
-	cellContainer.innerHTML = JSON.stringify(cells, undefined, "  ");
+	if (cellContainer) {
+		cellContainer.innerHTML = JSON.stringify(cells, undefined, "  ");
 
-	for (const cell of cells) {
-		if (KNOWN_INSTRUMENTS.includes(cell.value)) {
-			await broadcastInstrument(cell.value);
+		for (const cell of cells) {
+			if (KNOWN_INSTRUMENTS.includes(cell.value)) {
+				await broadcastInstrument(cell.value);
+			}
 		}
 	}
 }
@@ -237,29 +285,36 @@ async function setCellValue(): Promise<void> {
 		const cellLocation = document.querySelector<HTMLInputElement>("#cell-location");
 		const cellValue = document.querySelector<HTMLInputElement>("#cell-value");
 
-		await openWorksheets[selectedWorksheetIndex].sheet.setCellValues(cellLocation.value, [[cellValue.value]]);
+		if (cellLocation && cellValue) {
+			const cells = [[cellValue.value]];
+			await openWorksheets[selectedWorksheetIndex].sheet.setCellValues(cellLocation.value, cells);
+		}
 	}
 }
 
 async function broadcastInstrument(instrument: string): Promise<void> {
 	const broadcastElement = document.querySelector<HTMLInputElement>("#broadcast-instrument");
-	if (window.fdc3) {
-		try {
-			const fdcInstrument = {
-				type: "fdc3.instrument",
-				id: {
-					ticker: instrument
+	if (broadcastElement) {
+		if (window.fdc3) {
+			try {
+				const fdcInstrument = {
+					type: "fdc3.instrument",
+					id: {
+						ticker: instrument
+					}
+				};
+
+				const channel = await getCurrentChannel();
+				if (channel) {
+					await channel.broadcast(fdcInstrument);
 				}
-			};
 
-			const channel = await getCurrentChannel();
-			await channel.broadcast(fdcInstrument);
-
-			broadcastElement.value = instrument;
-		} catch (err) {
-			broadcastElement.value = err.message;
+				broadcastElement.value = instrument;
+			} catch (err) {
+				broadcastElement.value = err instanceof Error ? err.message : JSON.stringify(err);
+			}
+		} else {
+			broadcastElement.textContent = "No FD3 Channel available";
 		}
-	} else {
-		broadcastElement.textContent = "No FD3 Channel available";
 	}
 }

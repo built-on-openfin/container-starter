@@ -6,7 +6,7 @@
 		"rootDir": "./src",
 		"outDir": "build",
 		"skipLibCheck": true,
-		"strict": false,
+		"strict": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "node",

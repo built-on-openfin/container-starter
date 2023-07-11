@@ -24,12 +24,16 @@ async function changeContextGroup(event: Event): Promise<void> {
 	const color: string = selectedColorElement.title;
 	await fin.me.interop.joinContextGroup(color, lastFocusedView);
 	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
-	document
-		.querySelector(`#tab-${lastFocusedView.name}`)
-		.classList.remove(
-			...contextGroups.map(({ displayMetadata }: PlatformContextGroup) => `${displayMetadata.name}-channel`)
+	const focusedTab = document.querySelector(`#tab-${lastFocusedView.name}`);
+	if (focusedTab) {
+		focusedTab.classList.remove(
+			...contextGroups.map(({ displayMetadata }: PlatformContextGroup) => `${displayMetadata?.name}-channel`)
 		);
-	document.querySelector(`#tab-${lastFocusedView.name}`).classList.add(`${color}-channel`);
+	}
+	const focusedView = document.querySelector(`#tab-${lastFocusedView.name}`);
+	if (focusedView) {
+		focusedView.classList.add(`${color}-channel`);
+	}
 }
 
 /**
@@ -42,21 +46,23 @@ async function changeContextGroup(event: Event): Promise<void> {
 async function addContextGroupButtons(): Promise<void> {
 	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
 	const windowFrameStyleSheet: CSSStyleSheet = document.styleSheets[0];
-	const buttonsWrapper: HTMLElement = document.querySelector("#buttons-wrapper");
-	for (const systemChannel of contextGroups) {
-		windowFrameStyleSheet.insertRule(
-			`.${systemChannel.displayMetadata.name}-channel { border-left: 2px solid ${systemChannel.displayMetadata.color} !important;}`
-		);
-		windowFrameStyleSheet.insertRule(
-			`#${systemChannel.displayMetadata.name}-button:after { background-color: ${systemChannel.displayMetadata.color}}`
-		);
-		const newButton = document.createElement("div");
-		newButton.classList.add("button");
-		newButton.classList.add("channel-button");
-		newButton.id = `${systemChannel.displayMetadata.name}-button`;
-		newButton.title = systemChannel.displayMetadata.name;
-		newButton.addEventListener("click", changeContextGroup);
-		buttonsWrapper.prepend(newButton);
+	const buttonsWrapper = document.querySelector<HTMLElement>("#buttons-wrapper");
+	if (buttonsWrapper) {
+		for (const systemChannel of contextGroups) {
+			const nm = systemChannel.displayMetadata?.name;
+			const col = systemChannel.displayMetadata?.color;
+			if (nm && col) {
+				windowFrameStyleSheet.insertRule(`.${nm}-channel { border-left: 2px solid ${col} !important;}`);
+				windowFrameStyleSheet.insertRule(`#${nm}-button:after { background-color: ${col}}`);
+				const newButton = document.createElement("div");
+				newButton.classList.add("button");
+				newButton.classList.add("channel-button");
+				newButton.id = `${nm}-button`;
+				newButton.title = nm;
+				newButton.addEventListener("click", changeContextGroup);
+				buttonsWrapper.prepend(newButton);
+			}
+		}
 	}
 }
 
@@ -77,16 +83,18 @@ async function minimizeWindow(): Promise<void> {
 }
 
 async function setupTitleBar(): Promise<void> {
-	const title: HTMLElement = document.querySelector("#title");
-	const minBtn: HTMLElement = document.querySelector("#minimize-button");
-	const maxBtn: HTMLElement = document.querySelector("#expand-button");
-	const closeBtn: HTMLElement = document.querySelector("#close-button");
+	const title = document.querySelector("#title");
+	const minBtn = document.querySelector("#minimize-button");
+	const maxBtn = document.querySelector("#expand-button");
+	const closeBtn = document.querySelector("#close-button");
 
-	title.innerHTML = fin.me.identity.uuid;
+	if (title && minBtn && maxBtn && closeBtn) {
+		title.innerHTML = fin.me.identity.uuid;
 
-	minBtn.addEventListener("click", minimizeWindow);
-	maxBtn.addEventListener("click", maxOrRestore);
-	closeBtn.addEventListener("click", closeWindow);
+		minBtn.addEventListener("click", minimizeWindow);
+		maxBtn.addEventListener("click", maxOrRestore);
+		closeBtn.addEventListener("click", closeWindow);
+	}
 
 	await addContextGroupButtons();
 }

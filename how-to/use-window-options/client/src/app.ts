@@ -59,7 +59,7 @@ let selectedResizeRegion: Partial<OpenFin.ResizeRegion> = { ...defaultResizeRegi
 let selectedResizeRegionSides: Partial<ResizeSides> = { ...defaultResizeRegionSides };
 let selectedCornerRounding: Partial<OpenFin.CornerRounding> = { ...defaultCornerRounding };
 
-let previewWindow: OpenFin.Window;
+let previewWindow: OpenFin.Window | undefined;
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
@@ -71,46 +71,54 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function initDom(): Promise<void> {
 	const btnPreview = document.querySelector("#btnPreview");
-	btnPreview.addEventListener("click", async () => {
-		if (previewWindow) {
-			await previewWindow.removeAllListeners();
-			await previewWindow.close(true);
-			previewWindow = undefined;
-		}
-		const previewOptions: OpenFin.WindowCreationOptions = {
-			...finalizeWindowOptions(),
-			saveWindowState: false
-		};
-		previewWindow = await fin.Window.create(previewOptions);
-		await previewWindow.addListener("closed", () => {
-			previewWindow = undefined;
+	if (btnPreview) {
+		btnPreview.addEventListener("click", async () => {
+			if (previewWindow) {
+				await previewWindow.removeAllListeners();
+				await previewWindow.close(true);
+				previewWindow = undefined;
+			}
+			const previewOptions: OpenFin.WindowCreationOptions = {
+				...finalizeWindowOptions(),
+				saveWindowState: false
+			};
+			previewWindow = await fin.Window.create(previewOptions);
+			await previewWindow.addListener("closed", () => {
+				previewWindow = undefined;
+			});
 		});
-	});
+	}
 
 	const btnClosePreview = document.querySelector("#btnClosePreview");
-	btnClosePreview.addEventListener("click", async () => {
-		if (previewWindow) {
-			await previewWindow.removeAllListeners();
-			await previewWindow.close(true);
-			previewWindow = undefined;
-		}
-	});
+	if (btnClosePreview) {
+		btnClosePreview.addEventListener("click", async () => {
+			if (previewWindow) {
+				await previewWindow.removeAllListeners();
+				await previewWindow.close(true);
+				previewWindow = undefined;
+			}
+		});
+	}
 
 	const btnReset = document.querySelector("#btnReset");
-	btnReset.addEventListener("click", () => {
-		selectedCommonOptions = { ...defaultCommonOptions };
-		selectedFramelessOptions = { ...defaultFramelessOptions };
-		selectedResizeRegion = { ...defaultResizeRegion };
-		selectedResizeRegionSides = { ...defaultResizeRegionSides };
-		selectedCornerRounding = { ...defaultCornerRounding };
-		populateForm();
-		updatePreview();
-	});
+	if (btnReset) {
+		btnReset.addEventListener("click", () => {
+			selectedCommonOptions = { ...defaultCommonOptions };
+			selectedFramelessOptions = { ...defaultFramelessOptions };
+			selectedResizeRegion = { ...defaultResizeRegion };
+			selectedResizeRegionSides = { ...defaultResizeRegionSides };
+			selectedCornerRounding = { ...defaultCornerRounding };
+			populateForm();
+			updatePreview();
+		});
+	}
 
 	const btnCopy = document.querySelector("#btnCopy");
-	btnCopy.addEventListener("click", async () => {
-		await fin.Clipboard.writeText({ data: createPreview() });
-	});
+	if (btnCopy) {
+		btnCopy.addEventListener("click", async () => {
+			await fin.Clipboard.writeText({ data: createPreview() });
+		});
+	}
 
 	populateForm();
 	updatePreview();
@@ -161,11 +169,15 @@ function populateForm(): void {
 
 function updateResizeState(): void {
 	const resizable = selectedCommonOptions.resizable ?? defaultCommonOptions.resizable;
-	const widthElem: HTMLElement = document.querySelector("#resizeWidth");
-	widthElem.style.display = resizable ? "flex" : "none";
+	const widthElem = document.querySelector<HTMLElement>("#resizeWidth");
+	if (widthElem) {
+		widthElem.style.display = resizable ? "flex" : "none";
+	}
 
-	const heightElem: HTMLElement = document.querySelector("#resizeHeight");
-	heightElem.style.display = resizable ? "flex" : "none";
+	const heightElem = document.querySelector<HTMLElement>("#resizeHeight");
+	if (heightElem) {
+		heightElem.style.display = resizable ? "flex" : "none";
+	}
 
 	if (!resizable) {
 		delete selectedCommonOptions.minWidth;
@@ -177,51 +189,75 @@ function updateResizeState(): void {
 
 function updateFramelessState(): void {
 	const frame = selectedCommonOptions.frame ?? defaultCommonOptions.frame;
-	const sectionFrameless: HTMLElement = document.querySelector("#sectionFrameless");
-	sectionFrameless.style.display = frame ? "none" : "flex";
+	const sectionFrameless = document.querySelector<HTMLElement>("#sectionFrameless");
+	if (sectionFrameless) {
+		sectionFrameless.style.display = frame ? "none" : "flex";
+	}
 }
 
 function updateResizeWidth(): void {
 	if (
 		selectedCommonOptions.maxWidth !== -1 &&
+		selectedCommonOptions.maxWidth !== undefined &&
+		selectedCommonOptions.minWidth !== undefined &&
 		selectedCommonOptions.maxWidth <= selectedCommonOptions.minWidth
 	) {
 		selectedCommonOptions.maxWidth = selectedCommonOptions.minWidth + 50;
-		const maxWidthElem: HTMLInputElement = document.querySelector("#optionMaxWidth");
-		maxWidthElem.valueAsNumber = selectedCommonOptions.maxWidth;
-		const maxWidthValueElem: HTMLElement = document.querySelector("#optionMaxWidthValue");
-		maxWidthValueElem.textContent = selectedCommonOptions.maxWidth.toString();
+		const maxWidthElem = document.querySelector<HTMLInputElement>("#optionMaxWidth");
+		if (maxWidthElem) {
+			maxWidthElem.valueAsNumber = selectedCommonOptions.maxWidth;
+		}
+		const maxWidthValueElem = document.querySelector<HTMLElement>("#optionMaxWidthValue");
+		if (maxWidthValueElem) {
+			maxWidthValueElem.textContent = selectedCommonOptions.maxWidth.toString();
+		}
 	}
 }
 
 function updateResizeHeight(): void {
 	if (
 		selectedCommonOptions.maxHeight !== -1 &&
+		selectedCommonOptions.maxHeight !== undefined &&
+		selectedCommonOptions.minHeight !== undefined &&
 		selectedCommonOptions.maxHeight <= selectedCommonOptions.minHeight
 	) {
 		selectedCommonOptions.maxHeight = selectedCommonOptions.minHeight + 50;
-		const maxHeightElem: HTMLInputElement = document.querySelector("#optionMaxHeight");
-		maxHeightElem.valueAsNumber = selectedCommonOptions.maxHeight;
-		const maxHeightValueElem: HTMLElement = document.querySelector("#optionMaxHeightValue");
-		maxHeightValueElem.textContent = selectedCommonOptions.maxHeight.toString();
+		const maxHeightElem = document.querySelector<HTMLInputElement>("#optionMaxHeight");
+		if (maxHeightElem) {
+			maxHeightElem.valueAsNumber = selectedCommonOptions.maxHeight;
+		}
+		const maxHeightValueElem = document.querySelector<HTMLElement>("#optionMaxHeightValue");
+		if (maxHeightValueElem) {
+			maxHeightValueElem.textContent = selectedCommonOptions.maxHeight.toString();
+		}
 	}
 }
 
 function updateDefaultPosition(): void {
 	const isCentered = selectedCommonOptions.defaultCentered ?? defaultCommonOptions.defaultCentered;
 
-	const defaultPositionElem: HTMLDivElement = document.querySelector("#defaultPosition");
-	defaultPositionElem.style.display = isCentered ? "none" : "flex";
+	const defaultPositionElem = document.querySelector<HTMLDivElement>("#defaultPosition");
+	if (defaultPositionElem) {
+		defaultPositionElem.style.display = isCentered ? "none" : "flex";
+	}
 
-	const optionDefaultLeft: HTMLInputElement = document.querySelector("#optionDefaultLeft");
-	optionDefaultLeft.valueAsNumber = defaultCommonOptions.defaultLeft;
-	const optionDefaultLeftValue: HTMLSpanElement = document.querySelector("#optionDefaultLeftValue");
-	optionDefaultLeftValue.textContent = defaultCommonOptions.defaultLeft.toString();
+	const optionDefaultLeft = document.querySelector<HTMLInputElement>("#optionDefaultLeft");
+	if (optionDefaultLeft && defaultCommonOptions.defaultLeft !== undefined) {
+		optionDefaultLeft.valueAsNumber = defaultCommonOptions.defaultLeft;
+	}
+	const optionDefaultLeftValue = document.querySelector<HTMLSpanElement>("#optionDefaultLeftValue");
+	if (optionDefaultLeftValue && defaultCommonOptions.defaultLeft !== undefined) {
+		optionDefaultLeftValue.textContent = defaultCommonOptions.defaultLeft.toString();
+	}
 
-	const optionDefaultTop: HTMLInputElement = document.querySelector("#optionDefaultTop");
-	optionDefaultTop.valueAsNumber = defaultCommonOptions.defaultTop;
-	const optionDefaultTopValue: HTMLSpanElement = document.querySelector("#optionDefaultTopValue");
-	optionDefaultTopValue.textContent = defaultCommonOptions.defaultTop.toString();
+	const optionDefaultTop = document.querySelector<HTMLInputElement>("#optionDefaultTop");
+	if (optionDefaultTop && defaultCommonOptions.defaultTop !== undefined) {
+		optionDefaultTop.valueAsNumber = defaultCommonOptions.defaultTop;
+	}
+	const optionDefaultTopValue = document.querySelector<HTMLSpanElement>("#optionDefaultTopValue");
+	if (optionDefaultTopValue && defaultCommonOptions.defaultTop !== undefined) {
+		optionDefaultTopValue.textContent = defaultCommonOptions.defaultTop.toString();
+	}
 
 	if (isCentered) {
 		delete selectedCommonOptions.defaultLeft;
@@ -239,11 +275,13 @@ function getProperty<T, K extends keyof T, P>(obj: Partial<T>, key: K): P {
 
 function connectInput<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
-	option.value = getProperty(selectedValues, property) ?? "";
-	option.addEventListener("input", () => {
-		setProperty(selectedValues, property, option.value === "" ? undefined : option.value);
-		updatePreview();
-	});
+	if (option) {
+		option.value = getProperty(selectedValues, property) ?? "";
+		option.addEventListener("input", () => {
+			setProperty(selectedValues, property, option.value === "" ? undefined : option.value);
+			updatePreview();
+		});
+	}
 }
 
 function connectCheckbox<T, K extends keyof T>(
@@ -253,14 +291,16 @@ function connectCheckbox<T, K extends keyof T>(
 	changed?: () => void
 ): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
-	option.checked = getProperty(selectedValues, property);
-	option.addEventListener("change", () => {
-		setProperty(selectedValues, property, option.checked);
-		if (changed) {
-			changed();
-		}
-		updatePreview();
-	});
+	if (option) {
+		option.checked = getProperty(selectedValues, property);
+		option.addEventListener("change", () => {
+			setProperty(selectedValues, property, option.checked);
+			if (changed) {
+				changed();
+			}
+			updatePreview();
+		});
+	}
 }
 
 function connectRange<T, K extends keyof T>(
@@ -272,16 +312,18 @@ function connectRange<T, K extends keyof T>(
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	const optionValue = document.querySelector<HTMLInputElement>(`#${fieldId}Value`);
 
-	option.valueAsNumber = getProperty(selectedValues, property);
-	optionValue.textContent = getProperty(selectedValues, property);
-	option.addEventListener("input", () => {
-		setProperty(selectedValues, property, option.valueAsNumber);
-		optionValue.textContent = option.valueAsNumber.toString();
-		if (changed) {
-			changed();
-		}
-		updatePreview();
-	});
+	if (option && optionValue) {
+		option.valueAsNumber = getProperty(selectedValues, property);
+		optionValue.textContent = getProperty(selectedValues, property);
+		option.addEventListener("input", () => {
+			setProperty(selectedValues, property, option.valueAsNumber);
+			optionValue.textContent = option.valueAsNumber.toString();
+			if (changed) {
+				changed();
+			}
+			updatePreview();
+		});
+	}
 }
 
 function connectColor<T, K extends keyof T>(
@@ -293,16 +335,18 @@ function connectColor<T, K extends keyof T>(
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	const optionValue = document.querySelector<HTMLInputElement>(`#${fieldId}Value`);
 
-	option.value = getProperty(selectedValues, property);
-	optionValue.textContent = getProperty(selectedValues, property);
-	option.addEventListener("input", () => {
-		setProperty(selectedValues, property, option.value);
-		optionValue.textContent = option.value;
-		if (changed) {
-			changed();
-		}
-		updatePreview();
-	});
+	if (option && optionValue) {
+		option.value = getProperty(selectedValues, property);
+		optionValue.textContent = getProperty(selectedValues, property);
+		option.addEventListener("input", () => {
+			setProperty(selectedValues, property, option.value);
+			optionValue.textContent = option.value;
+			if (changed) {
+				changed();
+			}
+			updatePreview();
+		});
+	}
 }
 
 function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
@@ -312,27 +356,50 @@ function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
 		autoShow: selectedCommonOptions.autoShow
 	};
 
-	for (const prop of Object.keys(selectedCommonOptions)) {
+	for (const prop of Object.keys(selectedCommonOptions) as (keyof OpenFin.WindowCreationOptions)[]) {
 		if (selectedCommonOptions[prop] !== defaultCommonOptions[prop]) {
 			finalWindowOptions[prop] = selectedCommonOptions[prop];
 		}
 	}
 
 	if (!(selectedCommonOptions.frame ?? true)) {
-		for (const prop of Object.keys(selectedFramelessOptions)) {
+		for (const prop of Object.keys(selectedFramelessOptions) as (keyof OpenFin.WindowCreationOptions)[]) {
 			if (selectedFramelessOptions[prop] !== defaultCommonOptions[prop]) {
 				finalWindowOptions[prop] = selectedFramelessOptions[prop];
 			}
 		}
 
-		for (const prop of Object.keys(selectedResizeRegion)) {
-			if (selectedResizeRegion[prop] !== defaultResizeRegion[prop]) {
-				finalWindowOptions.resizeRegion = finalWindowOptions.resizeRegion ?? {};
-				finalWindowOptions.resizeRegion[prop] = selectedResizeRegion[prop];
+		const finalRegion: OpenFin.ResizeRegion = {};
+		if (selectedResizeRegion.bottomRightCorner !== defaultResizeRegion.bottomRightCorner) {
+			finalRegion.bottomRightCorner = selectedResizeRegion.bottomRightCorner;
+		}
+		if (selectedResizeRegion.size !== defaultResizeRegion.size) {
+			finalRegion.size = selectedResizeRegion.size;
+		}
+		if (selectedResizeRegion.sides) {
+			finalRegion.sides = {};
+			if (selectedResizeRegion.sides?.bottom !== defaultResizeRegion.sides?.bottom) {
+				finalRegion.sides.bottom = selectedResizeRegion.sides?.bottom;
+			}
+			if (selectedResizeRegion.sides?.left !== defaultResizeRegion.sides?.left) {
+				finalRegion.sides.left = selectedResizeRegion.sides?.left;
+			}
+			if (selectedResizeRegion.sides?.top !== defaultResizeRegion.sides?.top) {
+				finalRegion.sides.top = selectedResizeRegion.sides?.top;
+			}
+			if (selectedResizeRegion.sides?.right !== defaultResizeRegion.sides?.right) {
+				finalRegion.sides.right = selectedResizeRegion.sides?.right;
+			}
+			if (Object.keys(finalRegion.sides).length === 0) {
+				delete finalRegion.sides;
 			}
 		}
 
-		for (const prop of Object.keys(selectedResizeRegionSides)) {
+		if (Object.keys(finalRegion).length > 0) {
+			finalWindowOptions.resizeRegion = finalRegion;
+		}
+
+		for (const prop of Object.keys(selectedResizeRegionSides) as (keyof ResizeSides)[]) {
 			if (selectedResizeRegionSides[prop] !== defaultResizeRegionSides[prop]) {
 				finalWindowOptions.resizeRegion = finalWindowOptions.resizeRegion ?? {};
 				finalWindowOptions.resizeRegion.sides = finalWindowOptions.resizeRegion.sides ?? {};
@@ -340,7 +407,7 @@ function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
 			}
 		}
 
-		for (const prop of Object.keys(selectedCornerRounding)) {
+		for (const prop of Object.keys(selectedCornerRounding) as (keyof OpenFin.CornerRounding)[]) {
 			if (selectedCornerRounding[prop] !== defaultCornerRounding[prop]) {
 				finalWindowOptions.cornerRounding = finalWindowOptions.cornerRounding ?? {};
 				finalWindowOptions.cornerRounding[prop] = selectedCornerRounding[prop];
@@ -353,7 +420,9 @@ function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
 
 function updatePreview(): void {
 	const previewElem = document.querySelector("#preview");
-	previewElem.textContent = createPreview();
+	if (previewElem) {
+		previewElem.textContent = createPreview();
+	}
 }
 
 function createPreview(): string {

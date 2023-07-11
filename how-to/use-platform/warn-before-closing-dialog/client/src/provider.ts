@@ -1,9 +1,12 @@
-async function launchDialog(viewsPreventingUnload, windowId, closeType): Promise<boolean> {
+async function launchDialog(viewsPreventingUnload: OpenFin.Identity[], windowId: OpenFin.Identity, closeType: "window" | "view"): Promise<boolean> {
 	const views = { views: viewsPreventingUnload };
 	const queryString = new URLSearchParams(`views=${JSON.stringify(views)}&closeType=${closeType}`);
 	const baseUrl = window.location.href.replace("provider", "dialog");
 	const url = `${baseUrl}?${queryString.toString()}`;
-	async function handleUserDecisionPromise(resolve, reject): Promise<void> {
+	async function handleUserDecisionPromise(
+		resolve: (close: boolean) => void,
+		reject: (err: unknown) => void
+	): Promise<void> {
 		try {
 			const dialogWindow = fin.Window.wrapSync({ uuid: fin.me.identity.uuid, name: "before-unload-dialog" });
 
@@ -13,7 +16,8 @@ async function launchDialog(viewsPreventingUnload, windowId, closeType): Promise
 				await provider.destroy();
 			});
 
-			provider.register("get-user-decision", (continueWithClose: boolean) => {
+			provider.register("get-user-decision", (payload: unknown) => {
+				const continueWithClose = payload as boolean;
 				resolve(continueWithClose);
 			});
 
@@ -40,7 +44,7 @@ async function launchDialog(viewsPreventingUnload, windowId, closeType): Promise
 function overrideCallback(
 	PlatformProvider: OpenFin.Constructor<OpenFin.PlatformProvider>
 ): OpenFin.PlatformProvider {
-	class beforeUnloadDialogOverride extends PlatformProvider {
+	class BeforeUnloadDialogOverride extends PlatformProvider {
 		public async getUserDecisionForBeforeUnload(
 			payload: OpenFin.ViewsPreventingUnloadPayload
 		): Promise<OpenFin.BeforeUnloadUserDecision> {
@@ -55,7 +59,7 @@ function overrideCallback(
 			return { windowShouldClose: false, viewsToClose: [] };
 		}
 	}
-	return new beforeUnloadDialogOverride();
+	return new BeforeUnloadDialogOverride();
 }
 
 fin.Platform.init({ overrideCallback }).catch((error) => console.error(error));

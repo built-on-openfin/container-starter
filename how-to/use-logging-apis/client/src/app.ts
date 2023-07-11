@@ -19,16 +19,22 @@ document.addEventListener("DOMContentLoaded", async () => {
  */
 
 async function initDom(): Promise<void> {
-	const logListElement: HTMLSelectElement = document.querySelector("#log-list");
-	await createLogDropDown(logListElement);
-	logListElement.addEventListener("change", async (selectionChangeEvent) => {
-		fileName = (selectionChangeEvent.target as HTMLOptionElement).value;
-	});
+	const logListElement = document.querySelector<HTMLSelectElement>("#log-list");
+	if (logListElement) {
+		await createLogDropDown(logListElement);
+		logListElement.addEventListener("change", async (selectionChangeEvent) => {
+			fileName = (selectionChangeEvent.target as HTMLOptionElement).value;
+		});
+	}
 
-	const upload: HTMLFormElement = document.querySelector("#upload-form");
-	upload.addEventListener("submit", uploadHandler);
-	const sendAppLogBtn: HTMLButtonElement = document.querySelector("#send-app-log");
-	sendAppLogBtn.addEventListener("click", sendApplicationLogs);
+	const upload = document.querySelector<HTMLFormElement>("#upload-form");
+	if (upload) {
+		upload.addEventListener("submit", uploadHandler);
+	}
+	const sendAppLogBtn = document.querySelector<HTMLButtonElement>("#send-app-log");
+	if (sendAppLogBtn) {
+		sendAppLogBtn.addEventListener("click", sendApplicationLogs);
+	}
 }
 
 /**
@@ -60,8 +66,10 @@ async function uploadHandler(submitEvent: Event): Promise<void> {
 	const uploadStateJson = await uploadState.json();
 	const uploadStateJsonString = JSON.stringify(uploadStateJson, null, 5);
 	const logs = `${new Date().toLocaleTimeString()}: ${uploadStateJsonString}\n`;
-	const logPreview: HTMLPreElement = document.querySelector("#preview");
-	logPreview.textContent += logs;
+	const logPreview = document.querySelector("#preview");
+	if (logPreview) {
+		logPreview.textContent += logs;
+	}
 }
 
 /**

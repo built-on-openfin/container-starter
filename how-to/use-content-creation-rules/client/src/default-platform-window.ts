@@ -7,19 +7,25 @@ window.addEventListener("DOMContentLoaded", async () => {
 	await fin.Platform.Layout.init({ containerId: CONTAINER_ID });
 
 	const minimizeBtn = document.querySelector("#minimize-button");
-	minimizeBtn.addEventListener("click", async () => {
-		await me.minimize().catch(console.error);
-	});
+	if (minimizeBtn) {
+		minimizeBtn.addEventListener("click", async () => {
+			await me.minimize().catch(console.error);
+		});
+	}
 
 	const maximizeBtn = document.querySelector("#expand-button");
-	maximizeBtn.addEventListener("click", async () => {
-		await maxOrRestore().catch(console.error);
-	});
+	if (maximizeBtn) {
+		maximizeBtn.addEventListener("click", async () => {
+			await maxOrRestore().catch(console.error);
+		});
+	}
 
 	const closeBtn = document.querySelector("#close-button");
-	closeBtn.addEventListener("click", async (e) => {
-		await me.close();
-	});
+	if (closeBtn) {
+		closeBtn.addEventListener("click", async (e) => {
+			await me.close();
+		});
+	}
 
 	async function maxOrRestore(): Promise<void> {
 		if ((await me.getState()) === "normal") {
@@ -39,7 +45,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 		// If the window.open contained a target it is the viewOptions.name,
 		// the name starts internal-generated if a target wasn't specified
-		if (!viewOptions.name.startsWith("internal-generated")) {
+		if (!viewOptions.name?.startsWith("internal-generated")) {
 			// This is a window.open with a target, but we can't use the original target name
 			// as the view name, because this would not allow it to be re-used, so we
 			// substitute a derived view name and then remove the old view later

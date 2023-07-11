@@ -3,14 +3,17 @@ export {};
 document.addEventListener("DOMContentLoaded", init);
 
 function init(): void {
-	const showPopupButton = document.querySelector("#btn-show-popup");
-	showPopupButton.addEventListener("click", createPopupWindow);
+	const showPopupButton = document.querySelector<HTMLButtonElement>("#btn-show-popup");
+	if (showPopupButton) {
+		showPopupButton.addEventListener("click", createPopupWindow);
+	}
 }
 
-async function createPopupWindow(event): Promise<void> {
+async function createPopupWindow(event: MouseEvent): Promise<void> {
 	resetPopupResult();
-	const { top, right, height }: { top: number; right: number; height: number } =
-		event.target.getBoundingClientRect();
+	const { top, right, height }: { top: number; right: number; height: number } = (
+		event.target as HTMLElement
+	).getBoundingClientRect();
 	const hHeight = height / 2;
 	const result = await fin.me.showPopupWindow({
 		url: location.href.replace("app", "popup"),
@@ -23,9 +26,15 @@ async function createPopupWindow(event): Promise<void> {
 }
 
 function renderPopupResult(result: OpenFin.PopupResult): void {
-	document.querySelector("#popup-result").textContent = JSON.stringify(result, undefined, 2);
+	const res = document.querySelector("#popup-result");
+	if (res) {
+		res.textContent = JSON.stringify(result, undefined, 2);
+	}
 }
 
 function resetPopupResult(): void {
-	document.querySelector("#popup-result").textContent = "No result";
+	const res = document.querySelector("#popup-result");
+	if (res) {
+		res.textContent = "No result";
+	}
 }
