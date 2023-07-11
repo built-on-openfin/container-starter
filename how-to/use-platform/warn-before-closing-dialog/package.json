@@ -13,8 +13,8 @@
 	},
 	"license": "ISC",
 	"devDependencies": {
-		"@openfin/core": "^27.70.8",
-		"openfin-adapter": "^26.70.16",
+		"@openfin/core": "^28.72.17",
+		"openfin-adapter": "^28.72.17",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.1.6",
 		"webpack": "^5.88.1",

@@ -65,7 +65,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-a-manifest/create-a-single-page-platform/public/common",
-				"files": ["images/icon-blue.png", "images/style/test-image.webp",  "style/app.css", "style/style.html"]
+				"files": ["images/icon-blue.png", "images/style/test-image.webp", "style/app.css", "style/style.html"]
 			}
 		]
 	},

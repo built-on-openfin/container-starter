@@ -19,7 +19,7 @@
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"express": "^4.18.2",
-		"openfin-adapter": "^26.70.16",
+		"openfin-adapter": "^28.72.17",
 		"source-map-loader": "^4.0.1",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.1.6",
