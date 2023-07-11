@@ -338,5 +338,55 @@
 				"files": ["fin.d.ts"]
 			}
 		]
+	},
+	{
+		"name": "use-preloads/basic",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-preloads/basic/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-preloads/basic/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-preloads/basic/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-preloads/basic/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-preloads/restart-on-refresh",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-preloads/restart-on-refresh/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-preloads/restart-on-refresh/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-preloads/restart-on-refresh/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-preloads/restart-on-refresh/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
 	}
 ]
