@@ -413,5 +413,30 @@
 				"files": ["fin.d.ts"]
 			}
 		]
+	},
+	{
+		"name": "use-window-options",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-window-options/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-window-options/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-window-options/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-window-options/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
 	}
 ]
