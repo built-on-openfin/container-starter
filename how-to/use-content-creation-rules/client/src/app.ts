@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
 	const openView = document.querySelector("#open-view");
 	openView.addEventListener("click", (e) => {
-		window.open("https://www.google.com");
+		const win = window.open("https://www.google.com");
+		logWindowResult(win);
 	});
 
 	const openViewTarget = document.querySelector("#open-view-target");
@@ -13,12 +14,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	let viewTargetIndex = 0;
 	openViewTarget.addEventListener("click", (e) => {
-		window.open(viewTargets[viewTargetIndex++ % viewTargets.length], "examples");
+		const win = window.open(viewTargets[viewTargetIndex++ % viewTargets.length], "examples", "blah=foo");
+		logWindowResult(win);
 	});
 
 	const openWindow = document.querySelector("#open-window");
 	openWindow.addEventListener("click", (e) => {
-		window.open("https://www.bing.com");
+		const win = window.open("https://www.bing.com");
+		logWindowResult(win);
 	});
 
 	const openWindowTarget = document.querySelector("#open-window-target");
@@ -30,16 +33,29 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	let windowTargetIndex = 0;
 	openWindowTarget.addEventListener("click", (e) => {
-		window.open(windowTargets[windowTargetIndex++ % windowTargets.length], "examples2");
+		const win = window.open(windowTargets[windowTargetIndex++ % windowTargets.length], "examples2");
+		logWindowResult(win);
 	});
 
 	const openBrowser = document.querySelector("#open-browser");
 	openBrowser.addEventListener("click", (e) => {
-		window.open("https://www.microsoft.com");
+		const win = window.open("https://www.microsoft.com");
+		logWindowResult(win);
 	});
 
 	const openBlocked = document.querySelector("#open-blocked");
 	openBlocked.addEventListener("click", (e) => {
-		window.open("https://www.apple.com");
+		const win = window.open("https://www.apple.com");
+		logWindowResult(win);
 	});
 });
+
+function logWindowResult(win: WindowProxy): void {
+	try {
+		win.addEventListener("DOMContentLoaded", () => {
+			console.log("Window Location", win.location);
+		});
+	} catch (err) {
+		console.error("Error logging window results", err);
+	}
+}

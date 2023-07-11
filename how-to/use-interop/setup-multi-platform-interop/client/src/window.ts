@@ -19,7 +19,7 @@ openfinApplication
  * Joins a context group by passing in the top-level variable `lastFocusedView` as the `target` parameter of the `joinContextGroup` function.
  */
 
-const changeContextGroup = async (event: Event): Promise<void> => {
+async function changeContextGroup(event: Event): Promise<void> {
 	const selectedColorElement: HTMLElement = event.target as HTMLElement;
 	const color: string = selectedColorElement.title;
 	await fin.me.interop.joinContextGroup(color, lastFocusedView);
@@ -30,7 +30,7 @@ const changeContextGroup = async (event: Event): Promise<void> => {
 			...contextGroups.map(({ displayMetadata }: PlatformContextGroup) => `${displayMetadata.name}-channel`)
 		);
 	document.querySelector(`#tab-${lastFocusedView.name}`).classList.add(`${color}-channel`);
-};
+}
 
 /**
  * @function addContextGroupButtons
@@ -39,7 +39,7 @@ const changeContextGroup = async (event: Event): Promise<void> => {
  * 2. Iterates all context groups and creates a corresponding button per context group (color channel).
  * 3. Adds a click listener to each button with the `changeContextGroup` function as the listener callback.
  */
-const addContextGroupButtons = async (): Promise<void> => {
+async function addContextGroupButtons(): Promise<void> {
 	const contextGroups: PlatformContextGroups = await fin.me.interop.getContextGroups();
 	const windowFrameStyleSheet: CSSStyleSheet = document.styleSheets[0];
 	const buttonsWrapper: HTMLElement = document.querySelector("#buttons-wrapper");
@@ -58,21 +58,25 @@ const addContextGroupButtons = async (): Promise<void> => {
 		newButton.addEventListener("click", changeContextGroup);
 		buttonsWrapper.prepend(newButton);
 	}
-};
+}
 
-const maxOrRestore = async (): Promise<void> => {
+async function maxOrRestore(): Promise<void> {
 	if ((await openfinWindow.getState()) === "normal") {
 		return openfinWindow.maximize();
 	}
 
 	return openfinWindow.restore();
-};
+}
 
-const closeWindow = async (): Promise<void> => openfinWindow.close();
+async function closeWindow(): Promise<void> {
+	return openfinWindow.close();
+}
 
-const minimizeWindow = async (): Promise<void> => openfinWindow.minimize();
+async function minimizeWindow(): Promise<void> {
+	return openfinWindow.minimize();
+}
 
-const setupTitleBar = async (): Promise<void> => {
+async function setupTitleBar(): Promise<void> {
 	const title: HTMLElement = document.querySelector("#title");
 	const minBtn: HTMLElement = document.querySelector("#minimize-button");
 	const maxBtn: HTMLElement = document.querySelector("#expand-button");
@@ -85,7 +89,7 @@ const setupTitleBar = async (): Promise<void> => {
 	closeBtn.addEventListener("click", closeWindow);
 
 	await addContextGroupButtons();
-};
+}
 
 window.addEventListener("DOMContentLoaded", async () => {
 	await fin.Platform.Layout.init({ containerId: CONTAINER_ID });

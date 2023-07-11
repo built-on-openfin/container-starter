@@ -8,6 +8,6 @@ if (window !== window.top) {
 	});
 }
 
-function initPlatformPreload() {
+function initPlatformPreload(): void {
 	console.log("Platform preload loaded.");
 }

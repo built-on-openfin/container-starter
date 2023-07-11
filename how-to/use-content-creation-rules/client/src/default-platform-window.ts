@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 		await me.close();
 	});
 
-	async function maxOrRestore() {
+	async function maxOrRestore(): Promise<void> {
 		if ((await me.getState()) === "normal") {
 			return me.maximize();
 		}

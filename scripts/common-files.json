@@ -1,0 +1,342 @@
+[
+	{
+		"name": "create-window",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/create-window/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/create-window/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/create-window/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/create-window/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "integration-excel",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/integration-excel/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/integration-excel/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/integration-excel/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/integration-excel/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-a-manifest/create-a-single-page-platform",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-a-manifest/create-a-single-page-platform/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-a-manifest/create-a-single-page-platform/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-a-manifest/create-a-single-page-platform/public/common",
+				"files": ["images/icon-blue.png", "images/style/test-image.webp",  "style/app.css", "style/style.html"]
+			}
+		]
+	},
+	{
+		"name": "use-channel-api/issue-commands-to-a-platform",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-channel-api/issue-commands-to-a-platform/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-channel-api/issue-commands-to-a-platform/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-channel-api/issue-commands-to-a-platform/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-channel-api/issue-commands-to-a-platform/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-content-creation-rules",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-content-creation-rules/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-content-creation-rules/public/common",
+				"files": ["style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-content-creation-rules/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-content-creation-rules/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-dynamic-manifest/basic",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-dynamic-manifest/basic/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-dynamic-manifest/basic/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-dynamic-manifest/basic/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			}
+		]
+	},
+	{
+		"name": "use-interop/setup-multi-platform-interop",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-interop/setup-multi-platform-interop/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-interop/setup-multi-platform-interop/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-interop/setup-multi-platform-interop/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-interop/setup-multi-platform-interop/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-launch-external-process",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-launch-external-process/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-launch-external-process/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-launch-external-process/scripts",
+				"files": ["kill.mjs", "launch.mjs", "dos.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-launch-external-process/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-logging-apis",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-logging-apis/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-logging-apis/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-logging-apis/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-logging-apis/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-platform/warn-before-closing-dialog",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-platform/warn-before-closing-dialog/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-platform/warn-before-closing-dialog/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-platform/warn-before-closing-dialog/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-platform/warn-before-closing-dialog/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-popup-window/advanced",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-popup-window/advanced/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-popup-window/advanced/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-popup-window/advanced/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-popup-window/advanced/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-popup-window/modal",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-popup-window/modal/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-popup-window/modal/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-popup-window/modal/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-popup-window/modal/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-popup-window/multiple-results",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-popup-window/multiple-results/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-popup-window/multiple-results/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-popup-window/multiple-results/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-popup-window/multiple-results/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
+		"name": "use-popup-window/single-result",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-popup-window/single-result/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-popup-window/single-result/public/common",
+				"files": ["images/icon-blue.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-popup-window/single-result/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-popup-window/single-result/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	}
+]

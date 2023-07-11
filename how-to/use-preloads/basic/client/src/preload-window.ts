@@ -8,6 +8,6 @@ if (window !== window.top) {
 	});
 }
 
-function initWindowPreload() {
+function initWindowPreload(): void {
 	console.log("Window preload loaded.");
 }

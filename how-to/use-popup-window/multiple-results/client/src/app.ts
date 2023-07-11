@@ -2,7 +2,7 @@ export {};
 
 document.addEventListener("DOMContentLoaded", init);
 
-function init() {
+function init(): void {
 	const showPopupButton = document.querySelector<HTMLButtonElement>("#btn-show-popup");
 	showPopupButton.addEventListener("click", createPopupWindow);
 }

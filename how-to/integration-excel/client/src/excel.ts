@@ -1,5 +1,11 @@
 import { getCurrentChannel } from "@finos/fdc3";
-import { Cell, ExcelApplication, ExcelWorkbook, ExcelWorksheet, getExcelApplication } from "@openfin/excel";
+import {
+	type Cell,
+	type ExcelApplication,
+	type ExcelWorkbook,
+	type ExcelWorksheet,
+	getExcelApplication
+} from "@openfin/excel";
 
 const KNOWN_INSTRUMENTS = ["TSLA", "MSFT", "AAPL"];
 
@@ -66,7 +72,7 @@ async function init(): Promise<void> {
 	}
 }
 
-function showError(err) {
+function showError(err): void {
 	const errDom = document.querySelector("#error");
 	errDom.innerHTML = err.message;
 }
@@ -247,7 +253,7 @@ async function broadcastInstrument(instrument: string): Promise<void> {
 			};
 
 			const channel = await getCurrentChannel();
-			channel.broadcast(fdcInstrument);
+			await channel.broadcast(fdcInstrument);
 
 			broadcastElement.value = instrument;
 		} catch (err) {

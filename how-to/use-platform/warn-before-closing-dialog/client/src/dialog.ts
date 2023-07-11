@@ -1,6 +1,6 @@
 import { fin } from "@openfin/core";
 
-function populatePreventedViews(views) {
+function populatePreventedViews(views): void {
 	for (const view of views) {
 		console.log("add view", view);
 		const viewP = document.createElement("p");
@@ -9,7 +9,7 @@ function populatePreventedViews(views) {
 	}
 }
 
-function populate() {
+function populate(): void {
 	const params = new URLSearchParams(window.location.search);
 	const closeType = params.get("closeType");
 
@@ -34,7 +34,7 @@ function populate() {
 	}
 }
 
-async function handleClose(userDecision) {
+async function handleClose(userDecision): Promise<void> {
 	try {
 		const client = await fin.InterApplicationBus.Channel.connect("userDecisionProvider");
 		await client.dispatch("get-user-decision", userDecision);

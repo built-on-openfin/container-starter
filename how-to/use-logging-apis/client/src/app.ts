@@ -41,7 +41,7 @@ async function initDom(): Promise<void> {
  * 4. Uploads the created runtime debug log file to a server endpoint.
  */
 
-async function uploadHandler(submitEvent: Event) {
+async function uploadHandler(submitEvent: Event): Promise<void> {
 	submitEvent.preventDefault();
 	if (!fileName) {
 		fileName = "debug.log";
@@ -70,7 +70,7 @@ async function uploadHandler(submitEvent: Event) {
  * Sends a message to the OpenFin RVM to send the application logs.
  */
 
-async function sendApplicationLogs() {
+async function sendApplicationLogs(): Promise<void> {
 	try {
 		const appLogResponse = await fin.Application.getCurrentSync().sendApplicationLog();
 		console.log(`Log ID: ${appLogResponse.logId}`);
@@ -97,7 +97,7 @@ async function getLogFromName(name: string): Promise<string> {
  * @description
  * Creates an HTMLOptionElement for each of the Runtime debug logs.
  */
-async function createLogDropDown(parentElement: HTMLSelectElement) {
+async function createLogDropDown(parentElement: HTMLSelectElement): Promise<void> {
 	const logList: OpenFin.LogInfo[] = await fin.System.getLogList();
 
 	for (const log of logList) {

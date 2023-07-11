@@ -116,7 +116,7 @@ async function initDom(): Promise<void> {
 	updatePreview();
 }
 
-function populateForm() {
+function populateForm(): void {
 	// Common options
 	connectInput(selectedCommonOptions, "optionName", "name");
 	connectInput(selectedCommonOptions, "optionUrl", "url");
@@ -159,7 +159,7 @@ function populateForm() {
 	updateFramelessState();
 }
 
-function updateResizeState() {
+function updateResizeState(): void {
 	const resizable = selectedCommonOptions.resizable ?? defaultCommonOptions.resizable;
 	const widthElem: HTMLElement = document.querySelector("#resizeWidth");
 	widthElem.style.display = resizable ? "flex" : "none";
@@ -175,13 +175,13 @@ function updateResizeState() {
 	}
 }
 
-function updateFramelessState() {
+function updateFramelessState(): void {
 	const frame = selectedCommonOptions.frame ?? defaultCommonOptions.frame;
 	const sectionFrameless: HTMLElement = document.querySelector("#sectionFrameless");
 	sectionFrameless.style.display = frame ? "none" : "flex";
 }
 
-function updateResizeWidth() {
+function updateResizeWidth(): void {
 	if (
 		selectedCommonOptions.maxWidth !== -1 &&
 		selectedCommonOptions.maxWidth <= selectedCommonOptions.minWidth
@@ -194,7 +194,7 @@ function updateResizeWidth() {
 	}
 }
 
-function updateResizeHeight() {
+function updateResizeHeight(): void {
 	if (
 		selectedCommonOptions.maxHeight !== -1 &&
 		selectedCommonOptions.maxHeight <= selectedCommonOptions.minHeight
@@ -207,7 +207,7 @@ function updateResizeHeight() {
 	}
 }
 
-function updateDefaultPosition() {
+function updateDefaultPosition(): void {
 	const isCentered = selectedCommonOptions.defaultCentered ?? defaultCommonOptions.defaultCentered;
 
 	const defaultPositionElem: HTMLDivElement = document.querySelector("#defaultPosition");
@@ -237,7 +237,7 @@ function getProperty<T, K extends keyof T, P>(obj: Partial<T>, key: K): P {
 	return obj[key] as unknown as P;
 }
 
-function connectInput<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K) {
+function connectInput<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	option.value = getProperty(selectedValues, property) ?? "";
 	option.addEventListener("input", () => {
@@ -251,7 +251,7 @@ function connectCheckbox<T, K extends keyof T>(
 	fieldId: string,
 	property: K,
 	changed?: () => void
-) {
+): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	option.checked = getProperty(selectedValues, property);
 	option.addEventListener("change", () => {
@@ -268,7 +268,7 @@ function connectRange<T, K extends keyof T>(
 	fieldId: string,
 	property: K,
 	changed?: () => void
-) {
+): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	const optionValue = document.querySelector<HTMLInputElement>(`#${fieldId}Value`);
 
@@ -289,7 +289,7 @@ function connectColor<T, K extends keyof T>(
 	fieldId: string,
 	property: K,
 	changed?: () => void
-) {
+): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	const optionValue = document.querySelector<HTMLInputElement>(`#${fieldId}Value`);
 
@@ -305,7 +305,7 @@ function connectColor<T, K extends keyof T>(
 	});
 }
 
-function finalizeWindowOptions() {
+function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
 	const finalWindowOptions: OpenFin.WindowCreationOptions = {
 		name: selectedCommonOptions.name,
 		url: selectedCommonOptions.url,
@@ -351,11 +351,11 @@ function finalizeWindowOptions() {
 	return finalWindowOptions;
 }
 
-function updatePreview() {
+function updatePreview(): void {
 	const previewElem = document.querySelector("#preview");
 	previewElem.textContent = createPreview();
 }
 
-function createPreview() {
+function createPreview(): string {
 	return `await fin.Window.create(${JSON.stringify(finalizeWindowOptions(), undefined, "  ")});`;
 }

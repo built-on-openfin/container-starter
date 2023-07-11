@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 });
 
-function beforeUnloadListener(e) {
+function beforeUnloadListener(e): void {
 	e.preventDefault();
 	e.returnValue = "";
 }

@@ -34,9 +34,6 @@ async function init(): Promise<void> {
 					...trayInfo.monitorInfo.nonPrimaryMonitors
 				];
 
-				const pointInRect = ({ left, top, right, bottom }, { x, y }) =>
-					x > left && x < right && y > top && y < bottom;
-
 				const foundMonitor = monitors.find((mi) =>
 					pointInRect(mi.monitorRect, { x: trayInfo.x, y: trayInfo.y })
 				);
@@ -77,4 +74,8 @@ async function init(): Promise<void> {
 
 		visible = !visible;
 	});
+}
+
+function pointInRect({ left, top, right, bottom }, { x, y }): boolean {
+	return x > left && x < right && y > top && y < bottom;
 }

@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
-async function openDynamicApplicationWindow() {
+async function openDynamicApplicationWindow(): Promise<OpenFin.Window> {
 	const winOption = {
 		name: "child",
 		defaultWidth: 800,
@@ -18,13 +18,16 @@ async function openDynamicApplicationWindow() {
 	return fin.Window.create(winOption);
 }
 
-async function openManifestApplicationWindow() {
-	fin.Application.startFromManifest("http://localhost:5050/app.fin.json")
-		.then((app) => console.log("App is running"))
-		.catch((err) => console.log(err));
+async function openManifestApplicationWindow(): Promise<void> {
+	try {
+		await fin.Application.startFromManifest("http://localhost:5050/app.fin.json");
+		console.log("App is running");
+	} catch (err) {
+		console.error(err);
+	}
 }
 
-async function openDataWindow() {
+async function openDataWindow(): Promise<OpenFin.Window> {
 	const winOption = {
 		name: "child-data",
 		defaultWidth: 800,
@@ -39,7 +42,7 @@ async function openDataWindow() {
 	return fin.Window.create(winOption);
 }
 
-async function openDataPlatformWindow() {
+async function openDataPlatformWindow(): Promise<void> {
 	const viewOption = {
 		name: "childview-data",
 		url: "http://localhost:5050/html/window.html",

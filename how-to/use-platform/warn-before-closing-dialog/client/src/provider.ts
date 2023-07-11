@@ -1,9 +1,9 @@
-const launchDialog = async (viewsPreventingUnload, windowId, closeType): Promise<boolean> => {
+async function launchDialog(viewsPreventingUnload, windowId, closeType): Promise<boolean> {
 	const views = { views: viewsPreventingUnload };
 	const queryString = new URLSearchParams(`views=${JSON.stringify(views)}&closeType=${closeType}`);
 	const baseUrl = window.location.href.replace("provider", "dialog");
 	const url = `${baseUrl}?${queryString.toString()}`;
-	const handleUserDecisionPromise = async (resolve, reject) => {
+	async function handleUserDecisionPromise(resolve, reject): Promise<void> {
 		try {
 			const dialogWindow = fin.Window.wrapSync({ uuid: fin.me.identity.uuid, name: "before-unload-dialog" });
 
@@ -33,13 +33,13 @@ const launchDialog = async (viewsPreventingUnload, windowId, closeType): Promise
 		} catch (error) {
 			reject(error);
 		}
-	};
+	}
 	return new Promise(handleUserDecisionPromise);
-};
+}
 
-const overrideCallback = (
+function overrideCallback(
 	PlatformProvider: OpenFin.Constructor<OpenFin.PlatformProvider>
-): OpenFin.PlatformProvider => {
+): OpenFin.PlatformProvider {
 	class beforeUnloadDialogOverride extends PlatformProvider {
 		public async getUserDecisionForBeforeUnload(
 			payload: OpenFin.ViewsPreventingUnloadPayload
@@ -56,6 +56,6 @@ const overrideCallback = (
 		}
 	}
 	return new beforeUnloadDialogOverride();
-};
+}
 
 fin.Platform.init({ overrideCallback }).catch((error) => console.error(error));

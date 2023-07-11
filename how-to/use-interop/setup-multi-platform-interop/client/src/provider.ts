@@ -136,7 +136,7 @@ function interopOverride(
 		public async setContextOnExternalClient(
 			context: ExternalContext,
 			clientIdentity: OpenFin.ClientIdentity
-		) {
+		): Promise<void> {
 			// use accessor syntax for this.getClientState as it is not a public inherited method from InteropBroker
 			// eslint-disable-next-line @typescript-eslint/dot-notation
 			const state = this["getClientState"](clientIdentity);

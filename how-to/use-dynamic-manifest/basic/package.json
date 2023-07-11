@@ -8,21 +8,20 @@
 		"build-server": "tsc --project ./server",
 		"start": "npm run server",
 		"server": "node ./server/build/index.js",
-		"client": "npm --prefix ../../common/ run client http://localhost:5050/manifest?env=dev",
-		"dev": "npm --prefix ../../common/ run client http://localhost:5050/manifest?env=dev",
-		"staging": "npm --prefix ../../common/ run client  http://localhost:5050/manifest?env=staging",
+		"client": "node ./scripts/launch.mjs http://localhost:5050/manifest?env=dev",
+		"dev": "node ./scripts/launch.mjs http://localhost:5050/manifest?env=dev",
+		"staging": "node ./scripts/launch.mjs  http://localhost:5050/manifest?env=staging",
 		"kill": "npm --prefix ../../common/ run kill",
-		"setup": "cd ../../../ && npm install && cd how-to/use-dynamic-manifest/basic && npm run build",
-		"validate": "npm --prefix ../../../ run validate"
+		"setup": "cd ../../../ && npm install && cd how-to/use-dynamic-manifest/basic && npm run build"
 	},
 	"author": "pj.singh@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"express": "^4.18.2",
-		"source-map-loader": "^4.0.1",
-		"ts-loader": "^9.4.2",
-		"typescript": "^4.9.5",
-		"webpack": "^5.75.0",
-		"webpack-cli": "^5.0.1"
+		"openfin-adapter": "^26.70.16",
+		"ts-loader": "^9.4.4",
+		"typescript": "^5.1.6",
+		"webpack": "^5.88.1",
+		"webpack-cli": "^5.1.4"
 	}
 }

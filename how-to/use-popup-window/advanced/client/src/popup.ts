@@ -4,7 +4,7 @@ const me = fin.me as OpenFin.Window;
 
 document.addEventListener("DOMContentLoaded", init);
 
-async function init() {
+async function init(): Promise<void> {
 	const okButton = document.querySelector("#btn-ok");
 	const confirmButton = document.querySelector("#btn-confirm");
 	const cancelButton = document.querySelector("#btn-cancel");
@@ -25,7 +25,7 @@ async function init() {
 	await me.on("shown", renderShownDate);
 }
 
-async function renderShownDate() {
+async function renderShownDate(): Promise<void> {
 	const shownDateEl = document.querySelector("#shown-date");
 	const { customData } = await me.getOptions();
 	const { shownAsPopup }: { shownAsPopup: number } = customData;

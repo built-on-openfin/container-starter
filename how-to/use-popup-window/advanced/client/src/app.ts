@@ -2,7 +2,7 @@ export {};
 
 document.addEventListener("DOMContentLoaded", init);
 
-async function init() {
+async function init(): Promise<void> {
 	// provision about:blank window to later show as popup
 	await fin.Window.create({ name: "popup", autoShow: false });
 	const showPopupButton = document.querySelector("#btn-show-popup");
