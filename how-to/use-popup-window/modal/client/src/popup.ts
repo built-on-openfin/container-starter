@@ -1,4 +1,4 @@
-export { };
+export {};
 
 const me = fin.me as OpenFin.Window;
 

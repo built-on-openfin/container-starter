@@ -1,4 +1,8 @@
-async function launchDialog(viewsPreventingUnload: OpenFin.Identity[], windowId: OpenFin.Identity, closeType: "window" | "view"): Promise<boolean> {
+async function launchDialog(
+	viewsPreventingUnload: OpenFin.Identity[],
+	windowId: OpenFin.Identity,
+	closeType: "window" | "view"
+): Promise<boolean> {
 	const views = { views: viewsPreventingUnload };
 	const queryString = new URLSearchParams(`views=${JSON.stringify(views)}&closeType=${closeType}`);
 	const baseUrl = window.location.href.replace("provider", "dialog");

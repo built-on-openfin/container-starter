@@ -1,4 +1,4 @@
-export { };
+export {};
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
@@ -95,9 +95,13 @@ async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	try {
 		const messageLog = document.querySelector("#message-log");
 		if (messageLog) {
-			await fin.InterApplicationBus.subscribe({ uuid: "*" }, topic, (payload: { id: { uuid: string }; message: string; realmName: string }) => {
-				messageLog.innerHTML += `Received message from app with identity of {uuid: ${payload.id.uuid}}\n\nRealm Name: ${payload.realmName}\nMessage: ${payload.message}\n\n`;
-			});
+			await fin.InterApplicationBus.subscribe(
+				{ uuid: "*" },
+				topic,
+				(payload: { id: { uuid: string }; message: string; realmName: string }) => {
+					messageLog.innerHTML += `Received message from app with identity of {uuid: ${payload.id.uuid}}\n\nRealm Name: ${payload.realmName}\nMessage: ${payload.message}\n\n`;
+				}
+			);
 		}
 	} catch (error) {
 		if (error) {

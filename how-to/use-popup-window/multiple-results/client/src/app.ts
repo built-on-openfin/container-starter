@@ -1,4 +1,4 @@
-export { };
+export {};
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -11,7 +11,9 @@ function init(): void {
 
 async function createPopupWindow(event: MouseEvent): Promise<void> {
 	resetPopupResult();
-	const { right, height }: { right: number; height: number } = (event.target as HTMLElement).getBoundingClientRect();
+	const { right, height }: { right: number; height: number } = (
+		event.target as HTMLElement
+	).getBoundingClientRect();
 	const hHeight = height / 2;
 	const result = await fin.me.showPopupWindow({
 		initialOptions: {
