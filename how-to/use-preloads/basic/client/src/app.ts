@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
-		await init();
+		await initDom();
 	} catch (error) {
 		console.error(error);
 	}
 });
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const showPlatformDevToolsButton = document.querySelector("#platform-devtools");
 	const showWindowDevToolsButton = document.querySelector("#window-devtools");
 	const showViewDevToolsButton = document.querySelector("#view-devtools");
@@ -22,6 +25,9 @@ async function init(): Promise<void> {
 	}
 }
 
+/**
+ * Show the developer tools for the platform.
+ */
 async function showPlatformDevTools(): Promise<void> {
 	try {
 		const identity = fin.me.identity;
@@ -32,6 +38,9 @@ async function showPlatformDevTools(): Promise<void> {
 	}
 }
 
+/**
+ * Show the develop tools for the window.
+ */
 async function showWindowDevTools(): Promise<void> {
 	try {
 		const identity = fin.me.identity;
@@ -43,6 +52,9 @@ async function showWindowDevTools(): Promise<void> {
 	}
 }
 
+/**
+ * Show the developer tools for the view.
+ */
 async function showViewDevTools(): Promise<void> {
 	try {
 		const identity = fin.me.identity;

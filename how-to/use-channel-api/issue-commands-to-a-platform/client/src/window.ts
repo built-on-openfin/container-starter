@@ -2,7 +2,7 @@ export {};
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
-		await init();
+		await initDom();
 	} catch (error) {
 		console.error(error);
 	}
@@ -16,7 +16,10 @@ let lastCreatedView:
 	| undefined;
 let channelClient: OpenFin.ChannelClient;
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const launchPlatformButton = document.querySelector("#launch-platform");
 	const requestViewButton = document.querySelector("#request-view");
 	const requestViewInSameWindowButton = document.querySelector("#request-view-same-window");
@@ -31,6 +34,9 @@ async function init(): Promise<void> {
 	}
 }
 
+/**
+ * Launch a platform from a manifest.
+ */
 async function launchPlatform(): Promise<void> {
 	try {
 		await fin.System.launchManifest("http://localhost:5050/platform.fin.json");
@@ -46,6 +52,9 @@ async function launchPlatform(): Promise<void> {
 	}
 }
 
+/**
+ * Create a view using a channel.
+ */
 async function requestView(): Promise<void> {
 	try {
 		// you have the option of letting the connected app to provide view options or maybe you will provide a more restrictive option where they can just specify an id of a view to load
@@ -63,6 +72,9 @@ async function requestView(): Promise<void> {
 	}
 }
 
+/**
+ * Create a view using a channel with a specific target.
+ */
 async function requestViewInLastWindow(): Promise<void> {
 	try {
 		// you have the option of letting the connected app to provide view options or maybe you will provide a more restrictive option where they can just specify an id of a view to load

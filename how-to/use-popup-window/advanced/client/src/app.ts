@@ -1,8 +1,11 @@
 export {};
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	// provision about:blank window to later show as popup
 	await fin.Window.create({ name: "popup", autoShow: false });
 	const showPopupButton = document.querySelector<HTMLButtonElement>("#btn-show-popup");
@@ -11,6 +14,10 @@ async function init(): Promise<void> {
 	}
 }
 
+/**
+ * Create the popup window from the click.
+ * @param event The event to handle.
+ */
 async function createPopupWindow(event: MouseEvent): Promise<void> {
 	resetPopupResult();
 	const { top, right, height }: { top: number; right: number; height: number } = (
@@ -34,6 +41,10 @@ async function createPopupWindow(event: MouseEvent): Promise<void> {
 	renderPopupResult(result);
 }
 
+/**
+ * Display the popup result.
+ * @param result The result to display.
+ */
 function renderPopupResult(result: OpenFin.PopupResult): void {
 	const res = document.querySelector("#popup-result");
 	if (res) {
@@ -41,6 +52,9 @@ function renderPopupResult(result: OpenFin.PopupResult): void {
 	}
 }
 
+/**
+ * Clear the popup result.
+ */
 function resetPopupResult(): void {
 	const res = document.querySelector("#popup-result");
 	if (res) {

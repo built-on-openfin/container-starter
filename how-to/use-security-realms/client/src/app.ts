@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
+/**
+ * Initialize the DOM elements.
+ */
 async function init(): Promise<void> {
 	const securityRealm = await getSecurityRealmInfo();
 	if (securityRealm === "UAT-MAIN") {
@@ -25,6 +28,10 @@ async function init(): Promise<void> {
 	await listenToTopicAndLogMessages(securityRealm ?? "");
 }
 
+/**
+ * Get the security realm info.
+ * @returns The security realm if it is set.
+ */
 async function getSecurityRealmInfo(): Promise<string | undefined> {
 	try {
 		const runtimeInfo: OpenFin.RuntimeInfo = await fin.System.getRuntimeInfo();
@@ -41,6 +48,10 @@ async function getSecurityRealmInfo(): Promise<string | undefined> {
 	}
 }
 
+/**
+ * Setup the send button.
+ * @param realm The realm to use.
+ */
 async function setupSendButton(realm: string): Promise<void> {
 	const sendMessageBtn = document.querySelector("#send-message");
 	if (sendMessageBtn) {
@@ -54,6 +65,12 @@ async function setupSendButton(realm: string): Promise<void> {
 		});
 	}
 }
+
+/**
+ * Publish a message to the topic.
+ * @param messageText The message text.
+ * @param realm The realm to send the message to.
+ */
 async function publishMessageToTopic(messageText: string, realm: string): Promise<void> {
 	try {
 		await fin.InterApplicationBus.publish(topic, {
@@ -67,6 +84,10 @@ async function publishMessageToTopic(messageText: string, realm: string): Promis
 	}
 }
 
+/**
+ * Listen for messages and log the results.
+ * @param realm The realm to listen on.
+ */
 async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	try {
 		const messageLog = document.querySelector("#message-log");
@@ -87,15 +108,11 @@ async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	}
 }
 
+/**
+ * Launch a native app.
+ * @returns The application identity.
+ */
 async function launchNativeApp(): Promise<OpenFin.ApplicationIdentity> {
-	/**
-	 * @key alias: <string> the name supplied to the appAsset in the app.json file.
-	 * @key target: <string> the relative path to the executable from the appAssets [alias]/[version].
-	 * @key arguments: <string> a string of acceptable arguments for the given executable.
-	 * @key listener: <function> listener, @param result: <object> = {topic: string, uuid: string, exitCode: number}.
-	 * @returns Promise<Object>: object containing the uuid of the launched executable { uuid: string }.
-	 */
-
 	const nativeApp = await fin.System.launchExternalProcess({
 		alias: "security-realms-native",
 		listener: async (result) => {

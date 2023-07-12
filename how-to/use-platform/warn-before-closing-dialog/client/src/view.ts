@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 });
 
+/**
+ * Handle the before unload listener.
+ * @param e The event to handle.
+ */
 function beforeUnloadListener(e: Event): void {
 	e.preventDefault();
 }

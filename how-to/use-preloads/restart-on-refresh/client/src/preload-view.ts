@@ -9,6 +9,9 @@ if (window !== window.top) {
 	});
 }
 
+/**
+ * Initialize the view preload.
+ */
 async function initViewPreload(): Promise<void> {
 	console.log("View preload loaded.");
 	const navigationEntries = performance.getEntriesByType("navigation");

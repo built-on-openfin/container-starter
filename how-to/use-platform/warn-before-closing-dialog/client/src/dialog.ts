@@ -1,5 +1,28 @@
 import { fin } from "@openfin/core";
 
+document.addEventListener("DOMContentLoaded", async () => {
+	const okay = document.querySelector("#okay");
+	const cancel = document.querySelector("#cancel");
+
+	if (okay) {
+		okay.addEventListener("click", async () => {
+			await handleClose(true);
+		});
+	}
+
+	if (cancel) {
+		cancel.addEventListener("click", async () => {
+			await handleClose(false);
+		});
+	}
+
+	populate();
+});
+
+/**
+ * Populate the list of views the were prevented.
+ * @param views The list of views.
+ */
 function populatePreventedViews(views: { name: string }[]): void {
 	for (const view of views) {
 		console.log("add view", view);
@@ -12,6 +35,9 @@ function populatePreventedViews(views: { name: string }[]): void {
 	}
 }
 
+/**
+ * Populate the views.
+ */
 function populate(): void {
 	const params = new URLSearchParams(window.location.search);
 	const closeType = params.get("closeType");
@@ -46,6 +72,10 @@ function populate(): void {
 	}
 }
 
+/**
+ * Handle the close event.
+ * @param userDecision The decision the user made.
+ */
 async function handleClose(userDecision: boolean): Promise<void> {
 	try {
 		const client = await fin.InterApplicationBus.Channel.connect("userDecisionProvider");
@@ -55,22 +85,3 @@ async function handleClose(userDecision: boolean): Promise<void> {
 		console.log(error);
 	}
 }
-
-document.addEventListener("DOMContentLoaded", async () => {
-	const okay = document.querySelector("#okay");
-	const cancel = document.querySelector("#cancel");
-
-	if (okay) {
-		okay.addEventListener("click", async () => {
-			await handleClose(true);
-		});
-	}
-
-	if (cancel) {
-		cancel.addEventListener("click", async () => {
-			await handleClose(false);
-		});
-	}
-
-	populate();
-});

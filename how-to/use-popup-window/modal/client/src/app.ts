@@ -1,14 +1,20 @@
 export {};
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-function init(): void {
+/**
+ * Initialize the DOM elements.
+ */
+function initDom(): void {
 	const showPopupButton = document.querySelector("#btn-show-popup");
 	if (showPopupButton) {
 		showPopupButton.addEventListener("click", createPopupWindow);
 	}
 }
 
+/**
+ * Create the popup window from the click.
+ */
 async function createPopupWindow(): Promise<void> {
 	const PARENT_FRAME_OFFSET = 64;
 	resetPopupResult();
@@ -30,6 +36,10 @@ async function createPopupWindow(): Promise<void> {
 	renderPopupResult(result);
 }
 
+/**
+ * Display the popup result.
+ * @param result The result to display.
+ */
 function renderPopupResult(result: OpenFin.PopupResult): void {
 	const res = document.querySelector("#popup-result");
 	if (res) {
@@ -37,6 +47,9 @@ function renderPopupResult(result: OpenFin.PopupResult): void {
 	}
 }
 
+/**
+ * Clear the popup result.
+ */
 function resetPopupResult(): void {
 	const res = document.querySelector("#popup-result");
 	if (res) {

@@ -2,13 +2,16 @@ import { getCurrentChannel } from "@finos/fdc3";
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
-		await init();
+		await initDom();
 	} catch (error) {
 		console.error(error);
 	}
 });
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	try {
 		const appChannel = await getCurrentChannel();
 
@@ -27,6 +30,10 @@ async function init(): Promise<void> {
 	}
 }
 
+/**
+ * Show an error on the UI.
+ * @param err The error to display.
+ */
 function showError(err: unknown): void {
 	const errDom = document.querySelector("#error");
 	if (errDom) {

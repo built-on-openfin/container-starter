@@ -8,7 +8,7 @@ module.exports = {
 		'plugin:import/errors',
 		'plugin:import/warnings',
 		'plugin:import/typescript',
-		// 'plugin:jsdoc/recommended',
+		'plugin:jsdoc/recommended',
 		'plugin:promise/recommended',
 		'plugin:unicorn/all'
 	],
@@ -410,97 +410,97 @@ module.exports = {
 		'wrap-iife': ['error'],
 		'wrap-regex': ['off'],
 		'yield-star-spacing': ['error'],
-		yoda: ['error']
-		// 'jsdoc/check-access': 'error',
-		// 'jsdoc/check-alignment': 'error',
-		// 'jsdoc/check-examples': 'off',
-		// 'jsdoc/check-indentation': 'error',
-		// 'jsdoc/check-line-alignment': 'error',
-		// 'jsdoc/check-param-names': 'error',
-		// 'jsdoc/check-property-names': 'error',
-		// 'jsdoc/check-syntax': 'error',
-		// 'jsdoc/check-tag-names': 'error',
-		// 'jsdoc/check-types': 'error',
-		// 'jsdoc/check-values': 'error',
-		// 'jsdoc/empty-tags': 'error',
-		// 'jsdoc/implements-on-classes': 'error',
-		// 'jsdoc/match-description': ['error'],
-		// 'jsdoc/newline-after-description': 'off',
-		// 'jsdoc/no-bad-blocks': 'error',
-		// 'jsdoc/no-defaults': 'error',
-		// 'jsdoc/no-types': 'error',
-		// 'jsdoc/no-undefined-types': 'error',
-		// 'jsdoc/require-asterisk-prefix': 'error',
-		// 'jsdoc/require-description': 'error',
-		// 'jsdoc/require-description-complete-sentence': 'off',
-		// 'jsdoc/require-example': 'off',
-		// 'jsdoc/require-file-overview': 'off',
-		// 'jsdoc/require-hyphen-before-param-description': 'off',
-		// 'jsdoc/require-jsdoc': [
-		// 	'error',
-		// 	{
-		// 		require: {
-		// 			ArrowFunctionExpression: false,
-		// 			ClassDeclaration: true,
-		// 			ClassExpression: true,
-		// 			FunctionDeclaration: true,
-		// 			FunctionExpression: true,
-		// 			MethodDefinition: true
-		// 		},
-		// 		contexts: [
-		// 			'FunctionDeclaration',
-		// 			'FunctionExpression',
-		// 			'MethodDefinition',
-		// 			'TSDeclareFunction',
-		// 			'TSEnumDeclaration',
-		// 			'TSInterfaceDeclaration',
-		// 			'TSMethodDeclaration',
-		// 			'TSMethodSignature',
-		// 			'TSPropertySignature:not(TSTypeLiteral > TSPropertySignature)',
-		// 			'TSTypeAliasDeclaration'
-		// 		]
-		// 	}
-		// ],
-		// 'jsdoc/require-param': [
-		// 	'error',
-		// 	{
-		// 		contexts: [
-		// 			'FunctionDeclaration',
-		// 			'FunctionExpression',
-		// 			'MethodDefinition',
-		// 			'TSDeclareFunction',
-		// 			'TSMethodDeclaration',
-		// 			'TSMethodSignature'
-		// 		]
-		// 	}
-		// ],
-		// 'jsdoc/require-param-description': 'error',
-		// 'jsdoc/require-param-name': 'error',
-		// 'jsdoc/require-param-type': 'off',
-		// 'jsdoc/require-property': 'error',
-		// 'jsdoc/require-property-description': 'error',
-		// 'jsdoc/require-property-name': 'error',
-		// 'jsdoc/require-property-type': 'error',
-		// 'jsdoc/require-returns': [
-		// 	'error',
-		// 	{
-		// 		contexts: [
-		// 			'FunctionDeclaration',
-		// 			'FunctionExpression',
-		// 			'MethodDefinition',
-		// 			'TSDeclareFunction',
-		// 			'TSMethodDeclaration',
-		// 			'TSMethodSignature'
-		// 		]
-		// 	}
-		// ],
-		// 'jsdoc/require-returns-check': 'error',
-		// 'jsdoc/require-returns-description': 'error',
-		// 'jsdoc/require-returns-type': 'off',
-		// 'jsdoc/require-throws': 'error',
-		// 'jsdoc/require-yields': 'error',
-		// 'jsdoc/require-yields-check': 'error',
-		// 'jsdoc/valid-types': 2
+		yoda: ['error'],
+		'jsdoc/check-access': 'error',
+		'jsdoc/check-alignment': 'error',
+		'jsdoc/check-examples': 'off',
+		'jsdoc/check-indentation': 'error',
+		'jsdoc/check-line-alignment': 'error',
+		'jsdoc/check-param-names': 'error',
+		'jsdoc/check-property-names': 'error',
+		'jsdoc/check-syntax': 'error',
+		'jsdoc/check-tag-names': 'error',
+		'jsdoc/check-types': 'error',
+		'jsdoc/check-values': 'error',
+		'jsdoc/empty-tags': 'error',
+		'jsdoc/implements-on-classes': 'error',
+		'jsdoc/match-description': ['error'],
+		'jsdoc/newline-after-description': 'off',
+		'jsdoc/no-bad-blocks': 'error',
+		'jsdoc/no-defaults': 'error',
+		'jsdoc/no-types': 'error',
+		'jsdoc/no-undefined-types': 'error',
+		'jsdoc/require-asterisk-prefix': 'error',
+		'jsdoc/require-description': 'error',
+		'jsdoc/require-description-complete-sentence': 'off',
+		'jsdoc/require-example': 'off',
+		'jsdoc/require-file-overview': 'off',
+		'jsdoc/require-hyphen-before-param-description': 'off',
+		'jsdoc/require-jsdoc': [
+			'error',
+			{
+				require: {
+					ArrowFunctionExpression: false,
+					ClassDeclaration: true,
+					ClassExpression: true,
+					FunctionDeclaration: true,
+					FunctionExpression: true,
+					MethodDefinition: true
+				},
+				contexts: [
+					'FunctionDeclaration',
+					'FunctionExpression',
+					'MethodDefinition',
+					'TSDeclareFunction',
+					'TSEnumDeclaration',
+					'TSInterfaceDeclaration',
+					'TSMethodDeclaration',
+					'TSMethodSignature',
+					'TSPropertySignature:not(TSTypeLiteral > TSPropertySignature)',
+					'TSTypeAliasDeclaration'
+				]
+			}
+		],
+		'jsdoc/require-param': [
+			'error',
+			{
+				contexts: [
+					'FunctionDeclaration',
+					'FunctionExpression',
+					'MethodDefinition',
+					'TSDeclareFunction',
+					'TSMethodDeclaration',
+					'TSMethodSignature'
+				]
+			}
+		],
+		'jsdoc/require-param-description': 'error',
+		'jsdoc/require-param-name': 'error',
+		'jsdoc/require-param-type': 'off',
+		'jsdoc/require-property': 'error',
+		'jsdoc/require-property-description': 'error',
+		'jsdoc/require-property-name': 'error',
+		'jsdoc/require-property-type': 'error',
+		'jsdoc/require-returns': [
+			'error',
+			{
+				contexts: [
+					'FunctionDeclaration',
+					'FunctionExpression',
+					'MethodDefinition',
+					'TSDeclareFunction',
+					'TSMethodDeclaration',
+					'TSMethodSignature'
+				]
+			}
+		],
+		'jsdoc/require-returns-check': 'error',
+		'jsdoc/require-returns-description': 'error',
+		'jsdoc/require-returns-type': 'off',
+		'jsdoc/require-throws': 'error',
+		'jsdoc/require-yields': 'error',
+		'jsdoc/require-yields-check': 'error',
+		'jsdoc/valid-types': 2
 	},
 	overrides: [
 		{

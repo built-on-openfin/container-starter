@@ -1,6 +1,13 @@
 import type OpenFin from "@openfin/core";
 
-window.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
+	await initDom();
+});
+
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const platform = fin.Platform.getCurrentSync();
 	const me = fin.me as OpenFin.Window;
 	const CONTAINER_ID = "layout-container";
@@ -16,7 +23,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 	const maximizeBtn = document.querySelector("#expand-button");
 	if (maximizeBtn) {
 		maximizeBtn.addEventListener("click", async () => {
-			await maxOrRestore().catch(console.error);
+			await maxOrRestore(me).catch(console.error);
 		});
 	}
 
@@ -25,14 +32,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 		closeBtn.addEventListener("click", async (e) => {
 			await me.close();
 		});
-	}
-
-	async function maxOrRestore(): Promise<void> {
-		if ((await me.getState()) === "normal") {
-			return me.maximize();
-		}
-
-		return me.restore();
 	}
 
 	await me.on("view-child-view-created", async (e) => {
@@ -110,4 +109,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 		// Called when content is blocked
 		console.log(e);
 	});
-});
+}
+
+/**
+ * Maximize of restore the window.
+ * @param win The window to perform the action on.
+ * @returns Nothing.
+ */
+async function maxOrRestore(win: OpenFin.Window): Promise<void> {
+	if ((await win.getState()) === "normal") {
+		return win.maximize();
+	}
+
+	return win.restore();
+}

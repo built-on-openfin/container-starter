@@ -1,5 +1,13 @@
 export {};
 
+window.addEventListener("DOMContentLoaded", async () => {
+	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
+	await platform.once("platform-api-ready", async () => init());
+});
+
+/**
+ * Initialize the components.
+ */
 async function init(): Promise<void> {
 	// create a channel to receive commands from external apps
 	const actionChannel: OpenFin.ChannelProvider = await fin.InterApplicationBus.Channel.create(
@@ -64,13 +72,11 @@ async function init(): Promise<void> {
 	});
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
-	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-	await platform.once("platform-api-ready", async () => init());
-});
-
 fin.Platform.init({
 	overrideCallback: async (Provider) => {
+		/**
+		 * Override the provider class.
+		 */
 		class Override extends Provider {}
 		return new Override();
 	}

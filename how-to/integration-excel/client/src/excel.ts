@@ -27,13 +27,16 @@ let selectedWorksheetIndex: number | undefined;
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
-		await init();
+		await initDom();
 	} catch (error) {
 		console.error(error);
 	}
 });
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM components.
+ */
+async function initDom(): Promise<void> {
 	try {
 		const resultsContainer = document.querySelector<HTMLElement>("#results-container");
 		if (resultsContainer) {
@@ -86,6 +89,10 @@ async function init(): Promise<void> {
 	}
 }
 
+/**
+ * Show an error on the UI.
+ * @param err The error to display.
+ */
 function showError(err: unknown): void {
 	const errDom = document.querySelector("#error");
 	if (errDom) {
@@ -93,6 +100,9 @@ function showError(err: unknown): void {
 	}
 }
 
+/**
+ * Open the excel instance.
+ */
 async function openExcel(): Promise<void> {
 	try {
 		if (
@@ -114,6 +124,9 @@ async function openExcel(): Promise<void> {
 	}
 }
 
+/**
+ * Populate the list of workbooks.
+ */
 async function populateWorkbooks(): Promise<void> {
 	if (excel) {
 		selectedWorkbookIndex = undefined;
@@ -163,6 +176,10 @@ async function populateWorkbooks(): Promise<void> {
 	}
 }
 
+/**
+ * Select a workbook.
+ * @param name The name of the workbook to select.
+ */
 async function selectWorkbook(name: string): Promise<void> {
 	if (openWorkbooks) {
 		const newWorkbookIndex = openWorkbooks.findIndex((w) => w.name === name);
@@ -178,6 +195,9 @@ async function selectWorkbook(name: string): Promise<void> {
 	}
 }
 
+/**
+ * Populate the worksheets.
+ */
 async function populateWorksheets(): Promise<void> {
 	if (excel) {
 		selectedWorksheetIndex = undefined;
@@ -230,6 +250,10 @@ async function populateWorksheets(): Promise<void> {
 	}
 }
 
+/**
+ * Select a worksheet.
+ * @param name The name of worksheet to select.
+ */
 async function selectWorksheet(name: string): Promise<void> {
 	if (openWorksheets && selectedWorksheetIndex !== undefined) {
 		const newWorksheetIndex = openWorksheets.findIndex((w) => w.name === name);
@@ -267,6 +291,10 @@ async function selectWorksheet(name: string): Promise<void> {
 	}
 }
 
+/**
+ * Handle a change from the excel worksheet.
+ * @param cells The cells that were changed.
+ */
 async function handleCellChange(cells: Cell[]): Promise<void> {
 	const cellContainer = document.querySelector("#cell-changes-container");
 	if (cellContainer) {
@@ -280,6 +308,9 @@ async function handleCellChange(cells: Cell[]): Promise<void> {
 	}
 }
 
+/**
+ * Set a cell value in excel.
+ */
 async function setCellValue(): Promise<void> {
 	if (openWorksheets && selectedWorksheetIndex !== undefined) {
 		const cellLocation = document.querySelector<HTMLInputElement>("#cell-location");
@@ -292,6 +323,10 @@ async function setCellValue(): Promise<void> {
 	}
 }
 
+/**
+ * Broadcast and FDC3 instrument.
+ * @param instrument The instrument to broadcast.
+ */
 async function broadcastInstrument(instrument: string): Promise<void> {
 	const broadcastElement = document.querySelector<HTMLInputElement>("#broadcast-instrument");
 	if (broadcastElement) {

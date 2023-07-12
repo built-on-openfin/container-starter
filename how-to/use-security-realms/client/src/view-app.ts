@@ -2,7 +2,7 @@ export {};
 
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
-		await init();
+		await initDom();
 	} catch (error) {
 		console.error(error);
 	}
@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 const topic = "/openfin/sample/security-realm-example";
 const rootPath = location.href.replace("/html/view-app.html", "/");
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const securityRealm = await getSecurityRealmInfo();
 	await listenToTopicAndLogMessages(securityRealm ?? "");
 	await setupSendButton(securityRealm ?? "");
@@ -30,6 +33,10 @@ async function init(): Promise<void> {
 	}
 }
 
+/**
+ * Get the security realm.
+ * @returns The realm if it is set.
+ */
 async function getSecurityRealmInfo(): Promise<string | undefined> {
 	try {
 		const runtimeInfo: OpenFin.RuntimeInfo = await fin.System.getRuntimeInfo();
@@ -46,11 +53,19 @@ async function getSecurityRealmInfo(): Promise<string | undefined> {
 	}
 }
 
+/**
+ * Launch the production app.
+ * @returns The application.
+ */
 async function launchProd(): Promise<OpenFin.Application> {
 	const app = await fin.Application.startFromManifest(`${rootPath}app.fin.json`);
 	return app;
 }
 
+/**
+ * Launch the uat app.
+ * @returns The application.
+ */
 async function launchUat(): Promise<OpenFin.Application | undefined> {
 	try {
 		const app = await fin.Application.startFromManifest(`${rootPath}uat/app.fin.json`);
@@ -60,6 +75,10 @@ async function launchUat(): Promise<OpenFin.Application | undefined> {
 	}
 }
 
+/**
+ * Setup the send button.
+ * @param realm The realm.
+ */
 async function setupSendButton(realm: string): Promise<void> {
 	try {
 		const sendMessageBtn = document.querySelector("#send-message");
@@ -78,6 +97,11 @@ async function setupSendButton(realm: string): Promise<void> {
 	}
 }
 
+/**
+ * Publish a message to the topic.
+ * @param messageText The message text.
+ * @param realm The realm to send the message to.
+ */
 async function publishMessageToTopic(messageText: string, realm: string): Promise<void> {
 	try {
 		await fin.InterApplicationBus.publish(topic, {
@@ -91,6 +115,10 @@ async function publishMessageToTopic(messageText: string, realm: string): Promis
 	}
 }
 
+/**
+ * Listen for messages and log the results.
+ * @param realm The realm to listen on.
+ */
 async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	try {
 		const messageLog = document.querySelector("#message-log");

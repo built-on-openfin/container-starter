@@ -34,10 +34,25 @@ const defaultResizeRegion: Partial<OpenFin.ResizeRegion> = {
 	bottomRightCorner: 9
 };
 
+/**
+ * Type for the resize sides.
+ */
 interface ResizeSides {
+	/**
+	 * Top position.
+	 */
 	top: boolean;
+	/**
+	 * Left position.
+	 */
 	left: boolean;
+	/**
+	 * Right position.
+	 */
 	right: boolean;
+	/**
+	 * Bottom position.
+	 */
 	bottom: boolean;
 }
 
@@ -69,6 +84,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
+/**
+ * Initialize the DOM elements.
+ */
 async function initDom(): Promise<void> {
 	const btnPreview = document.querySelector("#btnPreview");
 	if (btnPreview) {
@@ -124,6 +142,9 @@ async function initDom(): Promise<void> {
 	updatePreview();
 }
 
+/**
+ * Populate the form elements.
+ */
 function populateForm(): void {
 	// Common options
 	connectInput(selectedCommonOptions, "optionName", "name");
@@ -167,6 +188,9 @@ function populateForm(): void {
 	updateFramelessState();
 }
 
+/**
+ * Update the state of the resize components.
+ */
 function updateResizeState(): void {
 	const resizable = selectedCommonOptions.resizable ?? defaultCommonOptions.resizable;
 	const widthElem = document.querySelector<HTMLElement>("#resizeWidth");
@@ -187,6 +211,9 @@ function updateResizeState(): void {
 	}
 }
 
+/**
+ * Update the state of the frameless components.
+ */
 function updateFramelessState(): void {
 	const frame = selectedCommonOptions.frame ?? defaultCommonOptions.frame;
 	const sectionFrameless = document.querySelector<HTMLElement>("#sectionFrameless");
@@ -195,6 +222,9 @@ function updateFramelessState(): void {
 	}
 }
 
+/**
+ * Update the state of the resize width.
+ */
 function updateResizeWidth(): void {
 	if (
 		selectedCommonOptions.maxWidth !== -1 &&
@@ -214,6 +244,9 @@ function updateResizeWidth(): void {
 	}
 }
 
+/**
+ * Update the state of the resize height.
+ */
 function updateResizeHeight(): void {
 	if (
 		selectedCommonOptions.maxHeight !== -1 &&
@@ -233,6 +266,9 @@ function updateResizeHeight(): void {
 	}
 }
 
+/**
+ * Update the state of the default position components.
+ */
 function updateDefaultPosition(): void {
 	const isCentered = selectedCommonOptions.defaultCentered ?? defaultCommonOptions.defaultCentered;
 
@@ -265,14 +301,32 @@ function updateDefaultPosition(): void {
 	}
 }
 
+/**
+ * Set a property to an object.
+ * @param obj The object to set the property on.
+ * @param key The key to set.
+ * @param value The value.
+ */
 function setProperty<T, K extends keyof T>(obj: Partial<T>, key: K, value: unknown): void {
 	obj[key] = value as T[K];
 }
 
+/**
+ * Get a property from an object.
+ * @param obj The object to get the property from.
+ * @param key The key to get
+ * @returns The value.
+ */
 function getProperty<T, K extends keyof T, P>(obj: Partial<T>, key: K): P {
 	return obj[key] as unknown as P;
 }
 
+/**
+ * Connect an input to an option.
+ * @param selectedValues The selected value.
+ * @param fieldId The field id.
+ * @param property The property.
+ */
 function connectInput<T, K extends keyof T>(selectedValues: Partial<T>, fieldId: string, property: K): void {
 	const option = document.querySelector<HTMLInputElement>(`#${fieldId}`);
 	if (option) {
@@ -284,6 +338,13 @@ function connectInput<T, K extends keyof T>(selectedValues: Partial<T>, fieldId:
 	}
 }
 
+/**
+ * Connect a checkbox.
+ * @param selectedValues The selected values.
+ * @param fieldId The field id.
+ * @param property The property.
+ * @param changed The changed event to call.
+ */
 function connectCheckbox<T, K extends keyof T>(
 	selectedValues: Partial<T>,
 	fieldId: string,
@@ -303,6 +364,13 @@ function connectCheckbox<T, K extends keyof T>(
 	}
 }
 
+/**
+ * Connect a range.
+ * @param selectedValues The selected values.
+ * @param fieldId The field id.
+ * @param property The property.
+ * @param changed The changed event to call.
+ */
 function connectRange<T, K extends keyof T>(
 	selectedValues: Partial<T>,
 	fieldId: string,
@@ -326,6 +394,13 @@ function connectRange<T, K extends keyof T>(
 	}
 }
 
+/**
+ * Connect a color.
+ * @param selectedValues The selected values.
+ * @param fieldId The field id.
+ * @param property The property.
+ * @param changed The changed event to call.
+ */
 function connectColor<T, K extends keyof T>(
 	selectedValues: Partial<T>,
 	fieldId: string,
@@ -349,6 +424,10 @@ function connectColor<T, K extends keyof T>(
 	}
 }
 
+/**
+ * Finalize the window options.
+ * @returns The complete window options.
+ */
 function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
 	const finalWindowOptions: OpenFin.WindowCreationOptions = {
 		name: selectedCommonOptions.name,
@@ -418,6 +497,9 @@ function finalizeWindowOptions(): OpenFin.WindowCreationOptions {
 	return finalWindowOptions;
 }
 
+/**
+ * Update the preview.
+ */
 function updatePreview(): void {
 	const previewElem = document.querySelector("#preview");
 	if (previewElem) {
@@ -425,6 +507,10 @@ function updatePreview(): void {
 	}
 }
 
+/**
+ * Create a preview.
+ * @returns The preview code.
+ */
 function createPreview(): string {
 	return `await fin.Window.create(${JSON.stringify(finalizeWindowOptions(), undefined, "  ")});`;
 }

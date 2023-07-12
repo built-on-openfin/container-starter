@@ -2,9 +2,12 @@ export {};
 
 const me = fin.me as OpenFin.Window;
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const okButton = document.querySelector("#btn-ok");
 	const confirmButton = document.querySelector("#btn-confirm");
 	const cancelButton = document.querySelector("#btn-cancel");
@@ -31,6 +34,9 @@ async function init(): Promise<void> {
 	await me.on("shown", renderShownDate);
 }
 
+/**
+ * Show the shown date in the UI.
+ */
 async function renderShownDate(): Promise<void> {
 	const shownDateEl = document.querySelector("#shown-date");
 	const { customData } = await me.getOptions();

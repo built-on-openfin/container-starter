@@ -1,11 +1,17 @@
 const me = fin.me as OpenFin.Window;
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	await createGroupButtons();
 }
 
+/**
+ * Create the group buttons.
+ */
 async function createGroupButtons(): Promise<void> {
 	const { customData: contextGroups } = await me.getOptions();
 	for (const group of contextGroups) {

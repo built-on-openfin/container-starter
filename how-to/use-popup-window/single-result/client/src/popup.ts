@@ -2,9 +2,12 @@ export {};
 
 const me = fin.me as OpenFin.Window;
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-function init(): void {
+/**
+ * Initialize the DOM elements.
+ */
+function initDom(): void {
 	const okButton = document.querySelector("#btn-ok");
 	const confirmButton = document.querySelector("#btn-confirm");
 	const cancelButton = document.querySelector("#btn-cancel");

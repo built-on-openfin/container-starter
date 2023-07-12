@@ -2,12 +2,15 @@ export {};
 
 window.addEventListener("DOMContentLoaded", async () => {
 	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-	await platform.once("platform-api-ready", async () => init());
+	await platform.once("platform-api-ready", async () => initDom());
 });
 
 fin.Platform.init().catch(() => {});
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	console.log("Platform Init");
 
 	const application = await fin.Application.getCurrent();
@@ -78,6 +81,18 @@ async function init(): Promise<void> {
 	});
 }
 
+/**
+ * Is the point inside the rectangle.
+ * @param rect The rectangle to test.
+ * @param rect.left The rectangle left position.
+ * @param rect.top The rectangle top position.
+ * @param rect.right The rectangle right position.
+ * @param rect.bottom The rectangle bottom position.
+ * @param pt The point to check.
+ * @param pt.x The point x position.
+ * @param pt.y The point y position.
+ * @returns True if the point is in the rect.
+ */
 function pointInRect(
 	rect: { left: number; top: number; right: number; bottom: number },
 	pt: { x: number; y: number }

@@ -8,6 +8,9 @@ if (window !== window.top) {
 	});
 }
 
+/**
+ * Initialize the platform preload.
+ */
 function initPlatformPreload(): void {
 	console.log("Platform preload loaded.");
 }

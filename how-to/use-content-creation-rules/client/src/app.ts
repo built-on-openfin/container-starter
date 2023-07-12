@@ -1,4 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
+	await initDom();
+});
+
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const openView = document.querySelector("#open-view");
 	if (openView) {
 		openView.addEventListener("click", (e) => {
@@ -60,8 +67,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 			logWindowResult(win);
 		});
 	}
-});
+}
 
+/**
+ * Display a result when the window content has loaded.
+ * @param win The window to wire up the event.
+ */
 function logWindowResult(win: WindowProxy | null): void {
 	try {
 		if (win) {

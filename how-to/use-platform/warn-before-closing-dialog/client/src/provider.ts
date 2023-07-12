@@ -1,3 +1,10 @@
+/**
+ * Launch a dialog.
+ * @param viewsPreventingUnload The views that are preventing unload.
+ * @param windowId The window identifier.
+ * @param closeType The type of the component being closed.
+ * @returns True if it was closed.
+ */
 async function launchDialog(
 	viewsPreventingUnload: OpenFin.Identity[],
 	windowId: OpenFin.Identity,
@@ -7,6 +14,12 @@ async function launchDialog(
 	const queryString = new URLSearchParams(`views=${JSON.stringify(views)}&closeType=${closeType}`);
 	const baseUrl = window.location.href.replace("provider", "dialog");
 	const url = `${baseUrl}?${queryString.toString()}`;
+
+	/**
+	 * Handle the close decision.
+	 * @param resolve The promise resolve method.
+	 * @param reject The promise reject method.
+	 */
 	async function handleUserDecisionPromise(
 		resolve: (close: boolean) => void,
 		reject: (err: unknown) => void
@@ -45,10 +58,23 @@ async function launchDialog(
 	return new Promise(handleUserDecisionPromise);
 }
 
+/**
+ * Override the platform provider.
+ * @param PlatformProvider The platform provider base class.
+ * @returns The overridden platform provider.
+ */
 function overrideCallback(
 	PlatformProvider: OpenFin.Constructor<OpenFin.PlatformProvider>
 ): OpenFin.PlatformProvider {
+	/**
+	 * Override for the dialog.
+	 */
 	class BeforeUnloadDialogOverride extends PlatformProvider {
+		/**
+		 * Get the user decision for unloading a window.
+		 * @param payload The payload.
+		 * @returns The close decision.
+		 */
 		public async getUserDecisionForBeforeUnload(
 			payload: OpenFin.ViewsPreventingUnloadPayload
 		): Promise<OpenFin.BeforeUnloadUserDecision> {
