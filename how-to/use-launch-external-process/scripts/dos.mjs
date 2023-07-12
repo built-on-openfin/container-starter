@@ -6,7 +6,7 @@
 import { spawnSync } from 'child_process';
 
 // The common location for the DOS settings when running the local dev examples
-const DOS_URL = 'http://localhost:8080/common/dos.json';
+const DOS_URL = 'http://localhost:5050/common/dos.json';
 
 /**
  * Run the process.
