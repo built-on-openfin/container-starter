@@ -11,9 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	const lepBtn = document.querySelector("#lep-button");
 	if (lepBtn) {
 		lepBtn.addEventListener("click", async () => {
-			fin.System.launchExternalProcess(lepOptions)
-				.then((data) => console.log("successfully launched DotNetCore.exe:", data))
-				.catch(console.error);
+			try {
+				const data = await fin.System.launchExternalProcess(lepOptions);
+				console.log("successfully launched DotNetCore.exe:", data);
+			} catch (err) {
+				console.error(err);
+			}
 		});
 	}
 });
