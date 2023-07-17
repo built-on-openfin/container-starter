@@ -1,32 +1,37 @@
 import type OpenFin from "@openfin/core";
 
-window.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
+	await initDom();
+});
+
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const platform = fin.Platform.getCurrentSync();
 	const me = fin.me as OpenFin.Window;
 	const CONTAINER_ID = "layout-container";
 	await fin.Platform.Layout.init({ containerId: CONTAINER_ID });
 
 	const minimizeBtn = document.querySelector("#minimize-button");
-	minimizeBtn.addEventListener("click", async () => {
-		await me.minimize().catch(console.error);
-	});
+	if (minimizeBtn) {
+		minimizeBtn.addEventListener("click", async () => {
+			await me.minimize().catch(console.error);
+		});
+	}
 
 	const maximizeBtn = document.querySelector("#expand-button");
-	maximizeBtn.addEventListener("click", async () => {
-		await maxOrRestore().catch(console.error);
-	});
+	if (maximizeBtn) {
+		maximizeBtn.addEventListener("click", async () => {
+			await maxOrRestore(me).catch(console.error);
+		});
+	}
 
 	const closeBtn = document.querySelector("#close-button");
-	closeBtn.addEventListener("click", async (e) => {
-		await me.close();
-	});
-
-	async function maxOrRestore() {
-		if ((await me.getState()) === "normal") {
-			return me.maximize();
-		}
-
-		return me.restore();
+	if (closeBtn) {
+		closeBtn.addEventListener("click", async (e) => {
+			await me.close();
+		});
 	}
 
 	await me.on("view-child-view-created", async (e) => {
@@ -39,7 +44,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 		// If the window.open contained a target it is the viewOptions.name,
 		// the name starts internal-generated if a target wasn't specified
-		if (!viewOptions.name.startsWith("internal-generated")) {
+		if (!viewOptions.name?.startsWith("internal-generated")) {
 			// This is a window.open with a target, but we can't use the original target name
 			// as the view name, because this would not allow it to be re-used, so we
 			// substitute a derived view name and then remove the old view later
@@ -104,4 +109,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 		// Called when content is blocked
 		console.log(e);
 	});
-});
+}
+
+/**
+ * Maximize of restore the window.
+ * @param win The window to perform the action on.
+ * @returns Nothing.
+ */
+async function maxOrRestore(win: OpenFin.Window): Promise<void> {
+	if ((await win.getState()) === "normal") {
+		return win.maximize();
+	}
+
+	return win.restore();
+}

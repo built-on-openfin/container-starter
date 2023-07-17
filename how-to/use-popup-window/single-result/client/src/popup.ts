@@ -2,22 +2,31 @@ export {};
 
 const me = fin.me as OpenFin.Window;
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-function init() {
+/**
+ * Initialize the DOM elements.
+ */
+function initDom(): void {
 	const okButton = document.querySelector("#btn-ok");
 	const confirmButton = document.querySelector("#btn-confirm");
 	const cancelButton = document.querySelector("#btn-cancel");
 
-	okButton.addEventListener("click", async () => {
-		await me.dispatchPopupResult("ok");
-	});
+	if (okButton) {
+		okButton.addEventListener("click", async () => {
+			await me.dispatchPopupResult("ok");
+		});
+	}
 
-	confirmButton.addEventListener("click", async () => {
-		await me.dispatchPopupResult("confirm");
-	});
+	if (confirmButton) {
+		confirmButton.addEventListener("click", async () => {
+			await me.dispatchPopupResult("confirm");
+		});
+	}
 
-	cancelButton.addEventListener("click", async () => {
-		await me.dispatchPopupResult("cancel");
-	});
+	if (cancelButton) {
+		cancelButton.addEventListener("click", async () => {
+			await me.dispatchPopupResult("cancel");
+		});
+	}
 }

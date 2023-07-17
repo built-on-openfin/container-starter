@@ -4,19 +4,28 @@ document.addEventListener("DOMContentLoaded", () => {
 	const viewHeader = document.querySelector("#view-title");
 	const testInput = document.querySelector("#test-input");
 
-	document.title = viewTitle;
-	viewHeader.innerHTML = viewTitle;
+	if (document && viewTitle) {
+		document.title = viewTitle;
+	}
+	if (viewHeader && viewTitle) {
+		viewHeader.innerHTML = viewTitle;
+	}
 
-	testInput.addEventListener("input", (event) => {
-		if ((event.target as HTMLTextAreaElement).value !== "") {
-			window.addEventListener("beforeunload", beforeUnloadListener);
-		} else {
-			window.removeEventListener("beforeunload", beforeUnloadListener);
-		}
-	});
+	if (testInput) {
+		testInput.addEventListener("input", (event) => {
+			if ((event.target as HTMLTextAreaElement).value !== "") {
+				window.addEventListener("beforeunload", beforeUnloadListener);
+			} else {
+				window.removeEventListener("beforeunload", beforeUnloadListener);
+			}
+		});
+	}
 });
 
-function beforeUnloadListener(e) {
+/**
+ * Handle the before unload listener.
+ * @param e The event to handle.
+ */
+function beforeUnloadListener(e: Event): void {
 	e.preventDefault();
-	e.returnValue = "";
 }

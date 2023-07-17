@@ -8,6 +8,9 @@ if (window !== window.top) {
 	});
 }
 
-async function initViewPreload() {
+/**
+ * Initialize the view preload.
+ */
+async function initViewPreload(): Promise<void> {
 	console.log("View preload loaded.");
 }

@@ -1,8 +1,18 @@
 document.addEventListener("DOMContentLoaded", async () => {
+	await initDom();
+});
+
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	const openView = document.querySelector("#open-view");
-	openView.addEventListener("click", (e) => {
-		window.open("https://www.google.com");
-	});
+	if (openView) {
+		openView.addEventListener("click", (e) => {
+			const win = window.open("https://www.google.com");
+			logWindowResult(win);
+		});
+	}
 
 	const openViewTarget = document.querySelector("#open-view-target");
 	const viewTargets = [
@@ -12,14 +22,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 	];
 
 	let viewTargetIndex = 0;
-	openViewTarget.addEventListener("click", (e) => {
-		window.open(viewTargets[viewTargetIndex++ % viewTargets.length], "examples");
-	});
+	if (openViewTarget) {
+		openViewTarget.addEventListener("click", (e) => {
+			const win = window.open(viewTargets[viewTargetIndex++ % viewTargets.length], "examples", "blah=foo");
+			logWindowResult(win);
+		});
+	}
 
 	const openWindow = document.querySelector("#open-window");
-	openWindow.addEventListener("click", (e) => {
-		window.open("https://www.bing.com");
-	});
+	if (openWindow) {
+		openWindow.addEventListener("click", (e) => {
+			const win = window.open("https://www.bing.com");
+			logWindowResult(win);
+		});
+	}
 
 	const openWindowTarget = document.querySelector("#open-window-target");
 	const windowTargets = [
@@ -29,17 +45,42 @@ document.addEventListener("DOMContentLoaded", async () => {
 	];
 
 	let windowTargetIndex = 0;
-	openWindowTarget.addEventListener("click", (e) => {
-		window.open(windowTargets[windowTargetIndex++ % windowTargets.length], "examples2");
-	});
+	if (openWindowTarget) {
+		openWindowTarget.addEventListener("click", (e) => {
+			const win = window.open(windowTargets[windowTargetIndex++ % windowTargets.length], "examples2");
+			logWindowResult(win);
+		});
+	}
 
 	const openBrowser = document.querySelector("#open-browser");
-	openBrowser.addEventListener("click", (e) => {
-		window.open("https://www.microsoft.com");
-	});
+	if (openBrowser) {
+		openBrowser.addEventListener("click", (e) => {
+			const win = window.open("https://www.microsoft.com");
+			logWindowResult(win);
+		});
+	}
 
 	const openBlocked = document.querySelector("#open-blocked");
-	openBlocked.addEventListener("click", (e) => {
-		window.open("https://www.apple.com");
-	});
-});
+	if (openBlocked) {
+		openBlocked.addEventListener("click", (e) => {
+			const win = window.open("https://www.apple.com");
+			logWindowResult(win);
+		});
+	}
+}
+
+/**
+ * Display a result when the window content has loaded.
+ * @param win The window to wire up the event.
+ */
+function logWindowResult(win: WindowProxy | null): void {
+	try {
+		if (win) {
+			win.addEventListener("DOMContentLoaded", () => {
+				console.log("Window Location", win.location);
+			});
+		}
+	} catch (err) {
+		console.error("Error logging window results", err);
+	}
+}

@@ -25,13 +25,13 @@ npm run build
 3. Start the test server in a new window.
 
 ```shell
-npm run server
+npm run start
 ```
 
 4. Start the Platform application.
 
 ```shell
-npm run platform
+npm run client
 ```
 
 ### Use the project interface

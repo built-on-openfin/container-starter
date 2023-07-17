@@ -1,16 +1,26 @@
 export {};
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", initDom);
 
-function init() {
-	const showPopupButton = document.querySelector("#btn-show-popup");
-	showPopupButton.addEventListener("click", createPopupWindow);
+/**
+ * Initialize the DOM elements.
+ */
+function initDom(): void {
+	const showPopupButton = document.querySelector<HTMLButtonElement>("#btn-show-popup");
+	if (showPopupButton) {
+		showPopupButton.addEventListener("click", createPopupWindow);
+	}
 }
 
-async function createPopupWindow(event): Promise<void> {
+/**
+ * Create the popup window from the click.
+ * @param event The event to handle.
+ */
+async function createPopupWindow(event: MouseEvent): Promise<void> {
 	resetPopupResult();
-	const { top, right, height }: { top: number; right: number; height: number } =
-		event.target.getBoundingClientRect();
+	const { top, right, height }: { top: number; right: number; height: number } = (
+		event.target as HTMLElement
+	).getBoundingClientRect();
 	const hHeight = height / 2;
 	const result = await fin.me.showPopupWindow({
 		url: location.href.replace("app", "popup"),
@@ -22,10 +32,23 @@ async function createPopupWindow(event): Promise<void> {
 	renderPopupResult(result);
 }
 
+/**
+ * Display the popup result.
+ * @param result The result to display.
+ */
 function renderPopupResult(result: OpenFin.PopupResult): void {
-	document.querySelector("#popup-result").textContent = JSON.stringify(result, undefined, 2);
+	const res = document.querySelector("#popup-result");
+	if (res) {
+		res.textContent = JSON.stringify(result, undefined, 2);
+	}
 }
 
+/**
+ * Clear the popup result.
+ */
 function resetPopupResult(): void {
-	document.querySelector("#popup-result").textContent = "No result";
+	const res = document.querySelector("#popup-result");
+	if (res) {
+		res.textContent = "No result";
+	}
 }

@@ -2,12 +2,15 @@ export {};
 
 window.addEventListener("DOMContentLoaded", async () => {
 	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();
-	await platform.once("platform-api-ready", async () => init());
+	await platform.once("platform-api-ready", async () => initDom());
 });
 
 fin.Platform.init().catch(() => {});
 
-async function init(): Promise<void> {
+/**
+ * Initialize the DOM elements.
+ */
+async function initDom(): Promise<void> {
 	console.log("Platform Init");
 
 	const application = await fin.Application.getCurrent();
@@ -34,9 +37,6 @@ async function init(): Promise<void> {
 					...trayInfo.monitorInfo.nonPrimaryMonitors
 				];
 
-				const pointInRect = ({ left, top, right, bottom }, { x, y }) =>
-					x > left && x < right && y > top && y < bottom;
-
 				const foundMonitor = monitors.find((mi) =>
 					pointInRect(mi.monitorRect, { x: trayInfo.x, y: trayInfo.y })
 				);
@@ -48,10 +48,12 @@ async function init(): Promise<void> {
 					includeInSnapshot: false,
 					showTaskbarIcon: false,
 					saveWindowState: false,
-					defaultTop: foundMonitor.availableRect.top,
-					defaultLeft: foundMonitor.availableRect.right - winWidth,
+					defaultTop: foundMonitor?.availableRect.top,
+					defaultLeft: foundMonitor ? foundMonitor?.availableRect?.right - winWidth : undefined,
 					defaultWidth: winWidth,
-					defaultHeight: foundMonitor.availableRect.bottom - foundMonitor.availableRect.top,
+					defaultHeight: foundMonitor
+						? foundMonitor.availableRect.bottom - foundMonitor.availableRect.top
+						: undefined,
 					url: "http://localhost:5050/views/excel.html",
 					frame: false,
 					autoShow: true,
@@ -71,10 +73,29 @@ async function init(): Promise<void> {
 
 				win = await fin.Window.create(winOption);
 			}
-		} else {
+		} else if (win) {
 			await win.hide();
 		}
 
 		visible = !visible;
 	});
+}
+
+/**
+ * Is the point inside the rectangle.
+ * @param rect The rectangle to test.
+ * @param rect.left The rectangle left position.
+ * @param rect.top The rectangle top position.
+ * @param rect.right The rectangle right position.
+ * @param rect.bottom The rectangle bottom position.
+ * @param pt The point to check.
+ * @param pt.x The point x position.
+ * @param pt.y The point y position.
+ * @returns True if the point is in the rect.
+ */
+function pointInRect(
+	rect: { left: number; top: number; right: number; bottom: number },
+	pt: { x: number; y: number }
+): boolean {
+	return pt.x > rect.left && pt.x < rect.right && pt.y > rect.top && pt.y < rect.bottom;
 }

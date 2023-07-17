@@ -10,42 +10,67 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
+/**
+ * Initialize the DOM elements.
+ */
 async function init(): Promise<void> {
 	const securityRealm = await getSecurityRealmInfo();
 	if (securityRealm === "UAT-MAIN") {
 		const summary = document.querySelector("#summary");
-		summary.textContent =
-			"This UAT instance of the application will automatically launch a .net console application that is tied to the UAT security realm and will not receive messages from the PROD realm.";
+		if (summary) {
+			summary.textContent =
+				"This UAT instance of the application will automatically launch a .net console application that is tied to the UAT security realm and will not receive messages from the PROD realm.";
+		}
 		const id = await launchNativeApp();
 		console.log(id);
 	}
-	await setupSendButton(securityRealm);
-	await listenToTopicAndLogMessages(securityRealm);
+	await setupSendButton(securityRealm ?? "");
+	await listenToTopicAndLogMessages(securityRealm ?? "");
 }
 
-async function getSecurityRealmInfo(): Promise<string> {
+/**
+ * Get the security realm info.
+ * @returns The security realm if it is set.
+ */
+async function getSecurityRealmInfo(): Promise<string | undefined> {
 	try {
 		const runtimeInfo: OpenFin.RuntimeInfo = await fin.System.getRuntimeInfo();
-		const securityRealmName: HTMLHeadingElement = document.querySelector("#security-realm-name");
-		if (runtimeInfo.securityRealm) {
-			securityRealmName.innerHTML += runtimeInfo.securityRealm;
-			return runtimeInfo.securityRealm;
+		const securityRealmName = document.querySelector("#security-realm-name");
+		if (securityRealmName) {
+			if (runtimeInfo.securityRealm) {
+				securityRealmName.innerHTML += runtimeInfo.securityRealm;
+				return runtimeInfo.securityRealm;
+			}
+			securityRealmName.innerHTML += "No Security Realm Present";
 		}
-		securityRealmName.innerHTML += "No Security Realm Present";
 	} catch (error) {
 		console.error("Error getting runtime info:", error);
 	}
 }
 
+/**
+ * Setup the send button.
+ * @param realm The realm to use.
+ */
 async function setupSendButton(realm: string): Promise<void> {
-	const sendMessageBtn: HTMLButtonElement = document.querySelector("#send-message");
-	sendMessageBtn.addEventListener("click", async (e) => {
-		e.preventDefault();
-		const iabMessage: HTMLTextAreaElement = document.querySelector("#iab-message");
-		const messageText: string = iabMessage.value;
-		await publishMessageToTopic(messageText, realm);
-	});
+	const sendMessageBtn = document.querySelector("#send-message");
+	if (sendMessageBtn) {
+		sendMessageBtn.addEventListener("click", async (e) => {
+			e.preventDefault();
+			const iabMessage = document.querySelector<HTMLTextAreaElement>("#iab-message");
+			if (iabMessage) {
+				const messageText: string = iabMessage.value;
+				await publishMessageToTopic(messageText, realm);
+			}
+		});
+	}
 }
+
+/**
+ * Publish a message to the topic.
+ * @param messageText The message text.
+ * @param realm The realm to send the message to.
+ */
 async function publishMessageToTopic(messageText: string, realm: string): Promise<void> {
 	try {
 		await fin.InterApplicationBus.publish(topic, {
@@ -59,12 +84,22 @@ async function publishMessageToTopic(messageText: string, realm: string): Promis
 	}
 }
 
+/**
+ * Listen for messages and log the results.
+ * @param realm The realm to listen on.
+ */
 async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	try {
-		const messageLog: HTMLDivElement = document.querySelector("#message-log");
-		await fin.InterApplicationBus.subscribe({ uuid: "*" }, topic, ({ id, message, realmName }) => {
-			messageLog.innerHTML += `Received message from app with identity of {uuid: ${id.uuid}}\n\nRealm Name: ${realmName}\nMessage: ${message}`;
-		});
+		const messageLog = document.querySelector("#message-log");
+		if (messageLog) {
+			await fin.InterApplicationBus.subscribe(
+				{ uuid: "*" },
+				topic,
+				(payload: { id: { uuid: string }; message: string; realmName: string }) => {
+					messageLog.innerHTML += `Received message from app with identity of {uuid: ${payload.id.uuid}}\n\nRealm Name: ${payload.realmName}\nMessage: ${payload.message}`;
+				}
+			);
+		}
 	} catch (error) {
 		if (error) {
 			// eslint-disable-next-line no-alert
@@ -73,15 +108,11 @@ async function listenToTopicAndLogMessages(realm: string): Promise<void> {
 	}
 }
 
+/**
+ * Launch a native app.
+ * @returns The application identity.
+ */
 async function launchNativeApp(): Promise<OpenFin.ApplicationIdentity> {
-	/**
-	 * @key alias: <string> the name supplied to the appAsset in the app.json file.
-	 * @key target: <string> the relative path to the executable from the appAssets [alias]/[version].
-	 * @key arguments: <string> a string of acceptable arguments for the given executable.
-	 * @key listener: <function> listener, @param result: <object> = {topic: string, uuid: string, exitCode: number}.
-	 * @returns Promise<Object>: object containing the uuid of the launched executable { uuid: string }.
-	 */
-
 	const nativeApp = await fin.System.launchExternalProcess({
 		alias: "security-realms-native",
 		listener: async (result) => {

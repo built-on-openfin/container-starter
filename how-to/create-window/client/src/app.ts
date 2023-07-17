@@ -1,12 +1,41 @@
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
-		await init();
+		await initDom();
 	} catch (error) {
 		console.error(error);
 	}
 });
 
-async function openDynamicApplicationWindow() {
+/**
+ * Initialize the DOM components.
+ */
+async function initDom(): Promise<void> {
+	const btnOpenDynamicWindow = document.querySelector("#btn-open-dynamic-window");
+	if (btnOpenDynamicWindow) {
+		btnOpenDynamicWindow.addEventListener("click", async (e: Event) => openDynamicApplicationWindow());
+	}
+
+	const btnOpenManifestWindow = document.querySelector("#btn-open-manifest-window");
+	if (btnOpenManifestWindow) {
+		btnOpenManifestWindow.addEventListener("click", async (e: Event) => openManifestApplicationWindow());
+	}
+
+	const btnOpenDataWindow = document.querySelector("#btn-open-data-window");
+	if (btnOpenDataWindow) {
+		btnOpenDataWindow.addEventListener("click", async (e: Event) => openDataWindow());
+	}
+
+	const btnOpenDataPlatformWindow = document.querySelector("#btn-open-data-platform-window");
+	if (btnOpenDataPlatformWindow) {
+		btnOpenDataPlatformWindow.addEventListener("click", openDataPlatformWindow);
+	}
+}
+
+/**
+ * Open a window using dynamic options.
+ * @returns The window.
+ */
+async function openDynamicApplicationWindow(): Promise<OpenFin.Window> {
 	const winOption = {
 		name: "child",
 		defaultWidth: 800,
@@ -18,13 +47,23 @@ async function openDynamicApplicationWindow() {
 	return fin.Window.create(winOption);
 }
 
-async function openManifestApplicationWindow() {
-	fin.Application.startFromManifest("http://localhost:5050/app.fin.json")
-		.then((app) => console.log("App is running"))
-		.catch((err) => console.log(err));
+/**
+ * Open a window using a manifest.
+ */
+async function openManifestApplicationWindow(): Promise<void> {
+	try {
+		await fin.Application.startFromManifest("http://localhost:5050/app.fin.json");
+		console.log("App is running");
+	} catch (err) {
+		console.error(err);
+	}
 }
 
-async function openDataWindow() {
+/**
+ * Open a window and pass it custom data.
+ * @returns The window.
+ */
+async function openDataWindow(): Promise<OpenFin.Window> {
 	const winOption = {
 		name: "child-data",
 		defaultWidth: 800,
@@ -39,28 +78,16 @@ async function openDataWindow() {
 	return fin.Window.create(winOption);
 }
 
-async function openDataPlatformWindow() {
-	const viewOption = {
+/**
+ * Open a platform window using options.
+ */
+async function openDataPlatformWindow(): Promise<void> {
+	const viewOption: OpenFin.PlatformViewCreationOptions = {
 		name: "childview-data",
 		url: "http://localhost:5050/html/window.html",
 		customData: {
 			dateNow: Date.now()
-		},
-		target: undefined
-	};
+		}
+	} as OpenFin.PlatformViewCreationOptions;
 	await fin.Platform.getCurrentSync().createView(viewOption);
-}
-
-async function init(): Promise<void> {
-	const btn = document.querySelector("#btn-open-dynamic-window");
-	btn.addEventListener("click", async (e: Event) => openDynamicApplicationWindow());
-
-	const btn1 = document.querySelector("#btn-open-manifest-window");
-	btn1.addEventListener("click", async (e: Event) => openManifestApplicationWindow());
-
-	const btn2 = document.querySelector("#btn-open-data-window");
-	btn2.addEventListener("click", async (e: Event) => openDataWindow());
-
-	const btn3 = document.querySelector("#btn-open-data-platform-window");
-	btn3.addEventListener("click", openDataPlatformWindow);
 }
