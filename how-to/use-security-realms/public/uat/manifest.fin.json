@@ -1,45 +1,45 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect --security-realm=UAT-MAIN",
-		"version": "26.102.70.16"
-	},
-	"shortcut": {
-		"company": "OpenFin",
-		"description": "UAT Main Platform",
-		"icon": "http://localhost:5050/favicon.ico",
-		"name": "UAT Main Platform"
-	},
-	"platform": {
-		"uuid": "uat-main-platform",
-		"autoShow": false,
-		"permissions": {
-			"System": {
-				"launchExternalProcess": true
-			}
-		}
-	},
-	"snapshot": {
-		"windows": [
-			{
-				"layout": {
-					"content": [
-						{
-							"type": "stack",
-							"id": "no-drop-target",
-							"content": [
-								{
-									"type": "component",
-									"componentName": "view",
-									"componentState": {
-										"processAffinity": "ps_1",
-										"url": "http://localhost:5050/html/app.html"
-									}
-								}
-							]
-						}
-					]
-				}
-			}
-		]
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect --security-realm=UAT-MAIN",
+    "version": "32.114.76.10"
+  },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "UAT Main Platform",
+    "icon": "http://localhost:5050/favicon.ico",
+    "name": "UAT Main Platform"
+  },
+  "platform": {
+    "uuid": "uat-main-platform",
+    "autoShow": false,
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true
+      }
+    }
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:5050/html/app.html"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
