@@ -38,7 +38,7 @@ async function initDom(): Promise<void> {
 		// The content creation rules construct the options for the view in the childOptions
 		// The view has been created but not yet attached or navigated
 		console.log(e);
-		const viewOptions: OpenFin.PlatformViewCreationOptions = e.childOptions;
+		const viewOptions = e.childOptions;
 		let originalTargetName;
 		let create = true;
 
@@ -79,7 +79,7 @@ async function initDom(): Promise<void> {
 			// view created for us by the content creation rules
 			// Or if it had the name swapped due to a target specified in the original
 			// window.open it will create a new view with the derived name
-			const view = await platform.createView(viewOptions, e.target as OpenFin.Identity);
+			const view = await platform.createView(viewOptions, e.target);
 
 			// We must explicitly navigate the view created by the content creation rules
 			await view.navigate(viewOptions.url);
