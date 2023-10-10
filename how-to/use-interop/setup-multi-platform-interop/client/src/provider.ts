@@ -1,3 +1,4 @@
+import type OpenFin from "@openfin/core";
 import type { ExternalClientMap, ExternalContext } from "./shapes";
 
 /**
@@ -10,9 +11,6 @@ import type { ExternalClientMap, ExternalContext } from "./shapes";
  */
 function interopOverride(
 	InteropBroker: OpenFin.Constructor<OpenFin.InteropBroker>,
-	provider: OpenFin.ChannelProvider,
-	options: OpenFin.InteropBrokerOptions,
-	...args: unknown[]
 ): OpenFin.InteropBroker {
 	/**
 	 * Class that inherits the public InteropBroker methods that allows you to override existing
@@ -23,24 +21,16 @@ function interopOverride(
 
 		public externalClients: ExternalClientMap;
 
-		public overrideArgs: unknown[];
-
 		/**
 		 * Create new instance of the broker.
 		 * @param overrideProvider The provider.
 		 * @param overrideOpts The options.
 		 * @param overrideArgs The args.
 		 */
-		constructor(
-			overrideProvider: OpenFin.ChannelProvider,
-			overrideOpts: OpenFin.InteropBrokerOptions,
-			...overrideArgs: unknown[]
-		) {
-			super(overrideProvider, overrideOpts, ...overrideArgs);
+		constructor() {
+			super();
 			this.externalBroker = "platform-2";
 			this.externalClients = new Map();
-			this.overrideArgs = overrideArgs;
-			this.overrideArgs = [...this.overrideArgs, "connect-external"];
 			this.initializeBrokers().catch((error) => console.error(error));
 		}
 
@@ -181,7 +171,7 @@ function interopOverride(
 			}
 		}
 	}
-	return new Override(provider, options, ...args);
+	return new Override();
 }
 
 fin.Platform.init({ interopOverride }).catch((error) => console.error(error));
