@@ -1,0 +1,107 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "32.114.76.10"
+	},
+	"platform": {
+		"uuid": "integration-excel",
+		"applicationIcon": "https://built-on-openfin.github.io/container-starter/dev/v32/integration-excel/favicon.ico",
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/v32/integration-excel/provider/provider.html",
+		"autoShow": false,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true,
+				"downloadAsset": true,
+				"openUrlWithBrowser": {
+					"enabled": true,
+					"protocols": ["mailto"]
+				}
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"defaultWidth": 600,
+				"defaultHeight": 600,
+				"defaultLeft": 0,
+				"defaultTop": 0,
+				"saveWindowState": false,
+				"backgroundThrottling": true,
+				"layout": {
+					"content": [
+						{
+							"type": "column",
+							"id": "mainRow",
+							"isClosable": true,
+							"reorderEnabled": true,
+							"title": "",
+							"content": [
+								{
+									"type": "stack",
+									"width": 100,
+									"isClosable": true,
+									"reorderEnabled": true,
+									"title": "",
+									"activeItemIndex": 0,
+									"content": [
+										{
+											"type": "component",
+											"componentName": "view",
+											"componentState": {
+												"url": "https://built-on-openfin.github.io/container-starter/dev/v32/integration-excel/views/excel.html",
+												"name": "excel-view",
+												"fdc3InteropApi": "1.2",
+												"interop": {
+													"currentContextGroup": "green"
+												},
+												"permissions": {
+													"System": {
+														"launchExternalProcess": true,
+														"downloadAsset": true,
+														"openUrlWithBrowser": {
+															"enabled": true,
+															"protocols": ["mailto"]
+														}
+													}
+												}
+											},
+											"isClosable": true,
+											"reorderEnabled": true,
+											"title": "view"
+										}
+									]
+								},
+								{
+									"type": "stack",
+									"width": 100,
+									"isClosable": true,
+									"reorderEnabled": true,
+									"title": "",
+									"activeItemIndex": 0,
+									"content": [
+										{
+											"type": "component",
+											"componentName": "view",
+											"componentState": {
+												"url": "https://built-on-openfin.github.io/container-starter/dev/v32/integration-excel/views/fdc3monitor.html",
+												"name": "fdc3-view",
+												"fdc3InteropApi": "1.2",
+												"interop": {
+													"currentContextGroup": "green"
+												}
+											},
+											"isClosable": true,
+											"reorderEnabled": true,
+											"title": "view"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"runtime": {
+		"version": "32.114.76.10"
+	},
+	"startup_app": {
+		"name": "launch-app-asset",
+		"url": "https://built-on-openfin.github.io/container-starter/dev/v32/use-launch-external-process/app.html",
+		"uuid": "launch-app-asset",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/v32/common/images/icon-blue.png",
+		"autoShow": true,
+		"saveWindowState": true,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true,
+				"terminateExternalProcess": true,
+				"downloadAsset": true
+			}
+		}
+	},
+	"appAssets": [
+		{
+			"src": "https://built-on-openfin.github.io/container-starter/dev/v32/use-launch-external-process/assets/openfin-dotnet-example.zip",
+			"version": "3.1",
+			"alias": "of-dotnet-example",
+			"target": "DotNetCore.exe",
+			"mandatory": true
+		}
+	],
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Launch App Asset",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/v32/common/images/icon-blue.png",
+		"name": "Launch App Asset"
+	}
+}
