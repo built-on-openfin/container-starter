@@ -34,7 +34,10 @@ for (const fileNamePattern of fileNamePatterns) {
 				json[targetKey]['openfin-adapter'] = replacementValue;
 			}
 
-			if ((targetKey === 'dependencies' || targetKey === 'devDependencies') && json[targetKey] !== undefined) {
+			if (
+				(targetKey === 'dependencies' || targetKey === 'devDependencies') &&
+				json[targetKey] !== undefined
+			) {
 				json[targetKey]['@openfin/core'] = replacementValue;
 			}
 

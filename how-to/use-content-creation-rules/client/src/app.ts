@@ -1,4 +1,4 @@
-export { };
+export {};
 
 document.addEventListener("DOMContentLoaded", async () => {
 	await initDom();

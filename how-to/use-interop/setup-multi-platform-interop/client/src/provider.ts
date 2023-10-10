@@ -4,14 +4,9 @@ import type { ExternalClientMap, ExternalContext } from "./shapes";
 /**
  * Override the interop broker.
  * @param InteropBroker class used to extend the custom override subclass.
- * @param provider channel provider for the initialized platform.
- * @param options default options specified in the manifest attribute "platform.interopBrokerConfiguration".
- * @param args adds any additional parameters passed on instantiation of a new Override instance.
  * @returns The override.
  */
-function interopOverride(
-	InteropBroker: OpenFin.Constructor<OpenFin.InteropBroker>,
-): OpenFin.InteropBroker {
+function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroker>): OpenFin.InteropBroker {
 	/**
 	 * Class that inherits the public InteropBroker methods that allows you to override existing
 	 * InteropBroker methods and add any custom logic to the returned InteropBroker instance used by your platform.
@@ -22,10 +17,7 @@ function interopOverride(
 		public externalClients: ExternalClientMap;
 
 		/**
-		 * Create new instance of the broker.
-		 * @param overrideProvider The provider.
-		 * @param overrideOpts The options.
-		 * @param overrideArgs The args.
+		 * Initialize and connect to external broker.
 		 */
 		constructor() {
 			super();

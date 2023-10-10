@@ -1,25 +1,25 @@
 {
-  "runtime": {
-    "arguments": "--v=1 --inspect",
-    "version": "32.114.76.10"
-  },
-  "licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
-  "startup_app": {
-    "name": "use-application-logging",
-    "uuid": "use-application-logging",
-    "description": "An example of using application logging",
-    "url": "http://localhost:5050/html/app.html",
-    "icon": "http://localhost:5050/favicon.ico",
-    "autoShow": true,
-    "defaultWidth": 1200,
-    "defaultHeight": 800,
-    "defaultCentered": true,
-    "minWidth": 800,
-    "minHeight": 400,
-    "enableAppLogging": true,
-    "logManagement": {
-      "enabled": true,
-      "url": "http://localhost:5050"
-    }
-  }
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "32.114.76.10"
+	},
+	"licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
+	"startup_app": {
+		"name": "use-application-logging",
+		"uuid": "use-application-logging",
+		"description": "An example of using application logging",
+		"url": "http://localhost:5050/html/app.html",
+		"icon": "http://localhost:5050/favicon.ico",
+		"autoShow": true,
+		"defaultWidth": 1200,
+		"defaultHeight": 800,
+		"defaultCentered": true,
+		"minWidth": 800,
+		"minHeight": 400,
+		"enableAppLogging": true,
+		"logManagement": {
+			"enabled": true,
+			"url": "http://localhost:5050"
+		}
+	}
 }
