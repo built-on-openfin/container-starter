@@ -1,7 +1,7 @@
 {
 	"licenseKey": "openfin-demo-license-key",
 	"runtime": {
-		"version": "26.102.70.16",
+		"version": "32.114.76.10",
 		"arguments": "--v=1"
 	},
 	"startup_app": {

@@ -1,6 +1,6 @@
 {
 	"runtime": {
-		"version": "26.102.71.7"
+		"version": "32.114.76.10"
 	},
 	"startup_app": {
 		"name": "launch-app-asset",

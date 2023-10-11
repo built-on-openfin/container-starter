@@ -1,7 +1,7 @@
 {
 	"runtime": {
 		"arguments": "--v=1 --inspect --security-realm=UAT-MAIN",
-		"version": "26.102.70.16"
+		"version": "32.114.76.10"
 	},
 	"shortcut": {
 		"company": "OpenFin",
