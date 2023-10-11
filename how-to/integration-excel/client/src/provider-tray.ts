@@ -1,4 +1,4 @@
-export {};
+import type OpenFin from "@openfin/core";
 
 window.addEventListener("DOMContentLoaded", async () => {
 	const platform: OpenFin.Platform = fin.Platform.getCurrentSync();

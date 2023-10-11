@@ -1,3 +1,5 @@
+import type OpenFin from "@openfin/core";
+
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		await initDom();

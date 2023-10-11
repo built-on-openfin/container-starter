@@ -1,6 +1,6 @@
 {
 	"name": "openfin-container-starter",
-	"version": "26.102.0",
+	"version": "32.76.10",
 	"description": "OpenFin Container Starter",
 	"scripts": {
 		"build": "npm run build --workspaces",

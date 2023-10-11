@@ -15,7 +15,7 @@
 	"author": "@adam-saland",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"openfin-adapter": "^28.72.17",
+		"openfin-adapter": "32.76.10",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.1.6",
 		"webpack": "^5.88.1",

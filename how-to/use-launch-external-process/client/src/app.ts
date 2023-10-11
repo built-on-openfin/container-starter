@@ -1,3 +1,5 @@
+import type OpenFin from "@openfin/core";
+
 document.addEventListener("DOMContentLoaded", () => {
 	const lepOptions: OpenFin.ExternalProcessRequestType = {
 		alias: "of-dotnet-example",

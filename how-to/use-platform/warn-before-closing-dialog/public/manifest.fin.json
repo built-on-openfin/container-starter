@@ -1,7 +1,7 @@
 {
 	"runtime": {
 		"arguments": "--v=1 --inspect",
-		"version": "26.102.70.16"
+		"version": "32.114.76.10"
 	},
 	"platform": {
 		"enableBeforeUnload": true,

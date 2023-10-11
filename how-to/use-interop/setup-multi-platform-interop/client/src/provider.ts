@@ -1,19 +1,12 @@
+import type OpenFin from "@openfin/core";
 import type { ExternalClientMap, ExternalContext } from "./shapes";
 
 /**
  * Override the interop broker.
  * @param InteropBroker class used to extend the custom override subclass.
- * @param provider channel provider for the initialized platform.
- * @param options default options specified in the manifest attribute "platform.interopBrokerConfiguration".
- * @param args adds any additional parameters passed on instantiation of a new Override instance.
  * @returns The override.
  */
-function interopOverride(
-	InteropBroker: OpenFin.Constructor<OpenFin.InteropBroker>,
-	provider: OpenFin.ChannelProvider,
-	options: OpenFin.InteropBrokerOptions,
-	...args: unknown[]
-): OpenFin.InteropBroker {
+function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroker>): OpenFin.InteropBroker {
 	/**
 	 * Class that inherits the public InteropBroker methods that allows you to override existing
 	 * InteropBroker methods and add any custom logic to the returned InteropBroker instance used by your platform.
@@ -23,24 +16,13 @@ function interopOverride(
 
 		public externalClients: ExternalClientMap;
 
-		public overrideArgs: unknown[];
-
 		/**
-		 * Create new instance of the broker.
-		 * @param overrideProvider The provider.
-		 * @param overrideOpts The options.
-		 * @param overrideArgs The args.
+		 * Initialize and connect to external broker.
 		 */
-		constructor(
-			overrideProvider: OpenFin.ChannelProvider,
-			overrideOpts: OpenFin.InteropBrokerOptions,
-			...overrideArgs: unknown[]
-		) {
-			super(overrideProvider, overrideOpts, ...overrideArgs);
+		constructor() {
+			super();
 			this.externalBroker = "platform-2";
 			this.externalClients = new Map();
-			this.overrideArgs = overrideArgs;
-			this.overrideArgs = [...this.overrideArgs, "connect-external"];
 			this.initializeBrokers().catch((error) => console.error(error));
 		}
 
@@ -181,7 +163,7 @@ function interopOverride(
 			}
 		}
 	}
-	return new Override(provider, options, ...args);
+	return new Override();
 }
 
 fin.Platform.init({ interopOverride }).catch((error) => console.error(error));
