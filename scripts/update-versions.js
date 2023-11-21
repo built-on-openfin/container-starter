@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { globSync } = require('glob');
-console.log(process.argv.slice(2,-2))
+console.log(process.argv.slice(2, -2));
 // Get command line arguments
 const fileNamePatterns = process.argv.slice(2, -2);
 const targetKey = process.argv[process.argv.length - 2];
