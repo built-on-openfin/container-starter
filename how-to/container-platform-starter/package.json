@@ -1,23 +1,23 @@
 {
-	"name": "container-platform-starter",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/container-platform-starter && npm run build"
-	},
-	"license": "ISC",
-	"devDependencies": {
-		"@openfin/core": "^32.76.10",
-		"@openfin/node-adapter": "33.77.11",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.1.6",
-		"webpack": "^5.88.1",
-		"webpack-cli": "^5.1.4"
-	}
+  "name": "container-platform-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "build": "npm run build-client",
+    "start": "npx --yes http-server ./public -p 5050 -c-1",
+    "setup": "cd ../../ && npm install && cd how-to/container-platform-starter && npm run build"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@openfin/core": "33.77.11",
+    "@openfin/node-adapter": "33.77.11",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  }
 }

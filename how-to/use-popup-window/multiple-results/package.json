@@ -1,25 +1,25 @@
 {
-	"name": "use-popup-window-multiple-results",
-	"version": "0.0.1",
-	"description": "A demonstration of a popup window that can return multiple results.",
-	"main": "index.js",
-	"scripts": {
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../../ && npm install && cd how-to/use-popup-window/multiple-results && npm run build"
-	},
-	"author": "connor.mccafferty@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"@openfin/core": "^28.72.17",
-		"@types/node": "^20.4.1",
-		"@openfin/node-adapter": "33.77.11",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.1.6",
-		"webpack": "^5.88.1",
-		"webpack-cli": "^5.1.4"
-	}
+  "name": "use-popup-window-multiple-results",
+  "version": "0.0.1",
+  "description": "A demonstration of a popup window that can return multiple results.",
+  "main": "index.js",
+  "scripts": {
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "build": "npm run build-client",
+    "start": "npx --yes http-server ./public -p 5050 -c-1",
+    "setup": "cd ../../../ && npm install && cd how-to/use-popup-window/multiple-results && npm run build"
+  },
+  "author": "connor.mccafferty@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "@openfin/core": "33.77.11",
+    "@types/node": "^20.4.1",
+    "@openfin/node-adapter": "33.77.11",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  }
 }

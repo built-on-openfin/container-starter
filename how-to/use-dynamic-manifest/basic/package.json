@@ -1,27 +1,28 @@
 {
-	"name": "use-dynamic-manifest-basic",
-	"version": "0.0.1",
-	"description": "A basic demonstration of how to use dynamic manifest",
-	"main": "index.js",
-	"scripts": {
-		"build": "npm run build-server",
-		"build-server": "tsc --project ./server",
-		"start": "npm run server",
-		"server": "node ./server/build/index.js",
-		"client": "node ./scripts/launch.mjs http://localhost:5050/manifest?env=dev",
-		"dev": "node ./scripts/launch.mjs http://localhost:5050/manifest?env=dev",
-		"staging": "node ./scripts/launch.mjs  http://localhost:5050/manifest?env=staging",
-		"kill": "npm --prefix ../../common/ run kill",
-		"setup": "cd ../../../ && npm install && cd how-to/use-dynamic-manifest/basic && npm run build"
-	},
-	"author": "pj.singh@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"express": "^4.18.2",
-		"@openfin/node-adapter": "33.77.11",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.1.6",
-		"webpack": "^5.88.1",
-		"webpack-cli": "^5.1.4"
-	}
+  "name": "use-dynamic-manifest-basic",
+  "version": "0.0.1",
+  "description": "A basic demonstration of how to use dynamic manifest",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build-server",
+    "build-server": "tsc --project ./server",
+    "start": "npm run server",
+    "server": "node ./server/build/index.js",
+    "client": "node ./scripts/launch.mjs http://localhost:5050/manifest?env=dev",
+    "dev": "node ./scripts/launch.mjs http://localhost:5050/manifest?env=dev",
+    "staging": "node ./scripts/launch.mjs  http://localhost:5050/manifest?env=staging",
+    "kill": "npm --prefix ../../common/ run kill",
+    "setup": "cd ../../../ && npm install && cd how-to/use-dynamic-manifest/basic && npm run build"
+  },
+  "author": "pj.singh@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "express": "^4.18.2",
+    "@openfin/node-adapter": "33.77.11",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "@openfin/core": "33.77.11"
+  }
 }
