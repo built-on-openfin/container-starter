@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Security Realm Example</title>
+		<link rel="stylesheet" href="https://built-on-openfin.github.io/container-starter/dev/v33/common/style/app.css" />
+		<script src="../js/view-app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Security Realm Example</h1>
+				<h1 class="tag">
+					Security Realm Name:
+					<span id="security-realm-name"></span>
+				</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="https://built-on-openfin.github.io/container-starter/dev/v33/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="row gap10 fill">
+			<div class="fill col gap20 scroll-vertical">
+				<h3>Security Realms</h3>
+				<fieldset>
+					<label>Listening and Publishing To Topic</label>
+					<input type="text" readonly class="full" value="/openfin/sample/security-realm-example" />
+				</fieldset>
+				<fieldset>
+					<p>Launch a new application in the same security realm</p>
+					<button id="launch-app-btn">Launch App</button>
+				</fieldset>
+				<fieldset>
+					<p>Launch a new application in a different security realm</p>
+					<button id="launch-outofrealm-btn">Launch App</button>
+				</fieldset>
+				<fieldset>
+					<label>Message</label>
+					<textarea id="iab-message" class="fill overflow-y" rows="5"></textarea>
+				</fieldset>
+				<fieldset>
+					<button id="send-message">Send Message To Topic</button>
+				</fieldset>
+			</div>
+			<div class="col gap20 fill">
+				<h3>Logging</h3>
+				<pre id="message-log" class="fill scroll-vertical"></pre>
+			</div>
+		</main>
+	</body>
+</html>
