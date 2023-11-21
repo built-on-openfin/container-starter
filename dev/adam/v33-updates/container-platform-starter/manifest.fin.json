@@ -1,0 +1,43 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "32.114.76.10"
+	},
+	"platform": {
+		"enableBeforeUnload": true,
+		"uuid": "container-platform-starter",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/v33-updates/container-platform-starter/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adam/v33-updates/container-platform-starter/html/provider.html"
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "stack",
+									"content": [
+										{
+											"type": "component",
+											"title": "view1",
+											"componentName": "view",
+											"componentState": {
+												"url": "https://built-on-openfin.github.io/container-starter/dev/adam/v33-updates/common/views/platform/of-info/index.html",
+												"name": "view1",
+												"componentName": "view"
+											}
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
