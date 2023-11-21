@@ -1,31 +1,31 @@
 {
-	"name": "integration-excel",
-	"version": "0.0.1",
-	"description": "A demonstration of how to connect with Excel from OpenFin",
-	"main": "index.js",
-	"scripts": {
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
-		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/integration-excel && npm run build"
-	},
-	"author": "martyn.janes@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"@finos/fdc3": "^2.0.3",
-		"@openfin/node-adapter": "33.77.11",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.1.6",
-		"webpack": "^5.88.1",
-		"webpack-cli": "^5.1.4",
-		"@openfin/core": "33.77.11"
-	},
-	"dependencies": {
-		"@openfin/excel": "^1.4.1",
-		"@openfin/core": "33.77.11",
-		"@openfin/node-adapter": "33.77.11"
-	}
+  "name": "integration-excel",
+  "version": "0.0.1",
+  "description": "A demonstration of how to connect with Excel from OpenFin",
+  "main": "index.js",
+  "scripts": {
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "build": "npm run build-client",
+    "start": "npx --yes http-server ./public -p 5050 -c-1",
+    "setup": "cd ../../ && npm install && cd how-to/integration-excel && npm run build"
+  },
+  "author": "martyn.janes@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "@finos/fdc3": "^2.0.3",
+    "@openfin/node-adapter": "33.77.11",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "@openfin/core": "33.77.11"
+  },
+  "dependencies": {
+    "@openfin/excel": "^1.4.1",
+    "@openfin/core": "33.77.11",
+    "@openfin/node-adapter": "33.77.11"
+  }
 }

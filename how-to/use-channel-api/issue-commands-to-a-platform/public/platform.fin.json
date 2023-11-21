@@ -1,12 +1,12 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect",
-		"version": "33.116.77.11"
-	},
-	"platform": {
-		"uuid": "how-to-use-channel-api-issue-commands-to-a-platform",
-		"autoShow": true,
-		"providerUrl": "http://localhost:5050/html/provider.html",
-		"icon": "http://localhost:5050/favicon.ico"
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "33.116.77.11"
+  },
+  "platform": {
+    "uuid": "how-to-use-channel-api-issue-commands-to-a-platform",
+    "autoShow": true,
+    "providerUrl": "http://localhost:5050/html/provider.html",
+    "icon": "http://localhost:5050/favicon.ico"
+  }
 }
