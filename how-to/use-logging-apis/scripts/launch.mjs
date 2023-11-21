@@ -5,7 +5,7 @@
  * Pressing Ctrl+C/Command+C will terminate the application.
  */
 import { setDefaultResultOrder } from 'dns';
-import { connect, launch } from 'openfin-adapter';
+import { connect, launch } from '@openfin/node-adapter';
 
 /**
  * Run the process.

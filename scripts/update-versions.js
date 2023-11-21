@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { globSync } = require('glob');
-
+console.log(process.argv.slice(2,-2))
 // Get command line arguments
 const fileNamePatterns = process.argv.slice(2, -2);
 const targetKey = process.argv[process.argv.length - 2];
@@ -39,6 +39,7 @@ for (const fileNamePattern of fileNamePatterns) {
 				json[targetKey] !== undefined
 			) {
 				json[targetKey]['@openfin/core'] = replacementValue;
+				json[targetKey]['@openfin/node-adapter'] = replacementValue;
 			}
 
 			if (targetKey === 'version' && json['name'] === 'openfin-container-starter') {

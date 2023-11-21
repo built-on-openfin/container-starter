@@ -14,7 +14,7 @@
 	"author": "pj.singh@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"openfin-adapter": "32.76.10",
+		"@openfin/node-adapter": "33.77.11",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.1.6",
 		"webpack": "^5.88.1",
