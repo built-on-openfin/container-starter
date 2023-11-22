@@ -15,7 +15,7 @@ jobs:
           npm install
       - name: Run prettier
         run: |-
-          npx prettier --config .prettierrc --check .
+          npm prettier --config .prettierrc --check .
       - name: Run eslint
         run: |-
           npm run eslint
