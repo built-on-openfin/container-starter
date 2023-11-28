@@ -25,7 +25,8 @@ module.exports = {
 		'**/3rd-party/*',
 		'**/*.d.ts',
 		'**/settings.schema.json',
-		'**/reports/*'
+		'**/reports/*',
+		'**/integrate-with-salesforce/public/js/preload.js'
 	],
 	parserOptions: {
 		ecmaVersion: 2020,
@@ -90,10 +91,10 @@ module.exports = {
 		'import/export': ['error'],
 		'import/named': ['off'],
 		'import/namespace': ['error'],
-		'import/no-duplicates': ['warn'],
+		'import/no-duplicates': ['error'],
 		'import/no-extraneous-dependencies': ['off'],
-		'import/no-named-as-default': ['warn'],
-		'import/no-named-as-default-member': ['warn'],
+		'import/no-named-as-default': ['error'],
+		'import/no-named-as-default-member': ['error'],
 		'import/no-unresolved': ['off'],
 		'import/no-unused-modules': ['off'],
 		'import/order': [
@@ -591,7 +592,6 @@ module.exports = {
 				'@typescript-eslint/no-array-constructor': ['error'],
 				'@typescript-eslint/no-base-to-string': ['error'],
 				'@typescript-eslint/no-dupe-class-members': ['error'],
-				'@typescript-eslint/no-duplicate-imports': ['error'],
 				'@typescript-eslint/no-dynamic-delete': ['off'],
 				'@typescript-eslint/no-empty-function': ['off'],
 				'@typescript-eslint/no-empty-interface': ['error'],
@@ -619,7 +619,6 @@ module.exports = {
 				'@typescript-eslint/no-namespace': ['error'],
 				'@typescript-eslint/no-non-null-asserted-optional-chain': ['error'],
 				'@typescript-eslint/no-non-null-assertion': ['error'],
-				'@typescript-eslint/no-parameter-properties': ['error'],
 				'@typescript-eslint/no-redundant-type-constituents': ['off'],
 				'@typescript-eslint/no-require-imports': ['error'],
 				'@typescript-eslint/no-shadow': ['error'],
@@ -690,6 +689,30 @@ module.exports = {
 				],
 				'@typescript-eslint/unbound-method': ['error'],
 				'@typescript-eslint/unified-signatures': ['error']
+			}
+		},
+		{
+			files: ['how-to/workspace-platform-starter/client/**/*.ts'],
+			rules: {
+				'no-restricted-syntax': [
+					'error',
+					{
+						selector: "BinaryExpression[operator='==='][right.type='Identifier'][right.name='undefined']",
+						message: 'Instead of using "=== undefined", please use the utils method isEmpty'
+					},
+					{
+						selector: "BinaryExpression[operator='!=='][right.type='Identifier'][right.name='undefined']",
+						message: 'Instead of using "!== undefined", please use the utils method !isEmpty'
+					},
+					{
+						selector: "BinaryExpression[operator='==='][right.type='Identifier'][right.name='null']",
+						message: 'Instead of using "=== null", please use the utils method isEmpty'
+					},
+					{
+						selector: "BinaryExpression[operator='!=='][right.type='Identifier'][right.name='null']",
+						message: 'Instead of using "!== null", please use the utils method !isEmpty'
+					}
+				]
 			}
 		}
 	]
