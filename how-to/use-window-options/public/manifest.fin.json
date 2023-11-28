@@ -1,19 +1,19 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect",
-		"version": "33.116.77.11"
-	},
-	"startup_app": {
-		"name": "use-window-options",
-		"uuid": "use-window-options",
-		"description": "A guide to OpenFin Window Development",
-		"url": "http://localhost:5050/html/app.html",
-		"icon": "http://localhost:5050/favicon.ico",
-		"autoShow": true,
-		"defaultWidth": 1200,
-		"defaultHeight": 800,
-		"defaultCentered": true,
-		"minWidth": 800,
-		"minHeight": 400
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "33.116.77.11"
+  },
+  "startup_app": {
+    "name": "use-window-options",
+    "uuid": "use-window-options",
+    "description": "A guide to OpenFin Window Development",
+    "url": "http://localhost:5050/html/app.html",
+    "icon": "http://localhost:5050/favicon.ico",
+    "autoShow": true,
+    "defaultWidth": 1200,
+    "defaultHeight": 800,
+    "defaultCentered": true,
+    "minWidth": 800,
+    "minHeight": 400
+  }
 }
