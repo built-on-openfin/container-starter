@@ -1,3 +1,4 @@
+import type OpenFin from "@openfin/core";
 /**
  * Launch a dialog.
  * @param viewsPreventingUnload The views that are preventing unload.
