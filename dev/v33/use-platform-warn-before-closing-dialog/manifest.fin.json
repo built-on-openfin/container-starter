@@ -1,115 +1,115 @@
 {
-  "runtime": {
-    "arguments": "--v=1 --inspect",
-    "version": "33.116.77.11"
-  },
-  "platform": {
-    "enableBeforeUnload": true,
-    "uuid": "platform-warn",
-    "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
-    "autoShow": false,
-    "providerUrl": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/provider.html",
-    "apiDiagnostics": false,
-    "defaultWindowOptions": {
-      "contextMenu": true,
-      "defaultWidth": 900,
-      "defaultHeight": 900,
-      "defaultLeft": 0,
-      "defaultTop": 0,
-      "saveWindowState": false,
-      "backgroundThrottling": true,
-      "minHeight": 445,
-      "minWidth": 354,
-      "defaultCentered": true
-    }
-  },
-  "snapshot": {
-    "windows": [
-      {
-        "layout": {
-          "content": [
-            {
-              "type": "column",
-              "id": "no-drop-target",
-              "content": [
-                {
-                  "type": "row",
-                  "content": [
-                    {
-                      "type": "stack",
-                      "content": [
-                        {
-                          "type": "component",
-                          "title": "view1",
-                          "componentName": "view",
-                          "componentState": {
-                            "url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view1",
-                            "name": "view1",
-                            "backgroundThrottling": true,
-                            "componentName": "view"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "type": "stack",
-                      "content": [
-                        {
-                          "type": "component",
-                          "title": "view3",
-                          "componentName": "view",
-                          "componentState": {
-                            "url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view3",
-                            "name": "view3",
-                            "backgroundThrottling": true,
-                            "componentName": "view"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "row",
-                  "content": [
-                    {
-                      "type": "stack",
-                      "content": [
-                        {
-                          "type": "component",
-                          "title": "view2",
-                          "componentName": "view",
-                          "componentState": {
-                            "url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view2",
-                            "name": "view2",
-                            "componentName": "view"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "type": "stack",
-                      "content": [
-                        {
-                          "type": "component",
-                          "title": "view4",
-                          "componentName": "view",
-                          "componentState": {
-                            "url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view4",
-                            "name": "view4",
-                            "backgroundThrottling": true,
-                            "componentName": "view"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ]
-  }
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "33.116.77.11"
+	},
+	"platform": {
+		"enableBeforeUnload": true,
+		"uuid": "platform-warn",
+		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/provider.html",
+		"apiDiagnostics": false,
+		"defaultWindowOptions": {
+			"contextMenu": true,
+			"defaultWidth": 900,
+			"defaultHeight": 900,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"backgroundThrottling": true,
+			"minHeight": 445,
+			"minWidth": 354,
+			"defaultCentered": true
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "column",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "row",
+									"content": [
+										{
+											"type": "stack",
+											"content": [
+												{
+													"type": "component",
+													"title": "view1",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view1",
+														"name": "view1",
+														"backgroundThrottling": true,
+														"componentName": "view"
+													}
+												}
+											]
+										},
+										{
+											"type": "stack",
+											"content": [
+												{
+													"type": "component",
+													"title": "view3",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view3",
+														"name": "view3",
+														"backgroundThrottling": true,
+														"componentName": "view"
+													}
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "row",
+									"content": [
+										{
+											"type": "stack",
+											"content": [
+												{
+													"type": "component",
+													"title": "view2",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view2",
+														"name": "view2",
+														"componentName": "view"
+													}
+												}
+											]
+										},
+										{
+											"type": "stack",
+											"content": [
+												{
+													"type": "component",
+													"title": "view4",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/container-starter/dev/v33/use-platform-warn-before-closing-dialog/html/view.html?title=view4",
+														"name": "view4",
+														"backgroundThrottling": true,
+														"componentName": "view"
+													}
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
 }
