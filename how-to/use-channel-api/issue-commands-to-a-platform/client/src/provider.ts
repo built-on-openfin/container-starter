@@ -10,9 +10,8 @@ window.addEventListener("DOMContentLoaded", async () => {
  */
 async function init(): Promise<void> {
 	// create a channel to receive commands from external apps
-	const actionChannel: OpenFin.ChannelProvider = await fin.InterApplicationBus.Channel.create(
-		"platform-command"
-	);
+	const actionChannel: OpenFin.ChannelProvider =
+		await fin.InterApplicationBus.Channel.create("platform-command");
 
 	actionChannel.onConnection((identity, payload) => {
 		// on connection you can validate the identity and optionally specify that a payload to prove id needs to be passed

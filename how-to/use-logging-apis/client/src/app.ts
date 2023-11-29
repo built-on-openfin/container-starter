@@ -1,3 +1,4 @@
+import type OpenFin from "@openfin/core";
 import { fin } from "@openfin/core";
 
 let fileName: string;
