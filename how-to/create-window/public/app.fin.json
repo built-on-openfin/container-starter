@@ -18,7 +18,7 @@
 	},
 	"runtime": {
 		"arguments": "--enable-crash-reporting --no-sandbox",
-		"version": "32.114.76.10"
+		"version": "33.116.77.11"
 	},
 	"shortcut": {
 		"company": "OpenFin",

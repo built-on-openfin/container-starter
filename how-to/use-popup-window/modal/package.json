@@ -14,9 +14,9 @@
 	"author": "connor.mccafferty@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "^28.72.17",
+		"@openfin/core": "33.77.11",
 		"@types/node": "^20.4.1",
-		"openfin-adapter": "32.76.10",
+		"@openfin/node-adapter": "33.77.11",
 		"ts-loader": "^9.4.4",
 		"typescript": "^5.1.6",
 		"webpack": "^5.88.1",

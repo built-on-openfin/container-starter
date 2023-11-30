@@ -15,6 +15,8 @@
 		"@openfin/automation-helpers": "^1.0.13",
 		"@openfin/automation-native": "^1.0.13",
 		"chai": "4.3.7",
-		"mochawesome": "7.1.3"
+		"mochawesome": "7.1.3",
+		"@openfin/core": "33.77.11",
+		"@openfin/node-adapter": "33.77.11"
 	}
 }

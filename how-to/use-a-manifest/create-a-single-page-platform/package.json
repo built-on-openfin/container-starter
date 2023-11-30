@@ -14,6 +14,7 @@
 	"author": "john.mandia@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"openfin-adapter": "32.76.10"
+		"@openfin/node-adapter": "33.77.11",
+		"@openfin/core": "33.77.11"
 	}
 }
