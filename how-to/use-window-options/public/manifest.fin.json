@@ -1,6 +1,6 @@
 {
 	"runtime": {
-		"arguments": "--v=1 --inspect",
+		"arguments": "--inspect",
 		"version": "32.114.76.10"
 	},
 	"startup_app": {
@@ -13,6 +13,7 @@
 		"defaultWidth": 1200,
 		"defaultHeight": 800,
 		"defaultCentered": true,
+		"enableAppLogging": true,
 		"minWidth": 800,
 		"minHeight": 400
 	}

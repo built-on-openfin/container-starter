@@ -90,7 +90,23 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Initialize the DOM elements.
  */
 async function initDom(): Promise<void> {
-	const btnPreview = document.querySelector("#btnPreview");
+	await fin.System.setMinLogLevel("error")
+	.then(() => console.log("success"))
+	.catch((err) => console.log(err));
+
+	console.error("Console#ThMo!error");
+	console.warn("Console#ThMo!warn");
+	console.info("Console#ThMo!info");
+	console.log("Console#ThMo!log");
+	console.debug("Console#ThMo!debug");
+	// await fin.System.log("fatal", "Logger#ThMo!fatal");
+	await fin.System.log("error", "Logger#ThMo!error");
+	await fin.System.log("warning", "Logger#ThMo!warn");
+	await fin.System.log("info", "Logger#ThMo!info");
+	await fin.System.log("verbose", "Logger#ThMo!verbose");
+	// await fin.System.log("debug", "Logger#ThMo!debug");
+
+const btnPreview = document.querySelector("#btnPreview");
 	if (btnPreview) {
 		btnPreview.addEventListener("click", async () => {
 			if (previewWindow) {
@@ -102,6 +118,7 @@ async function initDom(): Promise<void> {
 				...finalizeWindowOptions(),
 				saveWindowState: false
 			};
+
 			previewWindow = await fin.Window.create(previewOptions);
 			await previewWindow.addListener("closed", () => {
 				previewWindow = undefined;
