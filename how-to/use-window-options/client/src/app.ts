@@ -90,9 +90,9 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Initialize the DOM elements.
  */
 async function initDom(): Promise<void> {
-	await fin.System.setMinLogLevel("error")
-	.then(() => console.log("success"))
-	.catch((err) => console.log(err));
+	await fin.System.setMinLogLevel("verbose")
+		.then(() => console.log("success"))
+		.catch((err) => console.log(err));
 
 	console.error("Console#ThMo!error");
 	console.warn("Console#ThMo!warn");
@@ -105,10 +105,21 @@ async function initDom(): Promise<void> {
 	await fin.System.log("info", "Logger#ThMo!info");
 	await fin.System.log("verbose", "Logger#ThMo!verbose");
 	// await fin.System.log("debug", "Logger#ThMo!debug");
+	const app = await fin.Application.getCurrent();
+	const appLogUsername = "ThMoAtLSEG";
+	console.log(`ThMo: calling setAppLogUsername with '${appLogUsername}'...`);
+	await app.setAppLogUsername(appLogUsername)
+		.then((value) => console.debug(value))
+		.catch((reason) => console.error(reason));
 
-const btnPreview = document.querySelector("#btnPreview");
+	const btnPreview = document.querySelector("#btnPreview");
 	if (btnPreview) {
 		btnPreview.addEventListener("click", async () => {
+			console.log("ThMo: calling sendApplicationLog...");
+			await app.sendApplicationLog()
+				.then((info) => console.log(info.logId))
+				.catch((err) => console.log(err));
+
 			if (previewWindow) {
 				await previewWindow.removeAllListeners();
 				await previewWindow.close(true);
