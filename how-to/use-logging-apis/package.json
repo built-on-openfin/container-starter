@@ -1,37 +1,37 @@
 {
-	"name": "use-logging-apis",
-	"version": "0.0.1",
-	"description": "A demonstration of how to use logging apis",
-	"main": "index.js",
-	"scripts": {
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"server": "node ./server/build/index.js",
-		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-		"build-server": "tsc --project ./server",
-		"build": "npm run build-client && npm run build-server",
-		"start": "npm run server",
-		"setup": "cd ../../ && npm install && cd how-to/use-logging-apis && npm run build"
-	},
-	"author": "martyn.janes@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"@openfin/core": "33.77.11",
-		"@types/multer": "^1.4.7",
-		"@types/node": "^20.4.1",
-		"body-parser": "^1.20.2",
-		"express": "^4.18.2",
-		"@openfin/node-adapter": "33.77.11",
-		"source-map-loader": "^4.0.1",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.1.6",
-		"webpack": "^5.88.1",
-		"webpack-cli": "^5.1.4"
-	},
-	"dependencies": {
-		"connect-busboy": "^1.0.0",
-		"multer": "^1.4.5-lts.1",
-		"@openfin/core": "33.77.11",
-		"@openfin/node-adapter": "33.77.11"
-	}
+  "name": "use-logging-apis",
+  "version": "0.0.1",
+  "description": "A demonstration of how to use logging apis",
+  "main": "index.js",
+  "scripts": {
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "server": "node ./server/build/index.js",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "build-server": "tsc --project ./server",
+    "build": "npm run build-client && npm run build-server",
+    "start": "npm run server",
+    "setup": "cd ../../ && npm install && cd how-to/use-logging-apis && npm run build"
+  },
+  "author": "martyn.janes@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "@openfin/core": "34.78.77",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.4.1",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "@openfin/node-adapter": "34.78.77",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "connect-busboy": "^1.0.0",
+    "multer": "^1.4.5-lts.1",
+    "@openfin/core": "34.78.77",
+    "@openfin/node-adapter": "34.78.77"
+  }
 }
