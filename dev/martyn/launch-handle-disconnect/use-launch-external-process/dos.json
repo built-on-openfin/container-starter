@@ -1,0 +1,13 @@
+{
+	"applicationSettings": {
+		"https://built-on-openfin.github.io/container-starter/dev/martyn/launch-handle-disconnect/use-launch-external-process/manifest.fin.json": {
+			"permissions": {
+				"System": {
+					"launchExternalProcess": true,
+					"terminateExternalProcess": true,
+					"downloadAsset": true
+				}
+			}
+		}
+	}
+}
