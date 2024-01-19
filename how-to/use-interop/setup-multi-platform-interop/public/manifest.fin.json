@@ -12,15 +12,17 @@
 		"defaultWindowOptions": {
 			"url": "http://localhost:5050/html/window.html",
 			"contextMenu": true,
-			"defaultWidth": 600,
-			"defaultHeight": 600,
+			"defaultWidth": 700,
+			"defaultHeight": 700,
 			"defaultLeft": 0,
 			"defaultTop": 0,
 			"saveWindowState": false,
 			"showBackgroundImages": true,
 			"backgroundThrottling": true,
-			"minHeight": 445,
-			"minWidth": 354
+			"minHeight": 700,
+			"minWidth": 700,
+			"height": 700,
+			"width": 700
 		}
 	},
 	"snapshot": {
@@ -32,6 +34,13 @@
 						{
 							"type": "row",
 							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v1.0.0/interop/interop-api/context/interop-broadcast-view.html"
+									}
+								},
 								{
 									"type": "component",
 									"componentName": "view",
