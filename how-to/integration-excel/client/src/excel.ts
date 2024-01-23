@@ -259,7 +259,7 @@ async function selectWorksheet(name: string): Promise<void> {
 		const newWorksheetIndex = openWorksheets.findIndex((w) => w.name === name);
 
 		if (newWorksheetIndex !== selectedWorksheetIndex) {
-			if(selectedWorksheetIndex !== undefined) {
+			if (selectedWorksheetIndex !== undefined) {
 				const oldWorksheet = openWorksheets[selectedWorksheetIndex];
 				if (oldWorksheet) {
 					await oldWorksheet.sheet.removeEventListener(handleCellChange);
