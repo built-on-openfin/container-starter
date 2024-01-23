@@ -22,8 +22,8 @@
 	"snapshot": {
 		"windows": [
 			{
-				"defaultWidth": 600,
-				"defaultHeight": 600,
+				"defaultWidth": 800,
+				"defaultHeight": 900,
 				"defaultLeft": 0,
 				"defaultTop": 0,
 				"saveWindowState": false,
