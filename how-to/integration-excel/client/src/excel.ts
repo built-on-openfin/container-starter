@@ -255,13 +255,15 @@ async function populateWorksheets(): Promise<void> {
  * @param name The name of worksheet to select.
  */
 async function selectWorksheet(name: string): Promise<void> {
-	if (openWorksheets && selectedWorksheetIndex !== undefined) {
+	if (openWorksheets && selectedWorksheetIndex === undefined) {
 		const newWorksheetIndex = openWorksheets.findIndex((w) => w.name === name);
 
 		if (newWorksheetIndex !== selectedWorksheetIndex) {
-			const oldWorksheet = openWorksheets[selectedWorksheetIndex];
-			if (oldWorksheet) {
-				await oldWorksheet.sheet.removeEventListener(handleCellChange);
+			if(selectedWorksheetIndex !== undefined) {
+				const oldWorksheet = openWorksheets[selectedWorksheetIndex];
+				if (oldWorksheet) {
+					await oldWorksheet.sheet.removeEventListener(handleCellChange);
+				}
 			}
 
 			selectedWorksheetIndex = newWorksheetIndex;
