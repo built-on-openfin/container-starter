@@ -26,7 +26,7 @@
 											"title": "view1",
 											"componentName": "view",
 											"componentState": {
-												"url": "https://built-on-openfin.github.io/container-starter/main/common/views/platform/of-info/index.html",
+												"url": "https://built-on-openfin.github.io/container-starter/main/container-platform-starter/common/views/platform/of-info/index.html",
 												"name": "view1",
 												"componentName": "view"
 											}
