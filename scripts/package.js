@@ -96,7 +96,7 @@ function packageItems(cliArgs) {
 		try {
 			const rootUrl = [baseURL, DEFAULT_FOLDER, hostFolder, item].filter(Boolean).join('/');
 			const options = {
-				files: `${targetDir}/**/*.json`,
+				files: [`${targetDir}/**/*.json`, `${targetDir}/**/*.js`, `${targetDir}/**/*.html`],
 				from: new RegExp(`http://localhost:${DEFAULT_PORT}`, 'g'),
 				to: rootUrl
 			};
