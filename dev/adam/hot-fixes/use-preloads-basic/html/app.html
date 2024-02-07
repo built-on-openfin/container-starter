@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Preload | Basic</title>
+		<link rel="stylesheet" href="/common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Issue Commands To a Platform</h1>
+				<h1 class="tag">Use the channel API to send command to a platform.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="col left gap10">
+			<p>
+				This is a basic example showing how a preload script can be injected into the three parts of a
+				platform application:
+			</p>
+			<ul>
+				<li>The view (this page)</li>
+				<li>The Window (the window containing this view)</li>
+				<li>The platform provider (The background hidden window loaded as part of a platform)</li>
+			</ul>
+			The preload scripts are called:
+			<ul>
+				<li>client/src/preload-view.ts</li>
+				<li>client/src/preload-window.ts</li>
+				<li>client/src/preload-platform.ts</li>
+			</ul>
+			<p>
+				The scripts are loaded individually into each part as defined in the manifest file:
+				`public/manifest.fin.json` (look for the preload definition). The scripts simply ensure they are not
+				executing within an iframe and then they log that they have run. This is a placeholder for you to add
+				your logic.
+			</p>
+			<p>
+				The buttons below allow you to launch the developer tools for each part so that you can see the
+				console.log messages for yourself. Please note you will not see the preload scripts in the source tab
+				of the developer tools.
+			</p>
+			<button id="view-devtools">Launch View Developer Tools</button>
+			<button id="window-devtools">Launch Window Developer Tools</button>
+			<button id="platform-devtools">Launch Platform Developer Tools</button>
+		</main>
+	</body>
+</html>
