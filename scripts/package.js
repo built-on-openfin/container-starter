@@ -94,26 +94,6 @@ function packageItems(cliArgs) {
 		}
 
 		try {
-			const commonUrl = [baseURL, DEFAULT_FOLDER, hostFolder, 'common'].filter(Boolean).join('/');
-			const commonOptions = [
-				{
-					files: `${targetDir}/**/*.json`,
-					from: new RegExp(`http://localhost:${DEFAULT_PORT}/common`, 'g'),
-					to: commonUrl
-				},
-				{
-					files: `${targetDir}/**/*.html`,
-					from: /(src|href)="\/common/g,
-					to: `$1="${commonUrl}`
-				}
-			];
-
-			for (const common of commonOptions) {
-				const commonResults = replace.sync(common);
-				console.log('Replacement results for common:', commonResults);
-				console.log(`Common URLs replaced with: ${commonUrl}`);
-			}
-
 			const rootUrl = [baseURL, DEFAULT_FOLDER, hostFolder, item].filter(Boolean).join('/');
 			const options = {
 				files: `${targetDir}/**/*.json`,
