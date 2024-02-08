@@ -4,7 +4,7 @@
 	},
 	"startup_app": {
 		"name": "launch-app-asset",
-		"url": "http://localhost:5050/app.html",
+		"url": "http://localhost:5050/html/app.html",
 		"uuid": "launch-app-asset",
 		"icon": "http://localhost:5050/common/images/icon-blue.png",
 		"autoShow": true,
