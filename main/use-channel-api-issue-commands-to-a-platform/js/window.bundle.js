@@ -53,7 +53,7 @@ async function initDom() {
  */
 async function launchPlatform() {
     try {
-        await fin.System.launchManifest("http://localhost:5050/platform.fin.json");
+        await fin.System.launchManifest("https://built-on-openfin.github.io/container-starter/main/use-channel-api-issue-commands-to-a-platform/platform.fin.json");
     }
     catch (error) {
         console.error("Error launching target platform app:", error);
@@ -76,7 +76,7 @@ async function requestView() {
         // and the platform app does a lookup.
         lastCreatedView = await channelClient.dispatch("createView", {
             viewOptions: {
-                url: "http://localhost:5050/html/app.html",
+                url: "https://built-on-openfin.github.io/container-starter/main/use-channel-api-issue-commands-to-a-platform/html/app.html",
                 customData: {
                     dateNow: Date.now()
                 }
@@ -96,7 +96,7 @@ async function requestViewInLastWindow() {
         // and the platform app does a lookup.
         lastCreatedView = await channelClient.dispatch("createView", {
             viewOptions: {
-                url: "http://localhost:5050/html/app.html",
+                url: "https://built-on-openfin.github.io/container-starter/main/use-channel-api-issue-commands-to-a-platform/html/app.html",
                 customData: {
                     dateNow: Date.now()
                 }

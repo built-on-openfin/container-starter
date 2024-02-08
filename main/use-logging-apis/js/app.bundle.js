@@ -34950,7 +34950,7 @@ async function uploadHandler(submitEvent) {
     formData.append("file", debugLogFile);
     formData.append("filename", fileName);
     formData.append("uuid", _openfin_core__WEBPACK_IMPORTED_MODULE_0__.fin.me.uuid);
-    const uploadState = await fetch("http://localhost:5050/uploads", {
+    const uploadState = await fetch("https://built-on-openfin.github.io/container-starter/main/use-logging-apis/uploads", {
         method: "POST",
         body: formData
     });

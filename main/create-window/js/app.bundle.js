@@ -70,7 +70,7 @@ async function openDynamicApplicationWindow() {
  */
 async function openManifestApplicationWindow() {
     try {
-        await fin.Application.startFromManifest("http://localhost:5050/app.fin.json");
+        await fin.Application.startFromManifest("https://built-on-openfin.github.io/container-starter/main/create-window/app.fin.json");
         console.log("App is running");
     }
     catch (err) {
@@ -86,7 +86,7 @@ async function openDataWindow() {
         name: "child-data",
         defaultWidth: 800,
         defaultHeight: 800,
-        url: "http://localhost:5050/html/window.html",
+        url: "https://built-on-openfin.github.io/container-starter/main/create-window/html/window.html",
         frame: true,
         autoShow: true,
         customData: {
@@ -101,7 +101,7 @@ async function openDataWindow() {
 async function openDataPlatformWindow() {
     const viewOption = {
         name: "childview-data",
-        url: "http://localhost:5050/html/window.html",
+        url: "https://built-on-openfin.github.io/container-starter/main/create-window/html/window.html",
         customData: {
             dateNow: Date.now()
         }

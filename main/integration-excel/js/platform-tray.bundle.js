@@ -32,7 +32,7 @@ fin.Platform.init().catch(() => { });
 async function initDom() {
     console.log("Platform Init");
     const application = await fin.Application.getCurrent();
-    await application.setTrayIcon("http://localhost:5050/favicon.ico");
+    await application.setTrayIcon("https://built-on-openfin.github.io/container-starter/main/integration-excel/favicon.ico");
     let visible = false;
     let win;
     await application.addListener("tray-icon-clicked", async (trayInfo) => {
@@ -65,7 +65,7 @@ async function initDom() {
                     defaultHeight: foundMonitor
                         ? foundMonitor.availableRect.bottom - foundMonitor.availableRect.top
                         : undefined,
-                    url: "http://localhost:5050/views/excel.html",
+                    url: "https://built-on-openfin.github.io/container-starter/main/integration-excel/views/excel.html",
                     frame: false,
                     autoShow: true,
                     alwaysOnTop: true,
