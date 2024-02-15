@@ -1,104 +1,31 @@
 import express from "express";
 import path from "path";
+import { platform } from 'node:process';
 
 const app = express();
 
 const mainPath = path.join(__dirname, "..", "..", "public");
+const macManifest = require(mainPath + '/mac.manifest.fin.json');
+const windowsManifest = require(mainPath + '/win.manifest.fin.json');
 const port = 5050;
 
 console.log(`Main Path / = ${mainPath}`);
 
 app.get("/manifest", (req, res) => {
 	const env = req.query.env;
-	if (env === "dev") {
-		res.json({
-			licenseKey: "openfin-demo-license-key",
-			runtime: {
-				arguments: "--v=1 --inspect",
-				version: "26.102.70.16"
-			},
-			platform: {
-				uuid: "how-to-use-dynamic-manifest-basic",
-				autoShow: false,
-				icon: "http://localhost:5050/favicon.ico",
-				preloadScripts: [],
-				defaultWindowOptions: {
-					preloadScripts: []
-				},
-				defaultViewOptions: {
-					preloadScripts: []
-				}
-			},
-			snapshot: {
-				windows: [
-					{
-						layout: {
-							content: [
-								{
-									type: "stack",
-									id: "no-drop-target",
-									content: [
-										{
-											type: "component",
-											componentName: "view",
-											componentState: {
-												processAffinity: "ps_1",
-												url: "http://localhost:5050/html/app-dev.html"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				]
-			}
-		});
-	} else {
-		res.json({
-			licenseKey: "openfin-demo-license-key",
-			runtime: {
-				arguments: "--v=1 --inspect",
-				version: "26.102.70.16"
-			},
-			platform: {
-				uuid: "how-to-use-dynamic-manifest-basic",
-				autoShow: false,
-				icon: "http://localhost:5050/favicon.ico",
-				preloadScripts: [],
-				defaultWindowOptions: {
-					preloadScripts: []
-				},
-				defaultViewOptions: {
-					preloadScripts: []
-				}
-			},
-			snapshot: {
-				windows: [
-					{
-						layout: {
-							content: [
-								{
-									type: "stack",
-									id: "no-drop-target",
-									content: [
-										{
-											type: "component",
-											componentName: "view",
-											componentState: {
-												processAffinity: "ps_1",
-												url: "http://localhost:5050/html/app-staging.html"
-											}
-										}
-									]
-								}
-							]
-						}
-					}
-				]
-			}
-		});
+	const os = platform;
+	console.log(`Your platform is: ${os}`);
+
+	if (os && os === 'darwin') {
+		// Launch Mac OS Manifest
+		res.json(macManifest);
 	}
+
+	if (os && os === 'win32') {
+		// Launch Windows Manifest.
+		res.json(windowsManifest);
+	}
+
 });
 
 app.get("/html/app-dev.html", (req, res) => {
