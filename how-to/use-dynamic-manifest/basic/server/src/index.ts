@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import { platform } from 'node:process';
+import os from 'node:os';
 
 const app = express();
 
@@ -13,15 +14,17 @@ console.log(`Main Path / = ${mainPath}`);
 
 app.get("/manifest", (req, res) => {
 	const env = req.query.env;
-	const os = platform;
-	console.log(`Your platform is: ${os}`);
+	const plat = platform;
+	console.log(`Your platform is: ${plat}`);  // Gives you the overall Platform from node (Win32, Darwin for Mac, etc..)
+	console.log(`Your platform is: ${os.type()}`); // Gives you the System type, which could be: Windows_NT, Cygwin, Ming, etc..
+	console.log(`Your version is: ${os.release()}`); // Gives you the actual release # for the platform (i.e. 10.0.22621)
 
-	if (os && os === 'darwin') {
+	if (plat && plat === 'darwin') {
 		// Launch Mac OS Manifest
 		res.json(macManifest);
 	}
 
-	if (os && os === 'win32') {
+	if (plat && plat === 'win32') {
 		// Launch Windows Manifest.
 		res.json(windowsManifest);
 	}
