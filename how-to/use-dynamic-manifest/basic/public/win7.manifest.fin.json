@@ -2,8 +2,13 @@
 	"licenseKey": "openfin-demo-license-key",
 	"runtime": {
 		"arguments": "--v=1 --inspect",
-		"version": "26.102.70.16"
+		"version": "29.108.73.19"
 	},
+	"fallbackManifests": [
+		{
+			"manifest": "http://localhost:5050/public/win7.older.manifest.fin.json"
+		}
+	],
 	"platform": {
 		"uuid": "how-to-use-dynamic-manifest-basic",
 		"autoShow": false,

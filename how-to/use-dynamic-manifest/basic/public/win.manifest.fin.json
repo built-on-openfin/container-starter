@@ -4,11 +4,6 @@
 		"arguments": "--v=1 --inspect",
 		"version": "34.118.78.80"
 	},
-    "fallbackManifests": [
-        {
-          "manifest": "http://localhost:5050/public/win7.manifest.fin.json"
-        }
-    ],
 	"platform": {
 		"uuid": "how-to-use-dynamic-manifest-basic",
 		"autoShow": false,
