@@ -1,45 +1,45 @@
 {
-  "runtime": {
-    "arguments": "--v=1 --inspect --security-realm=PROD-MAIN",
-    "version": "34.118.78.77"
-  },
-  "shortcut": {
-    "company": "OpenFin",
-    "description": "PROD Main Platform",
-    "icon": "http://localhost:5050/favicon.ico",
-    "name": "PROD Main Platform"
-  },
-  "platform": {
-    "uuid": "prod-main-platform",
-    "autoShow": false,
-    "permissions": {
-      "System": {
-        "launchExternalProcess": true
-      }
-    }
-  },
-  "snapshot": {
-    "windows": [
-      {
-        "layout": {
-          "content": [
-            {
-              "type": "stack",
-              "id": "no-drop-target",
-              "content": [
-                {
-                  "type": "component",
-                  "componentName": "view",
-                  "componentState": {
-                    "processAffinity": "ps_1",
-                    "url": "http://localhost:5050/html/view-app.html"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ]
-  }
+	"runtime": {
+		"arguments": "--v=1 --inspect --security-realm=PROD-MAIN",
+		"version": "34.118.78.80"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "PROD Main Platform",
+		"icon": "http://localhost:5050/favicon.ico",
+		"name": "PROD Main Platform"
+	},
+	"platform": {
+		"uuid": "prod-main-platform",
+		"autoShow": false,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "http://localhost:5050/html/view-app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
 }
