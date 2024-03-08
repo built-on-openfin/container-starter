@@ -1,35 +1,35 @@
 {
-  "runtime": {
-    "arguments": "--v=1 --inspect",
-    "version": "34.118.78.77"
-  },
-  "platform": {
-    "uuid": "how-to-open-windows",
-    "autoShow": true,
-    "icon": "https://built-on-openfin.github.io/container-starter/dev/john/update-window-options/create-window/favicon.ico"
-  },
-  "snapshot": {
-    "windows": [
-      {
-        "layout": {
-          "content": [
-            {
-              "type": "stack",
-              "id": "no-drop-target",
-              "content": [
-                {
-                  "type": "component",
-                  "componentName": "view",
-                  "componentState": {
-                    "processAffinity": "ps_1",
-                    "url": "https://built-on-openfin.github.io/container-starter/dev/john/update-window-options/create-window/html/app.html"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ]
-  }
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "34.118.78.80"
+	},
+	"platform": {
+		"uuid": "how-to-open-windows",
+		"autoShow": true,
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/john/update-window-options/create-window/favicon.ico"
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/john/update-window-options/create-window/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
 }

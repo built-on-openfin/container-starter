@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Window Options Example</title>
+		<title>Window Options Builder</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://built-on-openfin.github.io/container-starter/dev/john/update-window-options/common/style/app.css" />
@@ -12,7 +12,7 @@
 	<body class="col fill gap20">
 		<header class="row spread middle">
 			<div class="col">
-				<h1>Window Options Example</h1>
+				<h1>Window Options Builder</h1>
 				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
 			</div>
 			<div class="row middle gap10">
@@ -40,6 +40,10 @@
 							<fieldset class="row middle">
 								<input type="checkbox" id="optionAlwaysOnTop" />
 								<label for="optionAlwaysOnTop">Always On Top</label>
+							</fieldset>
+							<fieldset class="row middle" id="usePlatformContainer">
+								<input type="checkbox" id="optionUsePlatform" />
+								<label for="optionUsePlatform">Use Platform To Create Window</label>
 							</fieldset>
 							<fieldset>
 								<label for="optionOpacity">Opacity</label>
@@ -235,10 +239,11 @@
 					<button id="btnReset">Reset to Defaults</button>
 				</div>
 				<div class="row gap10">
-					<a href="https://cdn.openfin.co/docs/javascript/stable/tutorial-Window.create.html" target="_blank">
-						Tutorial
-					</a>
-					<a href="https://cdn.openfin.co/docs/javascript/stable/Window.html#~options" target="_blank">
+					<a href="https://developers.openfin.co/of-docs/docs/openfin-windows" target="_blank">Tutorial</a>
+					<a
+						href="https://developer.openfin.co/docs/javascript/stable/interfaces/OpenFin.WindowCreationOptions.html"
+						target="_blank"
+					>
 						API Docs
 					</a>
 				</div>
