@@ -5,7 +5,7 @@
 		<title>Window Options Builder</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="https://built-on-openfin.github.io/container-starter/v34/common/style/app.css" />
+		<link rel="stylesheet" href="../common/style/app.css" />
 		<script src="../js/app.bundle.js"></script>
 	</head>
 
@@ -16,7 +16,7 @@
 				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
 			</div>
 			<div class="row middle gap10">
-				<image src="https://built-on-openfin.github.io/container-starter/v34/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
 			</div>
 		</header>
 		<main class="row fill gap20">
@@ -76,14 +76,14 @@
 								<fieldset class="fill">
 									<label for="optionMinWidth">Min Width</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMinWidth" min="600" max="1000" step="10" />
+										<input type="range" id="optionMinWidth" min="100" max="1000" step="10" />
 										<span id="optionMinWidthValue"></span>
 									</div>
 								</fieldset>
 								<fieldset class="fill">
 									<label for="optionMaxWidth">Max Width</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMaxWidth" min="600" max="2000" step="10" />
+										<input type="range" id="optionMaxWidth" min="100" max="2000" step="10" />
 										<span id="optionMaxWidthValue"></span>
 									</div>
 								</fieldset>
@@ -92,14 +92,14 @@
 								<fieldset class="fill">
 									<label for="optionMinHeight">Min Height</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMinHeight" min="600" max="1000" step="10" />
+										<input type="range" id="optionMinHeight" min="100" max="1000" step="10" />
 										<span id="optionMinHeightValue"></span>
 									</div>
 								</fieldset>
 								<fieldset class="fill">
 									<label for="optionMaxHeight">Max Height</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMaxHeight" min="600" max="2000" step="10" />
+										<input type="range" id="optionMaxHeight" min="100" max="2000" step="10" />
 										<span id="optionMaxHeightValue"></span>
 									</div>
 								</fieldset>
@@ -234,7 +234,7 @@
 			<div class="row spread">
 				<div class="row gap10">
 					<button id="btnPreview">Preview</button>
-					<button id="btnClosePreview">Close Preview</button>
+					<button id="btnClosePreview">Close Last Preview</button>
 					<button id="btnCopy">Copy to Clipboard</button>
 					<button id="btnReset">Reset to Defaults</button>
 				</div>
