@@ -2,12 +2,12 @@ import type OpenFin from "@openfin/core";
 
 const defaultCommonOptions: OpenFin.WindowCreationOptions = {
 	name: "test-child",
-	url: "./preview.html",
+	url: window.location.href.replace("app.html", "preview.html"),
 	icon: undefined,
 	autoShow: true,
 	alwaysOnTop: false,
 	opacity: 1,
-	contextMenu: true,
+	contextMenuOptions: { enabled: true },
 	showTaskbarIcon: true,
 	resizable: true,
 	minimizable: true,
@@ -106,11 +106,6 @@ async function initDom(): Promise<void> {
 	const btnPreview = document.querySelector("#btnPreview");
 	if (btnPreview) {
 		btnPreview.addEventListener("click", async () => {
-			if (previewWindow) {
-				await previewWindow.removeAllListeners();
-				await previewWindow.close(true);
-				previewWindow = undefined;
-			}
 			const previewOptions: OpenFin.WindowCreationOptions = {
 				...finalizeWindowOptions(),
 				saveWindowState: false
