@@ -26,16 +26,17 @@
 					<option value="-width">Decrease Width</option>
 					<option value="+height">Increase Height</option>
 					<option value="-height">Decrease Height</option>
-				</select> <button id="btnApply">Apply</button>
+				</select>
+				<button id="btnApply">Apply</button>
 			</fieldset>
 			<fieldset class="row wrap">
 				<button id="btnCapture">Capture</button>
-				<button id="btnClosePreview">Close</button>	
+				<button id="btnClosePreview">Close</button>
 			</fieldset>
 		</main>
 		<script>
 			const windowName = document.querySelector('#windowName');
-			if(fin.me.isView) {
+			if (fin.me.isView) {
 				windowName.innerText = 'View Name: ' + fin.me.identity.name;
 				const sizeContainer = document.querySelector('#sizeContainer');
 				sizeContainer.style.display = 'none';
@@ -90,7 +91,7 @@
 						updated = true;
 					}
 					height = -100;
-				}	
+				}
 				if (updated) {
 					await fin.me.updateOptions(options);
 				}
