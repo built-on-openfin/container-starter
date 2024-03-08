@@ -1,0 +1,34 @@
+{
+	"licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
+	"runtime": {
+		"version": "34.118.78.80",
+		"arguments": "--v=1 --security-realm=UAT-MAIN"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "UAT Main Application",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/use-security-realms/favicon.ico",
+		"name": "UAT Main Application"
+	},
+	"startup_app": {
+		"name": "uat-main-application",
+		"uuid": "uat-main-application",
+		"url": "https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/use-security-realms/html/app.html",
+		"autoShow": true,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true,
+				"downloadAsset": true
+			}
+		}
+	},
+	"appAssets": [
+		{
+			"src": "https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/use-security-realms/assets/UseSecurityRealms.zip",
+			"version": "0.0.0.1",
+			"alias": "security-realms-native",
+			"target": "UseSecurityRealms.exe",
+			"mandatory": true
+		}
+	]
+}

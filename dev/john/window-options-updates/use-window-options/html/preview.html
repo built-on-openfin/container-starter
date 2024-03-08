@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Window Options Preview</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/common/style/app.css" />
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Window Options Preview</h1>
+				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
+			</div>
+			<div class="row middle gap10">
+				<image src="https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="row fill spread gap20">This is the preview window.</div>
+		</main>
+		<footer>
+			<div class="column spread">
+				<button id="btnGrowVertical">+ Height</button>
+				<button id="btnShrinkVertical">- Height</button>
+				<button id="btnGrowHorizontal">+ Width</button>
+				<button id="btnShrinkHorizontal">- Width</button>
+				<button id="btnCapture">Capture</button>
+				<button id="btnClosePreview">Close</button>
+			</div>
+		</footer>
+		<script>
+			const btnGrowVertical = document.querySelector('#btnGrowVertical');
+			btnGrowVertical.addEventListener('click', async () => {
+				let options = await fin.me.getOptions();
+				let updated = false;
+				if (options.maxHeight !== -1) {
+					options.maxHeight += 100;
+					updated = true;
+				}
+				if (options.minHeight !== -1) {
+					options.minHeight += 100;
+					updated = true;
+				}
+				if (updated) {
+					await fin.me.updateOptions(options);
+				}
+				await fin.me.resizeBy(0, 100);
+			});
+			if (fin.me.isView) {
+				btnGrowVertical.style.display = 'none';
+			}
+			const btnShrinkVertical = document.querySelector('#btnShrinkVertical');
+			btnShrinkVertical.addEventListener('click', async () => {
+				let options = await fin.me.getOptions();
+				let updated = false;
+				if (options.maxHeight !== -1) {
+					options.maxHeight -= 100;
+					updated = true;
+				}
+				if (options.minHeight !== -1) {
+					options.minHeight -= 100;
+					updated = true;
+				}
+				if (updated) {
+					await fin.me.updateOptions(options);
+				}
+				await fin.me.resizeBy(0, -100);
+			});
+			if (fin.me.isView) {
+				btnShrinkVertical.style.display = 'none';
+			}
+			const btnGrowHorizontal = document.querySelector('#btnGrowHorizontal');
+			btnGrowHorizontal.addEventListener('click', async () => {
+				let options = await fin.me.getOptions();
+				let updated = false;
+				if (options.maxWidth !== -1) {
+					options.maxWidth += 100;
+					updated = true;
+				}
+				if (options.minWidth !== -1) {
+					options.minWidth += 100;
+					updated = true;
+				}
+				if (updated) {
+					await fin.me.updateOptions(options);
+				}
+				await fin.me.resizeBy(100, 0);
+			});
+			if (fin.me.isView) {
+				btnGrowHorizontal.style.display = 'none';
+			}
+			const btnShrinkHorizontal = document.querySelector('#btnShrinkHorizontal');
+			btnShrinkHorizontal.addEventListener('click', async () => {
+				let options = await fin.me.getOptions();
+				let updated = false;
+				if (options.maxWidth !== -1) {
+					options.maxWidth -= 100;
+					updated = true;
+				}
+				if (options.minWidth !== -1) {
+					options.minWidth -= 100;
+					updated = true;
+				}
+				if (updated) {
+					await fin.me.updateOptions(options);
+				}
+				await fin.me.resizeBy(-100, 0);
+			});
+			if (fin.me.isView) {
+				btnShrinkHorizontal.style.display = 'none';
+			}
+			const btnClosePreview = document.querySelector('#btnClosePreview');
+			btnClosePreview.addEventListener('click', async () => (await fin.Window.getCurrent()).close());
+			if (fin.me.isView) {
+				btnClosePreview.style.display = 'none';
+			}
+			const btnCapture = document.querySelector('#btnCapture');
+			btnCapture.addEventListener('click', async () => {
+				console.log('SnapShot clicked');
+				const wnd = await fin.Window.getCurrent();
+
+				// Snapshot of a full visible window
+				let base64 = await wnd.getSnapshot();
+
+				const link = document.createElement('a');
+				link.setAttribute('href', 'data:image/png;base64,' + base64);
+				link.setAttribute('download', 'openfin-window-settings.png');
+				link.click();
+			});
+
+			(async () => {
+				const options = await fin.me.getOptions();
+				if (!options.frame) {
+					const header = document.querySelector('header > div');
+					header.classList.add('drag');
+				}
+			})();
+		</script>
+	</body>
+</html>

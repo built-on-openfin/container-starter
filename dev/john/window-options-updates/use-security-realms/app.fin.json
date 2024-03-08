@@ -1,0 +1,19 @@
+{
+	"licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
+	"runtime": {
+		"version": "34.118.78.80",
+		"arguments": "--v=1 --security-realm=PROD-MAIN"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "PROD Main Application",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/use-security-realms/favicon.ico",
+		"name": "PROD Main Application"
+	},
+	"startup_app": {
+		"name": "prod-main-application",
+		"uuid": "prod-main-application",
+		"url": "https://built-on-openfin.github.io/container-starter/dev/john/window-options-updates/use-security-realms/html/app.html",
+		"autoShow": true
+	}
+}
