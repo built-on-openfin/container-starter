@@ -9,7 +9,7 @@
 	</head>
 
 	<body class="col fill gap20">
-		<header class="row spread middle">
+		<header class="row spread middle drag">
 			<div class="col">
 				<h1>Window Options Preview</h1>
 				<h1 class="tag">Demonstrate customized window.</h1>
@@ -117,10 +117,11 @@
 			});
 
 			(async () => {
+				debugger;
 				const options = await fin.me.getOptions();
-				if (!options.frame) {
-					const header = document.querySelector('header > div');
-					header.classList.add('drag');
+				if (options.frame) {
+					const header = document.querySelector('header');
+					header.classList.remove('drag');
 				}
 			})();
 		</script>
