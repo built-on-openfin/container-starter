@@ -1,0 +1,35 @@
+{
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "35.120.79.5"
+  },
+  "platform": {
+    "uuid": "how-to-open-windows",
+    "autoShow": true,
+    "icon": "https://built-on-openfin.github.io/container-starter/dev/adam/v35/create-window/favicon.ico"
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "https://built-on-openfin.github.io/container-starter/dev/adam/v35/create-window/html/app.html"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

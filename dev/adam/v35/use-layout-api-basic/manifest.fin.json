@@ -1,0 +1,77 @@
+{
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "35.120.79.5"
+  },
+  "platform": {
+    "uuid": "use-layouts-basic",
+    "icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+    "autoShow": false,
+    "providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adam/v35/use-layout-api-basic/html/provider.html",
+    "apiDiagnostics": false,
+    "defaultWindowOptions": {
+      "url": "https://built-on-openfin.github.io/container-starter/dev/adam/v35/use-layout-api-basic/html/window.html",
+      "contextMenu": true
+    }
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layoutSnapshot": {
+          "layouts": {
+            "tab1": {
+              "content": [
+                {
+                  "type": "stack",
+                  "content": [
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "processAffinity": "ps_2",
+                        "url": "https://www.google.com"
+                      }
+                    },
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "processAffinity": "ps_1",
+                        "url": "https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.LayoutModule.html"
+                      }
+                    },
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "processAffinity": "ps_3",
+                        "url": "https://built-on-openfin.github.io/workspace-starter/workspace/v17.0.0/workspace-platform-starter/common/views/platform/of-info/index.html"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "tab2": {
+              "content": [
+                {
+                  "type": "stack",
+                  "content": [
+                    {
+                      "type": "component",
+                      "componentName": "view",
+                      "componentState": {
+                        "processAffinity": "ps_2",
+                        "url": "https://www.google.com"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}
