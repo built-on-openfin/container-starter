@@ -1,22 +1,24 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect",
-		"version": "36.122.80.11"
-	},
-	"platform": {
-		"uuid": "integration-excel-tray",
-		"applicationIcon": "http://localhost:5050/favicon.ico",
-		"providerUrl": "http://localhost:5050/provider/provider-tray.html",
-		"autoShow": false,
-		"permissions": {
-			"System": {
-				"launchExternalProcess": true,
-				"downloadAsset": true,
-				"openUrlWithBrowser": {
-					"enabled": true,
-					"protocols": ["mailto"]
-				}
-			}
-		}
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "36.122.80.11"
+  },
+  "platform": {
+    "uuid": "integration-excel-tray",
+    "applicationIcon": "http://localhost:5050/favicon.ico",
+    "providerUrl": "http://localhost:5050/provider/provider-tray.html",
+    "autoShow": false,
+    "permissions": {
+      "System": {
+        "launchExternalProcess": true,
+        "downloadAsset": true,
+        "openUrlWithBrowser": {
+          "enabled": true,
+          "protocols": [
+            "mailto"
+          ]
+        }
+      }
+    }
+  }
 }

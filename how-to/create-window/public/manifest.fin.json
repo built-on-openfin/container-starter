@@ -1,35 +1,35 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect",
-		"version": "36.122.80.11"
-	},
-	"platform": {
-		"uuid": "how-to-open-windows",
-		"autoShow": true,
-		"icon": "http://localhost:5050/favicon.ico"
-	},
-	"snapshot": {
-		"windows": [
-			{
-				"layout": {
-					"content": [
-						{
-							"type": "stack",
-							"id": "no-drop-target",
-							"content": [
-								{
-									"type": "component",
-									"componentName": "view",
-									"componentState": {
-										"processAffinity": "ps_1",
-										"url": "http://localhost:5050/html/app.html"
-									}
-								}
-							]
-						}
-					]
-				}
-			}
-		]
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "36.122.80.11"
+  },
+  "platform": {
+    "uuid": "how-to-open-windows",
+    "autoShow": true,
+    "icon": "http://localhost:5050/favicon.ico"
+  },
+  "snapshot": {
+    "windows": [
+      {
+        "layout": {
+          "content": [
+            {
+              "type": "stack",
+              "id": "no-drop-target",
+              "content": [
+                {
+                  "type": "component",
+                  "componentName": "view",
+                  "componentState": {
+                    "processAffinity": "ps_1",
+                    "url": "http://localhost:5050/html/app.html"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

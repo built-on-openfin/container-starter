@@ -1,20 +1,20 @@
 {
-	"name": "create-a-single-page-platform",
-	"version": "36.80.11",
-	"description": "A demonstration of a one page platform that can be used as a starting point.",
-	"scripts": {
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
-		"build-client": "echo Nothing to build",
-		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../../ && npm install && cd how-to/use-a-manifest/create-a-single-page-platform && npm run build"
-	},
-	"author": "john.mandia@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-		"@openfin/node-adapter": "36.80.11",
-		"@openfin/core": "36.80.11"
-	}
+  "name": "create-a-single-page-platform",
+  "version": "36.80.11",
+  "description": "A demonstration of a one page platform that can be used as a starting point.",
+  "scripts": {
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
+    "build-client": "echo Nothing to build",
+    "build": "npm run build-client",
+    "start": "npx --yes http-server ./public -p 5050 -c-1",
+    "setup": "cd ../../../ && npm install && cd how-to/use-a-manifest/create-a-single-page-platform && npm run build"
+  },
+  "author": "john.mandia@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "@openfin/node-adapter": "36.80.11",
+    "@openfin/core": "36.80.11"
+  }
 }

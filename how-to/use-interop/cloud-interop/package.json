@@ -1,28 +1,30 @@
 {
-	"name": "container-starter-use-interop--cloud-interop",
-	"version": "36.80.11",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
-		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
-		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../../ && npm install && cd how-to/use-interop/cloud-interop && npm run build"
-	},
-	"author": "adam.saland@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"dependencies": {
-		"@openfin/cloud-interop": "0.36.12"
-	},
-	"devDependencies": {
-		"@openfin/node-adapter": "36.80.11",
-		"ts-loader": "^9.5.1",
-		"typescript": "^5.4.5",
-		"webpack": "^5.91.0",
-		"webpack-cli": "^5.1.4",
-		"@openfin/core": "36.80.11"
-	}
+  "name": "container-starter-use-interop--cloud-interop",
+  "version": "36.80.11",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "secondclient": "node ./scripts/launch.mjs http://localhost:5050/second.manifest.fin.json",
+    "build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+    "build": "npm run build-client",
+    "start": "npx --yes http-server ./public -p 5050 -c-1",
+    "setup": "cd ../../../ && npm install && cd how-to/use-interop/cloud-interop && npm run build"
+  },
+  "author": "adam.saland@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "dependencies": {
+    "@openfin/cloud-interop": "0.36.12",
+    "@openfin/core": "36.80.11",
+    "@openfin/node-adapter": "36.80.11"
+  },
+  "devDependencies": {
+    "@openfin/node-adapter": "36.80.11",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "@openfin/core": "36.80.11"
+  }
 }
