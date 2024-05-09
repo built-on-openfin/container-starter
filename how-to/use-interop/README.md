@@ -8,9 +8,10 @@ This repository contains examples showing how to use the Interop API across your
 
 ### Examples
 
-| Example                                                                 | Description                                                                  |
-| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [How To - Setup Cross-Platform Interop](./setup-multi-platform-interop) | How to seamlessly connect to another Interop Broker using Platform Overrides |
+| Example                                                                 | Description                                                                          |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [How To - Setup Cross-Platform Interop](./setup-multi-platform-interop) | How to seamlessly connect to another Interop Broker using Platform Overrides         |
+| [How To - Use Cloud Interop](./cloud-interop)                           | How to seamlessly connect to another Interop Broker using our cloud interop solution |
 
 ## Before you get started
 

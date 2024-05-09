@@ -1,6 +1,6 @@
 {
 	"name": "integration-excel",
-	"version": "0.0.1",
+	"version": "36.80.11",
 	"description": "A demonstration of how to connect with Excel from OpenFin",
 	"main": "index.js",
 	"scripts": {
@@ -15,17 +15,17 @@
 	"author": "martyn.janes@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@finos/fdc3": "^2.0.3",
-		"@openfin/node-adapter": "33.77.11",
-		"ts-loader": "^9.4.4",
-		"typescript": "^5.1.6",
-		"webpack": "^5.88.1",
+		"@finos/fdc3": "^2.1.0",
+		"@openfin/node-adapter": "36.80.11",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.4.5",
+		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4",
-		"@openfin/core": "33.77.11"
+		"@openfin/core": "36.80.11"
 	},
 	"dependencies": {
-		"@openfin/excel": "^1.4.1",
-		"@openfin/core": "33.77.11",
-		"@openfin/node-adapter": "33.77.11"
+		"@openfin/excel": "^1.5.0",
+		"@openfin/core": "36.80.11",
+		"@openfin/node-adapter": "36.80.11"
 	}
 }

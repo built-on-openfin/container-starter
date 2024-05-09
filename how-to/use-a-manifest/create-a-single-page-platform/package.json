@@ -1,6 +1,6 @@
 {
 	"name": "create-a-single-page-platform",
-	"version": "0.0.1",
+	"version": "36.80.11",
 	"description": "A demonstration of a one page platform that can be used as a starting point.",
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",
@@ -14,7 +14,7 @@
 	"author": "john.mandia@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/node-adapter": "33.77.11",
-		"@openfin/core": "33.77.11"
+		"@openfin/node-adapter": "36.80.11",
+		"@openfin/core": "36.80.11"
 	}
 }

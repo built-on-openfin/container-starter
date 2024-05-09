@@ -1,13 +1,14 @@
 {
 	"runtime": {
 		"arguments": "--v=1 --inspect",
-		"version": "33.116.77.11"
+		"version": "36.122.80.11"
 	},
 	"platform": {
 		"uuid": "platform-2",
 		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
 		"autoShow": false,
 		"apiDiagnostics": false,
+		"providerUrl": "http://localhost:5050/html/provider.html",
 		"defaultWindowOptions": {
 			"url": "http://localhost:5050/html/window.html",
 			"contextMenu": true,
@@ -40,14 +41,14 @@
 									"type": "component",
 									"componentName": "view",
 									"componentState": {
-										"url": "https://samples.openfin.co/dev-extensions/extensions/v1.0.0/interop/fdc3/context/fdc3-broadcast-view.html"
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/fdc3/context/fdc3-broadcast-view.html"
 									}
 								},
 								{
 									"type": "component",
 									"componentName": "view",
 									"componentState": {
-										"url": "https://samples.openfin.co/dev-extensions/extensions/v1.0.0/interop/interop-api/context/interop-broadcast-view.html"
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/interop-api/context/interop-broadcast-view.html"
 									}
 								}
 							]
