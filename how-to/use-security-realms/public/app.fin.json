@@ -1,19 +1,19 @@
 {
-  "licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
-  "runtime": {
-    "version": "36.122.80.10",
-    "arguments": "--v=1 --security-realm=PROD-MAIN"
-  },
-  "shortcut": {
-    "company": "OpenFin",
-    "description": "PROD Main Application",
-    "icon": "http://localhost:5050/favicon.ico",
-    "name": "PROD Main Application"
-  },
-  "startup_app": {
-    "name": "prod-main-application",
-    "uuid": "prod-main-application",
-    "url": "http://localhost:5050/html/app.html",
-    "autoShow": true
-  }
+	"licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
+	"runtime": {
+		"version": "36.122.80.11",
+		"arguments": "--v=1 --security-realm=PROD-MAIN"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "PROD Main Application",
+		"icon": "http://localhost:5050/favicon.ico",
+		"name": "PROD Main Application"
+	},
+	"startup_app": {
+		"name": "prod-main-application",
+		"uuid": "prod-main-application",
+		"url": "http://localhost:5050/html/app.html",
+		"autoShow": true
+	}
 }

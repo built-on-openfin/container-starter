@@ -1,28 +1,28 @@
 {
-  "devtools_port": 9090,
-  "startup_app": {
-    "name": "OpenMultipleWindows",
-    "description": "OpenMultipleWindows",
-    "url": "http://www.google.com",
-    "showTaskbarIcon": true,
-    "taskbarIcon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
-    "icon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
-    "uuid": "OpenMultipleWindows",
-    "autoShow": true,
-    "contextMenu": true,
-    "defaultHeight": 500,
-    "defaultwidth": 500,
-    "frame": true,
-    "defaultCentered": true,
-    "resizable": true
-  },
-  "runtime": {
-    "arguments": "--enable-crash-reporting --no-sandbox",
-    "version": "36.122.80.10"
-  },
-  "shortcut": {
-    "company": "OpenFin",
-    "description": "Openfin openfin application window Sample",
-    "name": "Openfin application window"
-  }
+	"devtools_port": 9090,
+	"startup_app": {
+		"name": "OpenMultipleWindows",
+		"description": "OpenMultipleWindows",
+		"url": "http://www.google.com",
+		"showTaskbarIcon": true,
+		"taskbarIcon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
+		"icon": "http://cdn.openfin.co/hyperblotter/favicon.ico",
+		"uuid": "OpenMultipleWindows",
+		"autoShow": true,
+		"contextMenu": true,
+		"defaultHeight": 500,
+		"defaultwidth": 500,
+		"frame": true,
+		"defaultCentered": true,
+		"resizable": true
+	},
+	"runtime": {
+		"arguments": "--enable-crash-reporting --no-sandbox",
+		"version": "36.122.80.11"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Openfin openfin application window Sample",
+		"name": "Openfin application window"
+	}
 }
