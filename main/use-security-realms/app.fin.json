@@ -1,7 +1,7 @@
 {
 	"licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
 	"runtime": {
-		"version": "33.116.77.11",
+		"version": "36.122.80.11",
 		"arguments": "--v=1 --security-realm=PROD-MAIN"
 	},
 	"shortcut": {

@@ -1,28 +1,22 @@
 {
 	"runtime": {
-		"arguments": "--v=1 --inspect",
+		"arguments": "--v=1 --inspect --enable-mesh --security-realm=container-interop-use-cloud-platform1",
 		"version": "36.122.80.11"
 	},
 	"platform": {
 		"uuid": "platform-1",
-		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+		"icon": "https://built-on-openfin.github.io/container-starter/main/use-interop-cloud-interop/favicon.ico",
 		"autoShow": false,
-		"providerUrl": "https://built-on-openfin.github.io/container-starter/main/use-interop-setup-multi-platform-interop/html/provider.html",
-		"apiDiagnostics": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/main/use-interop-cloud-interop/html/provider.html",
 		"defaultWindowOptions": {
-			"url": "https://built-on-openfin.github.io/container-starter/main/use-interop-setup-multi-platform-interop/html/window.html",
+			"url": "https://built-on-openfin.github.io/container-starter/main/use-interop-cloud-interop/html/window.html",
 			"contextMenu": true,
-			"defaultWidth": 700,
+			"defaultWidth": 1100,
 			"defaultHeight": 700,
-			"defaultLeft": 0,
-			"defaultTop": 0,
-			"saveWindowState": false,
-			"showBackgroundImages": true,
-			"backgroundThrottling": true,
 			"minHeight": 700,
-			"minWidth": 700,
+			"minWidth": 900,
 			"height": 700,
-			"width": 700
+			"width": 1100
 		}
 	},
 	"snapshot": {
@@ -54,5 +48,18 @@
 				}
 			}
 		]
+	},
+	"customSettings": {
+		"cloudInteropProvider": {
+			"enabled": false,
+			"connectParams": {
+				"url": "<PLEASE ASK OPENFIN FOR A URL>",
+				"userId": "<PLEASE ASK OPENFIN FOR A USER ID>",
+				"password": "<PLEASE ASK OPENFIN FOR A PASSWORD>",
+				"platformId": "cloud-interop",
+				"sourceId": "platform1",
+				"sourceDisplayName": "Platform 1"
+			}
+		}
 	}
 }
