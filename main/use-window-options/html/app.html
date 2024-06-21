@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Window Options Example</title>
+		<title>Window Options Builder</title>
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../common/style/app.css" />
@@ -12,7 +12,7 @@
 	<body class="col fill gap20">
 		<header class="row spread middle">
 			<div class="col">
-				<h1>Window Options Example</h1>
+				<h1>Window Options Builder</h1>
 				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
 			</div>
 			<div class="row middle gap10">
@@ -40,6 +40,10 @@
 							<fieldset class="row middle">
 								<input type="checkbox" id="optionAlwaysOnTop" />
 								<label for="optionAlwaysOnTop">Always On Top</label>
+							</fieldset>
+							<fieldset class="row middle" id="usePlatformContainer">
+								<input type="checkbox" id="optionUsePlatform" />
+								<label for="optionUsePlatform">Use Platform To Create Window</label>
 							</fieldset>
 							<fieldset>
 								<label for="optionOpacity">Opacity</label>
@@ -72,14 +76,14 @@
 								<fieldset class="fill">
 									<label for="optionMinWidth">Min Width</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMinWidth" min="600" max="1000" step="10" />
+										<input type="range" id="optionMinWidth" min="100" max="1000" step="10" />
 										<span id="optionMinWidthValue"></span>
 									</div>
 								</fieldset>
 								<fieldset class="fill">
 									<label for="optionMaxWidth">Max Width</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMaxWidth" min="600" max="2000" step="10" />
+										<input type="range" id="optionMaxWidth" min="100" max="2000" step="10" />
 										<span id="optionMaxWidthValue"></span>
 									</div>
 								</fieldset>
@@ -88,14 +92,14 @@
 								<fieldset class="fill">
 									<label for="optionMinHeight">Min Height</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMinHeight" min="600" max="1000" step="10" />
+										<input type="range" id="optionMinHeight" min="100" max="1000" step="10" />
 										<span id="optionMinHeightValue"></span>
 									</div>
 								</fieldset>
 								<fieldset class="fill">
 									<label for="optionMaxHeight">Max Height</label>
 									<div class="row gap20 middle">
-										<input type="range" id="optionMaxHeight" min="600" max="2000" step="10" />
+										<input type="range" id="optionMaxHeight" min="100" max="2000" step="10" />
 										<span id="optionMaxHeightValue"></span>
 									</div>
 								</fieldset>
@@ -230,15 +234,16 @@
 			<div class="row spread">
 				<div class="row gap10">
 					<button id="btnPreview">Preview</button>
-					<button id="btnClosePreview">Close Preview</button>
+					<button id="btnClosePreview">Close Last Preview</button>
 					<button id="btnCopy">Copy to Clipboard</button>
 					<button id="btnReset">Reset to Defaults</button>
 				</div>
 				<div class="row gap10">
-					<a href="https://cdn.openfin.co/docs/javascript/stable/tutorial-Window.create.html" target="_blank">
-						Tutorial
-					</a>
-					<a href="https://cdn.openfin.co/docs/javascript/stable/Window.html#~options" target="_blank">
+					<a href="https://developers.openfin.co/of-docs/docs/openfin-windows" target="_blank">Tutorial</a>
+					<a
+						href="https://developer.openfin.co/docs/javascript/stable/interfaces/OpenFin.WindowCreationOptions.html"
+						target="_blank"
+					>
 						API Docs
 					</a>
 				</div>
