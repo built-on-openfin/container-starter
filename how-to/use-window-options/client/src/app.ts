@@ -2,12 +2,12 @@ import type OpenFin from "@openfin/core";
 
 const defaultCommonOptions: OpenFin.WindowCreationOptions = {
 	name: "test-child",
-	url: "./preview.html",
+	url: window.location.href.replace("app.html", "preview.html"),
 	icon: undefined,
 	autoShow: true,
 	alwaysOnTop: false,
 	opacity: 1,
-	contextMenu: true,
+	contextMenuOptions: { enabled: true },
 	showTaskbarIcon: true,
 	resizable: true,
 	minimizable: true,
@@ -70,11 +70,16 @@ const defaultCornerRounding: Partial<OpenFin.CornerRounding> = {
 	height: 0
 };
 
+const defaultLaunchOptions: {
+	usePlatform: boolean;
+} = { usePlatform: false };
+
 let selectedCommonOptions: OpenFin.WindowCreationOptions = { ...defaultCommonOptions };
 let selectedFramelessOptions: Partial<OpenFin.WindowCreationOptions> = { ...defaultFramelessOptions };
 let selectedResizeRegion: Partial<OpenFin.ResizeRegion> = { ...defaultResizeRegion };
 let selectedResizeRegionSides: Partial<ResizeSides> = { ...defaultResizeRegionSides };
 let selectedCornerRounding: Partial<OpenFin.CornerRounding> = { ...defaultCornerRounding };
+let selectedLaunchOptions = { ...defaultLaunchOptions };
 
 let previewWindow: OpenFin.Window | undefined;
 
@@ -90,19 +95,28 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Initialize the DOM elements.
  */
 async function initDom(): Promise<void> {
+	const app = fin.Application.getCurrentSync();
+	const appInfo = await app.getInfo();
+	if (!appInfo.initialOptions.isPlatformController) {
+		const usePlatformElemContainer = document.querySelector<HTMLElement>("#usePlatformContainer");
+		if (usePlatformElemContainer) {
+			usePlatformElemContainer.style.display = "none";
+		}
+	}
 	const btnPreview = document.querySelector("#btnPreview");
 	if (btnPreview) {
 		btnPreview.addEventListener("click", async () => {
-			if (previewWindow) {
-				await previewWindow.removeAllListeners();
-				await previewWindow.close(true);
-				previewWindow = undefined;
-			}
 			const previewOptions: OpenFin.WindowCreationOptions = {
 				...finalizeWindowOptions(),
 				saveWindowState: false
 			};
-			previewWindow = await fin.Window.create(previewOptions);
+			if (selectedLaunchOptions.usePlatform) {
+				const platform = fin.Platform.getCurrentSync();
+				previewWindow = await platform.createWindow(previewOptions);
+			} else {
+				previewWindow = await fin.Window.create(previewOptions);
+			}
+
 			await previewWindow.addListener("closed", () => {
 				previewWindow = undefined;
 			});
@@ -128,6 +142,7 @@ async function initDom(): Promise<void> {
 			selectedResizeRegion = { ...defaultResizeRegion };
 			selectedResizeRegionSides = { ...defaultResizeRegionSides };
 			selectedCornerRounding = { ...defaultCornerRounding };
+			selectedLaunchOptions = { ...defaultLaunchOptions };
 			populateForm();
 			updatePreview();
 		});
@@ -153,12 +168,13 @@ function populateForm(): void {
 	connectInput(selectedCommonOptions, "optionUrl", "url");
 	connectInput(selectedCommonOptions, "optionIcon", "icon");
 	connectCheckbox(selectedCommonOptions, "optionAlwaysOnTop", "alwaysOnTop");
+	connectCheckbox(selectedLaunchOptions, "optionUsePlatform", "usePlatform");
 	connectRange(selectedCommonOptions, "optionOpacity", "opacity");
 	connectCheckbox(selectedCommonOptions, "optionShowContextMenu", "contextMenu");
 	connectCheckbox(selectedCommonOptions, "optionShowTaskbarIcon", "showTaskbarIcon");
-	connectCheckbox(selectedCommonOptions, "optionResizable", "resizable", () => updateResizeState());
 	connectCheckbox(selectedCommonOptions, "optionMinimizable", "minimizable");
 	connectCheckbox(selectedCommonOptions, "optionMaximizable", "maximizable");
+	connectCheckbox(selectedCommonOptions, "optionResizable", "resizable");
 	connectRange(selectedCommonOptions, "optionMinWidth", "minWidth", () => updateResizeWidth());
 	connectRange(selectedCommonOptions, "optionMaxWidth", "maxWidth", () => updateResizeWidth());
 	connectRange(selectedCommonOptions, "optionMinHeight", "minHeight", () => updateResizeHeight());
@@ -186,31 +202,7 @@ function populateForm(): void {
 	connectRange(selectedCornerRounding, "optionCornerRoundingWidth", "width");
 	connectRange(selectedCornerRounding, "optionCornerRoundingHeight", "height");
 
-	updateResizeState();
 	updateFramelessState();
-}
-
-/**
- * Update the state of the resize components.
- */
-function updateResizeState(): void {
-	const resizable = selectedCommonOptions.resizable ?? defaultCommonOptions.resizable;
-	const widthElem = document.querySelector<HTMLElement>("#resizeWidth");
-	if (widthElem) {
-		widthElem.style.display = resizable ? "flex" : "none";
-	}
-
-	const heightElem = document.querySelector<HTMLElement>("#resizeHeight");
-	if (heightElem) {
-		heightElem.style.display = resizable ? "flex" : "none";
-	}
-
-	if (!resizable) {
-		delete selectedCommonOptions.minWidth;
-		delete selectedCommonOptions.maxWidth;
-		delete selectedCommonOptions.minHeight;
-		delete selectedCommonOptions.maxHeight;
-	}
 }
 
 /**
@@ -232,9 +224,9 @@ function updateResizeWidth(): void {
 		selectedCommonOptions.maxWidth !== -1 &&
 		selectedCommonOptions.maxWidth !== undefined &&
 		selectedCommonOptions.minWidth !== undefined &&
-		selectedCommonOptions.maxWidth <= selectedCommonOptions.minWidth
+		selectedCommonOptions.maxWidth < selectedCommonOptions.minWidth
 	) {
-		selectedCommonOptions.maxWidth = selectedCommonOptions.minWidth + 50;
+		selectedCommonOptions.maxWidth = selectedCommonOptions.minWidth;
 		const maxWidthElem = document.querySelector<HTMLInputElement>("#optionMaxWidth");
 		if (maxWidthElem) {
 			maxWidthElem.valueAsNumber = selectedCommonOptions.maxWidth;
@@ -254,9 +246,9 @@ function updateResizeHeight(): void {
 		selectedCommonOptions.maxHeight !== -1 &&
 		selectedCommonOptions.maxHeight !== undefined &&
 		selectedCommonOptions.minHeight !== undefined &&
-		selectedCommonOptions.maxHeight <= selectedCommonOptions.minHeight
+		selectedCommonOptions.maxHeight < selectedCommonOptions.minHeight
 	) {
-		selectedCommonOptions.maxHeight = selectedCommonOptions.minHeight + 50;
+		selectedCommonOptions.maxHeight = selectedCommonOptions.minHeight;
 		const maxHeightElem = document.querySelector<HTMLInputElement>("#optionMaxHeight");
 		if (maxHeightElem) {
 			maxHeightElem.valueAsNumber = selectedCommonOptions.maxHeight;
@@ -514,5 +506,9 @@ function updatePreview(): void {
  * @returns The preview code.
  */
 function createPreview(): string {
+	if (selectedLaunchOptions.usePlatform) {
+		return `const platform = fin.Platform.getCurrentSync();
+await platform.createWindow(${JSON.stringify(finalizeWindowOptions(), undefined, "  ")});`;
+	}
 	return `await fin.Window.create(${JSON.stringify(finalizeWindowOptions(), undefined, "  ")});`;
 }

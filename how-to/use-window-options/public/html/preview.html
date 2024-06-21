@@ -9,35 +9,106 @@
 	</head>
 
 	<body class="col fill gap20">
-		<header class="row spread middle">
+		<header class="row spread middle drag">
 			<div class="col">
 				<h1>Window Options Preview</h1>
-				<h1 class="tag">Demonstrate the customization options available for opening windows.</h1>
+				<h1 class="tag">Demonstrate customized window.</h1>
 			</div>
 			<div class="row middle gap10">
 				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
 			</div>
 		</header>
-		<main class="row fill gap20">
-			<p>This is the preview window.</p>
-		</main>
-		<footer>
-			<div class="row spread">
+		<main class="col gap10 scroll-horizontal">
+			<h4 id="windowName"></h4>
+			<fieldset class="row gap20 wrap" id="sizeContainer">
+				<select id="size">
+					<option selected="" value="+width">Increase Width</option>
+					<option value="-width">Decrease Width</option>
+					<option value="+height">Increase Height</option>
+					<option value="-height">Decrease Height</option>
+				</select>
+				<button id="btnApply">Apply</button>
+			</fieldset>
+			<fieldset class="row wrap">
 				<button id="btnCapture">Capture</button>
 				<button id="btnClosePreview">Close</button>
-			</div>
-		</footer>
+			</fieldset>
+		</main>
 		<script>
+			const windowName = document.querySelector('#windowName');
+			if (fin.me.isView) {
+				windowName.innerText = 'View Name: ' + fin.me.identity.name;
+				const sizeContainer = document.querySelector('#sizeContainer');
+				sizeContainer.style.display = 'none';
+			} else {
+				windowName.innerText = 'Window Name: ' + fin.me.identity.name;
+			}
+			const size = document.querySelector('#size');
+			const btnApply = document.querySelector('#btnApply');
+			btnApply.addEventListener('click', async () => {
+				const action = size.value;
+				let options = await fin.me.getOptions();
+				let updated = false;
+				let height = 0;
+				let width = 0;
+				if (action === '+width') {
+					if (options.maxWidth !== -1) {
+						options.maxWidth += 100;
+						updated = true;
+					}
+					if (options.minWidth !== -1) {
+						options.minWidth += 100;
+						updated = true;
+					}
+					width = 100;
+				} else if (action === '-width') {
+					if (options.maxWidth !== -1) {
+						options.maxWidth -= 100;
+						updated = true;
+					}
+					if (options.minWidth !== -1) {
+						options.minWidth -= 100;
+						updated = true;
+					}
+					width = -100;
+				} else if (action === '+height') {
+					if (options.maxHeight !== -1) {
+						options.maxHeight += 100;
+						updated = true;
+					}
+					if (options.minHeight !== -1) {
+						options.minHeight += 100;
+						updated = true;
+					}
+					height = 100;
+				} else if (action === '-height') {
+					if (options.maxHeight !== -1) {
+						options.maxHeight -= 100;
+						updated = true;
+					}
+					if (options.minHeight !== -1) {
+						options.minHeight -= 100;
+						updated = true;
+					}
+					height = -100;
+				}
+				if (updated) {
+					await fin.me.updateOptions(options);
+				}
+				await fin.me.resizeBy(width, height);
+			});
+
 			const btnClosePreview = document.querySelector('#btnClosePreview');
 			btnClosePreview.addEventListener('click', async () => (await fin.Window.getCurrent()).close());
-
+			if (fin.me.isView) {
+				btnClosePreview.style.display = 'none';
+			}
 			const btnCapture = document.querySelector('#btnCapture');
 			btnCapture.addEventListener('click', async () => {
 				console.log('SnapShot clicked');
-				const wnd = await fin.Window.getCurrent();
 
 				// Snapshot of a full visible window
-				let base64 = await wnd.getSnapshot();
+				let base64 = await fin.me.capturePage();
 
 				const link = document.createElement('a');
 				link.setAttribute('href', 'data:image/png;base64,' + base64);
@@ -47,9 +118,9 @@
 
 			(async () => {
 				const options = await fin.me.getOptions();
-				if (!options.frame) {
-					const header = document.querySelector('header > div');
-					header.classList.add('drag');
+				if (options.frame) {
+					const header = document.querySelector('header');
+					header.classList.remove('drag');
 				}
 			})();
 		</script>
