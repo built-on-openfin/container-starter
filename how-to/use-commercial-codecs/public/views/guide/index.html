@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>OpenFin Commercial Codec Support</title>
+		<link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+		<link rel="stylesheet" href="../../common/style/app.css" />
+		<script defer="defer" src="./of-info.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>OpenFin Commercial Codec Support</h1>
+				<h1 class="tag">How to enable commercial codecs within your OpenFin application.</h1>
+			</div>
+			<div class="row middle gap10">
+				<image src="../../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="fill col scroll-vertical gap10">
+			<div>This example includes 3 news websites that stream content using commercial codecs that are not enabled in OpenFin by default. This how-to shows you were you can put your settings in your manifest to enable commercial codecs. Without this you will not be able play any of the videos. Once you have provided this information then the video will play.</div>
+			<div>For this to work you need the latest version of runtime v38+ and RVM 15 or higher.</div>
+			<div>You can see the versions you are currently running with the information provided below. You can find out more information about our releases by visiting our <a href="https://developer.openfin.co/versions/?product=Runtime" target="_blank">versions page</a></div>
+			<fieldset>
+				<label for="rvmVersion">RVM Version</label>
+				<span id="rvmVersion"></span>
+			</fieldset>
+			<fieldset>
+				<label for="rvmPath">RVM Path</label>
+				<span id="rvmPath"></span>
+			</fieldset>
+			<fieldset>
+				<label for="appLogDirectory">App Log Directory</label>
+				<span id="appLogDirectory"></span>
+			</fieldset>
+			<hr />
+			<fieldset>
+				<label for="runtimeVersion">Runtime Version</label>
+				<span id="runtimeVersion"></span>
+			</fieldset>
+			<fieldset>
+				<label for="chromeVersion">Chrome Version</label>
+				<span id="chromeVersion"></span>
+			</fieldset>
+			<fieldset>
+				<label for="electronVersion">Electron Version</label>
+				<span id="electronVersion"></span>
+			</fieldset>
+			<hr />
+			<fieldset>
+				<label for="platformIdentity">Platform Identity</label>
+				<span id="platformIdentity" class="nowrap"></span>
+			</fieldset>
+		</main>
+	</body>
+</html>

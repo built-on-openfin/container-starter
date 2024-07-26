@@ -1,0 +1,14 @@
+{
+	"name": "use-commercial-codecs",
+	"version": "38.0.0",
+	"description": "A demonstration of a where you need to put configuration in order to enable commercial codecs.",
+	"scripts": {
+		"kill": "node ./scripts/kill.mjs",
+		"client": "node ./scripts/launch.mjs",
+		"start": "npx --yes http-server ./public -p 5050 -c-1"
+	},
+	"author": "john.mandia@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
+	"devDependencies": {
+	}
+}
