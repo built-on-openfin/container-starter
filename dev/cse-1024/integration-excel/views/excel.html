@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Integrate with Excel</title>
+		<script src="../js/excel.bundle.js"></script>
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<style>
+			main {
+				flex-direction: row;
+			}
+
+			@media only screen and (max-width: 600px) {
+				main {
+					flex-direction: column;
+					overflow-y: auto;
+				}
+
+				h1 {
+					font-size: 16px;
+				}
+			}
+		</style>
+	</head>
+
+	<body class="col fill gap20 scroll-vertical">
+		<header class="row spread middle gap10">
+			<div class="col">
+				<h1>Integrate with Excel</h1>
+				<h1 class="tag">Demonstrate integration with Excel.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+
+		<main class="gap20 wrap">
+			<div class="fill col gap10">
+				<div class="row spread">
+					<h3>Excel</h3>
+					<button id="open-excel" class="small">Open Excel</button>
+				</div>
+				<p>Open Excel and select Workbook and Worksheet below to start view changes to it's cells.</p>
+				<p>
+					This example application listens for cell changes and when the value is TSLA, MSFT or AAPL it will
+					create an fdc3.instrument context object with the value as the ticker and broadcast it.
+				</p>
+				<div class="error" id="error"></div>
+				<div class="col gap20">
+					<fieldset>
+						<label>Workbooks</label>
+						<div class="row gap10 wrap">
+							<select id="workbooks" disabled>
+								<option disabled selected>----Select workbook----</option>
+							</select>
+							<button id="workbook-refresh" disabled>Refresh</button>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label>Worksheets</label>
+						<div class="row gap10 wrap">
+							<select id="worksheets" disabled>
+								<option disabled selected>----Select worksheet----</option>
+							</select>
+							<button id="worksheet-refresh" disabled>Refresh</button>
+						</div>
+					</fieldset>
+				</div>
+				<hr />
+				<fieldset>
+					<label>Cell</label>
+					<input type="text" id="cell-location" placeholder="e.g. C7" disabled />
+				</fieldset>
+				<fieldset>
+					<label>Value / Formula</label>
+					<div class="row gap10 wrap">
+						<input type="text" id="cell-value" disabled />
+					</div>
+				</fieldset>
+				<fieldset>
+					<button id="set-value">Set Value</button>
+				</fieldset>
+				<hr />
+			</div>
+			<div class="fill col">
+				<div class="fill col gap10 overflow-hidden" id="results-container">
+					<h3>Results</h3>
+					<fieldset>
+						<label>Cell Changes</label>
+					</fieldset>
+					<pre id="cell-changes-container" class="fill scroll"></pre>
+					<fieldset>
+						<label for="broadcast-instrument">Broadcast Instrument</label>
+						<input type="text" readonly id="broadcast-instrument" value="" />
+					</fieldset>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

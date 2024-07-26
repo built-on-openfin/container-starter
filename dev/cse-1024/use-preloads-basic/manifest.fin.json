@@ -1,0 +1,54 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "36.122.80.11"
+	},
+	"platform": {
+		"uuid": "how-to-use-preloads-hello-world",
+		"autoShow": true,
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/cse-1024/use-preloads-basic/favicon.ico",
+		"preloadScripts": [
+			{
+				"url": "https://built-on-openfin.github.io/container-starter/dev/cse-1024/use-preloads-basic/js/preload-platform.bundle.js"
+			}
+		],
+		"defaultWindowOptions": {
+			"preloadScripts": [
+				{
+					"url": "https://built-on-openfin.github.io/container-starter/dev/cse-1024/use-preloads-basic/js/preload-window.bundle.js"
+				}
+			]
+		},
+		"defaultViewOptions": {
+			"preloadScripts": [
+				{
+					"url": "https://built-on-openfin.github.io/container-starter/dev/cse-1024/use-preloads-basic/js/preload-view.bundle.js"
+				}
+			]
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/cse-1024/use-preloads-basic/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
