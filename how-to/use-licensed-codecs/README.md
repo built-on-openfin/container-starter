@@ -53,7 +53,7 @@ You will then need to provide Here (OpenFin) with the following pieces of inform
 
 This information will then go through a process at Here (OpenFin) and you will be provided with the relevant trustedAppConfig.
 
-> ⚠️ **Warning:** Your manifest must be served using HTTPS; HTTP will not work.
+> ⚠️ **Warning:** Your manifest must be served using HTTPS; HTTP will not work. If you are looking to have a setup running on your machine before running this in a staging environment then tools like [ngrok](https://ngrok.com/) may help or you can find out more about generating your own certificates from [https://letsencrypt.org/](https://letsencrypt.org/docs/certificates-for-localhost/).
 
 ### A note about this example
 
