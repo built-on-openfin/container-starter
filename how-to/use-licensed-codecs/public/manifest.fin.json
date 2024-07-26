@@ -6,13 +6,14 @@
 		"autoShow": false
 	},
 	"trustedAppConfigs": {
-        "value": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
-        "signature": {
-            "win": "This value will be provided by Here (OpenFin) once the relevant information has been provided."
-        }
-    },
+		"value": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
+		"signature": {
+			"win": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
+			"mac": "This value will be provided by Here (OpenFin) once the relevant information has been provided."
+		}
+	},
 	"platform": {
-		"uuid": "how-to-use-commercial-codecs",
+		"uuid": "how-to-use-licensed-codecs",
 		"icon": "http://localhost:5050/favicon.ico"
 	},
 	"snapshot": {

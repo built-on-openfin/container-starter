@@ -1,4 +1,4 @@
-# How to use commercial codecs
+# How to use licensed codecs
 
 ## How it Works
 
@@ -10,7 +10,7 @@ Follow the instructions below to get up and running.
 
 ### Set up the project
 
-1. CD into the how-to/use-commercial-codecs directory
+1. CD into the how-to/use-licensed-codecs directory
 
 2. Start the test server.
 
@@ -34,7 +34,8 @@ A single platform window with multiple views. The initial window provides inform
 "trustedAppConfigs": {
         "value": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
         "signature": {
-            "win": "This value will be provided by Here (OpenFin) once the relevant information has been provided."
+            "win": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
+            "mac": "This value will be provided by Here (OpenFin) once the relevant information has been provided."
         }
     },
 ```
@@ -43,11 +44,11 @@ The RVM and runtime use this information to determine what codecs should be enab
 
 ### How do I get this information?
 
-You will need to contact your Here (OpenFin) account manager and say you want to enable commercial codecs for your project.
+You will need to contact your Here (OpenFin) account manager and say you want to enable licensed codecs for your project.
 
 You will then need to provide Here (OpenFin) with the following pieces of information:
 
-- The url where your manifest will be served from (the trusted app config will only work when the manifest is served from this domain) e.g. "<https://www.exampledomain.com/>*"
+- The url where your manifest will be served from (the trusted app config will only work when the manifest is served from this domain) e.g. "<https://www.exampledomain.com/>\*"
 - A list of the codecs you are licensed for from e.g. <https://www.via-la.com/licensing-2/avc-h-264/> e.g. "h264", "aac"
 
 This information will then go through a process at Here (OpenFin) and you will be provided with the relevant trustedAppConfig.
@@ -56,4 +57,4 @@ This information will then go through a process at Here (OpenFin) and you will b
 
 ### A note about this example
 
-This is an example of how to use OpenFin manifests to enable commercial codecs. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use OpenFin manifests to enable licensed codecs. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

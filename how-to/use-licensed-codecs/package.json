@@ -1,7 +1,7 @@
 {
-	"name": "use-commercial-codecs",
+	"name": "use-licensed-codecs",
 	"version": "38.0.0",
-	"description": "A demonstration of a where you need to put configuration in order to enable commercial codecs.",
+	"description": "A demonstration of a where you need to put configuration in order to enable licensed codecs.",
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",
 		"client": "node ./scripts/launch.mjs",
@@ -9,6 +9,5 @@
 	},
 	"author": "john.mandia@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {
-	}
+	"devDependencies": {}
 }
