@@ -6,7 +6,7 @@ The manifest file [public/manifest.fin.json](public/manifest.fin.json) has a sna
 
 ## Get Started
 
-Follow the instructions below to get up and running.
+Follow the instructions below to get up and running and read our supporting documentation: <https://developers.openfin.co/of-docs/docs/codecs>
 
 ### Set up the project
 
