@@ -2,7 +2,7 @@
 	"licenseKey": "openfin-demo-license-key",
 	"runtime": {
 		"arguments": "",
-		"version": "canary",
+		"version": "38.126.82.64",
 		"autoShow": false
 	},
 	"trustedAppConfigs": {
