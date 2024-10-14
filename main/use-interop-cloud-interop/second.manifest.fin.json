@@ -1,7 +1,7 @@
 {
 	"runtime": {
 		"arguments": "--v=1 --inspect --enable-mesh --security-realm=container-interop-use-cloud-platform2",
-		"version": "36.122.80.11"
+		"version": "38.126.83.79"
 	},
 	"platform": {
 		"uuid": "platform-2",
