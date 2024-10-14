@@ -21,7 +21,9 @@
 	"workspaces": [
 		"how-to/**"
 	],
-	"packageExclude": [],
+	"packageExclude": [
+		"how-to/use-licensed-codecs"
+	],
 	"packageCustomFolder": "",
 	"contributors": [
 		"adam.saland@openfin.co",

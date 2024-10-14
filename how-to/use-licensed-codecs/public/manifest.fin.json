@@ -1,0 +1,73 @@
+{
+	"licenseKey": "openfin-demo-license-key",
+	"runtime": {
+		"arguments": "",
+		"version": "38.126.82.64",
+		"autoShow": false
+	},
+	"trustedAppConfigs": {
+		"value": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
+		"signature": {
+			"win": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
+			"mac": "This value will be provided by Here (OpenFin) once the relevant information has been provided."
+		}
+	},
+	"platform": {
+		"uuid": "how-to-use-licensed-codecs",
+		"icon": "http://localhost:5050/favicon.ico"
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"defaultWidth": 800,
+				"defaultHeight": 600,
+				"defaultCentered": true,
+				"saveWindowState": true,
+				"backgroundThrottling": true,
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"width": 100,
+							"isClosable": false,
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "http://localhost:5050/views/guide/index.html"
+									},
+									"title": "view"
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://news.sky.com/watch-live"
+									},
+									"title": "view"
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://edition.cnn.com/videos"
+									},
+									"title": "view"
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://www.bbc.co.uk/news/uk"
+									},
+									"title": "view"
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
