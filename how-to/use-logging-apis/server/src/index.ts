@@ -16,8 +16,10 @@ app.use("/common", express.static(commonPath));
 
 /** LOGGING SERVER CONFIGURATION */
 const APP_LOG_DESTINATION = path.join(mainPath, "uploads/", "applogs");
+const OPFS_LOG_DESTINATION = path.join(mainPath, "uploads/", "opfslogs");
 const RUNTIME_DEBUG_LOG_DESTINATION = path.join(mainPath, "uploads/", "runtimelogs");
 const RUNTIME_DEBUG_LOG_ENDPOINT = "/uploads";
+const OPFS_LOG_ENDPOINT = "/opfsuploads";
 const APP_LOG_ENDPOINT = "/api/v1/logs";
 
 /**
@@ -28,6 +30,9 @@ const multerStorage = multer.diskStorage({
 		if (file.fieldname === "logFile") {
 			console.log({ message: `Saving application log to ${APP_LOG_DESTINATION}` });
 			cb(null, APP_LOG_DESTINATION);
+		} else if (file.fieldname === "opfsFile") {
+			console.log({ message: `Saving opfs log to ${OPFS_LOG_DESTINATION}` });
+			cb(null, OPFS_LOG_DESTINATION);
 		} else {
 			console.log({ message: `Saving runtime debug log to ${RUNTIME_DEBUG_LOG_DESTINATION}` });
 			cb(null, RUNTIME_DEBUG_LOG_DESTINATION);
@@ -36,6 +41,8 @@ const multerStorage = multer.diskStorage({
 	filename: (_req, file, cb) => {
 		if (file.fieldname === "file") {
 			cb(null, `debug-${file.fieldname}-${Date.now()}.log`);
+		} else if (file.fieldname === "opfsFile") {
+			cb(null, `opfs-${Date.now()}.log`);
 		} else if (file.fieldname === "logFile") {
 			cb(null, `app-${file.fieldname}-${Date.now()}.zip`);
 		}
@@ -58,6 +65,18 @@ app.route(RUNTIME_DEBUG_LOG_ENDPOINT).post(upload.single("file"), async (req, re
 });
 
 /**
+ * Server route for opfs log files.
+ */
+
+app.route(OPFS_LOG_ENDPOINT).post(upload.single("opfsFile"), async (req, res) => {
+	console.log({
+		message: `Received opfs log post request from application: ${req.body.uuid}`,
+		payload: req.file
+	});
+	res.json(req.file);
+});
+
+/**
  * Server route REQUIRED for processing the HTTP POST request sent by the RVM
  */
 
@@ -66,6 +85,11 @@ app.route(APP_LOG_ENDPOINT).post(upload.single("logFile"), (req, res) => {
 	console.log({
 		message: "Received app log post request from RVM",
 		payload: { file: req.file, body: { ...req.body } }
+	});
+	res.json({
+		response: {
+			id: req.file?.filename
+		}
 	});
 });
 
