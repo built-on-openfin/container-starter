@@ -1,6 +1,6 @@
 {
 	"name": "automation-testing-use-launch-external-process-js",
-	"version": "36.80.11",
+	"version": "38.83.79",
 	"description": "OpenFin Container Starter Automation Tests",
 	"scripts": {
 		"build": "echo Nothing to build",
@@ -15,7 +15,7 @@
 		"@openfin/automation-helpers": "^1.2.0",
 		"chai": "5.1.0",
 		"mochawesome": "7.1.3",
-		"@openfin/core": "36.80.11",
-		"@openfin/node-adapter": "36.80.11"
+		"@openfin/core": "38.83.79",
+		"@openfin/node-adapter": "38.83.79"
 	}
 }

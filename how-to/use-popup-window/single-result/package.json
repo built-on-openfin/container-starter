@@ -1,6 +1,6 @@
 {
 	"name": "use-popup-window-single-result",
-	"version": "36.80.11",
+	"version": "38.83.79",
 	"description": "A demonstration of a single use popup window.",
 	"main": "index.js",
 	"scripts": {
@@ -14,9 +14,9 @@
 	"author": "connor.mccafferty@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "36.80.11",
+		"@openfin/core": "38.83.79",
 		"@types/node": "^20.12.11",
-		"@openfin/node-adapter": "36.80.11",
+		"@openfin/node-adapter": "38.83.79",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
