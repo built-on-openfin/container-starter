@@ -1,0 +1,624 @@
+{
+	"windows": [
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		},
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "One Window Snapshot",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		}
+	]
+}
