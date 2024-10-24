@@ -1,37 +1,37 @@
 {
-    "windows": [
-        {
-            "layout": {
-                "content": [
-                    {
-                        "type": "column",
-                        "id": "no-drop-target",
-                        "content": [
-                            {
-                                "type": "row",
-                                "content": [
-                                    {
-                                        "type": "stack",
-                                        "content": [
-                                            {
-                                                "type": "component",
-                                                "title": "view1",
-                                                "componentName": "view",
-                                                "componentState": {
-                                                    "url": "about:blank",
-                                                    "name": "view1",
-                                                    "backgroundThrottling": true,
-                                                    "componentName": "view"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
+	"windows": [
+		{
+			"layout": {
+				"content": [
+					{
+						"type": "column",
+						"id": "no-drop-target",
+						"content": [
+							{
+								"type": "row",
+								"content": [
+									{
+										"type": "stack",
+										"content": [
+											{
+												"type": "component",
+												"title": "view1",
+												"componentName": "view",
+												"componentState": {
+													"url": "about:blank",
+													"name": "view1",
+													"backgroundThrottling": true,
+													"componentName": "view"
+												}
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		}
+	]
 }
