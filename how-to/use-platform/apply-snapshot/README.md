@@ -1,7 +1,7 @@
 # Use applySnapshot
 
 This repository demonstrates how to us the Platform API to launch a snapshot consisting of 1, 10, and 20 windows.
-To see the corresponding code view the  `client/src/provider.ts` file.
+To see the corresponding code view the `client/src/provider.ts` file.
 
 Please see the [API Documentation](https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.Platform.html#applySnapshot.applySnapshot-1) for technical detail of the API method.
 
