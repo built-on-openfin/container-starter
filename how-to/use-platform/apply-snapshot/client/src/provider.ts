@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	const launchOneBtn: HTMLButtonElement = document.querySelector("#launch-one") as HTMLButtonElement;
 	const launchTenBtn: HTMLButtonElement = document.querySelector("#launch-ten") as HTMLButtonElement;
 	const launchTwentyBtn: HTMLButtonElement = document.querySelector("#launch-twenty") as HTMLButtonElement;
-	const baseUrl = window.location.origin;
+	const baseUrl = location.href.includes("localhost") ? "http://localhost:8080" : "https://openfin-platform-api.herokuapp.com";
 	if (launchOneBtn || launchTenBtn || launchTwentyBtn) {
 		launchOneBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/snapshots/snapshot-one.json`);
