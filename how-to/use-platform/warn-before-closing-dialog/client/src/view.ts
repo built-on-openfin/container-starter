@@ -8,12 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		document.title = viewTitle;
 	}
 	if (viewHeader && viewTitle) {
-		viewHeader.innerHTML = viewTitle;
+		viewHeader.textContent = viewTitle;
 	}
 
 	if (testInput) {
 		testInput.addEventListener("input", (event) => {
-			if ((event.target as HTMLTextAreaElement).value !== "") {
+			if ((event.target as HTMLInputElement).value !== "") {
 				window.addEventListener("beforeunload", beforeUnloadListener);
 			} else {
 				window.removeEventListener("beforeunload", beforeUnloadListener);
