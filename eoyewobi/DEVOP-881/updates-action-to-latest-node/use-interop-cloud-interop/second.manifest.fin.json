@@ -1,0 +1,68 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect --enable-mesh --security-realm=container-interop-use-cloud-platform2",
+		"version": "38.126.83.79"
+	},
+	"platform": {
+		"uuid": "platform-2",
+		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/eoyewobi/DEVOP-881/updates-action-to-latest-node/use-interop-cloud-interop/html/provider.html",
+		"defaultWindowOptions": {
+			"url": "https://built-on-openfin.github.io/container-starter/eoyewobi/DEVOP-881/updates-action-to-latest-node/use-interop-cloud-interop/html/window.html",
+			"contextMenu": true,
+			"defaultWidth": 1100,
+			"defaultHeight": 700,
+			"minHeight": 700,
+			"minWidth": 700,
+			"height": 700,
+			"width": 1100
+		},
+		"defaultViewOptions": {
+			"fdc3InteropApi": "2.0"
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"name": "view",
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/fdc3/context/fdc3-broadcast-view.html"
+									}
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/interop-api/context/interop-broadcast-view.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	},
+	"customSettings": {
+		"cloudInteropProvider": {
+			"enabled": false,
+			"connectParams": {
+				"url": "<PLEASE ASK OPENFIN FOR A URL>",
+				"userId": "<PLEASE ASK OPENFIN FOR A USER ID>",
+				"password": "<PLEASE ASK OPENFIN FOR A PASSWORD>",
+				"platformId": "cloud-interop",
+				"sourceId": "platform2",
+				"sourceDisplayName": "Platform 2"
+			}
+		}
+	}
+}
