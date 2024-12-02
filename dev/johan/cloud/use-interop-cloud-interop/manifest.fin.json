@@ -1,7 +1,7 @@
 {
 	"runtime": {
 		"arguments": "--v=1 --inspect --enable-mesh --security-realm=container-interop-use-cloud-platform1",
-		"version": "38.126.83.79"
+		"version": "41.132.100.60"
 	},
 	"platform": {
 		"uuid": "platform-1",
@@ -51,7 +51,7 @@
 	},
 	"customSettings": {
 		"cloudInteropProvider": {
-			"enabled": false,
+			"enabled": true,
 			"connectParams": {
 				"url": "<PLEASE ASK OPENFIN FOR A URL>",
 				"userId": "<PLEASE ASK OPENFIN FOR A USER ID>",
