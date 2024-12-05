@@ -22,8 +22,8 @@
 			"webAPIs": ["notifications", "audio", "video", "hid", "usb"],
 			"devices": [
 				{
-					"vendorId": 1133,
-					"productId": 2140
+					"vendorId": 3034,
+					"productId": 21783
 				}
 			]
 		},
@@ -46,8 +46,8 @@
 				"webAPIs": ["notifications", "audio", "video", "hid", "usb"],
 				"devices": [
 					{
-						"vendorId": 1133,
-						"productId": 2140
+						"vendorId": 3034,
+						"productId": 21783
 					}
 				]
 			}

@@ -2,9 +2,7 @@
 
 ## How it Works
 
-The app.ts listens for button clicks and creates with a dynamic openfin window or from a manifest.
-
-The manifest is located in the config folder along with the manifest for this sample application
+Using a combination of the manifest file and WebUSB APIs, we can search for and detect connected USB devices inside of a container application.
 
 ## Get Started
 
@@ -38,7 +36,7 @@ npm run client
 
 ### What you will see
 
-1. The default platform provider window (as the manifest sets autoshow to true to help with development)
+1. An Platform Window with a button that leads you to documentation around WebUSB API usage, along with another button that should detect a plugged in device and display it in a list below.
 
 ## A note about this example
 

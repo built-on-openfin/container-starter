@@ -8,7 +8,7 @@
 		"client": "node ./scripts/launch.mjs",
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
+		"start": "npx --yes http-server ./public -p 5050 -c-1 -S -C cert.pem -K key.pem",
 		"setup": "cd ../../ && npm install && cd how-to/create-window && npm run build"
 	},
 	"author": "joe.ransegnola@here.io",
