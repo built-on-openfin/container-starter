@@ -23,7 +23,7 @@
 			"devices": [
 				{
 					"vendorId": 1133,
-					"productId": 2695
+					"productId": 2140
 				}
 			]
 		},
@@ -47,11 +47,7 @@
 				"devices": [
 					{
 						"vendorId": 1133,
-						"productId": 2695
-					},
-					{
-						"vendorId": 1452,
-						"productId": 5010
+						"productId": 2140
 					}
 				]
 			}
