@@ -27,7 +27,7 @@ async function initDom(): Promise<void> {
  * Checks to see what devices to connect.
  */
 async function requestDevice(): Promise<void> {
-	await navigator.usb.requestDevice({ filters: [{ vendorId: 1133 }] });
+	await navigator.usb.requestDevice({ filters: [{ vendorId: 1133, productId: 2140 }] });
 	const list = await navigator.usb.getDevices();
 	console.log(list);
 }
