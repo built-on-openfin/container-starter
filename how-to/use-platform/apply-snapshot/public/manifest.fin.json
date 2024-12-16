@@ -1,25 +1,25 @@
 {
-	"runtime": {
-		"arguments": "--v=1 --inspect",
-		"version": "38.126.83.79"
-	},
-	"platform": {
-		"uuid": "apply-snapshot",
-		"icon": "http://localhost:5050/favicon.ico",
-		"autoShow": true,
-		"providerUrl": "http://localhost:5050/html/provider.html",
-		"apiDiagnostics": false,
-		"defaultWindowOptions": {
-			"contextMenu": true,
-			"defaultWidth": 900,
-			"defaultHeight": 900,
-			"defaultLeft": 0,
-			"defaultTop": 0,
-			"saveWindowState": false,
-			"backgroundThrottling": true,
-			"minHeight": 445,
-			"minWidth": 354,
-			"defaultCentered": true
-		}
-	}
+  "runtime": {
+    "arguments": "--v=1 --inspect",
+    "version": "40.130.101.1"
+  },
+  "platform": {
+    "uuid": "apply-snapshot",
+    "icon": "http://localhost:5050/favicon.ico",
+    "autoShow": true,
+    "providerUrl": "http://localhost:5050/html/provider.html",
+    "apiDiagnostics": false,
+    "defaultWindowOptions": {
+      "contextMenu": true,
+      "defaultWidth": 900,
+      "defaultHeight": 900,
+      "defaultLeft": 0,
+      "defaultTop": 0,
+      "saveWindowState": false,
+      "backgroundThrottling": true,
+      "minHeight": 445,
+      "minWidth": 354,
+      "defaultCentered": true
+    }
+  }
 }

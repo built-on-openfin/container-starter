@@ -1,14 +1,17 @@
 {
-	"name": "use-licensed-codecs",
-	"version": "38.0.0",
-	"description": "A demonstration of a where you need to put configuration in order to enable licensed codecs.",
-	"scripts": {
-		"build": "echo This project does not require a build step.",
-		"kill": "node ./scripts/kill.mjs",
-		"client": "node ./scripts/launch.mjs",
-		"start": "npx --yes http-server ./public -p 5050 -c-1"
-	},
-	"author": "john.mandia@openfin.co",
-	"license": "SEE LICENSE IN LICENSE.MD",
-	"devDependencies": {}
+  "name": "use-licensed-codecs",
+  "version": "38.0.0",
+  "description": "A demonstration of a where you need to put configuration in order to enable licensed codecs.",
+  "scripts": {
+    "build": "echo This project does not require a build step.",
+    "kill": "node ./scripts/kill.mjs",
+    "client": "node ./scripts/launch.mjs",
+    "start": "npx --yes http-server ./public -p 5050 -c-1"
+  },
+  "author": "john.mandia@openfin.co",
+  "license": "SEE LICENSE IN LICENSE.MD",
+  "devDependencies": {
+    "@openfin/core": "40.101.1",
+    "@openfin/node-adapter": "40.101.1"
+  }
 }
