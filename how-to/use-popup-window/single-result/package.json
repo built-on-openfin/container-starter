@@ -1,6 +1,6 @@
 {
   "name": "use-popup-window-single-result",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of a single use popup window.",
   "main": "index.js",
   "scripts": {

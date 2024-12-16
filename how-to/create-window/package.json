@@ -1,6 +1,6 @@
 {
   "name": "application-window-creation",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of how to open openfin application windows",
   "main": "index.js",
   "scripts": {

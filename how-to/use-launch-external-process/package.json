@@ -1,6 +1,6 @@
 {
   "name": "launch-external-process",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "An example of how to use launch external process",
   "main": "index.js",
   "scripts": {

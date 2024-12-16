@@ -1,6 +1,6 @@
 {
   "name": "container-starter-use-interop--cloud-interop",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "author": "adam.saland@openfin.co",
   "license": "SEE LICENSE IN LICENSE.MD",
   "dependencies": {
-    "@openfin/cloud-interop": "0.38.79",
+    "@openfin/cloud-interop": "0.40.33",
     "@openfin/core": "40.101.1",
     "@openfin/node-adapter": "40.101.1"
   },

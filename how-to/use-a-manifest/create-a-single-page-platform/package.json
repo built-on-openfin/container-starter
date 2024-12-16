@@ -1,6 +1,6 @@
 {
   "name": "create-a-single-page-platform",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of a one page platform that can be used as a starting point.",
   "scripts": {
     "kill": "node ./scripts/kill.mjs",

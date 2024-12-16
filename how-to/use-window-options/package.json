@@ -1,6 +1,6 @@
 {
   "name": "use-window-options",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of the different options available when opening windows",
   "main": "index.js",
   "scripts": {

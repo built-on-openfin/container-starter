@@ -1,6 +1,6 @@
 {
   "name": "use-preloads-hello-world",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of how to configure preload scripts",
   "main": "index.js",
   "scripts": {

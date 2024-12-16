@@ -1,6 +1,6 @@
 {
   "name": "use-channel-api-issue-commands-to-a-platform",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of one app can issue commands to a platform application.",
   "main": "index.js",
   "scripts": {

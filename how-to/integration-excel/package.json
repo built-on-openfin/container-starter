@@ -1,6 +1,6 @@
 {
   "name": "integration-excel",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of how to connect with Excel from OpenFin",
   "main": "index.js",
   "scripts": {

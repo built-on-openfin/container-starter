@@ -1,6 +1,6 @@
 {
   "name": "warn-before-closing-dialog",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "",
   "main": "index.js",
   "scripts": {

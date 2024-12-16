@@ -1,6 +1,6 @@
 {
   "name": "use-preloads-restart-on-refresh",
-  "version": "38.83.79",
+  "version": "40.101.1",
   "description": "A demonstration of how to configure preload scripts to restart on refresh of a view",
   "main": "index.js",
   "scripts": {
