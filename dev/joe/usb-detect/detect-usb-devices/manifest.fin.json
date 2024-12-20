@@ -1,6 +1,6 @@
 {
 	"runtime": {
-		"arguments": "--v=1 --inspect",
+		"arguments": "--v=1 --inspect --ignore-certificate-errors",
 		"version": "38.126.83.79"
 	},
 	"platform": {
