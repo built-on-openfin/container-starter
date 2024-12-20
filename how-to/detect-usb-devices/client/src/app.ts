@@ -19,7 +19,7 @@ async function initDom(): Promise<void> {
 
 	const btnCheckForDevices = document.querySelector("#btn-check-for-usb-devices");
 	if (btnCheckForDevices) {
-		btnCheckForDevices.addEventListener("click", checkForUsbDevices);
+		btnCheckForDevices.addEventListener("click", async (e: Event) => requestDevice());
 	}
 }
 
@@ -29,7 +29,17 @@ async function initDom(): Promise<void> {
 async function requestDevice(): Promise<void> {
 	await navigator.usb.requestDevice({ filters: [{ vendorId: 3034, productId: 21783 }] });
 	const list = await navigator.usb.getDevices();
-	console.log(`listing devices... ${list}`);
+
+	const deviceList = document.querySelector("#devices-list");
+	if (deviceList) {
+		for (const item of list) {
+			const itemElement = document.createElement("li");
+			const product = item.productName ?? "";
+			const manufacturer = item.manufacturerName ?? "";
+			itemElement.textContent = `${manufacturer} : ${product}`;
+			deviceList.append(itemElement);
+		}
+	}
 }
 
 
@@ -49,38 +59,3 @@ async function openDynamicApplicationWindow(): Promise<OpenFin.Window> {
 	return fin.Window.create(winOption);
 }
 
-/**
- * Use the usb.getDevices method to get a list of connected devices.
- */
-async function checkForUsbDevices(): Promise<void> {
-	await requestDevice();
-	// Get all connected USB devices the website has been granted access to.
-	// if ("usb" in navigator) {
-	// 	const usb = navigator.usb;
-	// 	await usb.getDevices()
-	// 	.then((devices) => {
-	// 		if (devices.length > 0) {
-	// 			console.log(`There are ${devices.length} detected USB devices.`);
-	// 			for (const device of devices) {
-	// 				console.log(device.productName); // "Arduino Micro"
-	// 				console.log(device.manufacturerName); // "Arduino LLC"
-	// 			}
-	// 		} else {
-	// 			console.log("There are no detected USB devices.");
-	// 		}
-	// 		return true;
-	// 	})
-	// 	.catch((error) => {
-	// 		console.error(error);
-	// 	});
-	// } else {
-	// 	console.log("There is no USB detection on the Navigator window object for this browser.");
-	// }
-}
-
-/**
- *
- */
-// function addDeviceToList() {
-	
-// }
