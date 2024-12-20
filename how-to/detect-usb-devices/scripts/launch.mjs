@@ -156,7 +156,8 @@ async function launchFromFinsLink(manifestUrl) {
  */
 async function connectAndGetFinAPI(manifestUrl, exitMethod) {
 	try {
-		console.log(`[connectAndGetFinAPI] Using this manifestUrl: ${manifestUrl}`);
+		console.log(`Launching manifest...`);
+		console.log();
 
 		const port = await launch({ manifestUrl });
 
@@ -190,8 +191,15 @@ console.log();
 console.log(`Platform: ${process.platform}`);
 
 const launchArgs = process.argv.slice(2);
-const manifest = launchArgs.length > 0 ? launchArgs[0] : 'https://localhost:5050/manifest.fin.json';
+const manifest = launchArgs.length > 0 ? launchArgs[0] : 'http://localhost:5050/manifest.fin.json';
 console.log(`Manifest: ${manifest}`);
 
+try {
+	setDefaultResultOrder('ipv4first');
+} catch {
+	// Early versions of node do not support this method, but those earlier versions
+	// also do not have the same issue with interface ordering, so it doesn't matter
+	// that it hasn't been called.
+}
 
 run(manifest).catch((err) => console.error(err));

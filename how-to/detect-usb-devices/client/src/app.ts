@@ -42,7 +42,6 @@ async function requestDevice(): Promise<void> {
 	}
 }
 
-
 /**
  * Open a window using dynamic options.
  * @returns The window.
@@ -58,4 +57,3 @@ async function openDynamicApplicationWindow(): Promise<OpenFin.Window> {
 	};
 	return fin.Window.create(winOption);
 }
-
