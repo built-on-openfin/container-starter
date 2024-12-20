@@ -41,3 +41,9 @@ npm run client
 ## A note about this example
 
 This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+
+There are 3 things you should know when trying to detect and use USB devices (Printers, etc..) alongside your Container:
+
+1. Make sure to add the necessary permissions to the manifest file, specifically, the WebAPI and Devices sections.
+2. Use best practices with the API by reading more [here](https://developer.mozilla.org/en-US/docs/Web/API/WebUSB_API).
+3. If you have any additional questions, please email [Here.io Support](mailto:support@here.io).
