@@ -1,0 +1,19 @@
+{
+    "logUpload": {
+      "endpoint": "http://localhost:3000/api/upload",
+      "manifests": [],
+      "logs": ["debug", "app", "rvm"],
+      "ui": {
+        "title": "Log Uploader for Here.io",
+        "icon": "https://www.here.io/favicon.ico",
+        "header": "Here.io",
+        "description": "This is the log uploader tool. It will upload app, rvm and debug logs to the indicated endpoint",
+        "email": "support@nowhere.com",
+        "website": "https://www.here.io",
+        "websiteDescription": "The Here.io web site"
+      }
+    },
+    "runtime": {
+      "version": "40.130.101.1"
+    }
+  }
