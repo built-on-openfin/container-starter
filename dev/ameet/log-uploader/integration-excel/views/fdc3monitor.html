@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>FDC3 Monitor</title>
+		<script src="../js/fdc3monitor.bundle.js"></script>
+		<link rel="stylesheet" href="../common/style/app.css" />
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Monitor FDC3 Messages</h1>
+				<h1 class="tag">Demonstrate monitoring messages from Excel.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+
+		<main class="col gap10">
+			<p>When an fdc3.instrument context is received the ticker value will be shown below.</p>
+
+			<fieldset>
+				<label for="received-instrument">Received Instrument</label>
+				<input type="text" readonly id="received-instrument" value="No instrument detected" />
+			</fieldset>
+		</main>
+	</body>
+</html>

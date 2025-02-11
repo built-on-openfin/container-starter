@@ -1,0 +1,64 @@
+{
+	"runtime": {
+		"arguments": "--enable-mesh --security-realm=use-application-logging",
+		"version": "38.126.83.79"
+	},
+	"licenseKey": "openfin-demo-license-key",
+	"platform": {
+		"name": "use-application-logging",
+		"uuid": "use-application-logging",
+		"description": "An example of using application logging",
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/ameet/log-uploader/use-logging-apis/html/provider.html",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/ameet/log-uploader/use-logging-apis/favicon.ico",
+		"autoShow": true,
+		"defaultWidth": 1200,
+		"defaultHeight": 800,
+		"defaultCentered": true,
+		"minWidth": 800,
+		"minHeight": 400,
+		"appLogsTimezone": "utc",
+		"enableAppLogging": true,
+		"logManagement": {
+			"enabled": true,
+			"url": "https://built-on-openfin.github.io/container-starter/dev/ameet/log-uploader/use-logging-apis"
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"defaultHeight": 900,
+				"defaultWidth": 1200,
+				"defaultCentered": true,
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/container-starter/dev/ameet/log-uploader/use-logging-apis/html/app.html"
+									}
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/container-starter/dev/ameet/log-uploader/use-logging-apis/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	},
+	"supportInformation": {
+		"company": "OpenFin",
+		"product": "Container Logging APIs Example",
+		"email": "support@openfin.co",
+		"forwardErrorReports": false
+	}
+}
