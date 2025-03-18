@@ -1,0 +1,22 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "38.126.83.79"
+	},
+	"platform": {
+		"uuid": "integration-excel-tray",
+		"applicationIcon": "https://built-on-openfin.github.io/container-starter/dev/joe/use-jumplist/integration-excel/favicon.ico",
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/joe/use-jumplist/integration-excel/provider/provider-tray.html",
+		"autoShow": false,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true,
+				"downloadAsset": true,
+				"openUrlWithBrowser": {
+					"enabled": true,
+					"protocols": ["mailto"]
+				}
+			}
+		}
+	}
+}
