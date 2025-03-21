@@ -1,0 +1,83 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "38.126.83.79"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Use Layout APIs basic",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/favicon.ico",
+		"name": "Use Layout APIs basic"
+	},
+	"platform": {
+		"uuid": "use-layout-apis-basic",
+		"name": "use-layout-apis-basic",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/html/platform-provider.html",
+		"waitForPageLoad": false,
+		"defaultWindowOptions": {
+			"waitForPageLoad": false,
+			"url": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/html/default-layout-window.html",
+			"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/favicon.ico",
+			"contextMenu": true,
+			"defaultWidth": 600,
+			"defaultHeight": 600,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"backgroundThrottling": true,
+			"minHeight": 445,
+			"minWidth": 308
+		},
+		"commands": [
+			{
+				"command": "stack.nextTab",
+				"keys": "Ctrl+Tab"
+			}
+		]
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"name": "manual-test-platform-default",
+				"layoutSnapshot": {
+					"layouts": {
+						"tab1": {
+							"content": [
+								{
+									"type": "stack",
+									"content": [
+										{
+											"type": "component",
+											"componentName": "view",
+											"componentState": {
+												"url": "https://built-on-openfin.github.io/dev-extensions/extensions/v20.1.0/common/views/platform/new-tab/new-tab.html"
+											}
+										}
+									]
+								}
+							]
+						},
+						"tab2": {
+							"content": [
+								{
+									"type": "stack",
+									"content": [
+										{
+											"type": "component",
+											"componentName": "view",
+											"componentState": {
+												"url": "https://built-on-openfin.github.io/dev-extensions/extensions/v20.1.0/common/views/platform/new-tab/new-tab.html"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				}
+			}
+		]
+	}
+}
