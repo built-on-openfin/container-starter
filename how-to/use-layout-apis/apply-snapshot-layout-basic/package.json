@@ -1,7 +1,7 @@
 {
-	"name": "use-layout-apis",
+	"name": "apply-snapshot-layout-basic",
 	"version": "38.83.79",
-	"description": "How to use content creation rules.",
+	"description": "How to use apply define and apply a manifest's snapshot",
 	"main": "index.js",
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",
@@ -9,7 +9,7 @@
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
 		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../../ && npm install && cd how-to/use-layout-apis/basic && npm run build"
+		"setup": "cd ../../../ && npm install && cd how-to/use-layout-apis/apply-snapshot-layout-basic && npm run build"
 	},
 	"author": "@adam-saland",
 	"license": "SEE LICENSE IN LICENSE.MD",

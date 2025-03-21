@@ -40,7 +40,7 @@
 	"snapshot": {
 		"windows": [
 			{
-				"name": "manual-test-platform-default",
+				"name": "snapshot-basic",
 				"layoutSnapshot": {
 					"layouts": {
 						"tab1": {

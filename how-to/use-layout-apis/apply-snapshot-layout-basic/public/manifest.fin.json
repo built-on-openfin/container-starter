@@ -1,0 +1,124 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "38.126.83.79"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Use Layout APIs basic",
+		"icon": "http://localhost:5050/favicon.ico",
+		"name": "Use Layout APIs basic"
+	},
+	"platform": {
+		"uuid": "apply-layout-snapshot-basic",
+		"name": "apply-layout-snapshot-basic",
+		"icon": "http://localhost:5050/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "http://localhost:5050/html/provider.html",
+		"waitForPageLoad": false,
+		"defaultWindowOptions": {
+			"frame": false,
+			"waitForPageLoad": false,
+			"url": "http://localhost:5050/html/default-window.html",
+			"icon": "http://localhost:5050/favicon.ico",
+			"contextMenu": true,
+			"defaultWidth": 600,
+			"defaultHeight": 600,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"backgroundThrottling": true,
+			"minHeight": 445,
+			"minWidth": 308
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "column",
+									"width": 50,
+									"content": [
+										{
+											"type": "stack",
+											"width": 50,
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/dev-extensions/extensions/v20.1.0/common/views/platform/new-tab/new-tab.html",
+														"name": "internal-generated-view-e7fe7df3-6f64-4235-899f-4e91af2cb32d"
+													},
+													"title": "Example.com"
+												}
+											]
+										},
+										{
+											"type": "stack",
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/dev-extensions/extensions/v20.1.0/common/views/platform/new-tab/new-tab.html",
+														"name": "internal-generated-view-54a8ef85-a885-4234-be46-9d52e88fcb74"
+													},
+													"title": "Example.com"
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "column",
+									"width": 50,
+									"content": [
+										{
+											"type": "stack",
+											"width": 50,
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/dev-extensions/extensions/v20.1.0/common/views/platform/new-tab/new-tab.html",
+														"name": "internal-generated-view-64a8efd7-3d92-42ae-8fae-dffcc0fdac96"
+													},
+													"title": "Example.com"
+												}
+											]
+										},
+										{
+											"type": "stack",
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://built-on-openfin.github.io/dev-extensions/extensions/v20.1.0/common/views/platform/new-tab/new-tab.html",
+														"name": "internal-generated-view-2d9a3624-fd0e-4e0a-b681-a79a9616b871"
+													},
+													"title": "Example.com"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
