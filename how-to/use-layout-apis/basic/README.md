@@ -1,27 +1,8 @@
-# How to use Content Creation Rules
+# How to use Layout APIs Basic
 
 ## How it Works
 
-This example demonstrates how to use [content creation rules](https://developers.openfin.co/of-docs/docs/content-creation-rules) to specify the behavior for new windows created using the web native `window.open` call.
-
-Below is the content creation rule set defined in the [platform manifest](./public/manifest.fin.json) `"platform.defaultViewOptions"` object.
-
-```json
-"contentCreation": {
-    "rules": [
-        {
-            "behavior": "view",
-            "match": ["*://cdn.openfin.co/*"]
-        },
-        {
-            "behavior": "view",
-            "match": ["*://*.google.com/*"]
-        }
-    ]
-}
-```
-
-In the `client/src/default-window.ts` the `child-view-created` and `view-child-view-created` events we create the view from the `window.open` call invoked in `client/src/app.ts`.
+This example demonstrates the setup / fundamental layout api use cases..
 
 ## Get Started
 
@@ -52,8 +33,6 @@ Follow the instructions below to get up and running.
    ```shell
    npm run client
    ```
-
-![Content Creation Rules](./public/assets/content-creation-rules.gif)
 
 ### A note about this example
 
