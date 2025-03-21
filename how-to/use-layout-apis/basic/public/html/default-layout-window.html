@@ -1,0 +1,83 @@
+// platform-window.html:
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Multi Layout Platform Window</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../styles/core-web-styles.css">
+    <script>
+        const getDefaultLayout = async () => {
+            const layoutResponse = await fetch("http://localhost:5050/layouts/basic.layout.fin.json");
+            const layoutJson = (await layoutResponse.json());
+            return layoutJson;
+        }
+        const setupLayout = async () => {
+            const defaultLayout = await getDefaultLayout();
+            const snapshotState = [];
+
+            const layoutsDiv = document.getElementById('layouts');
+
+            const layoutManagerOverride = (BaseLayoutManager) =>
+                class CustomLayoutManager extends BaseLayoutManager {
+                    async applyLayoutSnapshot(snapshot) {
+                        // The snapshot object here matches `layoutSnapshot` from the manifest:
+                        // {
+                        //   "layouts": {
+                        //     "tab1": { ... }
+                        //   }
+                        // }
+                        // So we will be using the snapshot.layouts object from here on out.
+                        // Note any custom keys supplied as siblings of
+                        // "layouts" would be present in this snapshot object as well.
+
+                        const len = Object.keys(snapshot.layouts).length;
+                        console.log(`Creating ${len} layouts`);
+
+                        // Enumerate snapshot.layouts keys, create div containers and
+                        // call fin.Platform.Layout.create() for each layout.
+                        Object.entries(snapshot.layouts).forEach(async ([layoutName, layout], index) => {
+                            // Step 1: create a new div.
+                            const container = document.createElement('div');
+                            // Store the layoutName in the `id` field for easier lookup.
+                            container.id = layoutName;
+                            container.style.width = '100%';
+                            container.style.height = '100%';
+                            container.style.padding = '2px';
+                            // Show the first layout, hide all the others.
+                            container.style.display = index === 0 ? 'display' : 'none';
+
+                            // Here we would do other things like show the
+                            // first layout, hide the others.
+                            // Maybe if we are displaying a tabbed interface,
+                            // we would add a tab div container.
+
+                            // Add it to our layouts top-level div.
+                            layoutsDiv.appendChild(container);
+
+                            // Step 2: call Layout.create() tying together this layout to the container.
+                            await fin.Platform.Layout.create({ container, layoutName, layout });
+                            console.log(`Created layout ${layoutName}`);
+
+                            // Step 3: save the entire state for later use.
+                            snapshotState.push({ layoutName, layout, container });
+                        });
+                    }
+                };
+            await fin.Platform.Layout.init({layoutManagerOverride});
+        };
+
+        // Add the DOMContentLoaded event listener to call our setupLayout function
+        window.addEventListener('DOMContentLoaded', setupLayout);
+    </script>
+</head>
+
+<body>
+    <h2>Multi Layout Example</h2>
+    <div id="layouts"></div>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+{
+	"snapshot": {
+		"windows": [{
+			"name": "use-layouts-basic",
+			"layouts": {
+				"default": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "column",
+									"width": 50,
+									"content": [
+										{
+											"type": "stack",
+											"width": 50,
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://example.com",
+														"name": "internal-generated-view-e7fe7df3-6f64-4235-899f-4e91af2cb32d"
+													},
+													"title": "Example.com"
+												}
+											]
+										},
+										{
+											"type": "stack",
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://example.com",
+														"name": "internal-generated-view-54a8ef85-a885-4234-be46-9d52e88fcb74"
+													},
+													"title": "Example.com"
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "column",
+									"width": 50,
+									"content": [
+										{
+											"type": "stack",
+											"width": 50,
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://example.com",
+														"name": "internal-generated-view-64a8efd7-3d92-42ae-8fae-dffcc0fdac96"
+													},
+													"title": "Example.com"
+												}
+											]
+										},
+										{
+											"type": "stack",
+											"height": 50,
+											"content": [
+												{
+													"type": "component",
+													"componentName": "view",
+													"componentState": {
+														"url": "https://example.com",
+														"name": "internal-generated-view-2d9a3624-fd0e-4e0a-b681-a79a9616b871"
+													},
+													"title": "Example.com"
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		}]		
+	}
+}
