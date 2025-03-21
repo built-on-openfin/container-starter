@@ -82,7 +82,7 @@ async function initDom() {
  * @returns The default layout for this app.
  */
 async function getDefaultLayout() {
-    const layoutResponse = await fetch("https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/layouts/default.layout.fin.json");
+    const layoutResponse = await fetch("https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-multi-layouts-basic/layouts/default.layout.fin.json");
     const layoutJson = (await layoutResponse.json());
     return layoutJson;
 }

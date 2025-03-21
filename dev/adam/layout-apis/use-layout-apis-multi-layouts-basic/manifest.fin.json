@@ -6,20 +6,20 @@
 	"shortcut": {
 		"company": "OpenFin",
 		"description": "Use Layout APIs basic",
-		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/favicon.ico",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-multi-layouts-basic/favicon.ico",
 		"name": "Use Layout APIs basic"
 	},
 	"platform": {
 		"uuid": "use-layout-apis-basic",
 		"name": "use-layout-apis-basic",
-		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/favicon.ico",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-multi-layouts-basic/favicon.ico",
 		"autoShow": false,
-		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/html/platform-provider.html",
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-multi-layouts-basic/html/platform-provider.html",
 		"waitForPageLoad": false,
 		"defaultWindowOptions": {
 			"waitForPageLoad": false,
-			"url": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/html/default-layout-window.html",
-			"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-basic/favicon.ico",
+			"url": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-multi-layouts-basic/html/default-layout-window.html",
+			"icon": "https://built-on-openfin.github.io/container-starter/dev/adam/layout-apis/use-layout-apis-multi-layouts-basic/favicon.ico",
 			"contextMenu": true,
 			"defaultWidth": 600,
 			"defaultHeight": 600,
@@ -40,7 +40,7 @@
 	"snapshot": {
 		"windows": [
 			{
-				"name": "manual-test-platform-default",
+				"name": "snapshot-basic",
 				"layoutSnapshot": {
 					"layouts": {
 						"tab1": {
