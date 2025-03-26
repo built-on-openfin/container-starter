@@ -9,7 +9,7 @@
 		"strict": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "node10",
+		"moduleResolution": "node10"
 	},
 	"include": ["./*.ts"]
 }
