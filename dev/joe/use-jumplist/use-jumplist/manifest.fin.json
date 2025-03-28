@@ -9,7 +9,7 @@
 		"icon": "https://built-on-openfin.github.io/container-starter/dev/joe/use-jumplist/use-jumplist/favicon.ico",
 		"autoShow": false,
 		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/joe/use-jumplist/use-jumplist/html/provider.html",
-		"enableJumplist": true
+		"enableJumpList": true
 	},
 	"snapshot": {
 		"windows": [
