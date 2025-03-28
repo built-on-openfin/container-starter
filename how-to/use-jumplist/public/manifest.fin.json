@@ -9,7 +9,7 @@
 		"icon": "http://localhost:5050/favicon.ico",
 		"autoShow": false,
 		"providerUrl": "http://localhost:5050/html/provider.html",
-		"enableJumplist": true
+		"enableJumpList": true
 	},
 	"snapshot": {
 		"windows": [
