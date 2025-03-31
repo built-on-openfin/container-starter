@@ -1,8 +1,6 @@
-import express from "express";
-import { Request, Response } from "express";
+import express, { type Request, type Response } from "express";
+import multer, { type StorageEngine } from "multer";
 import path from "path";
-import multer from "multer";
-import { StorageEngine } from "multer";
 
 const app = express();
 
