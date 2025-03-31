@@ -1,6 +1,6 @@
 {
 	"name": "use-content-creation-rules",
-	"version": "38.83.79",
+	"version": "40.104.2",
 	"description": "How to use content creation rules.",
 	"main": "index.js",
 	"scripts": {
@@ -14,11 +14,11 @@
 	"author": "@adam-saland",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/node-adapter": "38.83.79",
+		"@openfin/node-adapter": "40.104.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4",
-		"@openfin/core": "38.83.79"
+		"@openfin/core": "40.104.2"
 	}
 }
