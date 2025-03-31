@@ -8,8 +8,7 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "node10"
+		"forceConsistentCasingInFileNames": true
 	},
 	"include": ["./*.ts"]
 }
