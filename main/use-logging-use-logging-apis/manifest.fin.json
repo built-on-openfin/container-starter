@@ -1,15 +1,15 @@
 {
 	"runtime": {
 		"arguments": "--enable-mesh --security-realm=use-application-logging",
-		"version": "38.126.83.79"
+		"version": "40.130.104.2"
 	},
 	"licenseKey": "openfin-demo-license-key",
 	"platform": {
 		"name": "use-application-logging",
 		"uuid": "use-application-logging",
 		"description": "An example of using application logging",
-		"providerUrl": "https://built-on-openfin.github.io/container-starter/main/use-logging-apis/html/provider.html",
-		"icon": "https://built-on-openfin.github.io/container-starter/main/use-logging-apis/favicon.ico",
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-logging-apis/html/provider.html",
+		"icon": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-logging-apis/favicon.ico",
 		"autoShow": true,
 		"defaultWidth": 1200,
 		"defaultHeight": 800,
@@ -20,7 +20,7 @@
 		"enableAppLogging": true,
 		"logManagement": {
 			"enabled": true,
-			"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-apis"
+			"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-logging-apis"
 		}
 	},
 	"snapshot": {
@@ -38,14 +38,14 @@
 									"type": "component",
 									"componentName": "view",
 									"componentState": {
-										"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-apis/html/app.html"
+										"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-logging-apis/html/app.html"
 									}
 								},
 								{
 									"type": "component",
 									"componentName": "view",
 									"componentState": {
-										"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-apis/html/app.html"
+										"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-logging-apis/html/app.html"
 									}
 								}
 							]
