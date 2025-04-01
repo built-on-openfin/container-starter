@@ -51,18 +51,17 @@
 	},
 	"customSettings": {
 		"cloudInteropProvider": {
-			"enabled": false,
+			"enabled": true,
 			"connectParams": {
-				"url": "",
 				"authenticationType": "basic",
+				"url": "https://salesdemo.is.here.io/interop",
 				"basicAuthenticationParameters": {
-					"username": "<DO NOT COMMIT CREDENTIALS>",
-					"password": "<DO NOT COMMIT CREDENTIALS>"
+					"username": "adam.saland@here.io",
+					"password": "az81GodbOL1b5w"
 				},
-				"platformId": "",
-				"sourceId": "",
-				"sourceDisplayName": "",
-				"realm": "default"
+				"platformId": "shared-cloud-id",
+				"sourceId": "platform1",
+				"sourceDisplayName": "Platform 1"
 			}
 		}
 	}
