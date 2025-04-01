@@ -1,4 +1,5 @@
 import type { CloudInteropOverrideParams } from "@openfin/cloud-interop";
+import type { ConnectParameters } from "@openfin/cloud-interop-core-api";
 
 /**
  * Settings for the cloud interop provider.
@@ -12,7 +13,7 @@ export interface CloudInteropProviderSettings {
 	/**
 	 * The connect parameters for the cloud interop provider.
 	 */
-	connectParams: CloudInteropOverrideParams;
+	connectParams: CloudInteropOverrideParams & ConnectParameters;
 }
 
 /**

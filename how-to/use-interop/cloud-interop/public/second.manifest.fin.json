@@ -56,12 +56,16 @@
 		"cloudInteropProvider": {
 			"enabled": false,
 			"connectParams": {
-				"url": "<PLEASE ASK OPENFIN FOR A URL>",
-				"userId": "<PLEASE ASK OPENFIN FOR A USER ID>",
-				"password": "<PLEASE ASK OPENFIN FOR A PASSWORD>",
-				"platformId": "cloud-interop",
-				"sourceId": "platform2",
-				"sourceDisplayName": "Platform 2"
+				"url": "",
+				"authenticationType": "basic",
+				"basicAuthenticationParameters": {
+					"username": "<DO NOT COMMIT CREDENTIALS>",
+					"password": "<DO NOT COMMIT CREDENTIALS>"
+				},
+				"platformId": "",
+				"sourceId": "",
+				"sourceDisplayName": "",
+				"realm": "default"
 			}
 		}
 	}
