@@ -55,21 +55,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 	if (launchOneBtn || launchTenBtn || launchTwentyBtn) {
 		launchOneBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/common/snapshots/snapshot-one.json`);
-			const snapshotJson = await snapshot.text();
-			const snapshotString = snapshotJson.replace(/about:blank/g, url.value.trim());
-			await platform.applySnapshot(JSON.parse(snapshotString));
+			if(url.value.trim() === "") {
+				const payload = await snapshot.json();
+				await platform.applySnapshot(payload);
+			} else {
+				const snapshotJson = await snapshot.text();
+				const snapshotString = snapshotJson.replace(/about:blank/g, url.value.trim());
+				await platform.applySnapshot(JSON.parse(snapshotString));
+			}
 		});
 		launchTenBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/common/snapshots/snapshot-ten.json`);
-			const snapshotJson = await snapshot.text();
-			const snapshotString = snapshotJson.replace(/about:blank/g, url.value.trim());
-			await platform.applySnapshot(JSON.parse(snapshotString));
+			if(url.value.trim() === "") {
+				const payload = await snapshot.json();
+				await platform.applySnapshot(payload);
+			} else {
+				const snapshotJson = await snapshot.text();
+				const snapshotString = snapshotJson.replace(/about:blank/g, url.value.trim());
+				await platform.applySnapshot(JSON.parse(snapshotString));
+			}
 		});
 		launchTwentyBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/common/snapshots/snapshot-twenty.json`);
-			const snapshotJson = await snapshot.text();
-			const snapshotString = snapshotJson.replace(/about:blank/g, url.value.trim());
-			await platform.applySnapshot(JSON.parse(snapshotString));
+			if(url.value.trim() === "") {
+				const payload = await snapshot.json();
+				await platform.applySnapshot(payload);
+			} else {
+				const snapshotJson = await snapshot.text();
+				const snapshotString = snapshotJson.replace(/about:blank/g, url.value.trim());
+				await platform.applySnapshot(JSON.parse(snapshotString));
+			}
 		});
 	}
 });
