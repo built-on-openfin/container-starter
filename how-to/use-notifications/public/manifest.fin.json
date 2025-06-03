@@ -1,0 +1,14 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "40.130.104.2"
+	},
+	"platform": {
+		"enableBeforeUnload": true,
+		"uuid": "container-use-notifications",
+		"icon": "http://localhost:5050/favicon.ico",
+		"autoShow": true,
+		"providerUrl": "http://localhost:5050/html/provider.html"
+	},
+	"snapshot": {}
+}
