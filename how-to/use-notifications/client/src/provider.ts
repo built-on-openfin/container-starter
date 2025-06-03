@@ -902,7 +902,7 @@ async function showCustomNotification(): Promise<void> {
 												padding: "3px",
 												whiteSpace: "nowrap",
 												fontWeight: "bold",
-												backgroundColor: "yellow"
+												backgroundColor: "red"
 											}
 										},
 										{
