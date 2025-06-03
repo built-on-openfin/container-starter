@@ -17,11 +17,10 @@ let connectedVersion: string | null;
 let statusIntervalId: number | undefined;
 let lastConnectionStatus: boolean | undefined;
 
-
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		await initDom();
-        await initializeNotifications();
+		await initializeNotifications();
 	} catch (error) {
 		console.error(error);
 	}
@@ -87,9 +86,9 @@ async function initDom(): Promise<void> {
 
 	codeContainer.style.display = "none";
 
-    if (loggingContainer) {
-        loggingContainer.style.display = "flex";
-    }
+	if (loggingContainer) {
+		loggingContainer.style.display = "flex";
+	}
 
 	const btnViewLogging = document.querySelector("#btnViewLogging");
 	if (btnViewLogging) {
@@ -221,10 +220,9 @@ async function initDom(): Promise<void> {
  */
 async function initializeNotifications(): Promise<void> {
 	await Notifications.register();
-    await initializeListeners();
+	await initializeListeners();
 	console.log("Number of notifications:", await Notifications.getNotificationsCount());
 }
-
 
 /**
  * Initialize the listeners for the events from the notification center.
@@ -305,7 +303,7 @@ async function initializeListeners(): Promise<void> {
  */
 function randomUUID(): string {
 	if ("randomUUID" in window.crypto) {
-        // If the browser supports window.crypto.randomUUID, use it
+		// If the browser supports window.crypto.randomUUID, use it
 		// eslint-disable-next-line no-restricted-syntax
 		return window.crypto.randomUUID();
 	}
@@ -373,7 +371,6 @@ function showNotificationCount(count: number): void {
 		btnNotificationsCenterShow.textContent = `Show [${count}]`;
 	}
 }
-
 
 /**
  * Display a very basic simple notification.
