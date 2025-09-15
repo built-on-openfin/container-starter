@@ -10,7 +10,10 @@
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
 		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/use-launch-external-process && npm run build"
+		"setup": "cd ../../ && npm install && cd how-to/use-launch-external-process && npm run build",
+		"validate": "npm run prettier && npm run eslint && npm run markdownlint",
+		"prettier": "prettier --config .prettierrc --write .",
+		"markdownlint": "markdownlint **/*.md --ignore **/node_modules/**"
 	},
 	"author": "ameet jayawant",
 	"license": "SEE LICENSE IN LICENSE.MD",
@@ -22,6 +25,9 @@
 		"webpack-cli": "^5.1.4"
 	},
 	"dependencies": {
-		"@openfin/core": "^42.100.107"
+		"@openfin/core": "^42.100.107",
+		"eslint": "^9.35.0",
+		"markdown-cli": "^1.6.0",
+		"prettier": "^3.6.2"
 	}
 }
