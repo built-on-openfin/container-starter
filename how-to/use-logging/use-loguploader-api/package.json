@@ -10,10 +10,7 @@
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
 		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/use-launch-external-process && npm run build",
-		"validate": "npm run prettier && npm run eslint && npm run markdownlint",
-		"prettier": "prettier --config .prettierrc --write .",
-		"markdownlint": "markdownlint **/*.md --ignore **/node_modules/**"
+		"setup": "cd ../../ && npm install && cd how-to/use-loguploader-api && npm run build"
 	},
 	"author": "ameet jayawant",
 	"license": "SEE LICENSE IN LICENSE.MD",
