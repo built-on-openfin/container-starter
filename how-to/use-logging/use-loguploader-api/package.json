@@ -9,8 +9,7 @@
 		"client": "node ./scripts/launch.mjs",
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/use-loguploader-api && npm run build"
+		"start": "npx --yes http-server ./public -p 5050 -c-1"
 	},
 	"author": "ameet jayawant",
 	"license": "SEE LICENSE IN LICENSE.MD",
