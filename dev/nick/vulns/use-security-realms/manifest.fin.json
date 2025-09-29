@@ -1,0 +1,45 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect --security-realm=PROD-MAIN",
+		"version": "40.130.104.2"
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "PROD Main Platform",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/nick/vulns/use-security-realms/favicon.ico",
+		"name": "PROD Main Platform"
+	},
+	"platform": {
+		"uuid": "prod-main-platform",
+		"autoShow": false,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/nick/vulns/use-security-realms/html/view-app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
