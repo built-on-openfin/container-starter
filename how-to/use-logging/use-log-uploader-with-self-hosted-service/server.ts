@@ -5,6 +5,9 @@ import path from "path";
 
 const app = express();
 
+// Disable X-Powered-By header for security
+app.disable("x-powered-by");
+
 app.use(express.json());
 
 // Serve static files from the "public" directory
