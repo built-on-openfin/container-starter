@@ -41,7 +41,7 @@ module.exports = [
 			path: path.resolve(__dirname, '..', 'public', 'js')
 		}
 	},
-		{
+	{
 		entry: './client/src/device-connector.ts',
 		devtool: 'inline-source-map',
 		module: {
