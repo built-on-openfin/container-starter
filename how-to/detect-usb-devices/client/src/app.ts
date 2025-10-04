@@ -17,29 +17,85 @@ async function initDom(): Promise<void> {
 		btnOpenDynamicWindow.addEventListener("click", async (e: Event) => openDynamicApplicationWindow());
 	}
 
-	const btnCheckForDevices = document.querySelector("#btn-check-for-usb-devices");
+	const btnCheckForDevices = document.querySelector("#btn-identify-device");
 	if (btnCheckForDevices) {
 		btnCheckForDevices.addEventListener("click", async (e: Event) => requestDevice());
 	}
+
+	const btnConnectDevice = document.querySelector("#btn-connect-device");
+	if (btnConnectDevice) {
+		btnConnectDevice.addEventListener("click", async (e: Event) => connectDevice());
+	}
+}
+
+async function connectDevice(): Promise<OpenFin.Window | undefined> {
+	const vendorIdInput = document.getElementById("vendorId") as HTMLInputElement;
+	const productIdInput = document.getElementById("productId") as HTMLInputElement;
+
+	const vendorId = parseInt(vendorIdInput.value, 10);
+	const productId = parseInt(productIdInput.value, 10);
+
+	if (isNaN(vendorId) || isNaN(productId)) {
+		alert("Please enter valid numeric values for Vendor ID and Product ID.");
+		return;
+	}
+
+	try {
+			// Here you would typically open a connection to the device using WebUSB or WebHID APIs.
+			console.log(`Connecting to device with Vendor ID: ${vendorId}, Product ID: ${productId}`);
+			const deviceType = (document.getElementById("deviceType") as HTMLSelectElement).value;
+			const deviceConnectionUrl = location.href.replace("app.html", "device-connector.html") + `?deviceType=${deviceType}`;
+			const name = "connect-device-" + vendorId + "-"+ productId
+			const exists = await bringToFrontIfExists(name);
+			if(!exists) {
+			// Open a new window to indicate connection (replace with actual connection logic)
+			const winOption: OpenFin.WindowCreationOptions = {
+			name,
+			defaultWidth: 800,
+			defaultHeight: 800,
+			url: deviceConnectionUrl,
+			frame: true,
+			autoShow: true,
+			permissions: {
+							webAPIs: ["hid", "usb"],
+							devices: [{
+								"vendorId": vendorId,
+								"productId": productId
+							}]
+						}
+			};
+			return fin.Window.create(winOption);
+		}
+	} catch (error) {
+		console.error("Error connecting to device:", error);
+	}
+}
+
+async function bringToFrontIfExists(name: string): Promise<boolean> {
+	try {
+		const existingWindow = await fin.Window.wrap({ uuid: fin.me.uuid, name });
+		const info = await existingWindow.getInfo();
+		console.log(`Bring window with url ${info.url} to front`);
+		if (existingWindow) {
+			await existingWindow.restore();
+			await existingWindow.bringToFront();
+			await existingWindow.focus();
+			return true;
+		}
+	} catch (error) {
+		// Window does not exist
+	}
+	return false;
 }
 
 /**
  * Checks to see what devices to connect.
  */
 async function requestDevice(): Promise<void> {
-	await navigator.usb.requestDevice({ filters: [{ vendorId: 3034, productId: 21783 }] });
-	const list = await navigator.usb.getDevices();
-
-	const deviceList = document.querySelector("#devices-list");
-	if (deviceList) {
-		for (const item of list) {
-			const itemElement = document.createElement("li");
-			const product = item.productName ?? "";
-			const manufacturer = item.manufacturerName ?? "";
-			itemElement.textContent = `${manufacturer} : ${product}`;
-			deviceList.append(itemElement);
-		}
-	}
+	const runtimeInfo = await fin.System.getRuntimeInfo();
+	const manifestUrl = runtimeInfo.manifestUrl ?? "";
+	const deviceIdentifierUrl = location.href.replace("app.html", "device-identifier.html") + "?fins=" + manifestUrl;
+	await fin.System.openUrlWithBrowser(deviceIdentifierUrl)
 }
 
 /**
