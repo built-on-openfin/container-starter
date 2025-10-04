@@ -26,6 +26,7 @@ async function initDom(): Promise<void> {
 	if (btnConnectDevice) {
 		btnConnectDevice.addEventListener("click", async (e: Event) => connectDevice());
 	}
+	await listenForDeviceInfo();
 }
 
 async function connectDevice(): Promise<OpenFin.Window | undefined> {
@@ -51,7 +52,8 @@ async function connectDevice(): Promise<OpenFin.Window | undefined> {
 			// Open a new window to indicate connection (replace with actual connection logic)
 			const winOption: OpenFin.WindowCreationOptions = {
 			name,
-			defaultWidth: 800,
+			defaultWidth: 1200,
+			width: 1200,
 			defaultHeight: 800,
 			url: deviceConnectionUrl,
 			frame: true,
@@ -94,8 +96,44 @@ async function bringToFrontIfExists(name: string): Promise<boolean> {
 async function requestDevice(): Promise<void> {
 	const runtimeInfo = await fin.System.getRuntimeInfo();
 	const manifestUrl = runtimeInfo.manifestUrl ?? "";
-	const deviceIdentifierUrl = location.href.replace("app.html", "device-identifier.html") + "?fins=" + manifestUrl;
+	const deviceIdentifierUrl = location.href.replace("app.html", "device-identifier.html") + "?fins=" + manifestUrl.replace("http", "fin");
 	await fin.System.openUrlWithBrowser(deviceIdentifierUrl)
+}
+
+async function listenForDeviceInfo(): Promise<void> {
+	const app = fin.Application.getCurrentSync();
+	const appInfo = await app.getInfo();
+	const customInitOptions = appInfo.initialOptions as OpenFin.ApplicationCreationOptions & {
+		userAppConfigArgs?: OpenFin.UserAppConfigArgs;
+	};
+	processPassedInformation(customInitOptions?.userAppConfigArgs);
+	
+	app.addListener("run-requested", (event: { userAppConfigArgs?: OpenFin.UserAppConfigArgs }) => {
+		processPassedInformation(event?.userAppConfigArgs);
+	});
+}
+
+function processPassedInformation(args?: OpenFin.UserAppConfigArgs) {
+	if(args) {
+		const vendorIdInput = document.getElementById("vendorId") as HTMLInputElement;
+		const productIdInput = document.getElementById("productId") as HTMLInputElement;
+		const deviceTypeSelect = document.getElementById("deviceType") as HTMLSelectElement;
+
+		if (args["deviceType"]) {
+			const deviceType = args["deviceType"] as string;
+			if(deviceType === "HID" || deviceType === "USB") {
+				deviceTypeSelect.value = deviceType;
+			}
+		}
+		if (args["vendorId"]) {
+			const vendorId = args["vendorId"] as string;
+			vendorIdInput.value = vendorId;
+		}
+		if (args["productId"]) {
+			const productId = args["productId"] as string;
+			productIdInput.value = productId;
+		}
+	}
 }
 
 /**

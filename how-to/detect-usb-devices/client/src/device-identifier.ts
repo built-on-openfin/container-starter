@@ -13,6 +13,8 @@ let selectedDevice: DeviceSelection = {
 // Global variable to store if fins parameter was passed
 let hasFinsParameter = false;
 
+let finsLink = "";
+
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		await initDom();
@@ -39,22 +41,8 @@ async function initDom(): Promise<void> {
 		if(finsParam.includes("fin://") || finsParam.includes("fins://")) {
 			showFins = true;
 			hasFinsParameter = true;
-			
-			// If we have a fins protocol URL, try to detect USB/HID devices
-			if (showFins) {
-				// Set up UI elements or indicators here if needed
-				
-				// Automatically request devices if fins protocol is detected
-				// Comment these out if you only want manual button triggering
-				// const hidDevices = await requestHidDevices();
-				// const usbDevice = await requestUSBDevices();
-				
-				// Process the detected devices as needed
-				// console.log('Detected devices:', { 
-				//	hid: hidDevices, 
-				//	usb: usbDevice 
-				// });
-			}
+			finsLink = decodeURIComponent(finsParam);
+			console.log('Fins protocol URL detected:', finsLink);
 		}
     }
     
@@ -215,6 +203,9 @@ function setupButtonEventListeners(): void {
 				
 				// Pass the device info to the starter
 				console.log('Device info passed to starter:', deviceInfo);
+
+				let url = finsLink.replace("?","") + `?$$deviceType=${deviceInfo.type}&$$vendorId=${deviceInfo.vendorId}&$$productId=${deviceInfo.productId}`;
+				window.open(url, '_blank');
 				
 				// Clear selection state and UI
 				clearDeviceSelection();

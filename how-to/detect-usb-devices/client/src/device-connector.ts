@@ -3,7 +3,6 @@ import { HID_DEVICE, USB_DEVICE } from "./device-type";
 
 // Global variables
 let loggingElement: HTMLElement | null;
-let usbPollingActive = false; // Used to control the USB polling loop
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -52,7 +51,13 @@ async function init(): Promise<void> {
     if (btnOpenDevice) {
         btnOpenDevice.addEventListener("click", async () => {  
             loggingAddEntry("Gathering devices.");
-            const devices = deviceTypeParam === HID_DEVICE ? await navigator.hid.getDevices() : await navigator.usb.getDevices();
+            let devices: (USBDevice | HIDDevice)[] = [];
+            if (deviceTypeParam === HID_DEVICE) {
+                devices = await navigator.hid.getDevices();
+            } else {
+                devices = await navigator.usb.getDevices();
+            }
+
             loggingAddEntry(`Found ${devices.length} ${deviceType} devices.`);
             devices.forEach((device, index) => {
                 loggingAddEntry(`Device ${index + 1}: Product Name: ${device.productName}, Vendor ID: ${device.vendorId}, Product ID: ${device.productId}`);
@@ -73,79 +78,42 @@ async function init(): Promise<void> {
                     
                     if (deviceTypeParam === HID_DEVICE) {
                         // HID device handling
-                        loggingAddEntry("Adding inputreport event listener for HID device.");
-                        const hidDevice = device as HIDDevice;
-                        hidDevice.addEventListener("inputreport", (event: any) => {
-                            loggingAddEntry(`Input report received from ${hidDevice.productName}`);
-                            loggingAddEntry(JSON.stringify(event, null, 5));
+                        loggingAddEntry(`Successfully connected to HID device: ${device.productName}`);
+                        loggingAddEntry(`Vendor ID: ${device.vendorId}, Product ID: ${device.productId}`);
+                        loggingAddEntry(`To receive input events, use the 'inputreport' event listener.`);
+                        
+                        // Add a simple input report listener to demonstrate it's working
+                        (device as HIDDevice).addEventListener("inputreport", (event: any) => {
+                            loggingAddEntry(`Received input report event.`);
+                            const data = new Uint8Array(event.data.buffer);
+                            loggingAddEntry(`Input report received - Report ID: ${event.reportId}, Data: ${Array.from(data).map(b => b.toString(16).padStart(2, '0')).join(' ')}`);
                         });
+                        
+                        loggingAddEntry(`Connection successful! Waiting for device input...`);
                     } else {
                         // USB device handling
-                        loggingAddEntry("Setting up USB device for input.");
-                        
-                        // Cast to USBDevice for proper type checking
                         const usbDevice = device as USBDevice;
+                        loggingAddEntry(`Connected to USB device: ${usbDevice.productName}`);
+                        loggingAddEntry(`Vendor ID: ${usbDevice.vendorId}, Product ID: ${usbDevice.productId}`);
                         
-                        // Select configuration (usually the first one)
-                        if (usbDevice.configuration === null) {
+                        // Check if a configuration is selected
+                        if (usbDevice.configuration === null && usbDevice.configurations.length > 0) {
                             loggingAddEntry(`Selecting the first configuration.`);
                             await usbDevice.selectConfiguration(usbDevice.configurations[0].configurationValue);
                         }
                         
-                        // Log available interfaces
-                        loggingAddEntry(`Device has ${usbDevice.configuration?.interfaces.length || 0} interfaces.`);
-                        
-                        // Try to find and claim a usable interface
-                        if (usbDevice.configuration && usbDevice.configuration.interfaces.length > 0) {
-                            loggingAddEntry(`Device has ${usbDevice.configuration.interfaces.length} interfaces.`);
-                            
-                            // Log all interfaces
-                            usbDevice.configuration.interfaces.forEach((iface, index) => {
-                                loggingAddEntry(`Interface ${iface.interfaceNumber}: Class ${iface.alternate.interfaceClass}, Subclass ${iface.alternate.interfaceSubclass}`);
-                            });
-                            
-                            // Try to find a non-protected interface
-                            let interfaceClaimed = false;
-                            for (const iface of usbDevice.configuration.interfaces) {
-                                const interfaceNumber = iface.interfaceNumber;
-                                try {
-                                    loggingAddEntry(`Attempting to claim interface ${interfaceNumber}...`);
-                                    await usbDevice.claimInterface(interfaceNumber);
-                                    loggingAddEntry(`Successfully claimed interface ${interfaceNumber}.`);
-                                    
-                                    // Start polling for USB input with the claimed interface
-                                    startListeningForUSBInput(usbDevice, interfaceNumber);
-                                    interfaceClaimed = true;
-                                    break;
-                                } catch (err: any) {
-                                    const errorMessage = err?.message || 'Unknown error';
-                                    loggingAddEntry(`Failed to claim interface ${interfaceNumber}: ${errorMessage}`);
-                                    
-                                    // Check if this is a protected class error
-                                    if (errorMessage.includes('protected class')) {
-                                        loggingAddEntry(`Interface ${interfaceNumber} is a protected class interface.`);
-                                        loggingAddEntry(`Protected classes often include: Human Interface Device (HID), Audio, Mass Storage, etc.`);
-                                        loggingAddEntry(`These interfaces may require specialized drivers or APIs (like WebHID for HID devices).`);
-                                        
-                                        // If this is a HID class device, provide specific guidance
-                                        if (iface.alternate.interfaceClass === 3) { // Class 3 is HID
-                                            loggingAddEntry(`This appears to be a HID device (Class 3). Try using the WebHID API instead.`);
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            if (!interfaceClaimed) {
-                                loggingAddEntry(`Could not claim any interfaces on this device.`);
-                                loggingAddEntry(`This may be because all interfaces implement protected classes.`);
-                                loggingAddEntry(`If this is a HID device, try using the WebHID API instead.`);
-                            }
-                        } else {
-                            loggingAddEntry("No interfaces available on this device.");
-                        }
+                        // Analyze and display device information
+                        analyzeUSBDevice(usbDevice);
                     }
-                } catch (error) {
-                    loggingAddEntry(`Error opening device: ${error}`);
+                } catch (error: any) {
+                    const errorMessage = error?.message || 'Unknown error';
+                    loggingAddEntry(`Error: ${errorMessage}`);
+                    
+                    if (errorMessage.includes('protected class')) {
+                        loggingAddEntry(`\nThis device has protected interfaces that cannot be accessed directly.`);
+                        loggingAddEntry(`If this is a HID device (like keyboard, mouse, gamepad), try using the WebHID API instead.`);
+                        loggingAddEntry(`Protected classes include: HID, Audio, Mass Storage, Video, etc.`);
+                    }
                 }
             }
 
@@ -156,12 +124,26 @@ async function init(): Promise<void> {
     if (btnCodeCopy) {
         btnCodeCopy.addEventListener("click", async () => { 
             loggingAddEntry("Copying code to clipboard");
+            const codeElement = document.getElementById("code");
+            if(codeElement) {
+                try {
+                    if(location.href.startsWith("https:")) {
+                    await navigator.clipboard.writeText(codeElement.textContent || "");
+                    } else {
+                       await fin.Clipboard.writeText({ data: codeElement.textContent || "" }); 
+                    }
+                    loggingAddEntry("Code copied to clipboard");
+                } catch (error) {
+                    loggingAddEntry("Failed to copy code to clipboard: " + error);
+                }
+            }
         });
     }
 
     if(fin) {
         const info = await fin.me.getOptions();
         const permissions = info.permissions;
+        writeCode(deviceType === HID_DEVICE, permissions);
         const devices = permissions?.devices;
         let device: OpenFin.DeviceInfo | undefined;
         if(tag) {
@@ -204,134 +186,133 @@ function loggingAddEntry(entry: string): void {
 	}
 }
 
-/**
- * Start polling for input from a USB device
- * @param device The USB device to listen to
- * @param interfaceNumber The interface number to use
- */
-async function startListeningForUSBInput(device: USBDevice, interfaceNumber: number): Promise<void> {
-    // First, find endpoints for this interface
-    const iface = device.configuration?.interfaces.find(i => i.interfaceNumber === interfaceNumber);
-    if (!iface) {
-        loggingAddEntry(`Interface ${interfaceNumber} not found.`);
-        return;
+function writeCode(isHidDevice: boolean, permissions?: OpenFin.Permissions): void {
+    const codeElement = document.getElementById("code");
+    if(codeElement) {
+        let code = `// Ensure your application has the appropriate permissions in the manifest or window or view options.\n\n`;
+        code += `// Example permissions block:\n`;
+        code += `/*\n"permissions": ${JSON.stringify(permissions, null, 5)}\n*/\n\n`;
+        code += `// Listen for device connection and disconnection events\n`;
+        if(isHidDevice) {
+            code += `navigator.hid.addEventListener("disconnect", (event) => {\n    console.log('HID disconnected: ' + event.device.productName);\n});\n`;
+            code += `navigator.hid.addEventListener("connect", (event) => {\n    console.log('HID connected: ' + event.device.productName);\n});\n\n`;
+        } else {
+            code += `navigator.usb.addEventListener("disconnect", (event) => {\n    console.log('USB disconnected: ' + event.device.productName);\n});\n`;
+            code += `navigator.usb.addEventListener("connect", (event) => {\n    console.log('USB connected: ' + event.device.productName);\n});\n\n`;
+        }
+        code += `// Getting ${isHidDevice ? 'HID' : 'USB'} devices\n`;
+        code += `// You don't need to call requestDevice as the device has already been given permissions through the manifest/window/view permission settings. You can call getDevices to interact with the device.\n`;
+        code += `const devices = ${isHidDevice ? 'await navigator.hid.getDevices();' : 'await navigator.usb.getDevices();'}\n`
+        code += `console.log('Found ' + devices.length + ' ${isHidDevice ? 'HID' : 'USB'} devices.');\n`;
+        code += `devices.forEach((device, index) => {\n    console.log('Device ' + (index + 1) + ': Product Name: ' + device.productName + ', Vendor ID: ' + device.vendorId + ', Product ID: ' + device.productId);\n});\n\n`;
+        code += `// Selecting the first device (if any)\n`;
+        code += `const device = devices.length > 0 ? devices[0] : null;\n\n`;
+        code += `// Opening the device\n`;
+        code += `if (device) {\n    await device.open();\n    console.log('Device opened:', device.productName);\n`;
+        if(!isHidDevice) {
+            code += `    // Continue with interface claiming and communication as needed\n`;
+        } else {
+            code += `    // Add event listeners for input reports\n`;
+            code += `    device.addEventListener('inputreport', (event) => {\n`;
+            code += `        const data = new Uint8Array(event.data.buffer);\n`;
+            code += `        console.log('Input report received:', data);\n    });\n`;
+        }
+        code += `} else {\n    console.log('No device selected');\n}\n`;
+        
+        codeElement.textContent = code;
     }
-    
-    // Log interface details
-    loggingAddEntry(`Interface ${interfaceNumber} details:`);
-    loggingAddEntry(`- Class: ${iface.alternate.interfaceClass}`);
-    loggingAddEntry(`- Subclass: ${iface.alternate.interfaceSubclass}`);
-    loggingAddEntry(`- Protocol: ${iface.alternate.interfaceProtocol}`);
-    
-    // Check if this is a known protected class
+}
+
+/**
+ * Analyze and display information about a USB device to help determine compatibility
+ * @param device The USB device to analyze
+ */
+function analyzeUSBDevice(device: USBDevice): void {
+    // Define known USB classes
     const knownClasses: {[key: number]: string} = {
+        0: 'Interface-specific',
         1: 'Audio',
+        2: 'Communications and CDC Control',
         3: 'HID (Human Interface Device)',
+        5: 'Physical',
+        6: 'Image',
         7: 'Printer',
         8: 'Mass Storage',
         9: 'Hub',
         10: 'CDC-Data',
         11: 'Smart Card',
+        13: 'Content Security',
         14: 'Video',
-        15: 'Personal Healthcare'
+        15: 'Personal Healthcare',
+        220: 'Diagnostic Device',
+        224: 'Wireless Controller',
+        239: 'Miscellaneous',
+        254: 'Application Specific',
+        255: 'Vendor Specific'
     };
-    
-    if (iface.alternate.interfaceClass in knownClasses) {
-        loggingAddEntry(`Warning: This is a ${knownClasses[iface.alternate.interfaceClass]} class device, which might be protected.`);
+
+    // If no configuration is selected or available
+    if (!device.configuration) {
+        loggingAddEntry('Device has no active configuration.');
+        return;
     }
     
-    // Find all endpoints and log them
-    const endpoints = iface.alternate.endpoints;
-    loggingAddEntry(`Interface has ${endpoints.length} endpoints:`);
+    loggingAddEntry('\nDevice Analysis:');
+    loggingAddEntry(`Device Name: ${device.productName || 'Unknown'}`);
+    loggingAddEntry(`Manufacturer: ${device.manufacturerName || 'Unknown'}`);
+    loggingAddEntry(`Serial Number: ${device.serialNumber || 'Not available'}`);
     
-    endpoints.forEach((endpoint, index) => {
-        loggingAddEntry(`- Endpoint ${index+1}: Number ${endpoint.endpointNumber}, Direction: ${endpoint.direction}, Type: ${endpoint.type}`);
+    // Display configurations
+    loggingAddEntry(`\nDevice has ${device.configurations.length} configuration(s).`);
+    loggingAddEntry(`Active Configuration: ${device.configuration.configurationValue}.`);
+    
+    // Analyze interfaces
+    const interfaces = device.configuration.interfaces;
+    loggingAddEntry(`\nInterfaces (${interfaces.length}):`);
+    
+    let hasProtectedClass = false;
+    let isHidDevice = false;
+    let hasVendorSpecific = false;
+    
+    interfaces.forEach((iface, index) => {
+        const ifaceClass = iface.alternate.interfaceClass;
+        const className = knownClasses[ifaceClass] || `Unknown Class (${ifaceClass})`;
+        
+        loggingAddEntry(`Interface ${index}: Class ${ifaceClass} - ${className}`);
+        
+        // Check for specific classes
+        if (ifaceClass === 3) {
+            isHidDevice = true;
+        }
+        
+        if (ifaceClass === 255) {
+            hasVendorSpecific = true;
+        }
+        
+        // Check if this is likely a protected class
+        if ([1, 3, 7, 8, 9, 14, 15].includes(ifaceClass)) {
+            hasProtectedClass = true;
+        }
     });
     
-    // Find the first IN endpoint (device-to-host)
-    const inEndpoint = endpoints.find(e => e.direction === 'in');
+    // Provide recommendations
+    loggingAddEntry('\nRecommendations:');
     
-    if (!inEndpoint) {
-        loggingAddEntry('No IN endpoint found for reading data. Cannot receive data from this device.');
-        return;
-    }
-    
-    loggingAddEntry(`Using IN endpoint: ${inEndpoint.endpointNumber} for data reception.`);
-    
-    // Set the flag to true to start polling
-    usbPollingActive = true;
-    
-    // Add a button to stop polling if needed
-    const btnStopPolling = document.querySelector("#btnStopPolling");
-    if (btnStopPolling) {
-        btnStopPolling.addEventListener("click", () => {
-            usbPollingActive = false;
-            loggingAddEntry("USB polling stopped.");
-        });
-    }
-    
-    // Start the polling loop
-    pollUSBDevice(device, inEndpoint.endpointNumber);
-}
-
-/**
- * Continuously poll a USB device for input data
- * @param device The USB device to poll
- * @param endpointNumber The endpoint number to read from
- */
-async function pollUSBDevice(device: USBDevice, endpointNumber: number): Promise<void> {
-    if (!usbPollingActive) {
-        loggingAddEntry("USB polling stopped.");
-        return;
-    }
-    
-    try {
-        // Try to read data from the device
-        // The length parameter specifies the maximum number of bytes to read
-        const result = await device.transferIn(endpointNumber, 64);
+    if (isHidDevice) {
+        loggingAddEntry('✖️ This appears to be an HID device. WebUSB cannot access HID interfaces.');
+        loggingAddEntry('✅ Please use WebHID API instead for this device.');
+    } else if (hasProtectedClass) {
+        loggingAddEntry('⚠️ This device has interfaces that are likely protected classes.');
+        loggingAddEntry('   Browser security restrictions may prevent WebUSB from accessing some interfaces.');
         
-        if (result.status === 'ok' && result.data && result.data.byteLength > 0) {
-            // Convert the data to something readable
-            const data = new Uint8Array(result.data.buffer);
-            
-            // Log the received data
-            loggingAddEntry(`Received data from endpoint ${endpointNumber}:`);
-            loggingAddEntry(`Data length: ${data.length} bytes`);
-            loggingAddEntry(`Raw data: ${Array.from(data).map(b => b.toString(16).padStart(2, '0')).join(' ')}`);
-            
-            try {
-                // Try to decode as UTF-8 text if appropriate
-                const textDecoder = new TextDecoder('utf-8');
-                const textData = textDecoder.decode(data);
-                if (/^[\x20-\x7E\r\n\t]*$/.test(textData)) { // Check if it's mostly printable ASCII
-                    loggingAddEntry(`Text data: ${textData}`);
-                }
-            } catch (e) {
-                // If it can't be decoded as text, that's fine
-            }
+        if (hasVendorSpecific) {
+            loggingAddEntry('✅ However, the device has vendor-specific interfaces that might be accessible.');
         }
-    } catch (error: any) {
-        const errorMessage = error?.message || 'Unknown error';
-        loggingAddEntry(`Error polling USB device: ${errorMessage}`);
-        
-        // Check for specific error types and provide more helpful messages
-        if (errorMessage.includes('device disconnected')) {
-            loggingAddEntry('Device appears to have been disconnected.');
-        } else if (errorMessage.includes('timeout')) {
-            loggingAddEntry('Operation timed out. Device may not be sending data or may be busy.');
-        } else if (errorMessage.includes('access denied') || errorMessage.includes('permission')) {
-            loggingAddEntry('Access denied. This could be due to permission issues or another application using the device.');
-        } else if (errorMessage.includes('protected class')) {
-            loggingAddEntry('This device interface implements a protected class and cannot be accessed directly with WebUSB.');
-            loggingAddEntry('Try using a different interface or a specialized API like WebHID for HID devices.');
-        }
-        
-        usbPollingActive = false;
-        return;
+    } else if (hasVendorSpecific) {
+        loggingAddEntry('✅ This device has vendor-specific interfaces which are typically accessible via WebUSB.');
+    } else {
+        loggingAddEntry('❓ This device may or may not be compatible with WebUSB, depending on its specific interfaces.');
     }
     
-    // Continue polling after a short delay
-    setTimeout(() => {
-        pollUSBDevice(device, endpointNumber);
-    }, 100); // Poll every 100ms - adjust as needed
+    loggingAddEntry('\nConnection established successfully. The device is now ready for communication.');
 }
