@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>USB Device Detection</title>
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/device-identifier.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>USB Device Detection</h1>
+				<h1 class="tag">Identify the device you wish to connect to.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="col left gap10">
+			<label>Identify USB Device</label>
+			<button id="btn-request-usb-device">Request USB Device</button>
+			<br />
+			<label>Identify HID Device</label>
+			<button id="btn-request-hid-device">Check for Devices</button>
+			<br />
+			<div id="device-container" style="display: none">
+				<label>Device</label>
+				<ul id="device-list"></ul>
+				<button id="btn-clear-device">Clear Selection</button>
+			</div>
+
+			<div id="fin-launch-container" style="display: none">
+				<button id="btn-fin-launch">Pass Device To Starter</button>
+			</div>
+		</main>
+	</body>
+</html>
