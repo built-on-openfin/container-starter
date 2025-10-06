@@ -10,7 +10,7 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "node",
-		"types": ["./types/fin", "w3c-web-usb"]
+		"types": ["./types/fin", "w3c-web-usb", "w3c-web-hid"]
 	},
 	"include": ["./src/**/*.ts"]
 }

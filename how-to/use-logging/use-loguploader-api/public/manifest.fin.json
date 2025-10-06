@@ -1,0 +1,27 @@
+{
+	"runtime": {
+		"version": "42.138.100.107"
+	},
+	"startup_app": {
+		"name": "launch-loguploader-programmatically",
+		"url": "http://localhost:5050/html/app.html",
+		"uuid": "launch-loguploader-programmatically",
+		"icon": "http://localhost:5050/common/images/icon-blue.png",
+		"autoShow": true,
+		"saveWindowState": true,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true,
+				"terminateExternalProcess": true,
+				"downloadAsset": true,
+				"launchLogUploader": true
+			}
+		}
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Launch Log Uploader",
+		"icon": "http://localhost:5050/common/images/icon-blue.png",
+		"name": "Launch Log Uploader"
+	}
+}

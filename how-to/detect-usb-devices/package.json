@@ -8,7 +8,7 @@
 		"client": "node ./scripts/launch.mjs",
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
-		"start": "npx --yes http-server ./public -p 5050 -c-1 -S -C cert.pem -K key.pem",
+		"start": "npx --yes http-server ./public -p 5050 -c-1",
 		"setup": "cd ../../ && npm install && cd how-to/create-window && npm run build"
 	},
 	"author": "joe.ransegnola@here.io",
@@ -17,6 +17,7 @@
 		"@openfin/core": "40.104.2",
 		"@openfin/node-adapter": "40.104.2",
 		"@types/w3c-web-usb": "^1.0.10",
+		"@types/w3c-web-hid": "^1.0.6",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",

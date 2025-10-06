@@ -1,8 +1,12 @@
+/* eslint-disable linebreak-style */
 import express, { type Request, type Response } from "express";
 import multer, { type StorageEngine } from "multer";
 import path from "path";
 
 const app = express();
+
+// Disable X-Powered-By header for security
+app.disable("x-powered-by");
 
 app.use(express.json());
 

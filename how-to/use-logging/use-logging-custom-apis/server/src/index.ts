@@ -3,6 +3,9 @@ import multer from "multer";
 import path from "path";
 const app = express();
 
+// Disable X-Powered-By header for security
+app.disable("x-powered-by");
+
 /** COMMON SERVER CONFIGURATION */
 const mainPath = path.join(__dirname, "..", "..", "public");
 const commonPath = path.join(__dirname, "..", "..", "..", "common", "public");

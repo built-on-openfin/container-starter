@@ -1,7 +1,25 @@
 import express from "express";
+import rateLimit from "express-rate-limit";
 import path from "path";
 
 const app = express();
+
+// Disable X-Powered-By header for security
+app.disable("x-powered-by");
+
+// Configure rate limiting to prevent DoS attacks
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per windowMs
+	message: {
+		error: "Too many requests from this IP, please try again later."
+	},
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false // Disable the `X-RateLimit-*` headers
+});
+
+// Apply rate limiting to all requests
+app.use(limiter);
 
 const mainPath = path.join(__dirname, "..", "..", "public");
 const port = 5050;
