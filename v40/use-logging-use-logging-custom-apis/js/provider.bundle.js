@@ -22988,7 +22988,7 @@ async function uploadHandler(submitEvent) {
     formData.append("uuid", _openfin_core__WEBPACK_IMPORTED_MODULE_0__.fin.me.uuid);
     const logPreview = document.querySelector("#preview");
     try {
-        const uploadState = await fetch("https://built-on-openfin.github.io/container-starter/v40/use-logging-use-logging-apis/uploads", {
+        const uploadState = await fetch("https://built-on-openfin.github.io/container-starter/v40/use-logging-use-logging-custom-apis/uploads", {
             method: "POST",
             body: formData
         });
@@ -23023,7 +23023,7 @@ async function uploadOPFSLogHandler() {
             opfsFormData.append("opfsFile", opfsLogFile);
             opfsFormData.append("filename", logFileName);
             opfsFormData.append("uuid", _openfin_core__WEBPACK_IMPORTED_MODULE_0__.fin.me.uuid);
-            const result = await fetch("https://built-on-openfin.github.io/container-starter/v40/use-logging-use-logging-apis/opfsuploads", {
+            const result = await fetch("https://built-on-openfin.github.io/container-starter/v40/use-logging-use-logging-custom-apis/opfsuploads", {
                 method: "POST",
                 body: opfsFormData
             });

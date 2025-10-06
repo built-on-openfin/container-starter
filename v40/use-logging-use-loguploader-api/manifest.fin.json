@@ -1,0 +1,27 @@
+{
+	"runtime": {
+		"version": "42.138.100.107"
+	},
+	"startup_app": {
+		"name": "launch-loguploader-programmatically",
+		"url": "https://built-on-openfin.github.io/container-starter/v40/use-logging-use-loguploader-api/html/app.html",
+		"uuid": "launch-loguploader-programmatically",
+		"icon": "https://built-on-openfin.github.io/container-starter/v40/use-logging-use-loguploader-api/common/images/icon-blue.png",
+		"autoShow": true,
+		"saveWindowState": true,
+		"permissions": {
+			"System": {
+				"launchExternalProcess": true,
+				"terminateExternalProcess": true,
+				"downloadAsset": true,
+				"launchLogUploader": true
+			}
+		}
+	},
+	"shortcut": {
+		"company": "OpenFin",
+		"description": "Launch Log Uploader",
+		"icon": "https://built-on-openfin.github.io/container-starter/v40/use-logging-use-loguploader-api/common/images/icon-blue.png",
+		"name": "Launch Log Uploader"
+	}
+}
