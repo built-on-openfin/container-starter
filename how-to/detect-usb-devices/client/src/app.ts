@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import type OpenFin from "@openfin/core";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -29,14 +30,20 @@ async function initDom(): Promise<void> {
 	await listenForDeviceInfo();
 }
 
+/**
+ * Connect to the specified device.
+ * @returns The window that was opened to connect to the device, if any.
+ * @throws An error if the connection fails.
+ */
 async function connectDevice(): Promise<OpenFin.Window | undefined> {
-	const vendorIdInput = document.getElementById("vendorId") as HTMLInputElement;
-	const productIdInput = document.getElementById("productId") as HTMLInputElement;
+	const vendorIdInput = document.querySelector("#vendorId") as HTMLInputElement;
+	const productIdInput = document.querySelector("#productId") as HTMLInputElement;
 
-	const vendorId = parseInt(vendorIdInput.value, 10);
-	const productId = parseInt(productIdInput.value, 10);
+	const vendorId = Number.parseInt(vendorIdInput.value, 10);
+	const productId = Number.parseInt(productIdInput.value, 10);
 
-	if (isNaN(vendorId) || isNaN(productId)) {
+	if (Number.isNaN(vendorId) || Number.isNaN(productId)) {
+		// eslint-disable-next-line no-alert
 		alert("Please enter valid numeric values for Vendor ID and Product ID.");
 		return;
 	}
@@ -44,10 +51,9 @@ async function connectDevice(): Promise<OpenFin.Window | undefined> {
 	try {
 		// Here you would typically open a connection to the device using WebUSB or WebHID APIs.
 		console.log(`Connecting to device with Vendor ID: ${vendorId}, Product ID: ${productId}`);
-		const deviceType = (document.getElementById("deviceType") as HTMLSelectElement).value;
-		const deviceConnectionUrl =
-			location.href.replace("app.html", "device-connector.html") + `?deviceType=${deviceType}`;
-		const name = "connect-device-" + vendorId + "-" + productId;
+		const deviceType = (document.querySelector("#deviceType") as HTMLSelectElement).value;
+		const deviceConnectionUrl = `${location.href.replace("app.html", "device-connector.html")}?deviceType=${deviceType}`;
+		const name = `connect-device-${vendorId}-${productId}`;
 		const exists = await bringToFrontIfExists(name);
 		if (!exists) {
 			// Open a new window to indicate connection (replace with actual connection logic)
@@ -63,19 +69,24 @@ async function connectDevice(): Promise<OpenFin.Window | undefined> {
 					webAPIs: ["hid", "usb"],
 					devices: [
 						{
-							vendorId: vendorId,
-							productId: productId
+							vendorId,
+							productId
 						}
 					]
 				}
 			};
-			return fin.Window.create(winOption);
+			return await fin.Window.create(winOption);
 		}
 	} catch (error) {
 		console.error("Error connecting to device:", error);
 	}
 }
 
+/**
+ * Brings an existing window to the front if it exists.
+ * @param name The name of the window to bring to the front.
+ * @returns True if the window was found and brought to the front, false otherwise.
+ */
 async function bringToFrontIfExists(name: string): Promise<boolean> {
 	try {
 		const existingWindow = await fin.Window.wrap({ uuid: fin.me.uuid, name });
@@ -87,7 +98,7 @@ async function bringToFrontIfExists(name: string): Promise<boolean> {
 			await existingWindow.focus();
 			return true;
 		}
-	} catch (error) {
+	} catch {
 		// Window does not exist
 	}
 	return false;
@@ -99,13 +110,13 @@ async function bringToFrontIfExists(name: string): Promise<boolean> {
 async function requestDevice(): Promise<void> {
 	const runtimeInfo = await fin.System.getRuntimeInfo();
 	const manifestUrl = runtimeInfo.manifestUrl ?? "";
-	const deviceIdentifierUrl =
-		location.href.replace("app.html", "device-identifier.html") +
-		"?fins=" +
-		manifestUrl.replace("http", "fin");
+	const deviceIdentifierUrl = `${location.href.replace("app.html", "device-identifier.html")}?fins=${manifestUrl.replace("http", "fin")}`;
 	await fin.System.openUrlWithBrowser(deviceIdentifierUrl);
 }
 
+/**
+ * Listens for device information passed via the OpenFin runtime and processes it.
+ */
 async function listenForDeviceInfo(): Promise<void> {
 	const app = fin.Application.getCurrentSync();
 	const appInfo = await app.getInfo();
@@ -114,16 +125,21 @@ async function listenForDeviceInfo(): Promise<void> {
 	};
 	processPassedInformation(customInitOptions?.userAppConfigArgs);
 
-	app.addListener("run-requested", (event: { userAppConfigArgs?: OpenFin.UserAppConfigArgs }) => {
+	// eslint-disable-next-line no-void
+	await app.addListener("run-requested", (event: { userAppConfigArgs?: OpenFin.UserAppConfigArgs }) => {
 		processPassedInformation(event?.userAppConfigArgs);
 	});
 }
 
-function processPassedInformation(args?: OpenFin.UserAppConfigArgs) {
+/**
+ * Processes the information passed via userAppConfigArgs.
+ * @param args The user application configuration arguments.
+ */
+function processPassedInformation(args?: OpenFin.UserAppConfigArgs): void {
 	if (args) {
-		const vendorIdInput = document.getElementById("vendorId") as HTMLInputElement;
-		const productIdInput = document.getElementById("productId") as HTMLInputElement;
-		const deviceTypeSelect = document.getElementById("deviceType") as HTMLSelectElement;
+		const vendorIdInput = document.querySelector("#vendorId") as HTMLInputElement;
+		const productIdInput = document.querySelector("#productId") as HTMLInputElement;
+		const deviceTypeSelect = document.querySelector("#deviceType") as HTMLSelectElement;
 
 		if (args["deviceType"]) {
 			const deviceType = args["deviceType"] as string;

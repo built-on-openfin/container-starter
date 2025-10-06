@@ -1,6 +1,16 @@
 // Store the selected device and its type
+/**
+ * A type to describe the device selection.
+ */
 interface DeviceSelection {
+	/**
+	 *
+	 */
 	deviceType: "HID" | "USB" | null;
+	/**
+	 *
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	device: any;
 }
 
@@ -27,8 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Initializes the controls available on the detection page.
  */
 async function initDom(): Promise<void> {
-	let search = location.search;
-	let showFins = false;
+	const search = location.search;
 	// Extract the 'fins' parameter from the querystring
 	const urlParams = new URLSearchParams(search);
 	const finsParam = urlParams.get("fins");
@@ -39,7 +48,6 @@ async function initDom(): Promise<void> {
 	if (finsParam !== null) {
 		console.log("Fins parameter value:", finsParam);
 		if (finsParam.includes("fin://") || finsParam.includes("fins://")) {
-			showFins = true;
 			hasFinsParameter = true;
 			finsLink = decodeURIComponent(finsParam);
 			console.log("Fins protocol URL detected:", finsLink);
@@ -50,7 +58,11 @@ async function initDom(): Promise<void> {
 	updateFinLaunchContainerVisibility();
 }
 
-async function requestHidDevices() {
+/**
+ * Requests HID devices and stores the selected device.
+ * @returns An array of selected HID devices.
+ */
+async function requestHidDevices(): Promise<HIDDevice[]> {
 	// Clear the current selection
 	clearDeviceSelection();
 
@@ -83,18 +95,21 @@ async function requestHidDevices() {
 }
 
 /**
- * Displays HID device information in the UI
+ * Displays HID device information in the UI.
+ * @param devices the devices to list.
  */
-function displayHIDDevices(devices: any[]): void {
-	if (!devices || devices.length === 0) return;
+function displayHIDDevices(devices: HIDDevice[]): void {
+	if (!devices || devices.length === 0) {
+		return;
+	}
 
-	const deviceList = document.getElementById("device-list");
+	const deviceList = document.querySelector("#device-list");
 	if (deviceList) {
 		// Clear previous entries
 		deviceList.innerHTML = "";
 
 		// Create list items for each device
-		devices.forEach((device, index) => {
+		for (const [index, device] of devices.entries()) {
 			const listItem = document.createElement("li");
 
 			// Highlight the first device which is stored as the selected device
@@ -109,12 +124,16 @@ function displayHIDDevices(devices: any[]): void {
 				}, Product ID: ${device.productId}`;
 			}
 
-			deviceList.appendChild(listItem);
-		});
+			deviceList.append(listItem);
+		}
 	}
 }
 
-async function requestUSBDevices() {
+/**
+ * Requests USB devices and stores the selected device.
+ * @returns The selected USB device or null if none was selected.
+ */
+async function requestUSBDevices(): Promise<USBDevice | null> {
 	// Clear the current selection
 	clearDeviceSelection();
 
@@ -127,7 +146,7 @@ async function requestUSBDevices() {
 			if (device) {
 				selectedDevice = {
 					deviceType: "USB",
-					device: device
+					device
 				};
 				console.log("Stored selected USB device:", selectedDevice);
 
@@ -147,11 +166,11 @@ async function requestUSBDevices() {
 }
 
 /**
- * Sets up the event listeners for all buttons
+ * Sets up the event listeners for all buttons.
  */
 function setupButtonEventListeners(): void {
 	// Wire up USB device request button
-	const usbButton = document.getElementById("btn-request-usb-device");
+	const usbButton = document.querySelector("#btn-request-usb-device");
 	if (usbButton) {
 		usbButton.addEventListener("click", async () => {
 			try {
@@ -165,7 +184,7 @@ function setupButtonEventListeners(): void {
 	}
 
 	// Wire up HID device request button
-	const hidButton = document.getElementById("btn-request-hid-device");
+	const hidButton = document.querySelector("#btn-request-hid-device");
 	if (hidButton) {
 		hidButton.addEventListener("click", async () => {
 			try {
@@ -179,7 +198,7 @@ function setupButtonEventListeners(): void {
 	}
 
 	// Wire up clear device button
-	const clearSelectionButton = document.getElementById("btn-clear-device");
+	const clearSelectionButton = document.querySelector("#btn-clear-device");
 	if (clearSelectionButton) {
 		clearSelectionButton.addEventListener("click", () => {
 			try {
@@ -193,7 +212,7 @@ function setupButtonEventListeners(): void {
 	}
 
 	// Wire up fin launch button
-	const finLaunchButton = document.getElementById("btn-fin-launch");
+	const finLaunchButton = document.querySelector("#btn-fin-launch");
 	if (finLaunchButton) {
 		finLaunchButton.addEventListener("click", () => {
 			try {
@@ -208,9 +227,7 @@ function setupButtonEventListeners(): void {
 				// Pass the device info to the starter
 				console.log("Device info passed to starter:", deviceInfo);
 
-				let url =
-					finsLink.replace("?", "") +
-					`?$$deviceType=${deviceInfo.type}&$$vendorId=${deviceInfo.vendorId}&$$productId=${deviceInfo.productId}`;
+				const url = `${finsLink.replace("?", "")}?$$deviceType=${deviceInfo.type}&$$vendorId=${deviceInfo.vendorId}&$$productId=${deviceInfo.productId}`;
 				window.open(url, "_blank");
 
 				// Clear selection state and UI
@@ -225,27 +242,30 @@ function setupButtonEventListeners(): void {
 }
 
 /**
- * Displays USB device information in the UI
+ * Displays USB device information in the UI.
+ * @param device The device to list.
  */
-function displayUSBDevice(device: any): void {
-	if (!device) return;
+function displayUSBDevice(device: USBDevice | null): void {
+	if (!device) {
+		return;
+	}
 
-	const deviceList = document.getElementById("device-list");
+	const deviceList = document.querySelector("#device-list");
 	if (deviceList) {
 		// Clear previous entries
 		deviceList.innerHTML = "";
 
 		// Create a list item for the device
 		const listItem = document.createElement("li");
-		listItem.textContent = `USB: ${device.productName || "Unknown"} - Vendor ID: ${
+		listItem.textContent = `USB: ${device.productName ?? "Unknown"} - Vendor ID: ${
 			device.vendorId
 		}, Product ID: ${device.productId}`;
-		deviceList.appendChild(listItem);
+		deviceList.append(listItem);
 	}
 }
 
 /**
- * Clears the selected device and updates the UI
+ * Clears the selected device and updates the UI.
  */
 function clearDeviceSelection(): void {
 	// Reset the selected device
@@ -255,7 +275,7 @@ function clearDeviceSelection(): void {
 	};
 
 	// Clear the device list in the UI
-	const deviceList = document.getElementById("device-list");
+	const deviceList = document.querySelector("#device-list");
 	if (deviceList) {
 		deviceList.innerHTML = "";
 	}
@@ -267,11 +287,11 @@ function clearDeviceSelection(): void {
 }
 
 /**
- * Updates the visibility of the containers based on device selection and fins parameter
+ * Updates the visibility of the containers based on device selection and fins parameter.
  */
 function updateFinLaunchContainerVisibility(): void {
-	const finLaunchContainer = document.getElementById("fin-launch-container");
-	const deviceContainer = document.getElementById("device-container");
+	const finLaunchContainer: HTMLElement | null = document.querySelector("#fin-launch-container");
+	const deviceContainer: HTMLElement | null = document.querySelector("#device-container");
 
 	// Check if we have a selected device
 	const hasDeviceSelected = selectedDevice.device !== null;

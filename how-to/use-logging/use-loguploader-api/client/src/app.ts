@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 							email: "support@nowhere.com",
 							website: "https://www.here.io",
 							websiteDescription: "The Here.io web site"
-					  }
+						}
 					: { show: false };
 
 				const data = await fin.System.launchLogUploader({

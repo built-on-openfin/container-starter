@@ -1,4 +1,6 @@
-import { type OpenFin } from "@openfin/core";
+/* eslint-disable newline-per-chained-call */
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+import type { OpenFin } from "@openfin/core";
 import { HID_DEVICE, USB_DEVICE } from "./device-type";
 
 // Global variables
@@ -12,11 +14,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 });
 
+/**
+ * Initialize the DOM components.
+ */
 async function init(): Promise<void> {
 	const tag = document.querySelector("#tag") as HTMLSpanElement;
 	loggingElement = document.querySelector("#logging");
 	// Extract the 'deviceType' parameter from the querystring
-	let search = location.search;
+	const search = location.search;
 	const urlParams = new URLSearchParams(search);
 	const deviceTypeParam = urlParams.get("deviceType");
 	let deviceType = USB_DEVICE;
@@ -58,17 +63,17 @@ async function init(): Promise<void> {
 			}
 
 			loggingAddEntry(`Found ${devices.length} ${deviceType} devices.`);
-			devices.forEach((device, index) => {
+			for (const [index, device] of devices.entries()) {
 				loggingAddEntry(
 					`Device ${index + 1}: Product Name: ${device.productName}, Vendor ID: ${
 						device.vendorId
 					}, Product ID: ${device.productId}`
 				);
-			});
+			}
 
 			if (devices.length > 0) {
 				loggingAddEntry("Selecting first device.");
-				let device = devices[0];
+				const device = devices[0];
 				try {
 					if (device.opened) {
 						loggingAddEntry("Device already opened. Closing it first.");
@@ -83,11 +88,12 @@ async function init(): Promise<void> {
 						// HID device handling
 						loggingAddEntry(`Successfully connected to HID device: ${device.productName}`);
 						loggingAddEntry(`Vendor ID: ${device.vendorId}, Product ID: ${device.productId}`);
-						loggingAddEntry(`To receive input events, use the 'inputreport' event listener.`);
+						loggingAddEntry("To receive input events, use the 'inputreport' event listener.");
 
 						// Add a simple input report listener to demonstrate it's working
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						(device as HIDDevice).addEventListener("inputreport", (event: any) => {
-							loggingAddEntry(`Received input report event.`);
+							loggingAddEntry("Received input report event.");
 							const data = new Uint8Array(event.data.buffer);
 							loggingAddEntry(
 								`Input report received - Report ID: ${event.reportId}, Data: ${Array.from(data)
@@ -96,7 +102,7 @@ async function init(): Promise<void> {
 							);
 						});
 
-						loggingAddEntry(`Connection successful! Waiting for device input...`);
+						loggingAddEntry("Connection successful! Waiting for device input...");
 					} else {
 						// USB device handling
 						const usbDevice = device as USBDevice;
@@ -105,23 +111,26 @@ async function init(): Promise<void> {
 
 						// Check if a configuration is selected
 						if (usbDevice.configuration === null && usbDevice.configurations.length > 0) {
-							loggingAddEntry(`Selecting the first configuration.`);
+							loggingAddEntry("Selecting the first configuration.");
 							await usbDevice.selectConfiguration(usbDevice.configurations[0].configurationValue);
 						}
 
 						// Analyze and display device information
 						analyzeUSBDevice(usbDevice);
 					}
-				} catch (error: any) {
-					const errorMessage = error?.message || "Unknown error";
+				} catch (error: unknown) {
+					const errorMessage =
+						typeof error === "object" && error !== null && "message" in error
+							? (error as { message?: string }).message ?? "Unknown error"
+							: "Unknown error";
 					loggingAddEntry(`Error: ${errorMessage}`);
 
 					if (errorMessage.includes("protected class")) {
-						loggingAddEntry(`\nThis device has protected interfaces that cannot be accessed directly.`);
+						loggingAddEntry("\nThis device has protected interfaces that cannot be accessed directly.");
 						loggingAddEntry(
-							`If this is a HID device (like keyboard, mouse, gamepad), try using the WebHID API instead.`
+							"If this is a HID device (like keyboard, mouse, gamepad), try using the WebHID API instead."
 						);
-						loggingAddEntry(`Protected classes include: HID, Audio, Mass Storage, Video, etc.`);
+						loggingAddEntry("Protected classes include: HID, Audio, Mass Storage, Video, etc.");
 					}
 				}
 			}
@@ -132,7 +141,7 @@ async function init(): Promise<void> {
 	if (btnCodeCopy) {
 		btnCodeCopy.addEventListener("click", async () => {
 			loggingAddEntry("Copying code to clipboard");
-			const codeElement = document.getElementById("code");
+			const codeElement = document.querySelector("#code");
 			if (codeElement) {
 				try {
 					if (location.href.startsWith("https:")) {
@@ -142,7 +151,7 @@ async function init(): Promise<void> {
 					}
 					loggingAddEntry("Code copied to clipboard");
 				} catch (error) {
-					loggingAddEntry("Failed to copy code to clipboard: " + error);
+					loggingAddEntry(`Failed to copy code to clipboard: ${error}`);
 				}
 			}
 		});
@@ -163,8 +172,8 @@ async function init(): Promise<void> {
 			}
 		}
 		if (device) {
-			loggingAddEntry(`Fetching permissions.`);
-			let logPermissions = `Required permissions:
+			loggingAddEntry("Fetching permissions.");
+			const logPermissions = `Required permissions:
             
 This could be controlled through Domain Setting Rules in the manifest, as permissions in your startup_app or platform configuration in the manifest (the permission will apply to the main/provider window), in your platform configuration as default viewOptions or windowOptions (the platform must define the permission as well) or added to specific window or views.
 
@@ -194,47 +203,60 @@ function loggingAddEntry(entry: string): void {
 	}
 }
 
+/**
+ * Writes example code to the code block based on device type and permissions.
+ * @param isHidDevice True if the device is HID, false if USB.
+ * @param permissions The permissions to include in the example code.
+ */
 function writeCode(isHidDevice: boolean, permissions?: OpenFin.Permissions): void {
-	const codeElement = document.getElementById("code");
+	const codeElement = document.querySelector("#code");
 	if (codeElement) {
-		let code = `// Ensure your application has the appropriate permissions in the manifest or window or view options.\n\n`;
-		code += `// Example permissions block:\n`;
+		let code =
+			"// Ensure your application has the appropriate permissions in the manifest or window or view options.\n\n";
+		code += "// Example permissions block:\n";
 		code += `/*\n"permissions": ${JSON.stringify(permissions, null, 5)}\n*/\n\n`;
-		code += `// Listen for device connection and disconnection events\n`;
+		code += "// Listen for device connection and disconnection events\n";
 		if (isHidDevice) {
-			code += `navigator.hid.addEventListener("disconnect", (event) => {\n    console.log('HID disconnected: ' + event.device.productName);\n});\n`;
-			code += `navigator.hid.addEventListener("connect", (event) => {\n    console.log('HID connected: ' + event.device.productName);\n});\n\n`;
+			code +=
+				"navigator.hid.addEventListener(\"disconnect\", (event) => {\n    console.log('HID disconnected: ' + event.device.productName);\n});\n";
+			code +=
+				"navigator.hid.addEventListener(\"connect\", (event) => {\n    console.log('HID connected: ' + event.device.productName);\n});\n\n";
 		} else {
-			code += `navigator.usb.addEventListener("disconnect", (event) => {\n    console.log('USB disconnected: ' + event.device.productName);\n});\n`;
-			code += `navigator.usb.addEventListener("connect", (event) => {\n    console.log('USB connected: ' + event.device.productName);\n});\n\n`;
+			code +=
+				"navigator.usb.addEventListener(\"disconnect\", (event) => {\n    console.log('USB disconnected: ' + event.device.productName);\n});\n";
+			code +=
+				"navigator.usb.addEventListener(\"connect\", (event) => {\n    console.log('USB connected: ' + event.device.productName);\n});\n\n";
 		}
 		code += `// Getting ${isHidDevice ? "HID" : "USB"} devices\n`;
-		code += `// You don't need to call requestDevice as the device has already been given permissions through the manifest/window/view permission settings. You can call getDevices to interact with the device.\n`;
+		code +=
+			"// You don't need to call requestDevice as the device has already been given permissions through the manifest/window/view permission settings. You can call getDevices to interact with the device.\n";
 		code += `const devices = ${
 			isHidDevice ? "await navigator.hid.getDevices();" : "await navigator.usb.getDevices();"
 		}\n`;
 		code += `console.log('Found ' + devices.length + ' ${isHidDevice ? "HID" : "USB"} devices.');\n`;
-		code += `devices.forEach((device, index) => {\n    console.log('Device ' + (index + 1) + ': Product Name: ' + device.productName + ', Vendor ID: ' + device.vendorId + ', Product ID: ' + device.productId);\n});\n\n`;
-		code += `// Selecting the first device (if any)\n`;
-		code += `const device = devices.length > 0 ? devices[0] : null;\n\n`;
-		code += `// Opening the device\n`;
-		code += `if (device) {\n    await device.open();\n    console.log('Device opened:', device.productName);\n`;
+		code +=
+			"devices.forEach((device, index) => {\n    console.log('Device ' + (index + 1) + ': Product Name: ' + device.productName + ', Vendor ID: ' + device.vendorId + ', Product ID: ' + device.productId);\n});\n\n";
+		code += "// Selecting the first device (if any)\n";
+		code += "const device = devices.length > 0 ? devices[0] : null;\n\n";
+		code += "// Opening the device\n";
+		code +=
+			"if (device) {\n    await device.open();\n    console.log('Device opened:', device.productName);\n";
 		if (!isHidDevice) {
-			code += `    // Continue with interface claiming and communication as needed\n`;
+			code += "    // Continue with interface claiming and communication as needed\n";
 		} else {
-			code += `    // Add event listeners for input reports\n`;
-			code += `    device.addEventListener('inputreport', (event) => {\n`;
-			code += `        const data = new Uint8Array(event.data.buffer);\n`;
-			code += `        console.log('Input report received:', data);\n    });\n`;
+			code += "    // Add event listeners for input reports\n";
+			code += "    device.addEventListener('inputreport', (event) => {\n";
+			code += "        const data = new Uint8Array(event.data.buffer);\n";
+			code += "        console.log('Input report received:', data);\n    });\n";
 		}
-		code += `} else {\n    console.log('No device selected');\n}\n`;
+		code += "} else {\n    console.log('No device selected');\n}\n";
 
 		codeElement.textContent = code;
 	}
 }
 
 /**
- * Analyze and display information about a USB device to help determine compatibility
+ * Analyze and display information about a USB device to help determine compatibility.
  * @param device The USB device to analyze
  */
 function analyzeUSBDevice(device: USBDevice): void {
@@ -268,9 +290,9 @@ function analyzeUSBDevice(device: USBDevice): void {
 	}
 
 	loggingAddEntry("\nDevice Analysis:");
-	loggingAddEntry(`Device Name: ${device.productName || "Unknown"}`);
-	loggingAddEntry(`Manufacturer: ${device.manufacturerName || "Unknown"}`);
-	loggingAddEntry(`Serial Number: ${device.serialNumber || "Not available"}`);
+	loggingAddEntry(`Device Name: ${device.productName ?? "Unknown"}`);
+	loggingAddEntry(`Manufacturer: ${device.manufacturerName ?? "Unknown"}`);
+	loggingAddEntry(`Serial Number: ${device.serialNumber ?? "Not available"}`);
 
 	// Display configurations
 	loggingAddEntry(`\nDevice has ${device.configurations.length} configuration(s).`);
@@ -284,7 +306,7 @@ function analyzeUSBDevice(device: USBDevice): void {
 	let isHidDevice = false;
 	let hasVendorSpecific = false;
 
-	interfaces.forEach((iface, index) => {
+	for (const [index, iface] of interfaces.entries()) {
 		const ifaceClass = iface.alternate.interfaceClass;
 		const className = knownClasses[ifaceClass] || `Unknown Class (${ifaceClass})`;
 
@@ -303,7 +325,7 @@ function analyzeUSBDevice(device: USBDevice): void {
 		if ([1, 3, 7, 8, 9, 14, 15].includes(ifaceClass)) {
 			hasProtectedClass = true;
 		}
-	});
+	}
 
 	// Provide recommendations
 	loggingAddEntry("\nRecommendations:");
