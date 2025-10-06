@@ -19,23 +19,6 @@
 			"permissions": {
 				"webAPIs": ["audio", "video", "hid", "usb"]
 			}
-		},
-		"defaultDomainSettings": {
-			"rules": [
-				{
-					"match": ["<all_urls>"],
-					"options": {
-						"downloadSettings": {
-							"rules": [
-								{
-									"match": ["<all_urls>"],
-									"behavior": "no-prompt"
-								}
-							]
-						}
-					}
-				}
-			]
 		}
 	},
 	"snapshot": {
