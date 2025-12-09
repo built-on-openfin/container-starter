@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>HERE Device Connection</title>
+		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/device-connector.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Connect To A Device</h1>
+				<h1 class="tag" id="tag"></h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/icon-blue.png" alt="HERE" height="40px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="col fill gap20 scroll-vertical">
+				<div class="col fill gap20 overflow-hidden" id="logging-container">
+					<h2>Code</h2>
+					<pre id="code" class="scroll fill"></pre>
+					<div class="row left gap10">
+						<button id="btnOpenDevice">Open Device</button>
+						<button id="btnCodeCopy">Copy Code</button>
+					</div>
+				</div>
+			</div>
+			<div class="col fill gap20">
+				<div class="col fill gap20 overflow-hidden" id="logging-container">
+					<h2>Logging</h2>
+					<pre id="logging" class="scroll fill"></pre>
+					<div class="row right">
+						<button id="btnLoggingClear">Clear Logging</button>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class="row spread">
+				<div class="row gap10">
+					<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebUSB_API" target="_blank">
+						Mozilla WebUSB API
+					</a>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebHID_API" target="_blank">
+						Mozilla WebHID API
+					</a>
+					<a href="https://developers.openfin.co/of-docs/docs/connect-usb-hid" target="_blank">
+						HERE API Docs
+					</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

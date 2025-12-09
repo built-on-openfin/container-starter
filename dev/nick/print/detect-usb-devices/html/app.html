@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>USB/HID Device Detection</title>
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>USB/HID Device Detection</h1>
+				<h1 class="tag">Demonstrate how to check for USB Devices using WebUSB API & OpenFin.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/icon-blue.png" alt="OpenFin" height="40px"></image>
+			</div>
+		</header>
+		<main class="col gap10 scroll-horizontal">
+			<form class="col gap20" id="device-form" onsubmit="return false;">
+				<fieldset>
+					<label for="btn-open-dynamic-window">How to Get Started with Devices</label>
+					<button type="button" id="btn-open-dynamic-window">Open Documentation</button>
+				</fieldset>
+				<fieldset>
+					<label for="btn-identify-device">Identify Device to get Vendor ID and Product ID</label>
+					<button type="button" id="btn-identify-device">Get Device Details</button>
+				</fieldset>
+				<fieldset>
+					<label for="deviceType">Device Type</label>
+					<select id="deviceType">
+						<option selected value="USB">USB</option>
+						<option value="HID">HID</option>
+					</select>
+				</fieldset>
+				<fieldset>
+					<label for="vendorId">VendorId</label>
+					<input id="vendorId" type="number" />
+				</fieldset>
+				<fieldset>
+					<label for="productId">Product Id</label>
+					<input id="productId" type="number" />
+				</fieldset>
+				<fieldset>
+					<label for="btn-connect-device">Open a connection to specified device</label>
+					<button type="button" id="btn-connect-device">Open Connected Window</button>
+				</fieldset>
+			</form>
+		</main>
+	</body>
+</html>
