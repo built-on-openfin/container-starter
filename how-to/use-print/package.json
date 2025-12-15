@@ -1,7 +1,7 @@
 {
 	"name": "use-print",
 	"version": "40.104.2",
-	"description": "A demonstration of how to use the view.print function",
+	"description": "",
 	"main": "index.js",
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",
@@ -9,17 +9,16 @@
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
 		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/use-print && npm run build"
+		"setup": "cd ../../../ && npm install && cd how-to/use-interop/setup-multi-platform-interop && npm run build"
 	},
-	"author": "pj.singh@openfin.co",
+	"author": "adam.saland@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/node-adapter": "40.104.2",
+		"@openfin/node-adapter": "40.100.7",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4",
-		"@openfin/core": "40.104.2"
+		"@openfin/core": "40.100.7"
 	}
 }
-

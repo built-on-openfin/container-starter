@@ -32,4 +32,3 @@ exec(cmd, (error, stdout, stderr) => {
 	}
 	console.log(stdout);
 });
-

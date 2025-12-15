@@ -203,4 +203,3 @@ try {
 }
 
 run(manifest).catch((err) => console.error(err));
-
