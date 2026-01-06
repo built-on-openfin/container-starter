@@ -2,15 +2,6 @@ import type OpenFin from "@openfin/core";
 
 export const CONTAINER_ID = "layout-container";
 const openfinWindow: OpenFin.Window = fin.Window.getCurrentSync();
-const openfinApplication: OpenFin.Application = fin.Application.getCurrentSync();
-
-let lastFocusedView: OpenFin.Identity;
-
-openfinApplication
-	.on("view-focused", (viewEvent): void => {
-		lastFocusedView = viewEvent.viewIdentity;
-	})
-	.catch((error) => console.error(error));
 
 window.addEventListener("DOMContentLoaded", async () => {
 	await fin.Platform.Layout.init({ containerId: CONTAINER_ID });
@@ -38,7 +29,7 @@ async function setupTitleBar(): Promise<void> {
  * Print the view.
  */
 async function printView(): Promise<void> {
-	await openfinWindow.print({content: "views", includeSelf: false});
+	await openfinWindow.print({ content: "views", includeSelf: false });
 }
 /**
  * Maximize or restore the window.
