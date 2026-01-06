@@ -2,7 +2,7 @@
 
 ## How it Works
 
-This example demonstrates how to use the `view.print()` function to print the current view. The app contains a button that triggers the print dialog when clicked.
+This example demonstrates how to use the `view.print()` function to print the current window's child views. The app contains a button that triggers the print dialog when clicked.
 
 For more information, see the [OpenFin View.print documentation](https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.View.html#print).
 
@@ -38,7 +38,7 @@ npm run client
 
 ### What you will see
 
-1. A platform window with a print button
+1. A platform window with two example views and a print button
 2. Clicking the print button will open the system print dialog
 3. The view content will be available for printing
 
