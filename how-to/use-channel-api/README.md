@@ -8,8 +8,8 @@ This repository contains examples showing how to use the Channel API across your
 
 ### Examples
 
-| Example                                                                 | Description                                                                                                                                                                                                                                                                                                |
-| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Example                                                                 | Description                                                                                                                                                                                                                                                                                             |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [How To - Issue Commands To A Platform](./issue-commands-to-a-platform) | This is an example of one application launching a platform application and then connecting to it in order to issue commands. The example uses an HERE Window Application but this could just as easily be a .NET or Java application using a platform application as an approach to migrate to the web. |
 
 ## Before you get started
