@@ -135,7 +135,7 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 
 		/**
 		 * Set the context.
-		 * @param payload object that is passed in when set context is called from an OpenFin entity using the interop api.
+		 * @param payload object that is passed in when set context is called from an HERE entity using the interop api.
 		 * @param payload.context The context for the payload.
 		 * @param clientIdentity object containing the clientIdentity of the sender.
 		 */

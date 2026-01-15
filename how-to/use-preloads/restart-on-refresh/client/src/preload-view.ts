@@ -35,7 +35,7 @@ async function initViewPreload(): Promise<void> {
 				console.log("Reload was detected on the originally loaded url. Performing no actions.");
 			}
 		} else {
-			console.error("This is a preload script so should only ever be loaded into an OpenFin container");
+			console.error("This is a preload script so should only ever be loaded into a HERE container");
 		}
 	} else {
 		console.log(`First load of: ${location.href}`);

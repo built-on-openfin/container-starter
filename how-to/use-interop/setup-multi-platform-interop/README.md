@@ -1,12 +1,12 @@
 # Use Cross Platform Interop
 
-This repository demonstrates how to use OpenFin's interop overrides to enable context sharing from two different Platform Applications
+This repository demonstrates how to use HERE's interop overrides to enable context sharing from two different Platform Applications
 
-Before diving in we recommend taking some time familiarize yourself with the concepts and terms found in the [interoperability overview](https://developers.openfin.co/of-docs/docs/interoperability-overview) section of our documentation.
+Before diving in we recommend taking some time familiarize yourself with the concepts and terms found in the [interoperability overview](https://resources.here.io/docs/core/container/interop/) section of our documentation.
 
 ## How it Works
 
-The interop object, made available through OpenFin views and windows, is programmatically accessible through the concept of platform provider overrides. A platform provider override enables a developer to implement additional logic from objects defined on an instance of an OpenFin window or view entity. In this case specifically, we will be focusing on the `interopOverride` implementing additional logic related to the `interop` object on a Platform's window and view entities.
+The interop object, made available through HERE views and windows, is programmatically accessible through the concept of platform provider overrides. A platform provider override enables a developer to implement additional logic from objects defined on an instance of an HERE window or view entity. In this case specifically, we will be focusing on the `interopOverride` implementing additional logic related to the `interop` object on a Platform's window and view entities.
 
 ## Get Started
 
@@ -67,4 +67,4 @@ From two different Platforms: add a view from a window's context group in platfo
 
 ### A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

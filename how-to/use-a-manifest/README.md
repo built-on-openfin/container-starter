@@ -14,4 +14,4 @@ This repository contains examples showing how to configure your application diff
 
 ## Before you get started
 
-Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
+Read more about our [recommended development environment](https://resources.here.io/docs/core/develop/).

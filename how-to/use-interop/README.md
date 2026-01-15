@@ -1,6 +1,6 @@
 # How To Use Interop API
 
-This directory contains information related to how to use the OpenFin Interop API.
+This directory contains information related to how to use the HERE Interop API.
 
 ## What you can do with this repository
 
@@ -15,4 +15,4 @@ This repository contains examples showing how to use the Interop API across your
 
 ## Before you get started
 
-Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
+Read more about our [recommended development environment](https://resources.here.io/docs/core/develop/).

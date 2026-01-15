@@ -865,7 +865,7 @@ async function showCustomNotification(): Promise<void> {
 									tooltipKey: "actionableUrlTooltip",
 									onClick: {
 										actionId: "open-web-site",
-										url: "https://openfin.co"
+										url: "https://here.io"
 									}
 								},
 								{
@@ -992,8 +992,8 @@ async function showCustomNotification(): Promise<void> {
 			d11: "650",
 			d12: "750",
 			exampleImageUrl: "http://localhost:5050/images/example.png",
-			actionableUrlTitle: "OpenFin Website",
-			actionableUrlTooltip: "http://www.openfin.co"
+			actionableUrlTitle: "HERE Website",
+			actionableUrlTooltip: "http://www.here.io"
 		}
 	};
 
