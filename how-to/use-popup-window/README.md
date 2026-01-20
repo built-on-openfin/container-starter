@@ -1,6 +1,6 @@
 # How To Use Popup Window
 
-This directory contains information related to using the popup window APIs: [Window.showPopupWindow](https://developer.openfin.co/docs/javascript/stable/tutorial-Window.showPopupWindow.html), [View.showPopupWindow](https://developer.openfin.co/docs/javascript/stable/tutorial-View.showPopupWindow.html) and [Window.dispatchPopupResult](https://developer.openfin.co/docs/javascript/stable/tutorial-Window.dispatchPopupResult.html).
+This directory contains information related to using the popup window APIs: [HERE Core Container Popup Window Documentation](https://resources.here.io/docs/core/container/windows/#popup-windows).
 
 ## What you can do with this repository
 
