@@ -10,7 +10,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/create-window/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -35,7 +35,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/integration-excel/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -65,7 +65,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-a-manifest/create-a-single-page-platform/public/common",
-				"files": ["images/icon-blue.png", "images/style/test-image.webp", "style/app.css", "style/style.html"]
+				"files": ["images/icon-here.png", "images/style/test-image.webp", "style/app.css", "style/style.html"]
 			}
 		]
 	},
@@ -80,7 +80,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-channel-api/issue-commands-to-a-platform/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -130,7 +130,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-dynamic-manifest/basic/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -150,7 +150,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-interop/setup-multi-platform-interop/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -175,7 +175,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-launch-external-process/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -200,7 +200,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-logging-apis/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -225,7 +225,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-platform/warn-before-closing-dialog/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -250,7 +250,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-popup-window/advanced/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -275,7 +275,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-popup-window/modal/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -300,7 +300,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-popup-window/multiple-results/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -325,7 +325,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-popup-window/single-result/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -350,7 +350,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-preloads/basic/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -375,7 +375,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-preloads/restart-on-refresh/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -400,7 +400,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-security-realms/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",
@@ -425,7 +425,7 @@
 			{
 				"srcFolder": "how-to/container-platform-starter/public/common",
 				"destFolder": "how-to/use-window-options/public/common",
-				"files": ["images/icon-blue.png", "style/app.css"]
+				"files": ["images/icon-here.png", "style/app.css"]
 			},
 			{
 				"srcFolder": "how-to/container-platform-starter/scripts",

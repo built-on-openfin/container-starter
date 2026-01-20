@@ -56,9 +56,9 @@
 		]
 	},
 	"supportInformation": {
-		"company": "OpenFin",
+		"company": "HERE",
 		"product": "Container Logging APIs Example",
-		"email": "support@openfin.co",
+		"email": "support@here.io",
 		"forwardErrorReports": false
 	}
 }

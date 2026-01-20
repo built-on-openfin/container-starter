@@ -4,7 +4,7 @@
 
 ### Client
 
-1. Please refer to our online documentation for how to setup the log uploader app to send the log. [File](https://developers.openfin.co/of-docs/docs/log-uploader)
+1. Please refer to our online documentation for how to setup the log uploader app to send the log. [File](https://resources.here.io/docs/core/develop/debug/log-uploader/)
 2. The manifest file for the log uploader will have the uri for the REST service.
 3. A minimum of v40.x of the runtime is required to run the log uploader.
 4. You will have a shortcut on the desktop that will start the log uploader process.

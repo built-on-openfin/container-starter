@@ -1,7 +1,7 @@
 {
 	"name": "application-window-creation",
 	"version": "40.104.2",
-	"description": "A demonstration of how to open openfin application windows",
+	"description": "A demonstration of how to open HERE application windows",
 	"main": "index.js",
 	"scripts": {
 		"kill": "node ./scripts/kill.mjs",

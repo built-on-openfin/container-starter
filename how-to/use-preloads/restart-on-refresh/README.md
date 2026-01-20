@@ -1,6 +1,6 @@
 # Use Preloads Restart On Refresh
 
-This repository demonstrates how to use OpenFin preload scripts to navigate to the originally loaded url in a view if the user navigates away and then reloads/refreshes the page.
+This repository demonstrates how to use HERE preload scripts to navigate to the originally loaded url in a view if the user navigates away and then reloads/refreshes the page.
 
 Preload scripts can be defined in window and view options or as part of a manifest. This example defines the view level preload via the manifest.
 
@@ -60,4 +60,4 @@ npm run client
 
 ### A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

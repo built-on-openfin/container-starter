@@ -5,7 +5,7 @@
 		"arguments": "--v=1 --security-realm=PROD-MAIN"
 	},
 	"shortcut": {
-		"company": "OpenFin",
+		"company": "HERE",
 		"description": "PROD Main Application",
 		"icon": "http://localhost:5050/favicon.ico",
 		"name": "PROD Main Application"

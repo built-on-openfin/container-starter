@@ -115,7 +115,7 @@ async function requestDevice(): Promise<void> {
 }
 
 /**
- * Listens for device information passed via the OpenFin runtime and processes it.
+ * Listens for device information passed via the HERE runtime and processes it.
  */
 async function listenForDeviceInfo(): Promise<void> {
 	const app = fin.Application.getCurrentSync();
@@ -167,7 +167,7 @@ async function openDynamicApplicationWindow(): Promise<OpenFin.Window> {
 		name: "child",
 		defaultWidth: 800,
 		defaultHeight: 800,
-		url: "https://developers.openfin.co/of-docs/docs/connect-usb-hid#find-all-connected-devices",
+		url: "https://resources.here.io/docs/core/develop/security/connect-usb-hid/#find-all-connected-devices",
 		frame: true,
 		autoShow: true
 	};

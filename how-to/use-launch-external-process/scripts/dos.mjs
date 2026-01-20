@@ -54,7 +54,7 @@ async function run() {
 			console.warn(
 				'If you are not sure what this means, please press Ctrl-C to exit, or any other key to continue'
 			);
-			console.warn('More Information: https://developers.openfin.co/of-docs/docs/desktop-owner-settings');
+			console.warn('More Information: https://resources.here.io/docs/core/manage/desktops/dos/');
 			await waitForKey(3);
 		}
 		console.log();

@@ -2,7 +2,7 @@
 
 ## How it Works
 
-This example demonstrates how to use [content creation rules](https://developers.openfin.co/of-docs/docs/content-creation-rules) to specify the behavior for new windows created using the web native `window.open` call.
+This example demonstrates how to use [content creation rules](https://resources.here.io/docs/core/container/layouts/content-creation-rules/) to specify the behavior for new windows created using the web native `window.open` call.
 
 Below is the content creation rule set defined in the [platform manifest](./public/manifest.fin.json) `"platform.defaultViewOptions"` object.
 
@@ -57,4 +57,4 @@ Follow the instructions below to get up and running.
 
 ### A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
