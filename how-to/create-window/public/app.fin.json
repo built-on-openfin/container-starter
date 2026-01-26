@@ -21,8 +21,8 @@
 		"version": "40.130.104.2"
 	},
 	"shortcut": {
-		"company": "OpenFin",
-		"description": "Openfin openfin application window Sample",
-		"name": "Openfin application window"
+		"company": "HERE",
+		"description": "HERE Core Container application window Sample",
+		"name": "HERE application window"
 	}
 }

@@ -5,7 +5,7 @@
 		"arguments": "--v=1 --security-realm=UAT-MAIN"
 	},
 	"shortcut": {
-		"company": "OpenFin",
+		"company": "HERE",
 		"description": "UAT Main Application",
 		"icon": "http://localhost:5050/favicon.ico",
 		"name": "UAT Main Application"

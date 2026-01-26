@@ -27,7 +27,7 @@ function populatePreventedViews(views: { name: string }[]): void {
 	for (const view of views) {
 		console.log("add view", view);
 		const viewP = document.createElement("p");
-		viewP.innerHTML = view.name;
+		viewP.textContent = view.name;
 		const v = document.querySelector("#views");
 		if (v) {
 			v.append(viewP);
@@ -44,7 +44,7 @@ function populate(): void {
 
 	if (closeType === "view") {
 		const p = document.createElement("p");
-		p.innerHTML = "Are you sure you want to close this view? It may have unsaved changes.";
+		p.textContent = "Are you sure you want to close this view? It may have unsaved changes.";
 		const t = document.querySelector("#text");
 		if (t) {
 			t.append(p);
@@ -55,14 +55,14 @@ function populate(): void {
 		const views = JSON.parse(params.get("views") ?? "").views;
 
 		const p1 = document.createElement("p");
-		p1.innerHTML = "Are you sure you want to close this window?";
+		p1.textContent = "Are you sure you want to close this window?";
 		const t1 = document.querySelector("#text");
 		if (t1) {
 			t1.append(p1);
 		}
 
 		const p2 = document.createElement("p");
-		p2.innerHTML = "The following views may have unsaved changes:";
+		p2.textContent = "The following views may have unsaved changes:";
 		const t2 = document.querySelector("#text");
 		if (t2) {
 			t2.append(p2);

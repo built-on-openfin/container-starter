@@ -6,10 +6,10 @@
 		"autoShow": false
 	},
 	"trustedAppConfigs": {
-		"value": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
+		"value": "This value will be provided by Here once the relevant information has been provided.",
 		"signature": {
-			"win": "This value will be provided by Here (OpenFin) once the relevant information has been provided.",
-			"mac": "This value will be provided by Here (OpenFin) once the relevant information has been provided."
+			"win": "This value will be provided by Here once the relevant information has been provided.",
+			"mac": "This value will be provided by Here once the relevant information has been provided."
 		}
 	},
 	"platform": {

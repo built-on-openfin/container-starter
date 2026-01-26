@@ -1,0 +1,13 @@
+{
+	"applicationSettings": {
+		"http://localhost:5050/manifest.fin.json": {
+			"permissions": {
+				"System": {
+					"launchExternalProcess": true,
+					"terminateExternalProcess": true,
+					"downloadAsset": true
+				}
+			}
+		}
+	}
+}
