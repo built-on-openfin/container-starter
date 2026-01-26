@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	if (launchOneBtn || launchTenBtn || launchTwentyBtn) {
 		launchOneBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/common/snapshots/snapshot-one.json`);
-			if(url.value.trim() === "") {
+			if (url.value.trim() === "") {
 				const payload = await snapshot.json();
 				await platform.applySnapshot(payload);
 			} else {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 		launchTenBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/common/snapshots/snapshot-ten.json`);
-			if(url.value.trim() === "") {
+			if (url.value.trim() === "") {
 				const payload = await snapshot.json();
 				await platform.applySnapshot(payload);
 			} else {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		});
 		launchTwentyBtn.addEventListener("click", async () => {
 			const snapshot = await fetch(`${baseUrl}/common/snapshots/snapshot-twenty.json`);
-			if(url.value.trim() === "") {
+			if (url.value.trim() === "") {
 				const payload = await snapshot.json();
 				await platform.applySnapshot(payload);
 			} else {
