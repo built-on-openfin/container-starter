@@ -1,6 +1,6 @@
 {
 	"name": "use-download-bubble",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"description": "A basic window with a button that triggers a download (Chromium download bubble UI).",
 	"main": "index.js",
 	"scripts": {

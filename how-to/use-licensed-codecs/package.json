@@ -1,6 +1,6 @@
 {
 	"name": "use-licensed-codecs",
-	"version": "38.0.0",
+	"version": "43.101.2",
 	"description": "A demonstration of a where you need to put configuration in order to enable licensed codecs.",
 	"scripts": {
 		"build": "echo This project does not require a build step.",

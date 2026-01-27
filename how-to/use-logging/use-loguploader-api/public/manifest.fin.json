@@ -1,6 +1,6 @@
 {
 	"runtime": {
-		"version": "42.138.100.107"
+		"version": "43.142.101.2"
 	},
 	"startup_app": {
 		"name": "launch-loguploader-programmatically",

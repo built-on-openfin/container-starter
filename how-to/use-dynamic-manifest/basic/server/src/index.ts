@@ -33,7 +33,7 @@ app.get("/manifest", (req, res) => {
 			licenseKey: "openfin-demo-license-key",
 			runtime: {
 				arguments: "--v=1 --inspect",
-				version: "26.102.70.16"
+				version: "43.142.101.2"
 			},
 			platform: {
 				uuid: "how-to-use-dynamic-manifest-basic",
@@ -77,7 +77,7 @@ app.get("/manifest", (req, res) => {
 			licenseKey: "openfin-demo-license-key",
 			runtime: {
 				arguments: "--v=1 --inspect",
-				version: "26.102.70.16"
+				version: "43.142.101.2"
 			},
 			platform: {
 				uuid: "how-to-use-dynamic-manifest-basic",

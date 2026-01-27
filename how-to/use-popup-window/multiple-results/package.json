@@ -1,6 +1,6 @@
 {
 	"name": "use-popup-window-multiple-results",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"description": "A demonstration of a popup window that can return multiple results.",
 	"main": "index.js",
 	"scripts": {
@@ -14,9 +14,9 @@
 	"author": "connor.mccafferty@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "40.104.2",
+		"@openfin/core": "43.101.2",
 		"@types/node": "^20.12.11",
-		"@openfin/node-adapter": "40.104.2",
+		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",

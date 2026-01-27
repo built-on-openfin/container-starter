@@ -1,6 +1,6 @@
 {
 	"name": "launch-external-process",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"description": "An example of how to use launch external process",
 	"main": "index.js",
 	"scripts": {
@@ -15,11 +15,11 @@
 	"author": "@adam-saland",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/node-adapter": "40.104.2",
+		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4",
-		"@openfin/core": "40.104.2"
+		"@openfin/core": "43.101.2"
 	}
 }
