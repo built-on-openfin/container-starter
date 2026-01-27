@@ -1,0 +1,39 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "how-to-use-download-bubble",
+		"autoShow": true,
+		"defaultWindowOptions": {
+			"downloadBubble": {
+				"enabled": true
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "download-bubble",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/main/use-download-bubble/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

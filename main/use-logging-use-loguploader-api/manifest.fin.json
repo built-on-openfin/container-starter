@@ -1,12 +1,12 @@
 {
 	"runtime": {
-		"version": "42.138.100.107"
+		"version": "43.142.101.2"
 	},
 	"startup_app": {
 		"name": "launch-loguploader-programmatically",
 		"url": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-loguploader-api/html/app.html",
 		"uuid": "launch-loguploader-programmatically",
-		"icon": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-loguploader-api/common/images/icon-blue.png",
+		"icon": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-loguploader-api/common/images/icon-here.png",
 		"autoShow": true,
 		"saveWindowState": true,
 		"permissions": {
@@ -19,9 +19,9 @@
 		}
 	},
 	"shortcut": {
-		"company": "OpenFin",
+		"company": "HERE",
 		"description": "Launch Log Uploader",
-		"icon": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-loguploader-api/common/images/icon-blue.png",
+		"icon": "https://built-on-openfin.github.io/container-starter/main/use-logging-use-loguploader-api/common/images/icon-here.png",
 		"name": "Launch Log Uploader"
 	}
 }
