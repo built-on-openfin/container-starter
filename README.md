@@ -1,4 +1,4 @@
-![HERE Core Container Starter](./assets/OpenFin-Container-Starter.png)
+![HERE Core Container Starter](./assets/HERO-STARTER-CONTAINER.png)
 
 _Disclaimer: ℹ️ HERE Core Container is a commercial product and this repo is for evaluation purposes. Use of the HERE Core Container and HERE Core components is only granted pursuant to a license from Here (see manifest). Please contact us if you would like to request a developer evaluation key or to discuss a production license._
 
