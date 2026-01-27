@@ -1,0 +1,14 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"enableBeforeUnload": true,
+		"uuid": "container-use-notifications",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-notifications/favicon.ico",
+		"autoShow": true,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-notifications/html/provider.html"
+	},
+	"snapshot": {}
+}

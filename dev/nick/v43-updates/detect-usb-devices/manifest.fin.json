@@ -1,0 +1,51 @@
+{
+	"runtime": {
+		"arguments": "--v=0",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "how-to-detect-usb-devices",
+		"autoShow": false,
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/detect-usb-devices/favicon.ico",
+		"permissions": {
+			"webAPIs": ["audio", "video", "hid", "usb"]
+		},
+		"defaultViewOptions": {
+			"permissions": {
+				"webAPIs": ["audio", "video", "hid", "usb"]
+			}
+		},
+		"defaultWindowOptions": {
+			"permissions": {
+				"webAPIs": ["audio", "video", "hid", "usb"]
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "no-drop-target",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/detect-usb-devices/html/app.html",
+										"permissions": {
+											"webAPIs": ["hid", "usb"]
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

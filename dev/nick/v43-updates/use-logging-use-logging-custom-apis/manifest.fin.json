@@ -1,0 +1,64 @@
+{
+	"runtime": {
+		"arguments": "--enable-mesh --security-realm=use-application-logging",
+		"version": "43.142.101.2"
+	},
+	"licenseKey": "openfin-demo-license-key",
+	"platform": {
+		"name": "use-application-logging",
+		"uuid": "use-application-logging",
+		"description": "An example of using application logging",
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-logging-use-logging-custom-apis/html/provider.html",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-logging-use-logging-custom-apis/favicon.ico",
+		"autoShow": true,
+		"defaultWidth": 1200,
+		"defaultHeight": 800,
+		"defaultCentered": true,
+		"minWidth": 800,
+		"minHeight": 400,
+		"appLogsTimezone": "utc",
+		"enableAppLogging": true,
+		"logManagement": {
+			"enabled": true,
+			"url": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-logging-use-logging-custom-apis"
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"defaultHeight": 900,
+				"defaultWidth": 1200,
+				"defaultCentered": true,
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-logging-use-logging-custom-apis/html/app.html"
+									}
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-logging-use-logging-custom-apis/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	},
+	"supportInformation": {
+		"company": "HERE",
+		"product": "Container Logging APIs Example",
+		"email": "support@here.io",
+		"forwardErrorReports": false
+	}
+}

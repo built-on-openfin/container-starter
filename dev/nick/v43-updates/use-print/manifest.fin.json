@@ -1,0 +1,58 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "platform-use-print",
+		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-print/html/provider.html",
+		"apiDiagnostics": false,
+		"defaultWindowOptions": {
+			"url": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-print/html/window.html",
+			"contextMenu": true,
+			"defaultWidth": 700,
+			"defaultHeight": 700,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"showBackgroundImages": true,
+			"backgroundThrottling": true,
+			"minHeight": 700,
+			"minWidth": 700,
+			"height": 700,
+			"width": 700
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"name": "window1",
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/interop-api/context/interop-broadcast-view.html"
+									}
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/interop-api/context/interop-broadcast-view.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

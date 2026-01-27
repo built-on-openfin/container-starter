@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Client that generates logs</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>A client that generates logs</h1>
+				<h1 class="tag">Log via Channel API vs console log</h1>
+			</div>
+			<div class="row middle gap10">
+				<image src="../common/images/icon-here.png" alt="HERE" height="40px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="row fill gap40">
+				<div class="fill col gap20">
+					<h4>Console Log A Message</h4>
+					<button id="console-app-log">Console Log Message</button>
+					<h4>Channel API Log A Message</h4>
+					<button id="channel-app-log">Channel API Log Message</button>
+				</div>
+			</div>
+			<div class="col fill_2 gap20">
+				<h2>Preview</h2>
+				<pre id="preview" class="fill scroll-horizontal"></pre>
+				<button id="clear-preview">Clear Preview</button>
+			</div>
+		</main>
+		<footer></footer>
+	</body>
+</html>

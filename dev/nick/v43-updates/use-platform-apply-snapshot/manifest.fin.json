@@ -1,0 +1,25 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "apply-snapshot",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-platform-apply-snapshot/favicon.ico",
+		"autoShow": true,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/nick/v43-updates/use-platform-apply-snapshot/html/provider.html",
+		"apiDiagnostics": false,
+		"defaultWindowOptions": {
+			"contextMenu": true,
+			"defaultWidth": 900,
+			"defaultHeight": 900,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"backgroundThrottling": true,
+			"minHeight": 445,
+			"minWidth": 354,
+			"defaultCentered": true
+		}
+	}
+}
