@@ -14,4 +14,4 @@ This repository contains examples showing how a service could be used to return 
 
 ## Before you get started
 
-Read more about our [recommended development environment](https://developers.openfin.co/of-docs/docs/set-up-your-dev-environment).
+Read more about our [recommended development environment](https://resources.here.io/docs/core/develop/).

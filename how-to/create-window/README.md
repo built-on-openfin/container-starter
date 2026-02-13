@@ -2,7 +2,7 @@
 
 ## How it Works
 
-The app.ts listens for button clicks and creates with a dynamic openfin window or from a manifest.
+The app.ts listens for button clicks and creates with a dynamic HERE window or from a manifest.
 
 The manifest is located in the config folder along with the manifest for this sample application
 
@@ -42,4 +42,4 @@ npm run client
 
 ## A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

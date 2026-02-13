@@ -1,8 +1,8 @@
 # Use security realms
 
-This repository demonstrates how to use OpenFin Runtime security realms to isolate application that have different target environments and enable interoperability between applications sharing the same target environment.
+This repository demonstrates how to use HERE Runtime security realms to isolate application that have different target environments and enable interoperability between applications sharing the same target environment.
 
-Before diving in we recommend taking some time reading an [overview of how security realms work](https://developers.openfin.co/of-docs/docs/openfin-security#security-realms).
+Before diving in we recommend taking some time reading an [overview of how security realms work](https://resources.here.io/docs/core/manage/security/#security-realms).
 
 ## How it Works
 
@@ -42,7 +42,7 @@ npm run client
 
 ### Use the project interface
 
-1. Launch the PROD manifest (`http://localhost:5050/manifest.fin.json`). An OpenFin Platform window opens, containing a single view with the following features:
+1. Launch the PROD manifest (`http://localhost:5050/manifest.fin.json`). A HERE Platform window opens, containing a single view with the following features:
 
    - A button to launch an application in **the same** target environment and security realm
    - A button to launch an application in **a different** target environment and security realm
@@ -92,4 +92,4 @@ _The paths provided in this description are relative to the server host_: `http:
 
 ### A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

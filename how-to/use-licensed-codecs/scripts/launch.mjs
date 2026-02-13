@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/no-process-exit */
 /**
- * This script will launch an OpenFin application.
- * It uses the OpenFin NodeJS adapter to launch the url specified on the command line.
+ * This script will launch a HERE application.
+ * It uses the HERE NodeJS adapter to launch the url specified on the command line.
  * Pressing Ctrl+C/Command+C will terminate the application.
  */
 import { connect, launch } from '@openfin/node-adapter';
@@ -114,7 +114,7 @@ async function launchFromFinsLink(manifestUrl) {
 		console.log('Please quit the platform using:');
 		console.log();
 		console.log('- Process Manager (https://start.openfin.co/pm)');
-		console.log('- run npm run kill to kill all OpenFin processes.');
+		console.log('- run npm run kill to kill all HERE processes.');
 		console.log();
 		console.log();
 	}
@@ -129,7 +129,7 @@ async function launchFromFinsLink(manifestUrl) {
 
 	// do something when app is closing
 	process.on('exit', async () => {
-		console.log('Please wait for the OpenFin application to launch.');
+		console.log('Please wait for the HERE application to launch.');
 		logQuitMessage();
 	});
 
@@ -161,14 +161,14 @@ async function connectAndGetFinAPI(manifestUrl, exitMethod) {
 
 		const port = await launch({ manifestUrl });
 
-		// We will use the port to connect from Node to determine when OpenFin exists.
+		// We will use the port to connect from Node to determine when HERE exists.
 		const fin = await connect({
 			uuid: `dev-connection-${Date.now()}`, // Supply an addressable Id for the connection
 			address: `ws://127.0.0.1:${port}`, // Connect to the given port.
-			nonPersistent: true // We want OpenFin to exit as our application exists.
+			nonPersistent: true // We want HERE to exit as our application exists.
 		});
 
-		// Once OpenFin exits we shut down the process.
+		// Once HERE exits we shut down the process.
 		fin.once('disconnected', () => {
 			console.log('Platform disconnected');
 			console.log('Exiting process');

@@ -252,7 +252,7 @@ function clearPreview(): void {
 }
 
 /**
- * Sends a message to the OpenFin RVM to send the application logs.
+ * Sends a message to the HERE RVM to send the application logs.
  */
 async function sendApplicationLogs(): Promise<void> {
 	const logPreview = document.querySelector("#preview");

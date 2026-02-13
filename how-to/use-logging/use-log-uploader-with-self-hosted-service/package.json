@@ -1,6 +1,6 @@
 {
 	"name": "log-uploader-api",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"main": "server.js",
 	"scripts": {
 		"start": "npx tsx server.ts"

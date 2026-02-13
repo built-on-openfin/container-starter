@@ -1,6 +1,6 @@
 {
 	"name": "detect-usb-devices",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"description": "A demonstration of how to check for connected usb devices",
 	"main": "index.js",
 	"scripts": {
@@ -14,8 +14,8 @@
 	"author": "joe.ransegnola@here.io",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "40.104.2",
-		"@openfin/node-adapter": "40.104.2",
+		"@openfin/core": "43.101.2",
+		"@openfin/node-adapter": "43.101.2",
 		"@types/w3c-web-usb": "^1.0.10",
 		"@types/w3c-web-hid": "^1.0.6",
 		"ts-loader": "^9.5.1",

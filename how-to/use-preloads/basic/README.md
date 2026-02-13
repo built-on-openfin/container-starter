@@ -1,6 +1,6 @@
 # Use Preloads Hello World
 
-This repository demonstrates how to use OpenFin Runtime Preload capabilities to inject a script into the different parts of an OpenFin application.
+This repository demonstrates how to use HERE Runtime Preload capabilities to inject a script into the different parts of an HERE application.
 
 Preload scripts can be defined in window and view options or as part of a manifest.
 
@@ -8,7 +8,7 @@ The manifest in [public/manifest.fin.json](public/manifest.fin.json) shows how y
 
 ## How it Works
 
-The preload script is injected into the page you are targeting. The sample checks to see if the page has finished loading (if it has it executes a function that simply logs out a message) and if hasn't then it adds an event listener in order to only execute some logic when the page is ready. The buttons on the view execute logic to show developer tools for each part of the OpenFin application that had preload scripts loaded.
+The preload script is injected into the page you are targeting. The sample checks to see if the page has finished loading (if it has it executes a function that simply logs out a message) and if hasn't then it adds an event listener in order to only execute some logic when the page is ready. The buttons on the view execute logic to show developer tools for each part of the HERE application that had preload scripts loaded.
 
 ## Get Started
 
@@ -54,4 +54,4 @@ npm run client
 
 ### A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

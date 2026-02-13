@@ -1,6 +1,6 @@
 {
 	"name": "container-starter-use-interop--cloud-interop",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -15,14 +15,14 @@
 	"author": "adam.saland@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"dependencies": {
-		"@openfin/cloud-interop": "0.40.33"
+		"@openfin/cloud-interop": "0.43.113"
 	},
 	"devDependencies": {
-		"@openfin/node-adapter": "40.101.1",
+		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4",
-		"@openfin/core": "40.101.1"
+		"@openfin/core": "43.101.2"
 	}
 }

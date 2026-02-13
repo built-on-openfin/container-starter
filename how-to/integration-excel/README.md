@@ -1,8 +1,8 @@
 # Integrate with Microsoft Excel
 
-This repository demonstrates how to use OpenFin’s Excel integration in order to interact with the Microsoft Excel native client application. The Excel integration API is an ES module provided via the [@openfin/excel](https://www.npmjs.com/package/@openfin/excel) NPM package.
+This repository demonstrates how to use HERE's Excel integration in order to interact with the Microsoft Excel native client application. The Excel integration API is an ES module provided via the [@openfin/excel](https://www.npmjs.com/package/@openfin/excel) NPM package.
 
-For further information about the Excel integration, refer to the developer [documentation](https://developers.openfin.co/of-docs/docs/excel-integration).
+For further information about the Excel integration, refer to the developer [documentation](https://resources.here.io/docs/core/integrations/excel/).
 
 ## How it Works
 
@@ -58,4 +58,4 @@ npm run secondclient
 
 ### A note about this example
 
-This is an example of how to use OpenFin APIs to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE APIs to configure HERE Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

@@ -2,7 +2,7 @@
 
 ## How it Works
 
-The manifest file [public/manifest.fin.json](public/manifest.fin.json) has a snapshot definition. We define a single url (our starter style guide as an example) and that the view should not show a tab (so you only see the main frame). The platform does not have a custom window template (it is using the default OpenFin template with minimize, maximize and close) and it doesn't specify a custom provider url (so it does not have an initial background page running background logic). This is a simple platform definition which can act as a first step with the potential of using platform capabilities in the future.
+The manifest file [public/manifest.fin.json](public/manifest.fin.json) has a snapshot definition. We define a single url (our starter style guide as an example) and that the view should not show a tab (so you only see the main frame). The platform does not have a custom window template (it is using the default HERE template with minimize, maximize and close) and it doesn't specify a custom provider url (so it does not have an initial background page running background logic). This is a simple platform definition which can act as a first step with the potential of using platform capabilities in the future.
 
 ## Get Started
 
@@ -58,4 +58,4 @@ npm run secondclient
 
 ### A note about this example
 
-This is an example of how to use OpenFin manifests to configure OpenFin Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+This is an example of how to use HERE manifests to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

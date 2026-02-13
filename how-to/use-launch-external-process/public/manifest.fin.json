@@ -1,12 +1,12 @@
 {
 	"runtime": {
-		"version": "40.130.104.2"
+		"version": "43.142.101.2"
 	},
 	"startup_app": {
 		"name": "launch-app-asset",
 		"url": "http://localhost:5050/html/app.html",
 		"uuid": "launch-app-asset",
-		"icon": "http://localhost:5050/common/images/icon-blue.png",
+		"icon": "http://localhost:5050/common/images/icon-here.png",
 		"autoShow": true,
 		"saveWindowState": true,
 		"permissions": {
@@ -27,9 +27,9 @@
 		}
 	],
 	"shortcut": {
-		"company": "OpenFin",
+		"company": "HERE",
 		"description": "Launch App Asset",
-		"icon": "http://localhost:5050/common/images/icon-blue.png",
+		"icon": "http://localhost:5050/common/images/icon-here.png",
 		"name": "Launch App Asset"
 	}
 }

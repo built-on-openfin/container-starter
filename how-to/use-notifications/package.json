@@ -1,6 +1,6 @@
 {
 	"name": "container-use-notifications",
-	"version": "40.104.2",
+	"version": "43.101.2",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -13,14 +13,14 @@
 	},
 	"license": "ISC",
 	"devDependencies": {
-		"@openfin/core": "40.104.2",
-		"@openfin/node-adapter": "40.104.2",
+		"@openfin/core": "43.101.2",
+		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4"
 	},
 	"dependencies": {
-		"@openfin/workspace": "^20.1.5"
+		"@openfin/workspace": "^23.1.3"
 	}
 }
