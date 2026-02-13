@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>OS Info and Host Specs Example</title>
+		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Show OS Information</h1>
+				<h1 class="tag">Shows how to gather required OS information.</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/favicon-32x32.png" alt="HERE" height="32px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="col fill left gap20 scroll-vertical">
+				<h2>Show OS Information</h2>
+				<button id="btn-show-host-specs" class="secondary">Show Host Specs</button>
+				<button id="btn-show-os-info" class="secondary">
+					Show OS Info
+				</button>
+				<div>Support for OS Info was added in HERE Core Runtime <a href="https://developer.openfin.co/versions/?product=Runtime#38.126.82.64" target="_blank">38.126.82.64</a>.</p> If your platform hosts mixed content (from multiple teams or third parties) then you may want to use <a href="https://resources.here.io/docs/core/develop/security/domain-permissions/" target="_blank"><b>domain permissions</b></a> to control access to this API instead of platform/window/view permissions or at a minimum permission your platform and control who can ask your platform for this information.</div>
+
+			</div>
+			<div class="col fill_2 gap20">
+				<div class="col fill gap20 overflow-hidden" id="logging-container">
+					<h2>Logging</h2>
+					<pre id="logging" class="scroll fill"></pre>
+					<div class="row right">
+						<button id="btnLoggingClear">Clear Logging</button>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class="row spread">
+				<div class="row gap10">
+					<a
+						href="https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#getHostSpecs"
+						target="_blank"
+					>
+						Get Host Specs API Docs
+					</a>
+				</div>
+				<div class="row gap10">
+					<a
+						href="https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#getOSInfo"
+						target="_blank"
+					>
+						Get OS Info API Docs
+					</a>
+					</div>
+					<div class="row gap10">
+					<a
+						href="https://resources.here.io/docs/core/develop/security/api-security"
+						target="_blank"
+					>
+						API Security Docs
+					</a></div>
+					<div class="row gap10">
+					<a
+						href="https://resources.here.io/docs/core/develop/security/domain-permissions/"
+						target="_blank"
+					>
+						Domain Permission Docs
+					</a></div>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
