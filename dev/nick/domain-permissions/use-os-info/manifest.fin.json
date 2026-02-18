@@ -1,0 +1,45 @@
+{
+	"runtime": {
+		"arguments": "",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "how-to-use-os-info",
+		"defaultViewOptions": {
+			"permissions": {
+				"System": {
+					"getOSInfo": true
+				}
+			}
+		},
+		"permissions": {
+			"System": {
+				"getOSInfo": true
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "os-info",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/nick/domain-permissions/use-os-info/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
