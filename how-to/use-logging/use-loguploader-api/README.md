@@ -8,11 +8,11 @@
 
 ```js
 const data = await fin.System.launchLogUploader({
-     endpoint: "http://localhost:3000/api/upload",
-     manifests: [],
-     logs: ["debug", "app", "rvm"],
-     ui
-    });
+  endpoint: 'http://localhost:3000/api/upload',
+  manifests: [],
+  logs: ['debug', 'app', 'rvm'],
+  ui
+});
 ```
 
 3. A minimum of v40.x of the runtime is required to run the log uploader.
