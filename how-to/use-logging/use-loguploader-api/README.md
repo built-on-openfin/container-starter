@@ -47,4 +47,4 @@ npm run start
 npm run client
 ```
 
-### Note: If you make any code changes please run steps 1 through 4.
+### Note: If you make any code changes please run steps 1 through 4
