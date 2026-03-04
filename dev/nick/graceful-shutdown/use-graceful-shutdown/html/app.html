@@ -2,9 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Graceful Shutdown Example</title>
+		<title>Graceful Shutdown</title>
 		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
-		<meta name="description" content="Demonstrates registerShutdownHandler for cleanup before runtime exit." />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../common/style/app.css" />
 		<script src="../js/app.bundle.js"></script>
@@ -14,35 +13,28 @@
 		<header class="row spread middle">
 			<div class="col">
 				<h1>Graceful Shutdown</h1>
-				<h1 class="tag">Demonstrates registerShutdownHandler for cleanup before runtime exit.</h1>
-			</div>
-			<div class="row middle gap20">
-				<img src="../common/images/icon-here.png" alt="OpenFin" height="32px" />
+				<h1 class="tag">registerShutdownHandler example</h1>
 			</div>
 		</header>
 		<main class="col fill left gap20 scroll-vertical">
 			<div class="col gap20">
-				<h2>Status</h2>
-				<p id="status" class="status-pending">Registering shutdown handler…</p>
-				<h2>How to test</h2>
+				<p id="status">Shutdown handler is registered in the provider.</p>
 				<p>
-					Close the platform window. The before-unload hook logs to the OpenFin log. Check
-					<code>%LOCALAPPDATA%\OpenFin\cache\&lt;runtime version&gt;\debug.log</code> (Windows) for
-					&quot;Graceful shutdown: before-unload ran (window close)&quot;.
+					<strong>Test:</strong> Close this app, then check the OpenFin log for &quot;Shutdown handler ran&quot;.
+					If the message is missing, the handler did not run.
+				</p>
+				<p>
+					<strong>Log (Windows):</strong> <code>%LOCALAPPDATA%\OpenFin\cache\43.142.101.2\debug.log</code>
 				</p>
 			</div>
 		</main>
 		<footer>
-			<div class="row spread">
-				<div class="row gap10">
-					<a
-						href="https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#registerShutdownHandler"
-						target="_blank"
-					>
-						registerShutdownHandler API Docs
-					</a>
-				</div>
-			</div>
+			<a
+				href="https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#registerShutdownHandler"
+				target="_blank"
+			>
+				registerShutdownHandler API
+			</a>
 		</footer>
 	</body>
 </html>
