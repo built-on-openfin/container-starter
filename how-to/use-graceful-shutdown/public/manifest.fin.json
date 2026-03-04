@@ -1,6 +1,6 @@
 {
 	"runtime": {
-		"arguments": "",
+		"arguments": "--v=1",
 		"version": "43.142.101.2"
 	},
 	"platform": {

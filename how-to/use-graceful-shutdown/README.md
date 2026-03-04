@@ -23,7 +23,10 @@ npm run client
 2. Open the OpenFin log and search for **"Shutdown handler ran"**.
 
 **Log location (Windows):** `%LOCALAPPDATA%\OpenFin\cache\<runtime version>\debug.log`  
+**Log location (Mac):** `~/Library/Application Support/OpenFin/cache/<runtime version>/debug.log`  
 Example: `C:\Users\<You>\AppData\Local\OpenFin\cache\43.142.101.2\debug.log`
+
+The manifest sets `runtime.arguments` to `--v=1` so that info-level logs (including `fin.System.log`) are written to the debug log. Without it, you may only see CORE-level entries.
 
 **If the message is not in the log,** the shutdown handler was not called when closing the app.
 
