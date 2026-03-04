@@ -2,9 +2,9 @@
 
 ## How it Works
 
-This example demonstrates **[registerShutdownHandler](https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#registerShutdownHandler)** from the OpenFin System API. The handler is registered in the platform provider. When system shutdown occurs, it logs a message via `fin.System.log()` (so you can verify in the OpenFin log file), then calls `shutdownEvent.proceed()` so the runtime can finish terminating.
+This example demonstrates **[registerShutdownHandler](https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#registerShutdownHandler)** and the platform **before-unload** hook. Closing the platform window triggers **getUserDecisionForBeforeUnload**, which logs to the OpenFin log file so you can verify. The example also registers **registerShutdownHandler** (which may not run when simply closing the last window; it runs at full system shutdown).
 
-> **Note:** `registerShutdownHandler` is marked as Experimental in the OpenFin docs. The handler must call `shutdownEvent.proceed()`; otherwise shutdown may not complete. Behavior may differ between Mac and Windows; if you don't see the handler run when closing the window, check the log file after exit (see below).
+**Verification:** Close the app, then open the OpenFin log (Windows: `%LOCALAPPDATA%\OpenFin\cache\<runtime version>\debug.log`) and search for **"Graceful shutdown: before-unload ran (window close)"**.
 
 ## Get Started
 
@@ -32,7 +32,9 @@ npm run client
 
 ### How to test
 
-Close the platform (close all windows or quit the app). The shutdown handler runs when the system shuts down. Because the dev console closes with the app, verify by checking the **OpenFin log file** (e.g. `debug.log` in your [OpenFin data directory](https://developer.openfin.co/docs/documentation/docs/debugging)) for the message: `Shutdown handler ran: cleanup before exit`.
+Close the platform window. The **before-unload** hook runs and writes to the log. Open the **OpenFin log file** and search for **"Graceful shutdown: before-unload ran (window close)"**.
+
+**Log location (Windows):** `%LOCALAPPDATA%\OpenFin\cache\<runtime version>\debug.log` (e.g. `C:\Users\<You>\AppData\Local\OpenFin\cache\43.142.101.2\debug.log`).
 
 Use `npm run kill` to stop all OpenFin processes if needed.
 
