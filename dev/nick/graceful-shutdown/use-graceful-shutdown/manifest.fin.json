@@ -6,7 +6,8 @@
 	"platform": {
 		"uuid": "how-to-use-graceful-shutdown",
 		"autoShow": true,
-		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/nick/graceful-shutdown/use-graceful-shutdown/html/provider.html"
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/nick/graceful-shutdown/use-graceful-shutdown/html/provider.html",
+		"enableBeforeUnload": true
 	},
 	"snapshot": {
 		"windows": [

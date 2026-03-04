@@ -26,9 +26,9 @@
 				<p id="status" class="status-pending">Registering shutdown handler…</p>
 				<h2>How to test</h2>
 				<p>
-					Close the platform (close all windows) or quit the app. The shutdown handler runs when the system
-					exits. Check the OpenFin log file (e.g. debug.log) for the message &quot;Shutdown handler ran: cleanup
-					before exit&quot;.
+					Close the platform window. The before-unload hook logs to the OpenFin log. Check
+					<code>%LOCALAPPDATA%\OpenFin\cache\&lt;runtime version&gt;\debug.log</code> (Windows) for
+					&quot;Graceful shutdown: before-unload ran (window close)&quot;.
 				</p>
 			</div>
 		</main>
