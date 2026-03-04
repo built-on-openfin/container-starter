@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Graceful Shutdown Example</title>
+		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+		<meta name="description" content="Demonstrates registerShutdownHandler for cleanup before runtime exit." />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Graceful Shutdown</h1>
+				<h1 class="tag">Demonstrates registerShutdownHandler for cleanup before runtime exit.</h1>
+			</div>
+			<div class="row middle gap20">
+				<img src="../common/images/icon-here.png" alt="OpenFin" height="32px" />
+			</div>
+		</header>
+		<main class="col fill left gap20 scroll-vertical">
+			<div class="col gap20">
+				<h2>Status</h2>
+				<p id="status" class="status-pending">Registering shutdown handler…</p>
+				<h2>How to test</h2>
+				<p>
+					Close the platform (close all windows) or quit the app. The shutdown handler runs when the system
+					exits. Check the OpenFin log file (e.g. debug.log) for the message &quot;Shutdown handler ran: cleanup
+					before exit&quot;.
+				</p>
+			</div>
+		</main>
+		<footer>
+			<div class="row spread">
+				<div class="row gap10">
+					<a
+						href="https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#registerShutdownHandler"
+						target="_blank"
+					>
+						registerShutdownHandler API Docs
+					</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
