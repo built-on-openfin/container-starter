@@ -1,9 +1,9 @@
 /**
  * When system shutdown runs, it logs "Shutdown handler ran" then calls proceed().
- * If closing the app does not write that message to the log, the handler is not being called.
+ * We await the log so shutdown doesn't proceed before the message is written.
  */
-fin.System.registerShutdownHandler((shutdownEvent) => {
-	fin.System.log("info", "Shutdown handler ran").catch(() => {});
+fin.System.registerShutdownHandler(async (shutdownEvent) => {
+	await fin.System.log("info", "Shutdown handler ran").catch(() => {});
 	shutdownEvent.proceed();
 }).catch((err) => console.error("Failed to register shutdown handler:", err));
 
