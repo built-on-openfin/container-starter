@@ -1,9 +1,21 @@
-# Use the launch external process API to run an appAsset
+# How to use the LogUploader api within your app with or without your own self hosted REST service
 
-This repository demonstrates the use of the `System.launchExternalProcess`, to launch an `appAsset` defined in an Application's manifest. `System.launchExternalProcess` is a [secure API][1] that can be enabled by user acceptance, or [desktop owner settings][2].
+## How it Works
 
-[1]: https://resources.here.io/docs/core/develop/security/api-security/ 'Read more on secure api here'
-[2]: https://resources.here.io/docs/core/manage/desktops/dos/ 'Read more on desktop owner settings here'
+1. Please refer to our online documentation for how to setup the log uploader app to send the log. [File](https://resources.here.io/docs/core/develop/debug/log-uploader/)
+
+2. The example code assumes that the endpoint where the logs will be sent is a local REST service. This can easily be changed to an appropriate endpoint by changing the endpoint definition in client/src/app.ts:
+
+```js
+const data = await fin.System.launchLogUploader({
+  endpoint: 'http://localhost:3000/api/upload',
+  manifests: [],
+  logs: ['debug', 'app', 'rvm'],
+  ui
+});
+```
+
+3. A minimum of v40.x of the runtime is required to run the log uploader.
 
 ## Get Started
 
@@ -13,63 +25,26 @@ Follow the instructions below to get up and running.
 
 1. Install dependencies and do the initial build. Note that these examples assume you are in the sub-directory for the example.
 
-   ```shell
-   npm run setup
-   ```
+```shell
+npm run setup
+```
 
 2. Build the project.
 
-   ```shell
-   npm run build
-   ```
+```shell
+npm run build
+```
 
 3. Start the test server in a new window.
 
-   ```shell
-   npm run start
-   ```
+```shell
+npm run start
+```
 
 4. Start the Platform application.
 
-   ```shell
-   npm run client
-   ```
-
-![Launch External Process Demo](./public/assets/lep-demo.gif)
-
-## App asset breakdown
-
-This is an example shape as it related to the top level application manifest property as seen [here](https://resources.here.io/docs/core/develop/manifests/#section-appassets-properties).
-
-`public/app.json`
-
-```json
- "appAssets": [{
-     "src": "http://localhost:5050/assets/openfin-dotnet-example.zip",
-     "version": "3.1",
-     "alias": "of-dotnet-example",
-     "target": "DotNetCore.exe",
-     "mandatory": true
- }],
+```shell
+npm run client
 ```
 
-### Property definitions
-
-- `"src"`: url to an accessible compressed zip file containing the executable.
-- `"version"`: a string to store that corresponds with the directory the application asset is stored under on disk.
-- `"alias"`: a string that represents an identifier that can be used to invoke the asset from the application context in which it has been downloaded to.
-- `"target"`: relative extracted path to the executable file within the compressed zip.
-- `"mandatory"`: in order for the application to start the appAsset must be successfully downloaded.
-- APPLICATION-NAME: `"startup_app.name"`
-- HASH: HASHED use to differentiate app instances.
-- Default directory:
-
-```bash
-%LOCALAPPDATA%\OpenFin\[APPLICATION-NAME]_[HASH]\assets\["alias"]\["version"]
-```
-
-> **Please Note**: APPLICATION-NAME and HASH are describing a folder name, they are **NOT** environment variables.
-
-### A note about this example
-
-This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+### Note: If you make any code changes please run steps 1 through 4
