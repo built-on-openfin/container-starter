@@ -1,6 +1,5 @@
 import type OpenFin from "@openfin/core";
 
-
 /**
  * Represents an external client that you support connecting with as a platform.
  */
@@ -168,27 +167,4 @@ export interface ExternalClientConnection {
 	 * A unique identifier for this specific connection to the external broker. This can be useful for tracking multiple connections to the same broker or for debugging purposes. It is generated using the external broker's UUID and a random UUID to ensure uniqueness across different connections.
 	 */
 	connectionId: string;
-}
-
-/**
- * Requests a connection to an external broker.
- */
-export interface ConnectionRequest {
-    /**
-     * The UUID of the external broker's platform.
-     */
-    uuid: string;
-    /**
-     * The manifest URL of the external broker's platform, used for validation to ensure we are connecting to the expected platform.
-     */
-    manifestUrl: string;
-    /**
-     * Any custom data needed for validation or connection.
-     */
-    customData?: {
-        /**
-         * A specific key within the custom data.
-         */
-        HERE_API?: string;
-    };
 }

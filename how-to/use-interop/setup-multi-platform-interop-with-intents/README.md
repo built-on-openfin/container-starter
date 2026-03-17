@@ -27,21 +27,21 @@ sequenceDiagram
     participant Handler as Intent Handler<br/>(Platform 2)
 
     Note over P1,Handler: INITIALIZATION PHASE
-    
+
     P1->>P1Broker: Platform.init({ interopOverride })
     activate P1Broker
     P1Broker->>P1Broker: constructor() called
     P1Broker->>P1Broker: initializeConnections()
-    
+
     P1Broker->>Config: Fetch external-clients.json
     Note right of Config: URL: {platformUUID}-external-clients.json<br/>Contains: uuid, manifestUrl,<br/>interopKey, intents config
     Config-->>P1Broker: Return ExternalClient[]
     P1Broker->>P1Broker: Store in this.externalClients[]
-    
+
     loop For each external client
         P1Broker->>P1Broker: validateAndConnect(externalClient)
         P1Broker->>P2App: Check isRunning()
-        
+
         alt Platform 2 is already running
             P2App-->>P1Broker: true
             P1Broker->>P2App: getInfo() - validate manifestUrl
@@ -66,33 +66,33 @@ sequenceDiagram
         end
     end
     deactivate P1Broker
-    
+
     Note over P1,Handler: INTENT RAISING PHASE
 
     P1->>P1Broker: fdc3.raiseIntent("ViewAnalysis", context)
     activate P1Broker
-    
+
     P1Broker->>P1Broker: isActionAuthorized("fireIntent")
     Note right of P1Broker: Check if Platform 1 app<br/>is allowed to raise<br/>"ViewAnalysis" intent
-    
+
     P1Broker->>P1Broker: handleInfoForIntent()
     Note right of P1Broker: Search externalClients[]<br/>for apps that listenFor<br/>"ViewAnalysis"
     P1Broker-->>P1: Return available apps
-    
+
     P1->>P1Broker: User selects Platform 2 as target
     P1Broker->>P1Broker: handleFiredIntent(intent, clientIdentity)
-    
+
     P1Broker->>P1Broker: Find target in externalClients[]
     Note right of P1Broker: Match by:<br/>1. Target appId (if specified)<br/>2. Intent name in listensFor
-    
+
     P1Broker->>P1Broker: Find connection in externalClientConnections[]
-    
+
     P1Broker->>P2Broker: client.fireIntent(intent)
-    
+
     activate P2Broker
     P2Broker->>P2Broker: isActionAuthorized("intentHandlerRegistered")
     Note right of P2Broker: Check if handler's intent<br/>is in allowed listensFor<br/>intents for Platform 2
-    
+
     alt Authorization successful
         P2Broker->>Handler: Route intent to registered handler
         Handler->>Handler: Process intent with context
@@ -105,45 +105,78 @@ sequenceDiagram
     end
     deactivate P2Broker
     deactivate P1Broker
-````
-
-This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. 
+```
 
 ## Get Started
 
 Follow the instructions below to get up and running.
 
-Set up the project
-Install dependencies and do the initial build. Note that these examples assume you are in the sub-directory for the example.
-Build the project.
-Start the test server in a new window.
-Start the first Platform application.
-Start the second Platform application.
-Use the project interface
+### Set up the project
+
+1. Install dependencies and do the initial build. Note that these examples assume you are in the sub-directory for the example.
+
+```shell
+npm run setup
+```
+
+2. Build the project.
+
+```shell
+npm run build
+```
+
+3. Start the test server in a new window.
+
+```shell
+npm run start
+```
+
+4. Start the first Platform application.
+
+```shell
+npm run client
+```
+
+5. Start the second Platform application.
+
+```shell
+npm run secondclient
+```
+
+### Use the project interface
+
 This example demonstrates intent-based communication between two separate platforms:
 
-Raising intents from Platform 1 to Platform 2:
+**Raising intents from Platform 1 to Platform 2:**
 
-In Platform 1, open a view that can raise intents (e.g., ViewAnalysis, ViewInstrument)
-Select a context (e.g., an instrument or organization)
-Raise an intent - the broker will query which platforms can handle it
-Select Platform 2 as the target from the list of available handlers
-Platform 2 receives the intent and routes it to the appropriate handler view
-Permission enforcement demonstration:
+1. In Platform 1, our intent view tool will open by default where you can raise intents (e.g., ViewAnalysis, ViewInstrument)
+2. Select a context (e.g., an instrument or organization)
+3. Raise an intent - the broker will query which platforms can handle it
+4. Select Platform 2 as the target from the list of available handlers
+5. Platform 2 receives the intent and routes it to the appropriate handler view (if you do not launch platform 2 using npm run secondclient then you will see the broker error that the app is unavailable)
+
+**Permission enforcement demonstration:**
 
 The example shows how external clients are restricted:
 
-Platform 2 can only listen for intents listed in its listensFor configuration (e.g., StartCall, ViewNews)
-Platform 2 can only raise intents listed in its raises configuration (e.g., ViewProfile, ViewAnalysis)
-Attempts to register handlers or raise intents outside these permissions are rejected by the broker's isActionAuthorized method
-Connection validation:
+- Platform 2 can only listen for intents listed in its `listensFor` configuration (e.g., StartCall, ViewNews)
+- Platform 2 can only raise intents listed in its `raises` configuration (e.g., ViewProfile, ViewAnalysis)
+- Attempts to register handlers or raise intents outside these permissions are rejected by the broker's `isActionAuthorized` method
+
+**Connection validation:**
 
 When platforms connect, they validate each other by:
 
-Checking that the connecting platform's UUID is in the allowed external clients list
-Verifying the manifest URL matches the expected URL for that platform
-Validating the shared interopKey passed during connection
-NOTE: The complete implementation logic for listing supported external clients, validating connections, and enforcing intent-based permissions is provided in client/src/provider.ts. The external client configurations defining which intents each platform can raise and listen for are in the platform-1-external-clients.json and platform-2-external-clients.json files.
+- Checking that the connecting platform's UUID is in the allowed external clients list
+- Verifying the manifest URL matches the expected URL for that platform
+- Validating the shared `interopKey` passed during connection (this is just an example of how you would validate tokens)
 
-A note about this example
-This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. DO NOT assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+> NOTE: The complete implementation logic for listing supported external clients, validating connections, and enforcing intent-based permissions is provided in [client/src/provider.ts](client/src/provider.ts). The external client configurations defining which intents each platform can raise and listen for are in the `platform-1-external-clients.json` and `platform-2-external-clients.json` files.
+
+### A note about this example
+
+- This is not an example of a full Interop Broker implementation (see our workspace starter for an example of a full implementation - <https://github.com/built-on-openfin/workspace-starter/tree/main/how-to/workspace-platform-starter#readme>)
+- The JSON files containing the list of supported external clients are prefixed with the uuid of the calling platform. We have added examples of raising an intent against a local or hosted version of the Workspace Platform Starter (as well as the two example platforms in this folder)
+- This is an example of how to use HERE APIs to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback.
+
+Thanks!
