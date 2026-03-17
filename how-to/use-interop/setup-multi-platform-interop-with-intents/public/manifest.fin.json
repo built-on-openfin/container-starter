@@ -1,0 +1,53 @@
+{
+	"runtime": {
+		"arguments": "",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "platform-1",
+		"icon": "http://localhost:5050/favicon.ico",
+		"autoShow": false,
+		"providerUrl": "http://localhost:5050/provider.html",
+		"apiDiagnostics": false,
+		"defaultWindowOptions": {
+			"url": "http://localhost:5050/html/window.html",
+			"contextMenu": true,
+			"defaultWidth": 1200,
+			"defaultHeight": 1200,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"fdc3InteropApi": "2.0",
+			"minHeight": 1200,
+			"minWidth": 1200,
+			"height": 1200,
+			"width": 1200
+		},
+		"defaultViewOptions": {
+			"fdc3InteropApi": "2.0"
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"name": "window1",
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/dev-extensions/main/interop/fdc3/intent/2-0/fdc3-intent-view.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}

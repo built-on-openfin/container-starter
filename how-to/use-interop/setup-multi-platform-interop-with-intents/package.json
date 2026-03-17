@@ -1,5 +1,5 @@
 {
-	"name": "container-use-notifications",
+	"name": "setup-cross-platform-interop-with-intents",
 	"version": "43.101.2",
 	"description": "",
 	"main": "index.js",
@@ -10,18 +10,15 @@
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build": "npm run build-client",
 		"start": "npx --yes http-server ./public -p 5050 -c-1",
-		"setup": "cd ../../ && npm install && cd how-to/container-platform-starter && npm run build"
+		"setup": "cd ../../../ && npm install && cd how-to/use-interop/setup-multi-platform-interop-with-intents && npm run build"
 	},
-	"license": "ISC",
+	"author": "john.mandia@here.io",
+	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "43.101.2",
 		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
-		"webpack": "^5.91.0",
-		"webpack-cli": "^5.1.4"
-	},
-	"dependencies": {
-		"@openfin/notifications": "2.13.1"
+		"webpack": "^5.105.4",
+		"@openfin/core": "43.101.2"
 	}
 }

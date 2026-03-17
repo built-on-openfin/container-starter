@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import * as Notifications from "@openfin/workspace/notifications";
+import * as Notifications from "@openfin/notifications";
 
 const NOTIFICATION_SOUND_URL = "http://localhost:5050/assets/notification.mp3";
 
