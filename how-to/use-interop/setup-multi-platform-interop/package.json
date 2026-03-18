@@ -18,8 +18,7 @@
 		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
-		"webpack": "^5.91.0",
-		"webpack-cli": "^5.1.4",
+		"webpack": "^5.105.4",
 		"@openfin/core": "43.101.2"
 	}
 }
