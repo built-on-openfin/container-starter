@@ -43,10 +43,6 @@
 					"ViewContact": {
 						"displayName": "View Contact Details",
 						"contexts": ["fdc3.contact"]
-					},
-					"ViewProfile": {
-						"displayName": "View Profile",
-						"contexts": ["fdc3.contact"]
 					}
 				}
 			},
@@ -64,10 +60,6 @@
 				"listensFor": {
 					"ViewContact": {
 						"displayName": "View Contact Details",
-						"contexts": ["fdc3.contact"]
-					},
-					"ViewProfile": {
-						"displayName": "View Profile",
 						"contexts": ["fdc3.contact"]
 					}
 				}
