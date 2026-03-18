@@ -18,12 +18,16 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 
 		public externalClientConnections: ExternalClientConnection[] = [];
 
+		private readonly _initializationComplete: Promise<void>;
+
 		/**
 		 * Initialize and connect to external broker.
 		 */
 		constructor() {
 			super();
-			this.initializeConnections().catch((error) => console.error(error));
+			this._initializationComplete = this.initializeConnections().catch((error) => {
+				console.error(error);
+			});
 		}
 
 		/**
@@ -45,6 +49,8 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 				"From client identity:",
 				clientIdentity
 			);
+			// Wait for initialization to complete before checking external clients
+			await this._initializationComplete;
 			// This is where you would check the intentOptions against your directory of applications and their supported intents
 			// and return the appropriate app metadata for the intent so that the client can make an informed decision about which app to route the intent to.
 			// you can also go beyond checking just the intent name and also check the context types, etc...
@@ -98,6 +104,8 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 			clientIdentity: OpenFin.ClientIdentity
 		): Promise<{ source: { appId: string }; intent: string }> {
 			console.log("Received request for a raised intent:", intent, "For client identity:", clientIdentity);
+			// Wait for initialization to complete before checking external clients
+			await this._initializationComplete;
 			// Validation would have occurred in isActionAuthorized but you could do additional validation here if needed before handling the intent.
 
 			// This is where you could check your application directory to see if a specific app should handle the request or if you should
@@ -202,6 +210,8 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 				console.log("Connection authorized for internal content", id.uuid);
 				return true;
 			}
+			// Wait for initialization to complete before checking external clients
+			await this._initializationComplete;
 			const allowedConnection = this.externalClients.find(
 				(externalClient) => externalClient.uuid === id.uuid
 			);
@@ -240,6 +250,7 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 				console.log("Action authorized for internal content", identity.uuid);
 				return true;
 			}
+			// External clients can only reach this point after passing isConnectionAuthorized, which ensures initialization is complete
 			const connectionRules = this.externalClients.find(
 				(externalClient) => externalClient.uuid === identity.uuid
 			);
