@@ -46,7 +46,7 @@
 		"eslint-plugin-unused-imports": "3.2.0",
 		"fast-glob": "3.3.2",
 		"fs-extra": "11.2.0",
-		"markdownlint-cli": "0.40.0",
+		"markdownlint-cli": "0.48.0",
 		"prettier": "3.2.5",
 		"replace-in-file": "7.1.0",
 		"yargs": "17.7.2",
@@ -56,6 +56,35 @@
 	"overrides": {
 		"parse-bmfont-xml": {
 			"xml2js": "0.5.0"
+		},
+		"ws": "8.18.3",
+		"puppeteer-core": {
+			"ws": "8.18.3",
+			"@puppeteer/browsers": {
+				"tar-fs": "3.1.1"
+			}
+		},
+		"webdriverio": {
+			"puppeteer-core": {
+				"ws": "8.18.3",
+				"@puppeteer/browsers": {
+					"tar-fs": "3.1.1"
+				}
+			}
+		},
+		"tar-fs": "3.1.1",
+		"glob": "11.1.0",
+		"@openfin/automation-cli": {
+			"glob": "11.1.0"
+		},
+		"markdown-it": "14.1.1",
+		"serialize-javascript": "7.0.4",
+		"fast-xml-parser": "5.5.7",
+		"edgedriver": "6.3.0",
+		"cross-spawn": "7.0.6",
+		"minimatch": "10.2.4",
+		"mocha": {
+			"serialize-javascript": "7.0.4"
 		}
 	}
 }
