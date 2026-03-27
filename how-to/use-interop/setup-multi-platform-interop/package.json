@@ -15,10 +15,11 @@
 	"author": "adam.saland@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/node-adapter": "43.101.2",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
-		"webpack": "^5.105.4",
-		"@openfin/core": "43.101.2"
+		"webpack": "^5.105.4"
+	},
+	"dependencies": {
+		"@openfin/node-adapter": "^43.101.2"
 	}
 }

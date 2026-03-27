@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import type OpenFin from "@openfin/core";
 import type { ExternalClientMap, ExternalContext } from "./shapes";
 
@@ -21,7 +22,7 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 		 */
 		constructor() {
 			super();
-			this.externalBroker = "platform-2";
+			this.externalBroker = fin.me.uuid === "platform-1" ? "platform-2" : "platform-1";
 			this.externalClients = new Map();
 			this.initializeBrokers().catch((error) => console.error(error));
 		}
@@ -36,10 +37,11 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 		public async initializeBrokers(): Promise<void> {
 			const platform: OpenFin.Platform = fin.Platform.wrapSync({ uuid: this.externalBroker });
 
+			/*
 			if (await platform.Application.isRunning()) {
 				await this.setupContextGroups();
 			}
-
+			*/
 			await platform.on("platform-api-ready", async () => {
 				await this.setupContextGroups();
 			});
@@ -135,7 +137,7 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 
 		/**
 		 * Set the context.
-		 * @param payload object that is passed in when set context is called from an HERE entity using the interop api.
+		 * @param payload object that is passed in when set context is called from an OpenFin entity using the interop api.
 		 * @param payload.context The context for the payload.
 		 * @param clientIdentity object containing the clientIdentity of the sender.
 		 */
