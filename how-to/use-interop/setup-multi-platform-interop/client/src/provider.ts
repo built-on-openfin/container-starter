@@ -41,12 +41,12 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 			if (await platform.Application.isRunning()) {
 				console.log("***** executing isRunning loop *****");
 				await this.setupContextGroups();
-			} else {
-				await platform.on("platform-api-ready", async () => {
-					console.log("***** executing platform-api-ready loop *****");
-					await this.setupContextGroups();
-				});
 			}
+
+			await platform.on("platform-api-ready", async () => {
+				console.log("***** executing platform-api-ready loop *****");
+				await this.setupContextGroups();
+			});
 
 			await platform.Application.once("closed", () => {
 				console.log("***** external platform closed *****");
