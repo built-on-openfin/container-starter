@@ -36,17 +36,20 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 		 */
 		public async initializeBrokers(): Promise<void> {
 			const platform: OpenFin.Platform = fin.Platform.wrapSync({ uuid: this.externalBroker });
+			console.log("***** Inside InitializeBrokers() *****");
 
-			/*
 			if (await platform.Application.isRunning()) {
+				console.log("***** executing isRunning loop *****");
 				await this.setupContextGroups();
+			} else {
+				await platform.on("platform-api-ready", async () => {
+					console.log("***** executing platform-api-ready loop *****");
+					await this.setupContextGroups();
+				});
 			}
-			*/
-			await platform.on("platform-api-ready", async () => {
-				await this.setupContextGroups();
-			});
 
 			await platform.Application.once("closed", () => {
+				console.log("***** external platform closed *****");
 				this.externalClients = new Map();
 			});
 		}
@@ -59,7 +62,6 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 		 * 4. PlatformContextGroups: using the created client instance, retrieve the current platform context groups.
 		 * 5. Check to which externalContextGroups and platformContextGroups are the same.
 		 * 6. If the platformContextGroup is shared with an externalContextGroup create a colorClient and join the shared context group from the colorClient.
-		 * 7. Create a context handler for the colorClient.
 		 */
 		public async setupContextGroups(): Promise<void> {
 			const externalInteropClient: OpenFin.InteropClient = fin.Interop.connectSync(this.externalBroker, {});
@@ -84,22 +86,6 @@ function interopOverride(InteropBroker: OpenFin.Constructor<OpenFin.InteropBroke
 						if (hasPlatformContextGroup) {
 							const colorClient: OpenFin.InteropClient = fin.Interop.connectSync(this.externalBroker, {});
 							await colorClient.joinContextGroup(externalContextGroupInfo.id);
-							/**
-							 * Handle a context.
-							 * @param context object passed from the setContext method.
-							 * If the newContext variable has a _clientInfo object with a uuid return the context as is
-							 * because it is initially set on the platformInteropClient's broker.
-							 * otherwise copy the context attributes and values to a new object containing
-							 * a _clientInfo attribute with the uuid of the connected externalBroker.
-							 */
-							const contextHandler = async (context: ExternalContext): Promise<void> => {
-								await platformInteropClient.joinContextGroup(externalContextGroupInfo.id);
-								const newContext = context._clientInfo?.uuid
-									? context
-									: { ...context, _clientInfo: { uuid: this.externalBroker } };
-								await platformInteropClient.setContext(newContext);
-							};
-							await colorClient.addContextHandler(contextHandler);
 							// return the connected context group and corresponded color client.
 							return this.externalClients.set(externalContextGroupInfo.id, colorClient);
 						}
