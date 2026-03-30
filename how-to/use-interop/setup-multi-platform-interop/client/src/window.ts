@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import type OpenFin from "@openfin/core";
 
 export const CONTAINER_ID = "layout-container";
