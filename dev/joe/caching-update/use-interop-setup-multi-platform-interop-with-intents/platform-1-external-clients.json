@@ -1,0 +1,71 @@
+[
+	{
+		"uuid": "platform-2",
+		"title": "Platform 2",
+		"manifestUrl": "https://built-on-openfin.github.io/container-starter/dev/joe/caching-update/use-interop-setup-multi-platform-interop-with-intents/second.manifest.fin.json",
+		"interopKey": "example",
+		"interop": {
+			"intents": {
+				"listensFor": {
+					"StartCall": {
+						"displayName": "Start a Call",
+						"contexts": ["fdc3.contact", "fdc3.contactList"]
+					},
+					"ViewNews": {
+						"displayName": "View News",
+						"contexts": [
+							"fdc3.country",
+							"fdc3.instrument",
+							"fdc3.instrumentList",
+							"fdc3.organization",
+							"fdc3.portfolio"
+						]
+					}
+				},
+				"raises": {
+					"ViewProfile": ["fdc3.contact"],
+					"ViewAnalysis": ["fdc3.instrument", "fdc3.organization", "fdc3.portfolio"],
+					"ViewInstrument": ["fdc3.instrument", "fdc3.instrumentList"]
+				}
+			},
+			"userChannels": {},
+			"appChannels": []
+		}
+	},
+	{
+		"uuid": "workspace-platform-starter",
+		"title": "Workspace Platform Starter (Local)",
+		"appId": "fdc3-intent-view",
+		"manifestUrl": "http://localhost:8080/manifest.fin.json",
+		"interop": {
+			"intents": {
+				"listensFor": {
+					"ViewContact": {
+						"displayName": "View Contact Details",
+						"contexts": ["fdc3.contact"]
+					}
+				}
+			},
+			"userChannels": {},
+			"appChannels": []
+		}
+	},
+	{
+		"uuid": "workspace-platform-starter-for-fdc3",
+		"title": "FDC3 Workspace Platform Starter v23 (Github Hosted)",
+		"appId": "fdc3-intent-view",
+		"manifestUrl": "https://built-on-openfin.github.io/workspace-starter/workspace/v23.0.0/workspace-platform-starter/third.manifest.fin.json",
+		"interop": {
+			"intents": {
+				"listensFor": {
+					"ViewContact": {
+						"displayName": "View Contact Details",
+						"contexts": ["fdc3.contact"]
+					}
+				}
+			},
+			"userChannels": {},
+			"appChannels": []
+		}
+	}
+]
