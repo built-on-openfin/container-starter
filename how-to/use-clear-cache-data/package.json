@@ -11,7 +11,7 @@
 		"start": "npx --yes http-server ./public -p 5050 -c-1",
 		"setup": "cd ../../ && npm install && cd how-to/use-clear-cache-data && npm run build"
 	},
-	"author": "",
+	"author": "joe.ransegnola@here.io",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
 		"@openfin/core": "44.101.3",
