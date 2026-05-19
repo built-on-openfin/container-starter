@@ -1,0 +1,33 @@
+{
+	"runtime": {
+		"arguments": "",
+		"version": "44.146.101.1"
+	},
+	"platform": {
+		"uuid": "how-to-use-clear-cache-data"
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "clear-cache-data",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/dev/joe/caching-update/use-clear-cache-data/html/app.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
