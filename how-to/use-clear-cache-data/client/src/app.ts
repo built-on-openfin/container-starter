@@ -153,7 +153,7 @@ async function refreshState(): Promise<void> {
 	}
 
 	stateElement.textContent =
-		`COOKIES:\n${cookieList}\n\n` + `LOCAL STORAGE:\n${storageList}\n\n` + `SERVICE WORKERS:\n${swList}`;
+		`COOKIES:\n${cookieList}\n\nLOCAL STORAGE:\n${storageList}\n\nSERVICE WORKERS:\n${swList}`;
 }
 
 /**
@@ -211,7 +211,9 @@ async function clearServiceWorkers(): Promise<void> {
 		dataTypes: ["serviceWorkers"]
 	};
 
-	const codeText = "await fin.System.clearCacheData({\n" + "    dataTypes: ['serviceWorkers']\n" + "});";
+	const codeText = `await fin.System.clearCacheData({
+    dataTypes: ['serviceWorkers']
+});`;
 
 	await executeClear(
 		() => fin.System.clearCacheData(options),
