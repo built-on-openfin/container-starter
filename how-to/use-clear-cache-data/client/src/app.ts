@@ -102,11 +102,8 @@ async function createTestLocalStorage(): Promise<void> {
 async function registerTestServiceWorker(): Promise<void> {
 	try {
 		const registration = await navigator.serviceWorker.register("/sw.js");
-		const workerState =
-			registration.active?.state ?? registration.installing?.state ?? "installing";
-		loggingAddEntry(
-			`Service worker registered:\n  Scope: ${registration.scope}\n  State: ${workerState}`
-		);
+		const workerState = registration.active?.state ?? registration.installing?.state ?? "installing";
+		loggingAddEntry(`Service worker registered:\n  Scope: ${registration.scope}\n  State: ${workerState}`);
 	} catch (error) {
 		loggingAddEntry(`Failed to register service worker:\n  ${error}`);
 	}
@@ -156,9 +153,7 @@ async function refreshState(): Promise<void> {
 	}
 
 	stateElement.textContent =
-		`COOKIES:\n${cookieList}\n\n` +
-		`LOCAL STORAGE:\n${storageList}\n\n` +
-		`SERVICE WORKERS:\n${swList}`;
+		`COOKIES:\n${cookieList}\n\n` + `LOCAL STORAGE:\n${storageList}\n\n` + `SERVICE WORKERS:\n${swList}`;
 }
 
 /**
@@ -216,10 +211,7 @@ async function clearServiceWorkers(): Promise<void> {
 		dataTypes: ["serviceWorkers"]
 	};
 
-	const codeText =
-		"await fin.System.clearCacheData({\n" +
-		"    dataTypes: ['serviceWorkers']\n" +
-		"});";
+	const codeText = "await fin.System.clearCacheData({\n" + "    dataTypes: ['serviceWorkers']\n" + "});";
 
 	await executeClear(
 		() => fin.System.clearCacheData(options),

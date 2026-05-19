@@ -5,10 +5,10 @@
  * entry in the Current State panel, allowing you to observe it
  * being cleared by fin.System.clearCacheData({ dataTypes: ['serviceWorkers'] }).
  */
-self.addEventListener("install", (event) => {
+self.addEventListener('install', (event) => {
 	self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener('activate', (event) => {
 	event.waitUntil(self.clients.claim());
 });

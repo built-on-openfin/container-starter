@@ -20,14 +20,14 @@ The new `clearCacheData` API accepts a **[ClearDataOptions](https://resources.he
 
 ## Examples Demonstrated
 
-| Button | API Call | What It Shows |
-| --- | --- | --- |
-| Clear Cookies & Storage for localhost | `clearCacheData({ dataTypes, origins })` | Target specific data types for a single origin |
-| Clear All Except localhost | `clearCacheData({ excludeOrigins })` | Broad clear while protecting one origin |
-| Clear Service Workers | `clearCacheData({ dataTypes: ['serviceWorkers'] })` | Clear a single data type globally |
-| Clear All Data (no options) | `clearCacheData()` | Clear everything (equivalent to broadest legacy call) |
-| Clear HTTP Cache | `clearHTTPCache()` | Convenience method for HTTP cache only |
-| Clear Cache (Legacy) | `clearCache({ ... })` | Legacy API for comparison |
+| Button                                | API Call                                            | What It Shows                                         |
+| ------------------------------------- | --------------------------------------------------- | ----------------------------------------------------- |
+| Clear Cookies & Storage for localhost | `clearCacheData({ dataTypes, origins })`            | Target specific data types for a single origin        |
+| Clear All Except localhost            | `clearCacheData({ excludeOrigins })`                | Broad clear while protecting one origin               |
+| Clear Service Workers                 | `clearCacheData({ dataTypes: ['serviceWorkers'] })` | Clear a single data type globally                     |
+| Clear All Data (no options)           | `clearCacheData()`                                  | Clear everything (equivalent to broadest legacy call) |
+| Clear HTTP Cache                      | `clearHTTPCache()`                                  | Convenience method for HTTP cache only                |
+| Clear Cache (Legacy)                  | `clearCache({ ... })`                               | Legacy API for comparison                             |
 
 ## Get Started
 
