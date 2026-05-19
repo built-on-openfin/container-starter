@@ -152,8 +152,7 @@ async function refreshState(): Promise<void> {
 		swList = "  (unavailable)";
 	}
 
-	stateElement.textContent =
-		`COOKIES:\n${cookieList}\n\nLOCAL STORAGE:\n${storageList}\n\nSERVICE WORKERS:\n${swList}`;
+	stateElement.textContent = `COOKIES:\n${cookieList}\n\nLOCAL STORAGE:\n${storageList}\n\nSERVICE WORKERS:\n${swList}`;
 }
 
 /**
