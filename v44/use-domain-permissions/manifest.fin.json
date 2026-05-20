@@ -1,0 +1,88 @@
+{
+	"runtime": {
+		"arguments": "--v=0",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "use-domain-permissions-clipboard",
+		"autoShow": false,
+		"icon": "https://built-on-openfin.github.io/container-starter/v44/use-domain-permissions/favicon.ico",
+		"permissions": {
+			"Clipboard": {
+				"readText": true,
+				"writeText": true
+			}
+		},
+		"domainSettings": {
+			"default": {
+				"api": {
+					"permissions": {
+						"Clipboard": {
+							"readText": false,
+							"writeText": false
+						}
+					}
+				}
+			},
+			"rules": [
+				{
+					"match": ["https://built-on-openfin.github.io/container-starter/v44/use-domain-permissions/html/clipboard-allowed.html"],
+					"options": {
+						"api": {
+							"permissions": {
+								"Clipboard": {
+									"readText": true,
+									"writeText": true
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		"snapshot": {
+			"windows": [
+				{
+					"layout": {
+						"content": [
+							{
+								"type": "stack",
+								"id": "no-drop-target",
+								"content": [
+									{
+										"type": "component",
+										"componentName": "view",
+										"componentState": {
+											"processAffinity": "ps_1",
+											"url": "https://built-on-openfin.github.io/container-starter/v44/use-domain-permissions/html/clipboard-allowed.html",
+											"permissions": {
+												"Clipboard": {
+													"readText": false,
+													"writeText": false
+												}
+											}
+										}
+									},
+									{
+										"type": "component",
+										"componentName": "view",
+										"componentState": {
+											"processAffinity": "ps_1",
+											"url": "https://built-on-openfin.github.io/container-starter/v44/use-domain-permissions/html/clipboard-blocked.html",
+											"permissions": {
+												"Clipboard": {
+													"readText": true,
+													"writeText": true
+												}
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}
