@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Clear Cache Data Example</title>
+		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Clear Cache Data</h1>
+				<h1 class="tag">
+					Demonstrates the v44 clearCacheData API with granular origin and data type control.
+				</h1>
+			</div>
+			<div class="row middle gap20">
+				<image src="../common/images/favicon-32x32.png" alt="HERE" height="32px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="col fill left gap20 scroll-vertical">
+				<h2>1. Create Test Data</h2>
+				<div>
+					Create observable test data first, then use the clear buttons below to see the
+					<b>clearCacheData</b>
+					API selectively remove specific types while leaving others intact.
+				</div>
+				<button id="btn-create-cookies" class="secondary">Create Test Cookies (4)</button>
+				<button id="btn-create-local-storage" class="secondary">Create Test localStorage Entries (4)</button>
+				<button id="btn-register-service-worker" class="secondary">Register Test Service Worker</button>
+				<hr />
+				<h2>2. clearCacheData (v44+)</h2>
+				<button id="btn-clear-cookies-only" class="secondary">Clear Cookies Only (localhost)</button>
+				<button id="btn-clear-localstorage-only" class="secondary">
+					Clear localStorage Only (localhost)
+				</button>
+				<button id="btn-clear-service-workers" class="secondary">Clear Service Workers (all origins)</button>
+				<button id="btn-clear-cookies-and-storage" class="secondary">
+					Clear Cookies &amp; localStorage (localhost)
+				</button>
+				<button id="btn-clear-all" class="secondary">Clear All Data (no options)</button>
+				<hr />
+				<h2>clearHTTPCache (v44+)</h2>
+				<button id="btn-clear-http-cache" class="secondary">Clear HTTP Cache</button>
+				<hr />
+				<h2>clearCache (legacy comparison)</h2>
+				<button id="btn-clear-cache-legacy" class="secondary">Clear Cache (Legacy)</button>
+			</div>
+			<div class="col fill_2 gap20">
+				<div class="col fill gap20 overflow-hidden">
+					<div class="row spread middle">
+						<h2>Current State</h2>
+						<button id="btn-refresh-state" class="small">Refresh</button>
+					</div>
+					<pre id="current-state" class="scroll fill"></pre>
+				</div>
+				<div class="col fill gap20 overflow-hidden">
+					<h2>Logging</h2>
+					<pre id="logging" class="scroll fill"></pre>
+					<div class="row right">
+						<button id="btnLoggingClear">Clear Logging</button>
+					</div>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<div class="row spread">
+				<div class="row gap10">
+					<a
+						href="https://resources.here.io/docs/javascript/stable/classes/OpenFin.System.html#clearCacheData"
+						target="_blank"
+					>
+						clearCacheData API Docs
+					</a>
+				</div>
+				<div class="row gap10">
+					<a
+						href="https://resources.here.io/docs/javascript/stable/interfaces/OpenFin.ClearDataOptions.html"
+						target="_blank"
+					>
+						ClearDataOptions Reference
+					</a>
+				</div>
+				<div class="row gap10">
+					<a
+						href="https://resources.here.io/docs/javascript/stable/classes/OpenFin.System.html#clearHTTPCache"
+						target="_blank"
+					>
+						clearHTTPCache API Docs
+					</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
