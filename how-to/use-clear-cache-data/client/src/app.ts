@@ -172,7 +172,7 @@ async function clearCookiesOnly(): Promise<void> {
 		"});";
 
 	await executeClear(
-		() => fin.System.clearCacheData(options),
+		async () => fin.System.clearCacheData(options),
 		codeText,
 		"Cleared cookies for localhost:5050.\nlocalStorage and service workers should remain."
 	);
@@ -195,7 +195,7 @@ async function clearLocalStorageOnly(): Promise<void> {
 		"});";
 
 	await executeClear(
-		() => fin.System.clearCacheData(options),
+		async () => fin.System.clearCacheData(options),
 		codeText,
 		"Cleared localStorage for localhost:5050.\nCookies and service workers should remain."
 	);
@@ -215,7 +215,7 @@ async function clearServiceWorkers(): Promise<void> {
 });`;
 
 	await executeClear(
-		() => fin.System.clearCacheData(options),
+		async () => fin.System.clearCacheData(options),
 		codeText,
 		"Cleared service workers across all origins.\nCookies and localStorage should remain."
 	);
@@ -238,7 +238,7 @@ async function clearCookiesAndStorage(): Promise<void> {
 		"});";
 
 	await executeClear(
-		() => fin.System.clearCacheData(options),
+		async () => fin.System.clearCacheData(options),
 		codeText,
 		"Cleared cookies and localStorage for localhost:5050.\nService workers should remain."
 	);
@@ -252,7 +252,7 @@ async function clearAllData(): Promise<void> {
 	const codeText = "await fin.System.clearCacheData();";
 
 	await executeClear(
-		() => fin.System.clearCacheData(),
+		async () => fin.System.clearCacheData(),
 		codeText,
 		"Cleared all browsing data across all origins.\nAll cookies, localStorage, and service workers should be gone."
 	);
@@ -266,7 +266,7 @@ async function clearHttpCache(): Promise<void> {
 	const codeText = "await fin.System.clearHTTPCache();";
 
 	await executeClear(
-		() => fin.System.clearHTTPCache(),
+		async () => fin.System.clearHTTPCache(),
 		codeText,
 		"Cleared HTTP cache only (HTML, CSS, JS, images).\nCookies, localStorage, and service workers should all remain."
 	);

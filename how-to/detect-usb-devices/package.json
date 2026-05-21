@@ -14,8 +14,8 @@
 	"author": "joe.ransegnola@here.io",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "43.101.2",
-		"@openfin/node-adapter": "43.101.2",
+		"@openfin/core": "44.101.3",
+		"@openfin/node-adapter": "44.101.3",
 		"@types/w3c-web-usb": "^1.0.10",
 		"@types/w3c-web-hid": "^1.0.6",
 		"ts-loader": "^9.5.1",
