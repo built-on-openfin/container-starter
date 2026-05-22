@@ -23,7 +23,6 @@
 	"dependencies": {
 		"@openfin/core": "^43.101.2",
 		"eslint": "^9.35.0",
-		"markdown-cli": "^1.6.0",
 		"prettier": "^3.6.2"
 	}
 }
