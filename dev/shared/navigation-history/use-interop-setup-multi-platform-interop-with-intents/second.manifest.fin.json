@@ -1,0 +1,53 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "platform-2",
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/use-interop-setup-multi-platform-interop-with-intents/favicon.ico",
+		"autoShow": false,
+		"apiDiagnostics": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/use-interop-setup-multi-platform-interop-with-intents/provider.html",
+		"defaultWindowOptions": {
+			"url": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/use-interop-setup-multi-platform-interop-with-intents/html/window.html",
+			"contextMenu": true,
+			"defaultWidth": 1200,
+			"defaultHeight": 1200,
+			"defaultLeft": 0,
+			"defaultTop": 0,
+			"saveWindowState": false,
+			"fdc3InteropApi": "2.0",
+			"minHeight": 600,
+			"minWidth": 600,
+			"height": 1200,
+			"width": 1200
+		},
+		"defaultViewOptions": {
+			"fdc3InteropApi": "2.0"
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"name": "view",
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://built-on-openfin.github.io/dev-extensions/main/interop/fdc3/intent/2-0/fdc3-intent-view.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
