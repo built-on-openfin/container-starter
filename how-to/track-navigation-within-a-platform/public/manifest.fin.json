@@ -1,0 +1,15 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "44.146.101.1"
+	},
+	"platform": {
+		"uuid": "how-to-track-navigation-within-a-platform",
+		"providerUrl": "http://localhost:5050/html/provider.html",
+		"icon": "http://localhost:5050/favicon.ico",
+		"autoShow": true,
+		"defaultWidth": 900,
+		"defaultHeight": 700,
+		"defaultCentered": true
+	}
+}

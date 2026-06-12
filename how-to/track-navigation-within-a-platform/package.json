@@ -1,0 +1,24 @@
+{
+	"name": "track-navigation-within-a-platform",
+	"version": "44.101.3",
+	"description": "Demonstrates how to track view navigation within a platform using a Chrome-like address bar with history and autocomplete.",
+	"main": "index.js",
+	"scripts": {
+		"kill": "node ./scripts/kill.mjs",
+		"client": "node ./scripts/launch.mjs",
+		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+		"build": "npm run build-client",
+		"start": "npx --yes http-server ./public -p 5050 -c-1",
+		"setup": "cd ../../ && npm install && cd how-to/track-navigation-within-a-platform && npm run build"
+	},
+	"author": "",
+	"license": "SEE LICENSE IN LICENSE.MD",
+	"devDependencies": {
+		"@openfin/core": "44.101.3",
+		"@openfin/node-adapter": "44.101.3",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.4.5",
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
+	}
+}
