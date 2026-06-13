@@ -58,6 +58,7 @@ async function initPlatform(): Promise<void> {
 
 	// Reset per-session state on startup.
 	clearFocusedWindowStack();
+	setActiveViews({});
 
 	const app = await fin.Application.getCurrent();
 
