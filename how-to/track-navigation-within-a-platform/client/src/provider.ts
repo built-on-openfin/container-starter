@@ -12,6 +12,8 @@ interface HistoryEntry {
 	url: string;
 	/** The page title captured from the view. */
 	title: string;
+	/** The page favicon URL captured from the view. */
+	favicon: string;
 	/** Unix timestamp of the most recent visit. */
 	timestamp: number;
 	/** Total number of times this URL has been visited. */
@@ -51,8 +53,8 @@ async function initPlatform(): Promise<void> {
 
 	await app.on(
 		"view-url-changed",
-		(event: { url: string; isInPage: boolean; viewIdentity: OpenFin.Identity }) => {
-			if (!event.isInPage && event.viewIdentity?.name) {
+		(event: { url: string; viewIdentity: OpenFin.Identity }) => {
+			if (event.viewIdentity?.name) {
 				viewUrlMap.set(event.viewIdentity.name, event.url);
 				recordVisit(event.url);
 				renderHistory();
@@ -67,6 +69,19 @@ async function initPlatform(): Promise<void> {
 				const url = viewUrlMap.get(event.viewIdentity.name);
 				if (url && event.title) {
 					updateTitle(url, event.title);
+					renderHistory();
+				}
+			}
+		}
+	);
+
+	await app.on(
+		"view-page-favicon-updated",
+		(event: { favicons: string[]; viewIdentity: OpenFin.Identity }) => {
+			if (event.viewIdentity?.name && event.favicons?.length > 0) {
+				const url = viewUrlMap.get(event.viewIdentity.name);
+				if (url) {
+					updateFavicon(url, event.favicons[0]);
 					renderHistory();
 				}
 			}
@@ -106,12 +121,131 @@ function initDom(): void {
 		});
 	}
 
+	initLaunchMenu();
+
 	const btnClearHistory = document.querySelector<HTMLButtonElement>("#btn-clear-history");
 	if (btnClearHistory) {
 		btnClearHistory.addEventListener("click", clearHistory);
 	}
 
+	const btnToggleHistory = document.querySelector<HTMLButtonElement>("#btn-toggle-history");
+	if (btnToggleHistory) {
+		btnToggleHistory.addEventListener("click", () => {
+			toggleHistoryPanel().catch(console.error);
+		});
+	}
+
+	const btnMinimize = document.querySelector<HTMLButtonElement>("#btn-minimize");
+	if (btnMinimize) {
+		btnMinimize.addEventListener("click", () => {
+			fin.Window.getCurrentSync()
+				.minimize()
+				.catch(console.error);
+		});
+	}
+
+	const btnClose = document.querySelector<HTMLButtonElement>("#btn-close");
+	if (btnClose) {
+		btnClose.addEventListener("click", () => {
+			fin.Platform.getCurrentSync()
+				.quit()
+				.catch(console.error);
+		});
+	}
+
 	renderHistory();
+}
+
+const COLLAPSED_HEIGHT = 225;
+const EXPANDED_HEIGHT = 550;
+
+/**
+ * Toggle the history panel visibility and resize the window accordingly.
+ */
+async function toggleHistoryPanel(): Promise<void> {
+	const panel = document.querySelector<HTMLElement>("#history-panel");
+	const btn = document.querySelector<HTMLButtonElement>("#btn-toggle-history");
+	if (!panel) {
+		return;
+	}
+
+	const isVisible = panel.style.display !== "none";
+	const win = fin.Window.getCurrentSync();
+	const bounds = await win.getBounds();
+
+	if (isVisible) {
+		panel.style.display = "none";
+		btn?.classList.remove("active");
+		await win.resizeTo(bounds.width, COLLAPSED_HEIGHT, "top-left");
+	} else {
+		panel.style.display = "flex";
+		btn?.classList.add("active");
+		renderHistory();
+		await win.resizeTo(bounds.width, EXPANDED_HEIGHT, "top-left");
+	}
+}
+
+/**
+ * Initialize the launch menu dropdown for choosing where to open a URL.
+ */
+function initLaunchMenu(): void {
+	const btnTrigger = document.querySelector<HTMLButtonElement>("#btn-launch-menu");
+	const menu = document.querySelector<HTMLElement>("#launch-menu");
+	const lastWindowItem = document.querySelector<HTMLElement>("#launch-last-window");
+
+	if (!btnTrigger || !menu) {
+		return;
+	}
+
+	btnTrigger.addEventListener("click", async () => {
+		const isOpen = menu.classList.contains("visible");
+		if (isOpen) {
+			menu.classList.remove("visible");
+			btnTrigger.classList.remove("active");
+		} else {
+			const hasWindow = await hasActiveWindow();
+			lastWindowItem?.classList.toggle("disabled", !hasWindow);
+			menu.classList.add("visible");
+			btnTrigger.classList.add("active");
+		}
+	});
+
+	document.addEventListener("click", (e) => {
+		const launchGroup = btnTrigger.parentElement;
+		if (launchGroup && !launchGroup.contains(e.target as Node)) {
+			menu.classList.remove("visible");
+			btnTrigger.classList.remove("active");
+		}
+	});
+
+	menu.addEventListener("click", async (e) => {
+		const item = (e.target as HTMLElement).closest<HTMLElement>(".launch-menu-item");
+		if (!item || item.classList.contains("disabled")) {
+			return;
+		}
+
+		const action = item.dataset.action;
+		const url = resolveInputUrl();
+		if (!url) {
+			return;
+		}
+
+		menu.classList.remove("visible");
+		btnTrigger.classList.remove("active");
+		hideAutocomplete();
+
+		if (action === "new-window") {
+			await openInNewWindow(url);
+			if (urlInput) {
+				urlInput.value = "";
+			}
+		} else if (action === "last-window") {
+			await openInLastActiveWindow(url);
+			if (urlInput) {
+				urlInput.value = "";
+			}
+		}
+	});
 }
 
 /**
@@ -160,50 +294,113 @@ function handleInputChange(): void {
 }
 
 /**
- * Navigate to the URL currently in the input field by opening a new platform window with a view.
+ * Resolve the current input value to a navigable URL.
+ * @returns The resolved URL, or null if input is empty.
  */
-async function navigateToInput(): Promise<void> {
+function resolveInputUrl(): string | null {
 	if (!urlInput) {
-		return;
+		return null;
 	}
 
 	let url = urlInput.value.trim();
 	if (!url) {
+		return null;
+	}
+
+	if (/^https?:\/\//i.test(url)) {
+		// Already has a protocol -- use as-is.
+	} else if (looksLikeUrl(url)) {
+		url = `https://${url}`;
+	} else {
+		url = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
+	}
+
+	return url;
+}
+
+/**
+ * Navigate to the URL currently in the input field by opening a new platform window with a view.
+ * If the input doesn't look like a URL (no protocol and no dot in the host), treat it as a
+ * search query and open a Google search instead.
+ */
+async function navigateToInput(): Promise<void> {
+	const url = resolveInputUrl();
+	if (!url || !urlInput) {
 		return;
 	}
 
-	if (!/^https?:\/\//i.test(url)) {
-		url = `https://${url}`;
-		urlInput.value = url;
-	}
-
+	urlInput.value = url;
 	hideAutocomplete();
 
 	try {
-		const platform = fin.Platform.getCurrentSync();
-		await platform.createWindow({
-			layout: {
-				content: [
-					{
-						type: "stack",
-						content: [
-							{
-								type: "component",
-								componentName: "view",
-								componentState: {
-									url
-								}
-							}
-						]
-					}
-				]
-			}
-		} as OpenFin.WindowCreationOptions);
-
+		await openInNewWindow(url);
 		urlInput.value = "";
 	} catch (err) {
 		console.error("Failed to create window:", err);
 	}
+}
+
+/**
+ * Open a URL in a brand new platform window containing a single view.
+ * @param url The URL to navigate to.
+ */
+async function openInNewWindow(url: string): Promise<void> {
+	const platform = fin.Platform.getCurrentSync();
+	await platform.createWindow({
+		layout: {
+			content: [
+				{
+					type: "stack",
+					content: [
+						{
+							type: "component",
+							componentName: "view",
+							componentState: {
+								url
+							}
+						}
+					]
+				}
+			]
+		}
+	} as OpenFin.WindowCreationOptions);
+}
+
+/**
+ * Open a URL as a new view in the last active non-provider window.
+ * Falls back to opening a new window if no suitable window is found.
+ * @param url The URL to navigate to.
+ */
+async function openInLastActiveWindow(url: string): Promise<void> {
+	const platform = fin.Platform.getCurrentSync();
+	const app = await fin.Application.getCurrent();
+	const childWindows = await app.getChildWindows();
+
+	const targetWin = childWindows[childWindows.length - 1];
+
+	if (targetWin) {
+		await platform.createView(
+			{ url } as OpenFin.ViewCreationOptions,
+			targetWin.identity
+		);
+		const state = await targetWin.getState();
+		if (state === "minimized") {
+			await targetWin.restore();
+		}
+		await targetWin.setAsForeground();
+	} else {
+		await openInNewWindow(url);
+	}
+}
+
+/**
+ * Check whether there is at least one non-provider window open.
+ * @returns True if a window other than the provider window exists.
+ */
+async function hasActiveWindow(): Promise<boolean> {
+	const app = await fin.Application.getCurrent();
+	const childWindows = await app.getChildWindows();
+	return childWindows.length > 0;
 }
 
 // -- History / localStorage helpers --
@@ -242,7 +439,7 @@ function recordVisit(url: string): void {
 		existing.visitCount++;
 		existing.timestamp = Date.now();
 	} else {
-		entries.push({ url, title: "", timestamp: Date.now(), visitCount: 1 });
+		entries.push({ url, title: "", favicon: "", timestamp: Date.now(), visitCount: 1 });
 	}
 
 	if (entries.length > MAX_ENTRIES) {
@@ -264,6 +461,21 @@ function updateTitle(url: string, title: string): void {
 
 	if (existing) {
 		existing.title = title;
+		saveHistory(entries);
+	}
+}
+
+/**
+ * Update the favicon of an existing history entry for the given URL.
+ * @param url The URL whose favicon should be updated.
+ * @param favicon The favicon URL.
+ */
+function updateFavicon(url: string, favicon: string): void {
+	const entries = loadHistory();
+	const existing = entries.find((e) => e.url === url);
+
+	if (existing) {
+		existing.favicon = favicon;
 		saveHistory(entries);
 	}
 }
@@ -320,6 +532,14 @@ function showSuggestions(query: string): void {
 		item.className = "autocomplete-item";
 		item.dataset.url = entry.url;
 
+		if (entry.favicon) {
+			const faviconImg = document.createElement("img");
+			faviconImg.className = "autocomplete-favicon";
+			faviconImg.src = entry.favicon;
+			faviconImg.alt = "";
+			item.append(faviconImg);
+		}
+
 		const textCol = document.createElement("div");
 		textCol.className = "autocomplete-text";
 
@@ -339,7 +559,43 @@ function showSuggestions(query: string): void {
 		countSpan.className = "visit-count";
 		countSpan.textContent = `${entry.visitCount} visit${entry.visitCount !== 1 ? "s" : ""}`;
 
+		const activeView = findActiveViewForUrl(entry.url);
+
 		item.append(textCol, countSpan);
+
+		if (activeView) {
+			const switchBtn = document.createElement("button");
+			switchBtn.className = "btn-switch-tab";
+			switchBtn.textContent = "Switch to tab";
+			switchBtn.addEventListener("mousedown", (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				hideAutocomplete();
+				switchToView(activeView).catch(console.error);
+			});
+			item.append(switchBtn);
+		}
+
+		if (viewUrlMap.size > 0) {
+			const openLastBtn = document.createElement("button");
+			openLastBtn.className = "btn-open-last";
+			openLastBtn.title = "Open in last active window";
+			openLastBtn.innerHTML = [
+				"<svg width=\"12\" height=\"12\" viewBox=\"0 0 16 16\" fill=\"currentColor\">",
+				"<path d=\"M1 3a1 1 0 0 1 1-1h5v1H2v9h5v1H2a1 1 0 0 1-1-1V3zm7-1h5a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H8v-1h5V3H8V2z\"/>",
+				"<path d=\"M5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z\"/></svg>"
+			].join("");
+			openLastBtn.addEventListener("mousedown", async (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				hideAutocomplete();
+				await openInLastActiveWindow(entry.url);
+				if (urlInput) {
+					urlInput.value = "";
+				}
+			});
+			item.append(openLastBtn);
+		}
 
 		item.addEventListener("mousedown", (e) => {
 			e.preventDefault();
@@ -353,6 +609,7 @@ function showSuggestions(query: string): void {
 	}
 
 	autocompleteList.style.display = "block";
+	resizeForAutocomplete(entries.length).catch(console.error);
 }
 
 /**
@@ -386,6 +643,20 @@ function escapeHtml(str: string): string {
 }
 
 /**
+ * Heuristic check for whether an input string looks like a URL rather than a search query.
+ * Returns true if it contains a dot followed by a plausible TLD segment (e.g. "bbc.co.uk",
+ * "example.com/path") and no spaces.
+ * @param input The raw user input to evaluate.
+ * @returns True if the input appears to be a URL, false if it looks like a search query.
+ */
+function looksLikeUrl(input: string): boolean {
+	if (input.includes(" ")) {
+		return false;
+	}
+	return /^\S+\.[a-z]{2,}(\/.*)?$/i.test(input);
+}
+
+/**
  * Hide the autocomplete dropdown.
  */
 function hideAutocomplete(): void {
@@ -394,6 +665,37 @@ function hideAutocomplete(): void {
 		autocompleteList.innerHTML = "";
 	}
 	selectedSuggestionIndex = -1;
+	const panel = document.querySelector<HTMLElement>("#history-panel");
+	const historyVisible = panel && panel.style.display !== "none";
+	if (!historyVisible) {
+		resizeToCollapsed().catch(console.error);
+	}
+}
+
+/**
+ * Resize the window to accommodate autocomplete results.
+ * @param itemCount The number of autocomplete items being shown.
+ */
+async function resizeForAutocomplete(itemCount: number): Promise<void> {
+	const win = fin.Window.getCurrentSync();
+	const bounds = await win.getBounds();
+	const itemHeight = 42;
+	const targetHeight = COLLAPSED_HEIGHT + (Math.min(itemCount, MAX_SUGGESTIONS) * itemHeight);
+	const newHeight = Math.max(targetHeight, bounds.height);
+	if (newHeight !== bounds.height) {
+		await win.resizeTo(bounds.width, newHeight, "top-left");
+	}
+}
+
+/**
+ * Resize the window back to collapsed height.
+ */
+async function resizeToCollapsed(): Promise<void> {
+	const win = fin.Window.getCurrentSync();
+	const bounds = await win.getBounds();
+	if (bounds.height !== COLLAPSED_HEIGHT) {
+		await win.resizeTo(bounds.width, COLLAPSED_HEIGHT, "top-left");
+	}
 }
 
 /**
@@ -413,11 +715,41 @@ function updateSuggestionHighlight(suggestions: NodeListOf<HTMLElement>): void {
 	}
 }
 
+/**
+ * Find the identity of an active view currently displaying the given URL, or null if none.
+ * @param url The URL to search for among active views.
+ * @returns The view identity if found, otherwise null.
+ */
+function findActiveViewForUrl(url: string): OpenFin.Identity | null {
+	for (const [viewName, viewUrl] of viewUrlMap.entries()) {
+		if (viewUrl === url) {
+			return { uuid: fin.me.uuid, name: viewName };
+		}
+	}
+	return null;
+}
+
+/**
+ * Focus an existing view and bring its parent window to front.
+ * @param identity The identity of the view to focus.
+ */
+async function switchToView(identity: OpenFin.Identity): Promise<void> {
+	const view = fin.View.wrapSync(identity);
+	const win = await view.getCurrentWindow();
+	const state = await win.getState();
+	if (state === "minimized") {
+		await win.restore();
+	}
+	await view.focus();
+	await win.setAsForeground();
+}
+
 // -- History panel rendering --
 
 /**
  * Render the full history list in the history panel, sorted by most recent first.
  * Shows title (if available) prominently with the URL beneath it.
+ * Checks active views and offers a "Switch to tab" button when a view is on that URL.
  */
 function renderHistory(): void {
 	if (!historyListElement) {
@@ -430,6 +762,14 @@ function renderHistory(): void {
 	for (const entry of entries) {
 		const row = document.createElement("div");
 		row.className = "history-entry";
+
+		if (entry.favicon) {
+			const faviconImg = document.createElement("img");
+			faviconImg.className = "history-favicon";
+			faviconImg.src = entry.favicon;
+			faviconImg.alt = "";
+			row.append(faviconImg);
+		}
 
 		const textCol = document.createElement("div");
 		textCol.className = "history-text";
@@ -467,6 +807,7 @@ function renderHistory(): void {
 		});
 
 		row.append(textCol, metaEl, deleteEl);
+
 		historyListElement.append(row);
 	}
 }
