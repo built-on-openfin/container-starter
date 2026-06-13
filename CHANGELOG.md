@@ -1,5 +1,9 @@
 # Changelog
 
+## June 2026
+
+- [track-navigation-within-a-platform](./how-to/track-navigation-within-a-platform/README.md) - Example shows how you can use our APIs to track navigation within a platform and create a chrome like omnibox with history.
+
 ## February 2026
 
 - [use-domain-permissions](./how-to/use-domain-permissions/README.md) - New example demonstrating how domain settings override window/view permissions. Uses the Clipboard API with `domainSettings.default` and `domainSettings.rules` to allow clipboard access for a specific URL while blocking it for others.

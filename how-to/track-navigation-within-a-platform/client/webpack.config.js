@@ -20,5 +20,25 @@ module.exports = [
 			filename: 'provider.bundle.js',
 			path: path.resolve(__dirname, '..', 'public', 'js')
 		}
+	},
+	{
+		entry: './client/src/url-navigator.ts',
+		devtool: 'inline-source-map',
+		module: {
+			rules: [
+				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: /node_modules/
+				}
+			]
+		},
+		resolve: {
+			extensions: ['.tsx', '.ts', '.js']
+		},
+		output: {
+			filename: 'url-navigator.bundle.js',
+			path: path.resolve(__dirname, '..', 'public', 'js')
+		}
 	}
 ];
