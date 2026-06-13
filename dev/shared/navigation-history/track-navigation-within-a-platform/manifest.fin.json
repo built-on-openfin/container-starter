@@ -6,10 +6,25 @@
 	"platform": {
 		"uuid": "how-to-track-navigation-within-a-platform",
 		"providerUrl": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/track-navigation-within-a-platform/html/provider.html",
-		"icon": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/track-navigation-within-a-platform/favicon.ico",
-		"autoShow": true,
-		"defaultWidth": 900,
-		"defaultHeight": 700,
-		"defaultCentered": true
+		"icon": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/track-navigation-within-a-platform/favicon-32x32.png",
+		"autoShow": false
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"url": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/track-navigation-within-a-platform/html/url-navigator.html",
+				"name": "url-navigator",
+				"icon": "https://built-on-openfin.github.io/container-starter/dev/shared/navigation-history/track-navigation-within-a-platform/favicon.ico",
+				"autoShow": true,
+				"frame": false,
+				"defaultWidth": 700,
+				"defaultHeight": 225,
+				"defaultCentered": true,
+				"resizable": true,
+				"minWidth": 500,
+				"minHeight": 225,
+				"saveWindowState": false
+			}
+		]
 	}
 }
