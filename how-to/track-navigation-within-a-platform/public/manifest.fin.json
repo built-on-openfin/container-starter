@@ -1,0 +1,30 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "44.146.101.1"
+	},
+	"platform": {
+		"uuid": "how-to-track-navigation-within-a-platform",
+		"providerUrl": "http://localhost:5050/html/provider.html",
+		"icon": "http://localhost:5050/favicon-32x32.png",
+		"autoShow": false
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"url": "http://localhost:5050/html/url-navigator.html",
+				"name": "url-navigator",
+				"icon": "http://localhost:5050/favicon.ico",
+				"autoShow": true,
+				"frame": false,
+				"defaultWidth": 700,
+				"defaultHeight": 225,
+				"defaultCentered": true,
+				"resizable": true,
+				"minWidth": 500,
+				"minHeight": 225,
+				"saveWindowState": false
+			}
+		]
+	}
+}
