@@ -26,6 +26,7 @@ let urlInput: HTMLInputElement | null = null;
 let autocompleteList: HTMLElement | null = null;
 let historyListElement: HTMLElement | null = null;
 let selectedSuggestionIndex = -1;
+let stashedQuery = "";
 
 document.addEventListener("DOMContentLoaded", () => {
 	initDom();
@@ -207,6 +208,9 @@ function handleInputKeyDown(e: KeyboardEvent): void {
 
 	if (e.key === "ArrowDown") {
 		e.preventDefault();
+		if (selectedSuggestionIndex === -1 && urlInput) {
+			stashedQuery = urlInput.value;
+		}
 		selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, suggestions.length - 1);
 		updateSuggestionHighlight(suggestions);
 	} else if (e.key === "ArrowUp") {
@@ -224,7 +228,12 @@ function handleInputKeyDown(e: KeyboardEvent): void {
 		}
 		navigateToInput().catch(console.error);
 	} else if (e.key === "Escape") {
-		hideAutocomplete();
+		if (selectedSuggestionIndex >= 0) {
+			selectedSuggestionIndex = -1;
+			updateSuggestionHighlight(suggestions);
+		} else {
+			hideAutocomplete();
+		}
 	}
 }
 
@@ -385,13 +394,49 @@ function showSuggestions(query: string): void {
 		.sort((a, b) => b.visitCount - a.visitCount)
 		.slice(0, MAX_SUGGESTIONS);
 
-	if (entries.length === 0) {
+	const isSearchQuery = !looksLikeUrl(query) && !/^https?:\/\//i.test(query);
+	if (entries.length === 0 && !isSearchQuery) {
 		hideAutocomplete();
 		return;
 	}
 
 	selectedSuggestionIndex = -1;
 	autocompleteList.innerHTML = "";
+
+	// If the query doesn't look like a URL, add a "Search Google" option at the top and pre-select it.
+	if (isSearchQuery) {
+		selectedSuggestionIndex = 0;
+		stashedQuery = query;
+		const searchItem = document.createElement("div");
+		searchItem.className = "autocomplete-item autocomplete-search selected";
+		searchItem.dataset.url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+
+		const searchIcon = document.createElement("span");
+		searchIcon.className = "autocomplete-search-icon";
+		searchIcon.innerHTML =
+			// eslint-disable-next-line @typescript-eslint/quotes
+			'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+			// eslint-disable-next-line @typescript-eslint/quotes
+			'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+			// eslint-disable-next-line @typescript-eslint/quotes
+			'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+		searchItem.append(searchIcon);
+
+		const searchText = document.createElement("span");
+		searchText.className = "autocomplete-search-label";
+		searchText.innerHTML = `Search Google for <strong>${escapeHtml(query)}</strong>`;
+		searchItem.append(searchText);
+
+		searchItem.addEventListener("mousedown", (e) => {
+			e.preventDefault();
+			if (urlInput) {
+				urlInput.value = query;
+			}
+			navigateToInput().catch(console.error);
+		});
+
+		autocompleteList.append(searchItem);
+	}
 
 	const hasLastWindow = Boolean(getLastFocusedWindow());
 
@@ -480,7 +525,8 @@ function showSuggestions(query: string): void {
 	}
 
 	autocompleteList.style.display = "block";
-	resizeForAutocomplete(entries.length).catch(console.error);
+	const totalItems = entries.length + (isSearchQuery ? 1 : 0);
+	resizeForAutocomplete(totalItems).catch(console.error);
 }
 
 /**
@@ -540,6 +586,8 @@ function updateSuggestionHighlight(suggestions: NodeListOf<HTMLElement>): void {
 		if (urlInput) {
 			urlInput.value = selected.dataset.url ?? "";
 		}
+	} else if (selectedSuggestionIndex === -1 && urlInput) {
+		urlInput.value = stashedQuery;
 	}
 }
 
