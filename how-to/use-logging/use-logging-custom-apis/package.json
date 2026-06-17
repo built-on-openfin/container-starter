@@ -30,6 +30,6 @@
 	},
 	"dependencies": {
 		"connect-busboy": "^1.0.0",
-		"multer": "^1.4.5-lts.1"
+		"multer": "^2.2.0"
 	}
 }
