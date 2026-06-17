@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Use Download Bubble</title>
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Use Download Bubble</h1>
+				<h1 class="tag">Trigger a download to show Chromium's download UI.</h1>
+			</div>
+			<button
+				id="btn-show-download-bubble"
+				class="icon-button"
+				aria-label="Show downloads"
+				title="Show downloads"
+			>
+				<!-- Download icon (inline SVG) -->
+				<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+					<path
+						fill="currentColor"
+						d="M12 3a1 1 0 0 1 1 1v8.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42L11 12.59V4a1 1 0 0 1 1-1ZM5 19a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"
+					/>
+				</svg>
+			</button>
+		</header>
+		<main class="col left gap10">
+			<button id="btn-trigger-download">Download</button>
+			<p id="status"></p>
+			<p>
+				The file is served from
+				<code>public/assets/example-download.txt</code>
+				and downloaded via an
+				<code>&lt;a download&gt;</code>
+				click.
+			</p>
+		</main>
+	</body>
+</html>
