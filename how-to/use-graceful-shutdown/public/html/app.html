@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Graceful Shutdown</title>
+		<link rel="icon" type="image/x-icon" href="../favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Graceful Shutdown</h1>
+				<h1 class="tag">registerShutdownHandler example</h1>
+			</div>
+		</header>
+		<main class="col fill left gap20 scroll-vertical">
+			<div class="col gap20">
+				<p id="status">Shutdown handler is registered in the provider.</p>
+				<p>
+					<strong>Test:</strong> Close this app, then check the OpenFin log for &quot;Shutdown handler ran&quot;.
+					If the message is missing, the handler did not run.
+				</p>
+				<p>
+					<strong>Log (Windows):</strong> <code>%LOCALAPPDATA%\OpenFin\cache\43.142.101.2\debug.log</code>
+				</p>
+			</div>
+		</main>
+		<footer>
+			<a
+				href="https://developer.openfin.co/docs/javascript/stable/classes/OpenFin.System.html#registerShutdownHandler"
+				target="_blank"
+			>
+				registerShutdownHandler API
+			</a>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Shutting down…</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<style>
+			body.countdown { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2rem; box-sizing: border-box; }
+			.countdown-number { font-size: 4rem; font-weight: 700; line-height: 1; color: var(--brand-primary, #0a76d3); }
+			.countdown-message { font-size: 1rem; opacity: 0.9; }
+		</style>
+	</head>
+	<body class="countdown">
+		<div id="countdown" class="countdown-number">5</div>
+		<div id="message" class="countdown-message">Shutdown handler running…</div>
+		<script>
+			(function () {
+				const countdownEl = document.getElementById("countdown");
+				const messageEl = document.getElementById("message");
+				let n = 5;
+				const interval = setInterval(function () {
+					n -= 1;
+					if (n > 0) {
+						countdownEl.textContent = String(n);
+					} else {
+						clearInterval(interval);
+						countdownEl.textContent = "0";
+						messageEl.textContent = "Shutting down…";
+					}
+				}, 1000);
+			})();
+		</script>
+	</body>
+</html>

@@ -438,5 +438,30 @@
 				"files": ["fin.d.ts"]
 			}
 		]
+	},
+	{
+		"name": "use-graceful-shutdown",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/public",
+				"destFolder": "how-to/use-graceful-shutdown/public",
+				"files": ["favicon.ico"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/public/common",
+				"destFolder": "how-to/use-graceful-shutdown/public/common",
+				"files": ["images/icon-here.png", "style/app.css"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/scripts",
+				"destFolder": "how-to/use-graceful-shutdown/scripts",
+				"files": ["kill.mjs", "launch.mjs"]
+			},
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-graceful-shutdown/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
 	}
 ]
