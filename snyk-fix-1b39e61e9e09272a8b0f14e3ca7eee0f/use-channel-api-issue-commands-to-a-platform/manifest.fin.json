@@ -1,0 +1,14 @@
+{
+	"licenseKey": "openfin-demo-license-key",
+	"runtime": {
+		"version": "43.142.101.2",
+		"arguments": "--v=1"
+	},
+	"startup_app": {
+		"name": "issue-commands-to-platform",
+		"uuid": "issue-commands-to-platform",
+		"url": "https://built-on-openfin.github.io/container-starter/snyk-fix-1b39e61e9e09272a8b0f14e3ca7eee0f/use-channel-api-issue-commands-to-a-platform/html/window.html",
+		"autoShow": true,
+		"icon": "https://built-on-openfin.github.io/container-starter/snyk-fix-1b39e61e9e09272a8b0f14e3ca7eee0f/use-channel-api-issue-commands-to-a-platform/favicon.ico"
+	}
+}

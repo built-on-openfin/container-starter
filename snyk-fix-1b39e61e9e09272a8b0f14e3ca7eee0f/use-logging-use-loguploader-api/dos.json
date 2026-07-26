@@ -1,0 +1,13 @@
+{
+	"applicationSettings": {
+		"https://built-on-openfin.github.io/container-starter/snyk-fix-1b39e61e9e09272a8b0f14e3ca7eee0f/use-logging-use-loguploader-api/manifest.fin.json": {
+			"permissions": {
+				"System": {
+					"launchExternalProcess": true,
+					"terminateExternalProcess": true,
+					"downloadAsset": true
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"enableBeforeUnload": true,
+		"uuid": "container-use-notifications",
+		"icon": "https://built-on-openfin.github.io/container-starter/snyk-fix-1b39e61e9e09272a8b0f14e3ca7eee0f/use-notifications/favicon.ico",
+		"autoShow": true,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/snyk-fix-1b39e61e9e09272a8b0f14e3ca7eee0f/use-notifications/html/provider.html"
+	},
+	"snapshot": {}
+}

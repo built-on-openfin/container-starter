@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+	--brand-background: var(--theme-background-primary, #1e1f23);
+	--brand-border: var(--theme-background4, #2f3136);
+	--brand-primary: var(--theme-brand-primary, #0a76d3);
+	--brand-text: var(--theme-text-default, #ffffff);
+	--brand-text-secondary: var(--theme-text-help, #c9cbd2);
+	accent-color: var(--brand-primary);
+}
+
+* {
+	font-family: Inter, 'Sans Serif', sans-serif;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	justify-content: stretch;
+	align-items: stretch;
+	overflow: hidden;
+	padding: 20px;
+	margin: 0;
+	background-color: var(--brand-background);
+	color: var(--brand-text);
+}
+
+h1 {
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1;
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+h1.tag {
+	font-size: 12px;
+	font-weight: normal;
+	margin-top: 5px;
+	color: var(--brand-text-secondary);
+}
+
+p {
+	color: var(--brand-text-secondary);
+	font-size: 12px;
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+code {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+		monospace;
+	font-size: 12px;
+}
+
+header {
+	padding-bottom: 10px;
+	border-bottom: 2px solid var(--brand-border);
+}
+
+button {
+	background-color: var(--brand-primary);
+	border: 2px solid var(--brand-primary);
+	color: #ffffff;
+	border-radius: 5px;
+	padding: 8px 20px;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	outline: 0;
+}
+
+.icon-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border-radius: 8px;
+}
+
+.icon-button svg {
+	display: block;
+}
+
+.icon-button.hidden {
+	display: none;
+}
+
+.icon-button:focus,
+.icon-button:hover {
+	filter: brightness(1.05);
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.col {
+	display: flex;
+	flex-direction: column;
+}
+
+.fill {
+	flex: 1;
+}
+
+.spread {
+	justify-content: space-between;
+}
+
+.middle {
+	align-items: center;
+}
+
+.left {
+	align-items: flex-start;
+}
+
+.gap10 {
+	gap: 10px;
+}
+
+.gap20 {
+	gap: 20px;
+}
