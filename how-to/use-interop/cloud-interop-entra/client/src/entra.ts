@@ -12,6 +12,7 @@ const DEFAULT_TENANT = "organizations";
 const REFRESH_BUFFER_RATIO = 0.8;
 const FALLBACK_EXPIRY_MS = 3_600_000;
 const SETTINGS_STORAGE_KEY = "cloud-interop-entra-settings";
+const SIGNED_OUT_STORAGE_KEY = "cloud-interop-entra-signed-out";
 
 /**
  * The claims we read from the ID token so that the values HERE needs can be logged.
@@ -122,6 +123,18 @@ export function getEntraSettings(search: string): EntraSettings | undefined {
 }
 
 /**
+ * Determine whether this page load is the one that Microsoft Entra ID redirected back to after a
+ * sign out, rather than after a sign in. The flag is cleared as it is read so that it only
+ * applies to the page load that immediately follows the sign out.
+ * @returns True if the user has just signed out.
+ */
+export function wasSignedOut(): boolean {
+	const signedOut = window.sessionStorage.getItem(SIGNED_OUT_STORAGE_KEY) !== null;
+	window.sessionStorage.removeItem(SIGNED_OUT_STORAGE_KEY);
+	return signedOut;
+}
+
+/**
  * Sign in to Microsoft Entra ID using a redirect. If the user needs to authenticate then the page
  * navigates to the Microsoft sign in page and this returns without a token, as the page is about
  * to unload. When the user returns the sign in completes and the cached ID token is handed back
@@ -134,13 +147,16 @@ export async function signInToEntra(settings: EntraSettings): Promise<EntraSignI
 	const authority =
 		settings.authority ?? `https://login.microsoftonline.com/${settings.tenantId ?? DEFAULT_TENANT}`;
 
+	// Microsoft Entra ID matches the redirect uri exactly and restricts query parameters, so
+	// redirect back to this page without the settings that are on its query string. Signing out
+	// comes back to the same place, which Microsoft Entra ID also requires to be registered.
+	const redirectUri = settings.redirectUri ?? `${window.location.origin}${window.location.pathname}`;
+
 	const msal = new PublicClientApplication({
 		auth: {
 			clientId: settings.clientId,
 			authority,
-			// Microsoft Entra ID matches the redirect uri exactly and restricts query parameters,
-			// so redirect back to this page without the settings that are on its query string.
-			redirectUri: settings.redirectUri ?? `${window.location.origin}${window.location.pathname}`
+			redirectUri
 		}
 	});
 
@@ -248,8 +264,9 @@ export async function signInToEntra(settings: EntraSettings): Promise<EntraSignI
 	}
 
 	/**
-	 * Sign out of Microsoft Entra ID, ending the session as well as clearing the MSAL cache,
-	 * so that a different account can be used the next time the platform is launched.
+	 * Sign out of Microsoft Entra ID using a redirect, ending the session as well as clearing the
+	 * MSAL cache, so that a different account can be used. This does not resolve, as the page
+	 * navigates to Microsoft and unloads before it has a chance to.
 	 * @returns Nothing.
 	 */
 	async function signOut(): Promise<void> {
@@ -261,11 +278,15 @@ export async function signInToEntra(settings: EntraSettings): Promise<EntraSignI
 		cachedToken = "";
 		signedInAccount = undefined;
 		tokenDetails = undefined;
-		window.sessionStorage.removeItem(SETTINGS_STORAGE_KEY);
 
-		// A popup is used rather than logoutRedirect, and mainWindowRedirectUri is left out, so
-		// that MSAL never navigates this window away from the platform it is hosting.
-		await msal.logoutPopup({ account: msal.getAllAccounts()[0] });
+		// The settings have to survive the round trip through Microsoft, just as they do when
+		// signing in, and the flag tells the page that loads afterwards that it got there by
+		// signing out rather than by signing in.
+		storeEntraSettings(settings);
+		window.sessionStorage.setItem(SIGNED_OUT_STORAGE_KEY, "true");
+
+		// The page unloads here, so nothing after this runs.
+		await msal.logoutRedirect({ account: msal.getAllAccounts()[0], postLogoutRedirectUri: redirectUri });
 	}
 
 	const signedIn = await fetchToken(true);

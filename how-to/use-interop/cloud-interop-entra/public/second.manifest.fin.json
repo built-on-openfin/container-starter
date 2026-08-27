@@ -7,7 +7,7 @@
 		"uuid": "platform-2-entra",
 		"icon": "https://openfin.github.io/golden-prototype/favicon.ico",
 		"autoShow": true,
-		"providerUrl": "http://localhost:5050/html/provider.html?clientId=941c7312-9331-4008-9b3b-bf4dde121b35",
+		"providerUrl": "http://localhost:5050/html/provider.html?clientId=<APPLICATION_CLIENT_ID>",
 		"defaultWindowOptions": {
 			"url": "http://localhost:5050/html/window.html",
 			"contextMenu": true,
@@ -57,10 +57,10 @@
 			"enabled": false,
 			"token": "",
 			"connectParams": {
-				"url": "https://se-dev.is.here.io/interop",
+				"url": "",
 				"authenticationType": "jwt",
 				"jwtAuthenticationParameters": {
-					"authenticationId": "7a725c6f-bb00-47f1-8e46-008765521845"
+					"authenticationId": ""
 				},
 				"platformId": "entra-example",
 				"sourceId": "client2",

@@ -114,7 +114,8 @@ export interface EntraSignInResult {
 	tokenDetails?: EntraTokenDetails;
 
 	/**
-	 * Sign out of Microsoft Entra ID. This is present whenever a token was acquired.
+	 * Sign out of Microsoft Entra ID. This is present whenever a token was acquired. It does not
+	 * resolve, as the page redirects to Microsoft and unloads.
 	 */
 	signOut?: () => Promise<void>;
 }

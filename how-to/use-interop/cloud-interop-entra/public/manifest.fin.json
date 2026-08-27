@@ -7,7 +7,7 @@
 		"uuid": "platform-1-entra",
 		"icon": "http://localhost:5050/favicon.ico",
 		"autoShow": true,
-		"providerUrl": "http://localhost:5050/html/provider.html?clientId=735b8402-e440-4d9b-82d1-d642de76404a",
+		"providerUrl": "http://localhost:5050/html/provider.html?clientId=<APPLICATION_CLIENT_ID>",
 		"defaultWindowOptions": {
 			"url": "http://localhost:5050/html/window.html",
 			"contextMenu": true,
@@ -51,13 +51,13 @@
 	},
 	"customSettings": {
 		"cloudInteropProvider": {
-			"enabled": true,
+			"enabled": false,
 			"token": "",
 			"connectParams": {
-				"url": "https://se-dev.is.here.io/interop",
+				"url": "",
 				"authenticationType": "jwt",
 				"jwtAuthenticationParameters": {
-					"authenticationId": "7a725c6f-bb00-47f1-8e46-008765521845"
+					"authenticationId": ""
 				},
 				"platformId": "entra-example",
 				"sourceId": "client1",

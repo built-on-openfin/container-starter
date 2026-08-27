@@ -1,18 +1,35 @@
 import { cloudInteropOverride } from "@openfin/cloud-interop";
 import type OpenFin from "@openfin/core";
-import { getEntraSettings, signInToEntra } from "./entra";
+import { getEntraSettings, signInToEntra, wasSignedOut } from "./entra";
 import { getManifestCustomSettings } from "./settings";
 import type { CustomSettings, EntraTokenDetails } from "./shapes";
 
 const CONTAINER_MESSAGE = "This example needs to run inside of a HERE Container.";
 const NO_TOKEN_VALUE = "Not signed in";
 const NO_MANIFEST_VALUE = "Unknown, the manifest is only available inside of the container";
-const RELAUNCH_MESSAGE =
+const SIGN_OUT_LABEL = typeof fin === "undefined" ? "Sign out" : "Sign out and quit";
+const SIGNING_OUT_MESSAGE =
 	typeof fin === "undefined"
-		? "Reload this page to sign in as a different account."
-		: "The platform is still running with the connection it already made, so quit it and launch it again to connect as a different account.";
+		? "Signing out of Microsoft Entra ID..."
+		: "Signing out of Microsoft Entra ID, the platform will quit once it completes...";
 
 window.addEventListener("DOMContentLoaded", async () => {
+	if (wasSignedOut() && typeof fin !== "undefined") {
+		// Signing out navigated the provider window to Microsoft, which ended the platform that
+		// was running in this document, so quit rather than leave it half started. In a browser
+		// there is no platform, so the sign in below simply starts again.
+		showMessage("Signed out of Microsoft Entra ID, quitting the platform...");
+
+		try {
+			await fin.Application.getCurrentSync().quit(true);
+		} catch (error) {
+			showMessage(`Signed out, but the platform could not be quit. ${formatError(error)}`);
+			console.error("Unable to quit the platform after signing out", error);
+		}
+
+		return;
+	}
+
 	// Sign the user in before any HERE related code runs so that a token is available
 	// by the time the platform and its cloud interop override are initialized.
 	const entraSettings = getEntraSettings(window.location.search);
@@ -83,9 +100,9 @@ function showTokenDetails(tokenDetails?: EntraTokenDetails): void {
 }
 
 /**
- * Show the sign out button and sign the user out when it is clicked. Signing out does not stop
- * the platform, as the cloud interop connection it made is already authenticated, so the message
- * explains what to do to connect as a different account.
+ * Show the sign out button and sign the user out when it is clicked. Signing out redirects this
+ * window to Microsoft, which ends the platform running in it, so inside the container the button
+ * says so and the application quits on the page load that follows.
  * @param signOut The function that signs the user out of Microsoft Entra ID.
  */
 function setupSignOut(signOut: () => Promise<void>): void {
@@ -95,17 +112,16 @@ function setupSignOut(signOut: () => Promise<void>): void {
 		return;
 	}
 
+	signOutButton.textContent = SIGN_OUT_LABEL;
 	signOutButton.classList.remove("hidden");
 
 	signOutButton.addEventListener("click", async () => {
 		signOutButton.disabled = true;
-		showMessage("Signing out of Microsoft Entra ID...");
+		showMessage(SIGNING_OUT_MESSAGE);
 
 		try {
+			// This does not return, as the page redirects to Microsoft and unloads.
 			await signOut();
-			signOutButton.classList.add("hidden");
-			showTokenDetails();
-			showMessage(`Signed out of Microsoft Entra ID. ${RELAUNCH_MESSAGE}`);
 		} catch (error) {
 			signOutButton.disabled = false;
 			showMessage(`Microsoft Entra ID sign out failed. ${formatError(error)}`);

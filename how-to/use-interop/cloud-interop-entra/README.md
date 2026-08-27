@@ -46,11 +46,28 @@ If you swap to a popup, remember to register the redirect uri that MSAL uses for
 
 ### Signing out
 
-Once a token has been acquired the provider page shows which account is signed in and offers a **Sign out** button, which is there so that you can try the example as a different account.
+Once a token has been acquired the provider page shows which account is signed in and offers a sign out button, which is there so that you can try the example as a different account.
 
-Sign out is the one place where this example does use a popup. `logoutRedirect` would navigate the provider window to Microsoft, and by this point that window is hosting the running platform, so the platform would be torn down with it. `logoutPopup` is called without a `mainWindowRedirectUri` instead, which leaves the provider window untouched while the Microsoft session is ended in the popup. Because the button is a user gesture, the popup is not blocked in a browser either.
+Sign out uses `logoutRedirect`, the same interaction type as sign in. `logoutPopup` was tried first and was dropped: inside the container it leaves a floating window behind, because the popup MSAL opens is a container window rather than a browser popup.
 
-Signing out clears the MSAL cache, the settings stored in `sessionStorage` and the cached token, and cancels the background refresh. It does **not** disconnect cloud interop: the connection was authenticated when the platform started and it carries on working, but `jwtRequestCallback` now has nothing to hand over if it is asked for a token again. To connect as a different account, quit the platform and launch it again. In a browser, where no platform was started, reloading the page is enough.
+The redirect navigates the provider window to Microsoft, which ends the session and then redirects back to the provider page. That window is the document hosting the running platform, so the platform does not survive the navigation. Rather than pretend otherwise, the two contexts diverge on the way back:
+
+- **In the container** the button reads **Sign out and quit**, and the page load that follows the logout quits the application. Launch it again to sign in as a different account.
+- **In a browser** there is no platform to lose, so the page load that follows the logout starts sign in again and Microsoft asks you to log in. Cloud interop does not work here, this mode is only useful for reading the values HERE needs.
+
+```mermaid
+flowchart TD
+  click[Sign out clicked] --> store[Store the settings and a signed out flag, clear the token and the refresh timer]
+  store --> redirect[logoutRedirect, the provider window unloads]
+  redirect --> ms[Microsoft ends the session and redirects back to provider.html]
+  ms --> load[provider.html loads and reads the signed out flag]
+  load -->|in the container| quit[Quit the application]
+  load -->|in a browser| signin[Start sign in again, so Microsoft asks for an account]
+```
+
+The returning page load has no way of knowing why it is loading, since a sign out and a sign in both come back to the same redirect uri, so `signOut` writes a flag to `sessionStorage` that `wasSignedOut` reads and clears. It also rewrites the settings to `sessionStorage`, for the same reason the sign in redirect does: the redirect uri cannot carry the query string that configured the page.
+
+The application is quit with `fin.Application.quit` rather than `fin.Platform.quit`, because the platform channel provider went away with the previous document and there is nothing left to service a platform quit.
 
 ### Surviving the redirect
 
@@ -86,7 +103,7 @@ Leave `tenantId` out if you want the account used at sign in to select the tenan
 ### Registering the app
 
 1. Register an application in the Microsoft Entra admin center and note the **Application (client) ID**.
-2. Add a **Single-page application** redirect URI of `http://localhost:5050/html/provider.html`. It must match exactly and must not include the query string, otherwise sign in fails with `AADSTS50011`.
+2. Add a **Single-page application** redirect URI of `http://localhost:5050/html/provider.html`. It must match exactly and must not include the query string, otherwise sign in fails with `AADSTS50011`. Sign out sends the same value as its `post_logout_redirect_uri`, which Microsoft Entra ID also requires to be a registered redirect URI, so registering it once covers both.
 3. Choose the supported account types. If you plan to omit `tenantId`, this must allow accounts in any organizational directory.
 
 `CloudAPAuthEnabled` is a container and Chrome policy rather than an MSAL flag, and this example neither enables nor requires it. Where the policy is on and the device is Entra ID or hybrid joined, `acquireTokenSilent` usually succeeds and no sign in page is shown at all. Where it is off, or there is no primary refresh token, the redirect to the Microsoft sign in page is **expected** rather than an error.
@@ -115,7 +132,7 @@ The same values are shown on the provider page under the sign in message, so you
 | `aud`      | The audience, which is the client id of your app registration.                                                                               |
 | `jwks_uri` | The keys the token signature can be validated against.                                                                                       |
 
-The three token rows read `Not signed in` until a token has been acquired, and go back to that after you sign out.
+The three token rows read `Not signed in` when no token was acquired, which is the case when the sign in was skipped or failed.
 
 ### Cloud interop settings
 
@@ -194,7 +211,7 @@ http://localhost:5050/html/provider.html?clientId=<APPLICATION_CLIENT_ID>
 
 You are redirected to Microsoft, and on the way back the page reports that it needs to run inside of a HERE Container, since there is no platform to initialize. If the sign in failed, the reason is shown alongside that message and the full error is in the console.
 
-The **Sign out** button works here too, which makes the browser the quickest way to check the sign in with a few different accounts: sign out, reload the page and sign in again.
+The **Sign out** button works here too, which makes the browser the quickest way to check the sign in with a few different accounts. Signing out returns to this page and starts sign in again, so Microsoft asks which account to use without you having to reload anything.
 
 ### Use the project interface
 
