@@ -14,6 +14,11 @@ export interface CloudInteropProviderSettings {
 	 * The connect parameters for the cloud interop provider.
 	 */
 	connectParams: CloudInteropOverrideParams & ConnectParameters;
+
+	/**
+	 * Optional JWT returned by jwtRequestCallback when authenticationType is "jwt".
+	 */
+	token?: string;
 }
 
 /**

@@ -7,8 +7,12 @@ window.addEventListener("DOMContentLoaded", async () => {
 	const interopOverrides = [];
 
 	if (customSettings?.cloudInteropProvider?.enabled) {
+		const { connectParams, token } = customSettings.cloudInteropProvider;
+		if (connectParams.authenticationType === "jwt" && connectParams.jwtAuthenticationParameters && token) {
+			connectParams.jwtAuthenticationParameters.jwtRequestCallback = (): string | object => token;
+		}
 		const initializedCloudInteropOverride = (await cloudInteropOverride(
-			customSettings?.cloudInteropProvider?.connectParams
+			connectParams
 		)) as unknown as OpenFin.ConstructorOverride<OpenFin.InteropBroker>;
 		interopOverrides.push(initializedCloudInteropOverride);
 	}

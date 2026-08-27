@@ -52,12 +52,16 @@
 	"customSettings": {
 		"cloudInteropProvider": {
 			"enabled": false,
+			"token": "",
 			"connectParams": {
 				"url": "",
 				"authenticationType": "basic",
 				"basicAuthenticationParameters": {
 					"username": "<DO NOT COMMIT CREDENTIALS>",
 					"password": "<DO NOT COMMIT CREDENTIALS>"
+				},
+				"jwtAuthenticationParameters": {
+					"authenticationId": ""
 				},
 				"platformId": "",
 				"sourceId": "",
