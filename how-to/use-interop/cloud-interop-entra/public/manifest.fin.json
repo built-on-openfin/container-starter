@@ -1,0 +1,69 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect --enable-mesh --security-realm=container-interop-use-cloud-entra-platform1",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "platform-1-entra",
+		"icon": "http://localhost:5050/favicon.ico",
+		"autoShow": true,
+		"providerUrl": "http://localhost:5050/html/provider.html?clientId=735b8402-e440-4d9b-82d1-d642de76404a",
+		"defaultWindowOptions": {
+			"url": "http://localhost:5050/html/window.html",
+			"contextMenu": true,
+			"defaultWidth": 1100,
+			"defaultHeight": 700,
+			"minHeight": 700,
+			"minWidth": 900,
+			"height": 700,
+			"width": 1100
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"name": "window1",
+				"layout": {
+					"content": [
+						{
+							"type": "row",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/interop-api/context/interop-broadcast-view.html"
+									}
+								},
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"url": "https://samples.openfin.co/dev-extensions/extensions/v18.0.0/interop/interop-api/context/interop-broadcast-view.html"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	},
+	"customSettings": {
+		"cloudInteropProvider": {
+			"enabled": true,
+			"token": "",
+			"connectParams": {
+				"url": "https://se-dev.is.here.io/interop",
+				"authenticationType": "jwt",
+				"jwtAuthenticationParameters": {
+					"authenticationId": "7a725c6f-bb00-47f1-8e46-008765521845"
+				},
+				"platformId": "entra-example",
+				"sourceId": "client1",
+				"sourceDisplayName": "client1",
+				"realm": "default"
+			}
+		}
+	}
+}
