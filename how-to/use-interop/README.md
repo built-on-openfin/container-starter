@@ -13,6 +13,7 @@ This repository contains examples showing how to use the Interop API across your
 | [How To - Setup Cross-Platform Interop](./setup-multi-platform-interop)                           | How to seamlessly connect to another Interop Broker using Platform Overrides                                         |
 | [How To - Setup Cross-Platform Interop With Intents](./setup-multi-platform-interop-with-intents) | An example of managing broker to broker connections when it comes to Intent execution using Interop Broker Overrides |
 | [How To - Use Cloud Interop](./cloud-interop)                                                     | How to seamlessly connect to another Interop Broker using our cloud interop solution                                 |
+| [How To - Use Cloud Interop With Microsoft Entra ID](./cloud-interop-entra)                       | How to authenticate against our cloud interop solution using a Microsoft Entra ID token                              |
 
 ## Before you get started
 
