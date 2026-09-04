@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>Here.io Template</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+	<body class="col fill gap20">
+		<h1>Launch Log Uploader Example</h1>
+		<div class="row gap10">
+			<button id="lep-button">Launch Log Uploader</button>
+		</div>
+		<div class="row gap10">
+			<input type="checkbox" id="chk_showui" checked />
+			<label for="chk_showui">Show UI</label>
+		</div>
+		<pre
+			id="logText"
+			style="
+				flex: 1 1 auto;
+				min-height: 100px;
+				max-height: 400px;
+				overflow-y: auto;
+				background: var(--brand-background);
+				color: #fff;
+				border: 1px solid #ccc;
+				padding: 10px;
+				margin: 0;
+			"
+		></pre>
+	</body>
+</html>
