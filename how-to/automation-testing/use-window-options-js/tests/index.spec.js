@@ -21,7 +21,7 @@ describe('Use Window Options', () => {
 
 	it('The title should be set', async () => {
 		const title = await WebDriver.getTitle();
-		expect(title).to.equal('Window Options Example');
+		expect(title).to.equal('Window Options Builder');
 	});
 
 	it('The url should be set', async () => {

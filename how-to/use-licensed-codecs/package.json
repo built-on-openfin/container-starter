@@ -4,6 +4,7 @@
 	"description": "A demonstration of a where you need to put configuration in order to enable licensed codecs.",
 	"scripts": {
 		"build": "echo This project does not require a build step.",
+		"build-client": "echo Nothing to build",
 		"kill": "node ./scripts/kill.mjs",
 		"client": "node ./scripts/launch.mjs",
 		"start": "npx --yes http-server ./public -p 5050 -c-1"

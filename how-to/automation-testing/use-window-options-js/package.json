@@ -4,6 +4,7 @@
 	"description": "OpenFin Container Starter Automation Tests",
 	"scripts": {
 		"build": "echo Nothing to build",
+		"build-client": "echo Nothing to build",
 		"test-local-mocha": "of-automation http://localhost:5050/manifest.fin.json ./tests/**/*.spec.js --reporter ./mocha.reporter.json",
 		"setup": "npm install && npm run build",
 		"validate": "npm --prefix ../../../ run validate"

@@ -14,7 +14,7 @@ describe('Launch External Process', () => {
 
 	it('The title should be set', async () => {
 		const title = await WebDriver.getTitle();
-		expect(title).to.equal('OpenFin Template');
+		expect(title).to.equal('HERE Template');
 	});
 
 	it('The url should be set', async () => {

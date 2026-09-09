@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "npm run build-server",
+		"build-client": "echo Nothing to build",
 		"build-server": "tsc --project ./server",
 		"start": "npm run server",
 		"server": "node ./server/build/index.js",

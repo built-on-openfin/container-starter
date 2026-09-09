@@ -39,7 +39,7 @@ Follow the instructions below to get up and running.
 
 ## App asset breakdown
 
-This is an example shape as it related to the top level application manifest property as seen [here](https://resources.here.io/docs/core/develop/manifests/#section-appassets-properties).
+This is an example shape as it related to the top level application manifest property as seen in the [HERE Core manifest documentation for appAssets properties](https://resources.here.io/docs/core/develop/manifests/#section-appassets-properties).
 
 `public/app.json`
 

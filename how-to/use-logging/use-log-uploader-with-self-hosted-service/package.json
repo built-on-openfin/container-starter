@@ -3,6 +3,7 @@
 	"version": "43.101.2",
 	"main": "server.js",
 	"scripts": {
+		"build-client": "echo Nothing to build",
 		"start": "npx tsx server.ts"
 	},
 	"keywords": [],

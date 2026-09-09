@@ -16,7 +16,7 @@ Application will be running on port 5050 `http://localhost:5050`
 Run the tests the following way:
 
 ```shell
-cd automation/create-window-js
+cd automation-testing/create-window-js
 npm install
 npm run test-local-mocha
 ```
