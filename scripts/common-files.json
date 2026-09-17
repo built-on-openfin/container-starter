@@ -1,5 +1,15 @@
 [
 	{
+		"name": "use-platform/customize-view-tab-headers",
+		"fileGroups": [
+			{
+				"srcFolder": "how-to/container-platform-starter/client/types",
+				"destFolder": "how-to/use-platform/customize-view-tab-headers/client/types",
+				"files": ["fin.d.ts"]
+			}
+		]
+	},
+	{
 		"name": "create-window",
 		"fileGroups": [
 			{
