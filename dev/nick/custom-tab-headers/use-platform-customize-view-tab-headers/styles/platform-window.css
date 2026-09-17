@@ -1,0 +1,76 @@
+:root {
+	color-scheme: dark;
+	font-family: Arial, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	background: #111827;
+	color: #f9fafb;
+}
+
+body {
+	display: grid;
+	grid-template-rows: auto 1fr;
+}
+
+.example-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	min-height: 58px;
+	padding: 10px 16px;
+	border-bottom: 1px solid #374151;
+	background: #1f2937;
+}
+
+.example-header div,
+.example-header span {
+	display: block;
+}
+
+.example-header span,
+#status {
+	margin-top: 4px;
+	color: #d1d5db;
+	font-size: 13px;
+}
+
+#status {
+	min-width: 260px;
+	text-align: right;
+}
+
+#layout-container {
+	min-height: 0;
+}
+
+.custom-tab-control {
+	padding: 0;
+	border: 0;
+	border-radius: 3px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	font: inherit;
+	line-height: 20px;
+}
+
+.custom-tab-control:hover,
+.custom-tab-control:focus-visible {
+	background: rgb(255 255 255 / 14%);
+	outline: 1px solid currentcolor;
+}
+
+.custom-tab-control[aria-pressed='true'] {
+	color: #fbbf24;
+}

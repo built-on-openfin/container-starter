@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sample view</title>
+		<link rel="icon" href="../images/page-tab.svg" />
+		<link rel="stylesheet" href="../styles/sample-view.css" />
+	</head>
+	<body>
+		<main>
+			<h1 id="view-name">Sample view</h1>
+			<p>
+				The tab icon above is controlled by the view's
+				<code>icon</code>
+				option.
+			</p>
+		</main>
+		<script>
+			const name = new URLSearchParams(window.location.search).get('name');
+			if (name) {
+				document.title = name;
+				document.querySelector('#view-name').textContent = name;
+			}
+		</script>
+	</body>
+</html>
