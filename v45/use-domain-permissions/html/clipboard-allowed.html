@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Clipboard Allowed (Domain Rule)</title>
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/clipboard-view.bundle.js"></script>
+	</head>
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>Clipboard Allowed</h1>
+				<h1 class="tag">
+					This URL matches the domain rule — clipboard access is allowed. Domain rules override window/view
+					permissions.
+				</h1>
+			</div>
+		</header>
+		<main class="col gap10 scroll-vertical">
+			<section class="col gap10 form-group">
+				<h3>Resolved permission (current context)</h3>
+				<p id="permission-read">—</p>
+				<p id="permission-write">—</p>
+				<p id="domain-rule">—</p>
+			</section>
+			<section class="col gap10 form-group">
+				<fieldset>
+					<label for="btn-copy">Copy to clipboard</label>
+					<button type="button" id="btn-copy">Copy to clipboard</button>
+					<p id="copy-result" class="result"></p>
+				</fieldset>
+				<fieldset>
+					<label for="btn-paste">Paste from clipboard</label>
+					<button type="button" id="btn-paste">Paste from clipboard</button>
+					<textarea
+						id="paste-content"
+						readonly
+						class="full"
+						rows="3"
+						placeholder="Pasted content will appear here."
+					></textarea>
+					<p id="paste-result" class="result"></p>
+				</fieldset>
+			</section>
+		</main>
+	</body>
+</html>
