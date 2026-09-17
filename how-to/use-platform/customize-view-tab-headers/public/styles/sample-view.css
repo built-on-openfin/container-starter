@@ -1,0 +1,26 @@
+:root {
+	color-scheme: light dark;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	display: grid;
+	min-height: 100vh;
+	margin: 0;
+	place-items: center;
+	background: #f3f4f6;
+	color: #111827;
+}
+
+main {
+	max-width: 520px;
+	padding: 32px;
+	text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background: #111827;
+		color: #f9fafb;
+	}
+}
