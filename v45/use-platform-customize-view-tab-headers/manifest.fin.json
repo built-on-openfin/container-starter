@@ -1,0 +1,11 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "45.150.101.1"
+	},
+	"platform": {
+		"uuid": "how-to-customize-view-tab-headers",
+		"autoShow": false,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/v45/use-platform-customize-view-tab-headers/html/provider.html"
+	}
+}
