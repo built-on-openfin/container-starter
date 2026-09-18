@@ -1,7 +1,7 @@
 {
 	"runtime": {
 		"arguments": "--enable-mesh --security-realm=use-application-logging",
-		"version": "43.142.101.2"
+		"version": "45.150.101.1"
 	},
 	"licenseKey": "openfin-demo-license-key",
 	"platform": {

@@ -1,7 +1,7 @@
 {
 	"licenseKey": "64605fac-add3-48a0-8710-64b38e96a2dd",
 	"runtime": {
-		"version": "43.142.101.2",
+		"version": "45.150.101.1",
 		"arguments": "--v=1 --security-realm=UAT-MAIN"
 	},
 	"shortcut": {

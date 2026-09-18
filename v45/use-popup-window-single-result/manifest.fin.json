@@ -2,7 +2,7 @@
 	"licenseKey": "openfin-demo-license-key",
 	"runtime": {
 		"arguments": "--v=1 --inspect",
-		"version": "43.142.101.2"
+		"version": "45.150.101.1"
 	},
 	"platform": {
 		"uuid": "how-to-use-popup-window-single-result",
