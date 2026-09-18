@@ -1,6 +1,6 @@
 {
 	"name": "track-navigation-within-a-platform",
-	"version": "44.101.3",
+	"version": "45.101.1",
 	"description": "Demonstrates how to track view navigation within a platform using a Chrome-like address bar with history and autocomplete.",
 	"main": "index.js",
 	"scripts": {
@@ -14,8 +14,8 @@
 	"author": "",
 	"license": "SEE LICENSE IN LICENSE.MD",
 	"devDependencies": {
-		"@openfin/core": "44.101.3",
-		"@openfin/node-adapter": "44.101.3",
+		"@openfin/core": "45.101.1",
+		"@openfin/node-adapter": "45.101.1",
 		"ts-loader": "^9.5.1",
 		"typescript": "^5.4.5",
 		"webpack": "^5.91.0",
