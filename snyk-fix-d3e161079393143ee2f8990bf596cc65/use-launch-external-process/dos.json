@@ -1,0 +1,13 @@
+{
+	"applicationSettings": {
+		"https://built-on-openfin.github.io/container-starter/snyk-fix-d3e161079393143ee2f8990bf596cc65/use-launch-external-process/manifest.fin.json": {
+			"permissions": {
+				"System": {
+					"launchExternalProcess": true,
+					"terminateExternalProcess": true,
+					"downloadAsset": true
+				}
+			}
+		}
+	}
+}
