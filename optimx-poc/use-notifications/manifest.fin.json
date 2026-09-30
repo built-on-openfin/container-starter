@@ -1,0 +1,14 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "45.150.101.1"
+	},
+	"platform": {
+		"enableBeforeUnload": true,
+		"uuid": "container-use-notifications",
+		"icon": "https://built-on-openfin.github.io/container-starter/optimx-poc/use-notifications/favicon.ico",
+		"autoShow": true,
+		"providerUrl": "https://built-on-openfin.github.io/container-starter/optimx-poc/use-notifications/html/provider.html"
+	},
+	"snapshot": {}
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>How to collect debug logs</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/provider.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="row spread middle">
+			<div class="col">
+				<h1>How to collect logs.</h1>
+				<h1 class="tag">Demonstrate how to use logging related APIs</h1>
+			</div>
+			<div class="row middle gap10">
+				<image src="../common/images/icon-here.png" alt="HERE" height="40px"></image>
+			</div>
+		</header>
+		<main class="row fill gap20">
+			<div class="row fill gap40">
+				<div class="fill col gap20">
+					<form
+						action="/upload"
+						id="upload-form"
+						method="post"
+						enctype="multipart/form-data"
+						class="col gap40 scroll-vertical"
+					>
+						<div class="formSection col gap10">
+							<h4>Select a debug log.</h4>
+							<fieldset>
+								<select id="log-list"></select>
+							</fieldset>
+							<button type="submit">Upload Debug Log</button>
+						</div>
+					</form>
+					<h4>Upload your applications log (console messages).</h4>
+					<button id="send-app-log">Send Application Logs</button>
+					<h4>Upload your OPFS log (Channel API Messages).</h4>
+					<button id="send-opfs-log">Send OPFS Logs</button>
+					<h4>Console Log A Message</h4>
+					<button id="console-app-log">Console Log Message</button>
+					<h4>Channel API Log A Message</h4>
+					<button id="channel-app-log">Channel API Log Message</button>
+				</div>
+			</div>
+			<div class="col fill_2 gap20">
+				<h2>Preview</h2>
+				<pre id="preview" class="fill scroll-horizontal"></pre>
+				<button id="clear-preview">Clear Preview</button>
+			</div>
+		</main>
+		<footer>
+			<div class="row spread">
+				<div class="row gap10">
+					<a href="https://resources.here.io/docs/core/develop/debug/app-logs/" target="_blank">
+						App Log Content
+					</a>
+					<a href="https://resources.here.io/docs/core/develop/debug/hc-logs/" target="_blank">
+						HERE (Debug) Logs
+					</a>
+					<a
+						href="https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system"
+						target="_blank"
+					>
+						OPFS (Origin Private File System) Logs
+					</a>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
