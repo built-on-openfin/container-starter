@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Enable Automatic File Downloads</title>
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script src="../js/app.bundle.js"></script>
+	</head>
+
+	<body class="col fill gap20">
+		<header class="col">
+			<h1 id="title">Enable Automatic File Downloads</h1>
+			<h1 id="tag" class="tag"></h1>
+		</header>
+		<main class="col left gap10">
+			<p id="description"></p>
+			<div class="row gap10">
+				<button id="btn-trigger-download">Download</button>
+			</div>
+
+			<div id="code-controls" class="col left gap10 hidden">
+				<p>
+					Use the buttons below to call
+					<code>fin.System.setDomainSettings()</code>
+					and change the download behavior at runtime.
+				</p>
+				<div class="row gap10">
+					<button id="btn-enable-auto">Enable automatic downloads</button>
+					<button id="btn-disable-auto">Require Save As prompt</button>
+				</div>
+				<p>Current domain settings:</p>
+				<pre id="domain-settings"></pre>
+			</div>
+
+			<p>Download events:</p>
+			<pre id="log"></pre>
+		</main>
+	</body>
+</html>
