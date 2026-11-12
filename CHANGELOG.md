@@ -1,5 +1,9 @@
 # Changelog
 
+## November 2026
+
+- [enable-automatic-file-downloads](./how-to/enable-automatic-file-downloads/README.md) - New example showing how to enable automatic file downloads (`downloadSettings` behavior `no-prompt`) via `platform.domainSettings` in the manifest or at runtime with `fin.System.setDomainSettings`, alongside a manifest where the default Save As dialog is shown.
+
 ## June 2026
 
 - [track-navigation-within-a-platform](./how-to/track-navigation-within-a-platform/README.md) - Example shows how you can use our APIs to track navigation within a platform and create a chrome like omnibox with history.

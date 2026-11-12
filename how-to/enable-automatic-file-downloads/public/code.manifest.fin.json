@@ -1,0 +1,49 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "how-to-enable-automatic-file-downloads-code",
+		"autoShow": true,
+		"icon": "http://localhost:5050/favicon.ico",
+		"defaultViewOptions": {
+			"permissions": {
+				"System": {
+					"getDomainSettings": true,
+					"setDomainSettings": true
+				}
+			}
+		},
+		"permissions": {
+			"System": {
+				"getDomainSettings": true,
+				"setDomainSettings": true
+			}
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "automatic-file-downloads",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "http://localhost:5050/html/app.html?mode=code"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
