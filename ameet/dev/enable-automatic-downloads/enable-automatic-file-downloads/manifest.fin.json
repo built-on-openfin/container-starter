@@ -1,0 +1,52 @@
+{
+	"runtime": {
+		"arguments": "--v=1 --inspect",
+		"version": "43.142.101.2"
+	},
+	"platform": {
+		"uuid": "how-to-enable-automatic-file-downloads-manifest",
+		"autoShow": true,
+		"icon": "https://built-on-openfin.github.io/container-starter/ameet/dev/enable-automatic-downloads/enable-automatic-file-downloads/favicon.ico",
+		"domainSettings": {
+			"rules": [
+				{
+					"match": ["https://built-on-openfin.github.io/container-starter/ameet/dev/enable-automatic-downloads/enable-automatic-file-downloads/*"],
+					"options": {
+						"downloadSettings": {
+							"rules": [
+								{
+									"match": ["<all_urls>"],
+									"behavior": "no-prompt"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	},
+	"snapshot": {
+		"windows": [
+			{
+				"layout": {
+					"content": [
+						{
+							"type": "stack",
+							"id": "automatic-file-downloads",
+							"content": [
+								{
+									"type": "component",
+									"componentName": "view",
+									"componentState": {
+										"processAffinity": "ps_1",
+										"url": "https://built-on-openfin.github.io/container-starter/ameet/dev/enable-automatic-downloads/enable-automatic-file-downloads/html/app.html?mode=manifest"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
