@@ -1,0 +1,33 @@
+/* 
+ * Example of css to override default platform window
+ * Start of css override
+ */
+
+/*
+  * This root removes the layout padding. Useful for this example when you have a single view and you want the view
+  * to take all available space. Uncomment to enable.
+ */
+
+/*
+ :root {
+    --layout-container-padding-top: 0px;
+    --layout-container-padding-right: 0px;
+    --layout-container-padding-bottom: 0px;
+    --layout-container-padding-left: 0px;
+ }
+*/
+
+/*
+ * This sets the border of the layout to indigo. If you wish to test the above setting 
+ * comment out the root section above (if it isn't commented) and uncomment this. 
+ * Launch the platform and you will see the padding of the layout in indigo.
+ * Quit the platform, uncomment the above, re-launch the platform and the indigo will be hidden.
+*/
+/*
+#layout-container {
+    background-color: indigo;
+}
+*/
+/*
+ * End of css override
+*/

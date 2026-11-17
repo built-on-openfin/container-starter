@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>HERE Template</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../common/style/app.css" />
+		<script type="module" src="../js/provider.bundle.js"></script>
+	</head>
+
+	<body>
+		<div class="col gap20 scroll-vertical width-full">
+			<div class="col gap10">
+				<h1>Platform Provider</h1>
+				<div class="row middle gap10 wrap">
+					<p id="status">Checking your Microsoft Entra ID sign in...</p>
+					<button id="sign-out" class="secondary small hidden">Sign out</button>
+				</div>
+			</div>
+			<div id="details" class="col gap10 hidden">
+				<h3>Cloud interop</h3>
+				<table>
+					<tbody>
+						<tr>
+							<th>Enabled</th>
+							<td id="cloud-interop-enabled"></td>
+						</tr>
+						<tr>
+							<th>iss</th>
+							<td id="token-iss"></td>
+						</tr>
+						<tr>
+							<th>aud</th>
+							<td id="token-aud"></td>
+						</tr>
+						<tr>
+							<th>jwks_uri</th>
+							<td id="token-jwks-uri"></td>
+						</tr>
+					</tbody>
+				</table>
+				<p>Send the iss, aud and jwks_uri values to HERE so that they can validate your tokens.</p>
+			</div>
+		</div>
+	</body>
+</html>
