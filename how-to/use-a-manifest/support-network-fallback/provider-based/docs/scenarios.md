@@ -1,0 +1,162 @@
+# Support network fallback (provider-based): scenarios
+
+## This is an example, not production code
+
+This is an example of how to use HERE manifests to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!
+
+## How to use this document
+
+Each scenario below is a walkthrough you can run against the sample. Start with the [Quick start](../README.md#quick-start) in the README, then keep `npm run start` running in one terminal and use another for `npm run client` and `npm run kill`.
+
+Every scenario uses the same template:
+
+- **Goal:** what the scenario shows.
+- **Control panel settings:** which state to give each route at [http://localhost:5082](http://localhost:5082).
+- **Action:** what to launch or click.
+- **What the user sees:** the route badge, prompts and windows.
+- **Log lines to expect:** lines in the app view's log, also written to `app.log` (the gateway's lines start with `[gateway]`).
+- **Observed on Windows:** the result recorded against runtime `43.142.101.2`, where it was run.
+
+The internal route is `localhost:5080` (standing in for `app.example.internal`) and the public route is `127.0.0.1:5081` (standing in for `app.example.com`). Unless a scenario says otherwise, run `npm run kill` first and set both routes to `healthy`.
+
+## Scenarios at launch
+
+### 1. First launch with the internal route healthy
+
+```mermaid
+sequenceDiagram
+    participant RVM as RVM (shortcut)
+    participant P as Public route
+    participant I as Internal route
+    RVM ->> P: GET /manifest.fin.json (cached for next time)
+    RVM ->> RVM: create Start menu shortcut
+    RVM ->> P: load /gateway/index.html
+    P ->> P: gateway registers the service worker
+    P ->> I: GET /health
+    I -->> P: healthy
+    P ->> I: navigate to /provider.html
+    I -->> I: Platform.init, app view from the internal origin
+```
+
+- **Goal:** show the normal case: the platform starts from the public manifest and runs on the internal route.
+- **Control panel settings:** both routes `healthy`.
+- **Action:** `npm run client`.
+- **What the user sees:** a platform window with a blue "INTERNAL route - app.example.internal" badge. "Chosen by the gateway" shows `health: app.example.internal is healthy`.
+- **Log lines to expect:**
+  - `[gateway] Checking app.example.internal...`
+  - `[gateway] Using app.example.internal (health: app.example.internal is healthy). Service worker: page not controlled yet, service worker active.`
+  - `Started from http://127.0.0.1:5081/manifest.fin.json on route internal (provider http://localhost:5080). ... Preferred: yes.`
+- **Observed on Windows:** as expected. The provider was running on the internal origin about 2 seconds after the gateway loaded. A "Support Network Fallback (provider-based)" Start menu shortcut and its uninstall entry were created.
+
+### 2. First install with the internal route down
+
+- **Goal:** show that installing needs only the public route.
+- **Control panel settings:** internal `down`, public `healthy`. Ideally on a machine, or after [removing the sample](../README.md#removing-the-sample), where the sample has never run.
+- **Action:** `npm run client`. Then set the internal route to `healthy`, run `npm run kill` and `npm run client` again.
+- **What the user sees:** the first launch starts on the public route with an orange badge. The second starts on the internal route.
+- **Log lines to expect:** `[gateway] Using app.example.com (fallback: app.example.internal is not answering within 2000 ms)` or `... is unreachable`, then on the second launch `Gateway chose this route by health`.
+- **Observed on Windows:** the launch with the internal route down was run on a machine where the sample had already been installed (scenario 3); a clean first install was not run. Nothing in the gateway depends on a cached copy, and the manifest and gateway come only from the public route.
+
+### 3. Internal down or unhealthy at launch
+
+```mermaid
+sequenceDiagram
+    participant RVM
+    participant P as Public route
+    participant I as Internal route
+    RVM ->> P: GET /manifest.fin.json
+    RVM ->> P: load /gateway/index.html
+    P -x I: GET /health (refused, timeout, error or unhealthy)
+    P ->> P: navigate to the public /provider.html
+```
+
+- **Goal:** show the gateway falling back.
+- **Control panel settings:** internal `down`, `unhealthy` or `server-error`; public `healthy`.
+- **Action:** `npm run client`.
+- **What the user sees:** the platform starts with an orange "PUBLIC route - app.example.com" badge. "Chosen by the gateway" shows `fallback: ...`.
+- **Log lines to expect:** `Gateway chose this route by fallback: app.example.internal is unhealthy.`, `... is not answering within 2000 ms.` or `... is returning HTTP 500.`
+- **Observed on Windows:** as expected for `unhealthy` and `down`. With `down`, the refused connection took the full 2-second timeout, as it does on Windows for local ports.
+
+### 4. Public down after a first launch
+
+```mermaid
+sequenceDiagram
+    participant RVM
+    participant P as Public route
+    participant SW as Service worker cache
+    participant I as Internal route
+    Note over P: down
+    RVM -x P: GET /manifest.fin.json (refused)
+    RVM ->> RVM: use the cached manifest
+    RVM ->> SW: load /gateway/index.html
+    SW -->> RVM: cached gateway
+    SW ->> I: GET /health
+    I -->> SW: healthy
+    SW ->> I: navigate to /provider.html
+```
+
+- **Goal:** show that the cached manifest and the cached gateway still let the platform start on the internal route.
+- **Control panel settings:** internal `healthy`, public `down`. Run scenario 1 first, so the manifest and gateway are cached.
+- **Action:** `npm run client`. The control panel keeps running while a route is down, so the script still gets the launch command.
+- **What the user sees:** after about 15 seconds, the platform starts with a blue badge. "Gateway service worker" shows `page served through the service worker`.
+- **Observed on Windows:** as expected. The RVM retried the manifest, used its cached copy, and the gateway loaded from the service worker cache 2 seconds later, once its network attempt failed. The provider was running on the internal route 15 seconds after launch.
+
+### 5. Both routes down
+
+- **Goal:** show the limit of the "public is always available" assumption.
+- **Control panel settings:** both `down`, after scenario 1.
+- **Action:** `npm run client`.
+- **What the user sees:** nothing. The gateway loads from the cache, falls back to the public provider, which cannot load.
+- **Observed on Windows:** as expected. The gateway logged `Using app.example.com (fallback: app.example.internal is not answering within 2000 ms)` and no provider started. Run `npm run kill` afterwards.
+
+## Scenarios while running
+
+### 6. Internal unhealthy while running
+
+- **Goal:** show the running check offering a switch.
+- **Control panel settings:** both `healthy`. After the platform has started on the internal route, set the internal route to `unhealthy`.
+- **Action:** `npm run client`, change the state, then click **Switch** in the prompt.
+- **What the user sees:** within about 5 seconds, a "Switch to app.example.com?" prompt. On **Switch**, the platform closes and restarts with an orange badge, and "Chosen by the gateway" shows `preference: stored preference for app.example.com`.
+- **Log lines to expect:**
+  - `app.example.internal is unhealthy.`, `app.example.com is healthy.`
+  - `Offering a switch: app.example.internal is unhealthy and app.example.com is healthy.`
+  - `The user accepted the switch.`, `Switching to app.example.com (...). Storing the preference, then restarting.`
+  - `Stored the preference for the public route.` (from the preference page)
+- **Observed on Windows:** the offer appeared within 5 seconds of the change. The click on **Switch** was not automated; accepting runs the same switch as scenario 7.
+
+### 7. The in-app switcher
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as Provider (internal)
+    participant H as Preference page (public)
+    participant G as Gateway
+    User ->> App: Use app.example.com
+    App ->> H: open hidden, connect, registerLocationPreference(public)
+    H -->> App: written true
+    App ->> App: Application.restart()
+    G ->> G: read and clear the preference
+    G ->> G: navigate to the public provider
+```
+
+- **Goal:** show a user-chosen switch.
+- **Control panel settings:** both `healthy`.
+- **Action:** `npm run client`, then click **Use app.example.com** in the app view.
+- **What the user sees:** the platform restarts with an orange badge. The button for the current route is disabled.
+- **Log lines to expect:** `Switching to app.example.com (you chose app.example.com in the app). ...`, `Stored the preference for the public route.`, `[gateway] Using app.example.com (preference: stored preference for app.example.com)`.
+- **Observed on Windows:** as expected, triggered through the status channel's `switch-to` request, which is what the button sends. The preference was stored 1.2 seconds after the request and the new provider was running on the public route 3 seconds after it.
+
+### 8. The preference is used once
+
+- **Goal:** show that a stored preference applies to one start only.
+- **Action:** after scenario 7, run `npm run kill` and `npm run client`.
+- **What the user sees:** the platform starts on the internal route again.
+- **Observed on Windows:** as expected: `Gateway chose this route by health: app.example.internal is healthy.`
+
+### 9. The preference page rejects other clients
+
+- **Goal:** show that only the platform's provider can store a preference.
+- **Action:** this needs a second client, so it is not something you can click. With the preference page open, connect to the `support-network-fallback-provider/preference` channel from any other app, view or external connection.
+- **What to expect:** the connection fails with `Connection rejected: ...`, and the page logs `Rejected a connection: ...` with the reason (uuid, window name or connection URL).
+- **Observed on Windows:** a node adapter client was rejected with `uuid snf-driver-... is not this platform`.

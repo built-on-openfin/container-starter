@@ -1,7 +1,7 @@
 {
-	"name": "use-a-manifest-support-network-fallback",
+	"name": "use-a-manifest-support-network-fallback-multi-manifest",
 	"version": "43.101.2",
-	"description": "One shortcut that prefers an internal deployment and falls back to a public deployment, at launch and while running.",
+	"description": "One shortcut that prefers an internal deployment and falls back to a public deployment using fallbackManifests at launch, and a health check and switcher while running.",
 	"scripts": {
 		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
 		"build-server": "tsc --project ./server",
@@ -11,7 +11,7 @@
 		"client:public": "node ./scripts/launch.mjs public",
 		"client:fresh": "node ./scripts/launch.mjs fresh",
 		"kill": "node ./scripts/kill.mjs",
-		"setup": "cd ../../../ && npm install && cd how-to/use-a-manifest/support-network-fallback && npm run build"
+		"setup": "cd ../../../../ && npm install && cd how-to/use-a-manifest/support-network-fallback/multi-manifest && npm run build"
 	},
 	"author": "john.mandia@openfin.co",
 	"license": "SEE LICENSE IN LICENSE.MD",
