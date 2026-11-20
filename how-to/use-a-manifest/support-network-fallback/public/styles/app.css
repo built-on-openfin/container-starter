@@ -1,0 +1,86 @@
+body {
+	font-family: 'Segoe UI', system-ui, sans-serif;
+	margin: 0;
+	background: #f6f7f9;
+	color: #1d2330;
+}
+
+.badge {
+	background: #666;
+	color: #fff;
+	padding: 16px 20px;
+	font-size: 22px;
+	font-weight: 600;
+}
+
+main {
+	padding: 8px 20px 20px;
+}
+
+h2 {
+	font-size: 15px;
+	margin: 16px 0 6px;
+}
+
+dl {
+	display: grid;
+	grid-template-columns: 150px 1fr;
+	gap: 4px 12px;
+	margin: 0;
+	font-size: 13px;
+}
+
+dt {
+	font-weight: 600;
+}
+
+dd {
+	margin: 0;
+	font-family: Consolas, monospace;
+	word-break: break-all;
+}
+
+pre {
+	background: #fff;
+	border: 1px solid #dde;
+	padding: 8px;
+	font-size: 12px;
+	max-height: 200px;
+	overflow: auto;
+	white-space: pre-wrap;
+}
+
+.result:empty {
+	display: none;
+}
+
+.buttons {
+	display: flex;
+	gap: 8px;
+}
+
+button {
+	padding: 6px 14px;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.log {
+	background: #fff;
+	border: 1px solid #dde;
+	margin: 0;
+	padding: 8px 8px 8px 28px;
+	font-family: Consolas, monospace;
+	font-size: 12px;
+	max-height: 260px;
+	overflow: auto;
+}
+
+.log li {
+	margin: 2px 0;
+}
+
+.hint {
+	color: #5b6170;
+	font-size: 12px;
+}

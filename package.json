@@ -22,7 +22,8 @@
 		"how-to/**"
 	],
 	"packageExclude": [
-		"how-to/use-licensed-codecs"
+		"how-to/use-licensed-codecs",
+		"how-to/use-a-manifest/support-network-fallback"
 	],
 	"packageCustomFolder": "",
 	"contributors": [

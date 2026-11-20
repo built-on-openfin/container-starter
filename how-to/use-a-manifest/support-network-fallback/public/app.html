@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Support network fallback</title>
+		<link rel="stylesheet" href="./styles/app.css" />
+		<script src="./js/app.bundle.js"></script>
+	</head>
+	<body>
+		<header id="badge" class="badge">Connecting to the provider...</header>
+		<main>
+			<section>
+				<h2>Where this platform is running from</h2>
+				<dl>
+					<dt>Manifest URL</dt>
+					<dd id="manifest-url">-</dd>
+					<dt>Provider origin</dt>
+					<dd id="provider-origin">-</dd>
+					<dt>Preferred route</dt>
+					<dd id="preferred">-</dd>
+					<dt>Other route</dt>
+					<dd id="other-route">-</dd>
+				</dl>
+			</section>
+			<section>
+				<h2>Health check</h2>
+				<dl>
+					<dt>This route</dt>
+					<dd id="check-current">-</dd>
+					<dt>Other route</dt>
+					<dd id="check-other">-</dd>
+				</dl>
+				<p class="hint">The other route is only checked while this route is unhealthy.</p>
+				<div class="buttons">
+					<button id="manual-switch" hidden>Switch to other route</button>
+				</div>
+				<pre id="action-result" class="result"></pre>
+			</section>
+			<section>
+				<h2>Log (newest first)</h2>
+				<ol id="log" class="log"></ol>
+			</section>
+		</main>
+	</body>
+</html>

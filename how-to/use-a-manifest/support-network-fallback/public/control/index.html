@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Support network fallback - control panel</title>
+		<style>
+			body {
+				font-family: 'Segoe UI', system-ui, sans-serif;
+				margin: 0;
+				color: #1d2330;
+				background: #f6f7f9;
+			}
+			.banner {
+				background: #7a2e2e;
+				color: #fff;
+				padding: 10px 20px;
+				font-weight: 600;
+			}
+			main {
+				padding: 12px 20px;
+			}
+			.routes {
+				display: flex;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+			fieldset {
+				background: #fff;
+				border: 1px solid #ccd;
+				border-radius: 6px;
+				padding: 10px 14px;
+				flex: 1 1 320px;
+			}
+			legend {
+				font-weight: 600;
+				padding: 2px 8px;
+				border-radius: 4px;
+				color: #fff;
+			}
+			.internal legend {
+				background: #2b6cd6;
+			}
+			.public legend {
+				background: #e07b22;
+			}
+			label {
+				display: block;
+				margin: 4px 0;
+			}
+			.hint {
+				color: #5b6170;
+				font-size: 12px;
+			}
+			h3 {
+				margin: 12px 0 4px;
+				font-size: 14px;
+			}
+			.row {
+				margin: 4px 0;
+			}
+			code {
+				background: #eef0f4;
+				padding: 2px 6px;
+				font-size: 12px;
+				word-break: break-all;
+			}
+			.warning {
+				color: #7a2e2e;
+				font-weight: 600;
+			}
+			table {
+				border-collapse: collapse;
+				width: 100%;
+				font-family: Consolas, monospace;
+				font-size: 12px;
+				background: #fff;
+			}
+			td,
+			th {
+				border-bottom: 1px solid #e3e5ea;
+				padding: 3px 6px;
+				text-align: left;
+			}
+			.log {
+				max-height: 320px;
+				overflow: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="banner">Test tool only. Not part of the pattern.</div>
+		<main>
+			<div class="routes" id="routes"></div>
+
+			<h2>Launch</h2>
+			<p>
+				Use
+				<code>npm run client</code>
+				,
+				<code>npm run client:public</code>
+				or
+				<code>npm run client:fresh</code>
+				, or run one of the commands below. The links work only if your RVM allows
+				<code>fin://</code>
+				over plain HTTP.
+			</p>
+			<div id="launch"></div>
+
+			<h2>/health requests (newest first)</h2>
+			<div class="log">
+				<table>
+					<thead>
+						<tr>
+							<th>Time</th>
+							<th>Route</th>
+							<th>Mode</th>
+							<th>HTTP status</th>
+						</tr>
+					</thead>
+					<tbody id="log"></tbody>
+				</table>
+			</div>
+		</main>
+		<script>
+			const HINTS = {
+				healthy: '/health reports healthy.',
+				unhealthy: '/health reports unhealthy. Manifests and pages still load.',
+				'server-error': 'Every request returns HTTP 500. The RVM does not fall back on this.',
+				down: 'Connections are refused. The RVM falls back on this.',
+				'provider-500': 'Only /provider.html fails, with HTTP 500. The manifest and /health still work.',
+				'provider-reset':
+					'Only /provider.html fails: the connection is closed without an answer. The manifest and /health still work.',
+				'provider-refused':
+					'The manifest points providerUrl at a port with no listener (port + 20). The manifest and /health still work.'
+			};
+			const PROVIDER_MODES = ['provider-500', 'provider-reset', 'provider-refused'];
+
+			async function api(path, body) {
+				const response = await fetch(path, {
+					method: body ? 'POST' : 'GET',
+					headers: { 'Content-Type': 'application/json' },
+					body: body ? JSON.stringify(body) : undefined
+				});
+				return response.json();
+			}
+
+			function routeCard(id, current, allModes) {
+				const option = (mode) =>
+					`<label><input type="radio" name="${id}" value="${mode}"${mode === current ? ' checked' : ''}> ${mode} <span class="hint">${HINTS[mode]}</span></label>`;
+				const options =
+					allModes
+						.filter((mode) => !PROVIDER_MODES.includes(mode))
+						.map(option)
+						.join('') +
+					'<h3>Provider-only failures (launch experiments)</h3>' +
+					PROVIDER_MODES.map(option).join('');
+				return `<fieldset class="${id}"><legend>${id} route</legend>${options}</fieldset>`;
+			}
+
+			async function render() {
+				const state = await api('/api/state');
+				document.querySelector('#routes').innerHTML = ['internal', 'public']
+					.map((id) => routeCard(id, state.modes[id], state.allModes))
+					.join('');
+			}
+
+			document.querySelector('#routes').addEventListener('change', async (event) => {
+				await api(`/api/route/${event.target.name}`, { mode: event.target.value });
+				await render();
+			});
+
+			async function renderLaunch() {
+				const entries = [
+					['Internal route (normal identity)', 'internal', 'normal', ''],
+					['Public route (normal identity)', 'public', 'normal', ''],
+					[
+						'Fresh identity on the internal route',
+						'internal',
+						'fresh',
+						'Launch only with the internal route down. A successful launch caches this identity.'
+					]
+				];
+				const parts = [];
+				for (const [title, route, identity, warning] of entries) {
+					const details = await api(`/api/launch-url?route=${route}&identity=${identity}`);
+					parts.push(`<h3>${title}</h3>
+						${warning ? `<p class="warning">${warning}</p>` : ''}
+						<div class="row">RVM: <code>${details.rvmCommand}</code></div>
+						<div class="row">Link: <a href="${details.finLink}">${details.finLink}</a></div>`);
+				}
+				document.querySelector('#launch').innerHTML = parts.join('');
+			}
+
+			let lastLogId = 0;
+			const rows = [];
+			async function refreshLog() {
+				try {
+					const entries = await api(`/api/log?since=${lastLogId}`);
+					for (const entry of entries) {
+						lastLogId = entry.id;
+						rows.unshift(
+							`<tr><td>${entry.time.slice(11, 23)}</td><td>${entry.route}</td><td>${entry.mode}</td><td>${entry.status}</td></tr>`
+						);
+					}
+					rows.splice(200);
+					document.querySelector('#log').innerHTML = rows.join('');
+				} catch {}
+			}
+
+			render();
+			renderLaunch();
+			setInterval(refreshLog, 1000);
+		</script>
+	</body>
+</html>

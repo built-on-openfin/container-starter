@@ -1,0 +1,28 @@
+{
+	"name": "use-a-manifest-support-network-fallback",
+	"version": "43.101.2",
+	"description": "One shortcut that prefers an internal deployment and falls back to a public deployment, at launch and while running.",
+	"scripts": {
+		"build-client": "webpack build --config ./client/webpack.config.js --mode=development",
+		"build-server": "tsc --project ./server",
+		"build": "npm run build-server && npm run build-client",
+		"start": "node ./server/build/server/src/index.js",
+		"client": "node ./scripts/launch.mjs",
+		"client:public": "node ./scripts/launch.mjs public",
+		"client:fresh": "node ./scripts/launch.mjs fresh",
+		"kill": "node ./scripts/kill.mjs",
+		"setup": "cd ../../../ && npm install && cd how-to/use-a-manifest/support-network-fallback && npm run build"
+	},
+	"author": "john.mandia@openfin.co",
+	"license": "SEE LICENSE IN LICENSE.MD",
+	"devDependencies": {
+		"@openfin/core": "43.101.2",
+		"@openfin/node-adapter": "43.101.2",
+		"@types/express": "^4.17.21",
+		"express": "^4.19.2",
+		"ts-loader": "^9.5.1",
+		"typescript": "^5.4.5",
+		"webpack": "^5.91.0",
+		"webpack-cli": "^5.1.4"
+	}
+}
