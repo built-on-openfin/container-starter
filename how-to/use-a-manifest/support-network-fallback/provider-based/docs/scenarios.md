@@ -46,7 +46,7 @@ sequenceDiagram
   - `[gateway] Checking app.example.internal...`
   - `[gateway] Using app.example.internal (health: app.example.internal is healthy). Service worker: page not controlled yet, service worker active.`
   - `Started from http://127.0.0.1:5081/manifest.fin.json on route internal (provider http://localhost:5080). ... Preferred: yes.`
-- **Observed on Windows:** as expected. The provider was running on the internal origin about 2 seconds after the gateway loaded. A "Support Network Fallback (provider-based)" Start menu shortcut and its uninstall entry were created.
+- **Observed on Windows:** as expected. The provider was running on the internal origin about 2 seconds after the gateway loaded. A "Network Fallback Provider-Based" Start menu shortcut and its uninstall entry were created.
 
 ### 2. First install with the internal route down
 
@@ -172,3 +172,47 @@ sequenceDiagram
 - **Action:** this needs a second client, so it is not something you can click. With the preference page open, connect to the `support-network-fallback-provider/preference` channel from any other app, view or external connection.
 - **What to expect:** the connection fails with `Connection rejected: ...`, and the page logs `Rejected a connection: ...` with the reason (uuid, window name or connection URL).
 - **Observed on Windows:** a node adapter client was rejected with `uuid snf-driver-... is not this platform`.
+
+## Launch params scenarios
+
+The app view's "Launch params" section shows the links, and every set of params that reaches the platform is logged as a highlighted `LAUNCH PARAMS RECEIVED (<source>, <when>): ...` line. See [Deep links, custom scheme and jump list](../README.md#deep-links-custom-scheme-and-jump-list).
+
+### 11. Init params at launch and while running
+
+- **Goal:** show that init params reach the provider, through the gateway, whether or not the platform is running.
+- **Control panel settings:** both `healthy`.
+- **Action:** with nothing running, `npm run deeplink -- init at-launch`. Once the platform is up, `npm run deeplink -- init while-running`, then `npm run deeplink -- fin via-fin-link`.
+- **What the user sees:** one platform window. No second platform starts.
+- **Log lines to expect:**
+  - `LAUNCH PARAMS RECEIVED (init params, at launch): sampleParam=at-launch; launchSource=script`
+  - `LAUNCH PARAMS RECEIVED (init params, while running): sampleParam=while-running; launchSource=script`
+  - `LAUNCH PARAMS RECEIVED (init params, while running): sampleParam=via-fin-link; launchSource=script`
+- **Observed on Windows:** as expected. The params were in `initialOptions.userAppConfigArgs` after the gateway had navigated to the internal provider. The `fin://` link to the HTTP manifest, opened through Windows, was delivered too.
+
+### 12. Custom scheme
+
+- **Goal:** show the `here-sample-network-fallback` scheme starting the platform and reaching it while it runs.
+- **Control panel settings:** both `healthy`.
+- **Action:** start the platform once, so the scheme is registered. Run `npm run kill`, then `npm run deeplink -- scheme scheme-at-launch`. Once it is up, `npm run deeplink -- scheme via-scheme`. You can also paste the link from the app view into the Run dialog (Win+R).
+- **What the user sees:** the platform starts on the internal route, the route the gateway prefers, even though the scheme is registered to the public manifest.
+- **Log lines to expect:**
+  - `here-sample-network-fallback:// is registered to http://127.0.0.1:5081/manifest.fin.json.` (or `was ..., now registered to ...` the first time, or after the multi-manifest sample has run)
+  - `LAUNCH PARAMS RECEIVED (custom scheme, at launch): sampleParam=scheme-at-launch (from userRequestUri=here-sample-network-fallback://open/?sampleParam=scheme-at-launch)`
+  - `LAUNCH PARAMS RECEIVED (custom scheme, while running): sampleParam=via-scheme (...)`
+- **Observed on Windows:** as expected. The registry command is `OpenFinRVM.exe "--config=http://127.0.0.1:5081/manifest.fin.json" "--user-request-uri=%1"`.
+
+### 13. Jump list
+
+- **Goal:** show the jump list task reaching the platform.
+- **Action:** pin the running platform to the taskbar, or right-click its taskbar button, and choose **Open with a jump list param**.
+- **Log lines to expect:** `Jump list set; its tasks point at http://127.0.0.1:5081/manifest.fin.json.` at startup, then `LAUNCH PARAMS RECEIVED (jump list, while running): launchSource=jumplist; sampleParam=from-the-jump-list`.
+- **What the user sees:** after about 12 seconds, the highlighted launch entry in the log. Wait for it: nothing else shows that the click worked.
+- **Observed on Windows:** the task runs `openfin.exe --startup-url=http://127.0.0.1:5081/manifest.fin.json --user-app-config-args=launchSource=jumplist&sampleParam=from-the-jump-list`, without the RVM or the platform's realm, and the params reached the running platform about 12 seconds later. Clicking the jump list's app entry at the bottom instead ran the RVM with `--config=fin://127.0.0.1:5081/manifest.fin.json` and logged `LAUNCH RECEIVED (while running) with no params`. A task whose `deepLink` was a custom scheme link was rejected with `invalid url`, so the sample has no such task.
+
+### 14. Launch params after a switch
+
+- **Goal:** show what a switch does to the launch params and the scheme.
+- **Action:** run scenario 12's first step, then click **Use app.example.com**.
+- **What the user sees:** the platform restarts on the public route. The scheme and jump list still point at the same public manifest.
+- **Log lines to expect:** after the restart, `LAUNCH PARAMS RECEIVED (custom scheme, at launch): sampleParam=scheme-at-launch ...` again.
+- **Observed on Windows:** `Application.restart()` delivered the original launch params again. An app that acts on a param must remember that it has handled it.

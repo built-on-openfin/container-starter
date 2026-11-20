@@ -525,3 +525,52 @@ sequenceDiagram
   - `provider-500`, RVM log: `Result of loading primary application: Success`, and no `FALLBACK_RESOLVER` entries.
 - **What it teaches:** the fallback depends on the provider page failing as a connection, not on the manifest host being down. A provider that is broken but answers with an error page does not fall back. See [When the manifest is served but the provider fails](../README.md#when-the-manifest-is-served-but-the-provider-fails) for ways to make it fail as a connection.
 - **Observed on Windows:** `provider-refused` fell back; the provider load failed about 10 seconds after the platform started and the platform was on the public route 26 seconds after launch. `provider-reset` fell back faster; the provider load failed within 2 seconds and the platform was on the public route 9 seconds after launch. `provider-500` did not fall back, and the platform was left running until `npm run kill`.
+
+## Launch params scenarios
+
+Every set of params that reaches the platform is logged as a highlighted `LAUNCH PARAMS RECEIVED (<source>, <when>): ...` line. See [Deep links, custom scheme and jump list](../README.md#deep-links-custom-scheme-and-jump-list).
+
+### 16. Init params at launch and while running
+
+- **Goal:** show init params reaching the provider.
+- **Identity and cache state needed:** normal identity.
+- **Control panel settings:** both `healthy`.
+- **Action:** `npm run client`. Then `npm run deeplink -- init internal-while-running`, then `npm run deeplink -- init public-manifest-while-internal-runs public`.
+- **What the user sees:** one platform, on the internal route.
+- **Log lines to expect:** `LAUNCH PARAMS RECEIVED (init params, while running): sampleParam=internal-while-running; ...`, then the same for `public-manifest-while-internal-runs`.
+- **What it teaches:** both manifests use the same uuid, so a link to the other route's manifest reaches the running platform instead of switching routes. The RVM still loads that manifest into its own `apps` folder.
+- **Observed on Windows:** as expected. The RVM log showed the public manifest's `apps` folder being used for the second link.
+
+### 17. The custom scheme follows the last route
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Reg as Registry (here-sample-network-fallback)
+    participant P as Public manifest
+    participant I as Internal manifest
+    User ->> P: npm run client:public
+    P ->> Reg: registerCustomProtocol (now the public manifest)
+    User ->> Reg: here-sample-network-fallback://open?sampleParam=scheme-at-launch
+    Reg ->> P: OpenFinRVM --config=public manifest --user-request-uri=...
+    Note over I: healthy and preferred, but not used
+```
+
+- **Goal:** show that the scheme starts whichever manifest registered it last.
+- **Identity and cache state needed:** normal identity, both manifests cached.
+- **Control panel settings:** both `healthy`.
+- **Action:** `npm run client:public`, then `npm run kill`, then `npm run deeplink -- scheme scheme-at-launch`.
+- **What the user sees:** the platform starts with an orange PUBLIC badge, although the internal route is healthy and preferred.
+- **Log lines to expect:**
+  - on the public start: `here-sample-network-fallback:// was registered to http://localhost:5050/manifest.fin.json, now registered to http://127.0.0.1:5051/manifest.fin.json.` and `Jump list set; its tasks point at http://127.0.0.1:5051/manifest.fin.json.`
+  - after the scheme link: `Started from http://127.0.0.1:5051/manifest.fin.json on route public` and `LAUNCH PARAMS RECEIVED (custom scheme, at launch): sampleParam=scheme-at-launch (from userRequestUri=...)`
+- **What it teaches:** after a fallback or a switch, the scheme, the jump list and anything pinned belong to the public manifest until the next start from the internal one. Compare scenario 12 in the [provider-based scenarios](../../provider-based/docs/scenarios.md), where they always belong to the one public manifest and the gateway still picks the internal route.
+- **Observed on Windows:** as expected.
+
+### 18. Jump list
+
+- **Goal:** show the jump list task reaching the platform, and which manifest it targets.
+- **Action:** right-click the running platform's taskbar button and choose **Open with a jump list param**, once after `npm run client` and once after `npm run client:public`.
+- **Log lines to expect:** `LAUNCH PARAMS RECEIVED (jump list, while running): launchSource=jumplist; sampleParam=from-the-jump-list`. The `Jump list set; its tasks point at ...` line names the manifest each time.
+- **What the user sees:** after about 12 seconds, the highlighted launch entry in the log.
+- **Observed on Windows:** the jump list was set for each manifest in turn. In the provider-based sample the same task took about 12 seconds to reach the running platform, because it runs `openfin.exe` directly rather than through the RVM; see its scenario 13.

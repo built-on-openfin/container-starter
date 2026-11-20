@@ -58,7 +58,14 @@ These steps assume you are in this folder (`how-to/use-a-manifest/support-networ
    npm run client
    ```
 
-6. Close everything when you are done.
+6. Optionally, send launch params, whether or not the platform is running. Each one appears as a highlighted `LAUNCH PARAMS RECEIVED` line in the app view's log; see [Deep links, custom scheme and jump list](#deep-links-custom-scheme-and-jump-list).
+
+   ```shell
+   npm run deeplink -- init hello
+   npm run deeplink -- scheme hello
+   ```
+
+7. Close everything when you are done.
 
    ```shell
    npm run kill
@@ -113,7 +120,7 @@ flowchart LR
 - There is no `snapshot`. The view has to load from the route the gateway chose, which is not known when the manifest is written, so the provider builds the window from its own origin once it starts.
 - There are no `fallbackManifests`. The gateway makes the choice instead of the RVM.
 - `offlineAccess: true` lets the RVM start from its cached copy if the public route is briefly unreachable.
-- The `shortcut` block (`target: ["start-menu"]`) creates a "Support Network Fallback (provider-based)" Start menu shortcut in an "Example Co" folder, pointing at the public manifest.
+- The `shortcut` block (`target: ["start-menu"]`) creates a "Network Fallback Provider-Based" Start menu shortcut in an "Example Co" folder, pointing at the public manifest.
 
 ### The gateway
 
@@ -217,6 +224,30 @@ The restart closes every window and loses everything held in memory. That keeps 
 
 [What to carry across a switch](../multi-manifest/README.md#what-state-to-carry-across-a-switch) in the multi-manifest README discusses the state you would need to handle in either case.
 
+## Deep links, custom scheme and jump list
+
+[client/src/launch-params.ts](./client/src/launch-params.ts) is the same file in both approaches, so they can be compared. The provider calls it once it has started:
+
+- **Init params at launch.** It logs `getInfo().initialOptions.userAppConfigArgs`. A `fin://` link or a manifest URL with `?$$name=value` parameters puts them there.
+- **Init params while running.** It listens for the application's `run-requested` event, which fires when the platform is launched again while it is running, and logs `event.userAppConfigArgs`. The platform is not started a second time.
+- **On Windows only:**
+  - It registers the `here-sample-network-fallback` scheme with `System.registerCustomProtocol()`. The manifest enables that API, and `getCustomProtocolState`, for that scheme only, under `platform.permissions.System`. A scheme link arrives as a `userRequestUri` init param holding the whole link. The log shows the query parameters parsed from it.
+  - It sets a jump list with `Application.setJumpList()`, which needs `enableJumpList: true` in the platform options. Its task is a `fin://` link to the manifest with `$$launchSource=jumplist`.
+- **On macOS and other systems,** it logs that the scheme and jump list are skipped. The init params code is the same everywhere, but it has only been run on Windows here.
+
+Every set of params goes through one function, `describeLaunch()`. It names the source (custom scheme, jump list or init params) and writes one `LAUNCH PARAMS RECEIVED (<source>, at launch|while running): ...` line, which the app view highlights. The app view's "Launch params" section shows the links to try, with **Copy** buttons.
+
+`npm run deeplink -- init|fin|scheme [value]` sends them. On Windows, `init` runs the RVM with `--config=<manifest>?$$sampleParam=<value>&$$launchSource=script`, which is what a `fin://` link becomes. The RVM ignores a separate `--user-app-config-args` argument.
+
+**Why this approach suits them.** There is one manifest URL, on the public route, whichever route the gateway picks. The scheme registration, the jump list task, a pinned taskbar item and any shared `fin://` link all point at it, and they stay the same after a switch. The params survive the gateway's navigation to the provider, because they belong to the application, not to the page.
+
+**Things to handle in your own app:**
+
+- **`Application.restart()` delivers the original launch params again.** After a switch, the provider logs them a second time as "at launch". An app that acts on a param, for example by opening a record, should remember that it has handled it, or ignore params when the gateway reports `selectedBy: preference`, which only happens after a switch.
+- **Params that arrive before the provider has started.** Deep links sent from about 4 seconds after launch were all delivered to the provider's `run-requested` listener. Whether one sent during the gateway's half-second health check is kept was not established.
+- **Jump list tasks are slow.** The runtime turns the task's `fin://` link into a command that runs `openfin.exe --startup-url=<manifest> --user-app-config-args=...` directly, without the RVM or the platform's `--security-realm`. The params reached the running platform about 12 seconds after the task started, so give the user feedback when they arrive. This sample only highlights them in the log. The jump list's own app entry, at the bottom, relaunches the manifest with no params; the log shows that as `LAUNCH RECEIVED (while running) with no params`.
+- **Both samples register the same scheme.** Whichever sample started last owns it; the log shows the previous owner when it changes.
+
 ## Compared with the multi-manifest approach
 
 **What this approach gains:**
@@ -237,18 +268,22 @@ The restart closes every window and loses everything held in memory. That keeps 
 
 These results were recorded on Windows with runtime `43.142.101.2` and `@openfin/core` `43.101.2`. The per-scenario results are in [the scenarios document](./docs/scenarios.md).
 
-| Check                                                                                                                                  | Result                                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| The provider window can navigate from the gateway (public origin) to a provider on another origin and call `fin.Platform.init()` there | Yes                                                                                                                                                            |
-| The view opened by the provider loads from the provider's origin                                                                       | Yes, `http://localhost:5080/app.html` on the internal route                                                                                                    |
-| The service worker installs on the first launch and serves the gateway on later launches                                               | Yes; the first launch logged `page not controlled yet, service worker active`, and later ones `page served through the service worker`                         |
-| `Application.restart()` restarts the platform at the gateway URL                                                                       | Yes, the new provider was running on the chosen route about 3 seconds after the switch was requested                                                           |
-| The preference page rejects a client that is not the provider                                                                          | Yes; a node adapter client was rejected with `uuid ... is not this platform`                                                                                   |
-| The preference is cleared once read                                                                                                    | Yes; the next launch chose the internal route by health check                                                                                                  |
-| Public route down after a first launch, internal healthy                                                                               | The RVM used its cached manifest, the gateway came from the service worker cache, and the platform started on the internal route about 15 seconds after launch |
-| Both routes down                                                                                                                       | The gateway (from the cache) showed "Support Network Fallback cannot start" with the reason for each route, and Retry and Close buttons                        |
-| Switching with the in-app button to a route that is down                                                                               | Refused without a restart: `Not switching: app.example.com is not answering within 2000 ms. Staying on app.example.internal.`                                  |
-| The shortcut                                                                                                                           | The public manifest's `shortcut` block created "Support Network Fallback (provider-based)" and its uninstall entry in the Start menu                           |
+| Check                                                                                                                                  | Result                                                                                                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The provider window can navigate from the gateway (public origin) to a provider on another origin and call `fin.Platform.init()` there | Yes                                                                                                                                                                                                                                       |
+| The view opened by the provider loads from the provider's origin                                                                       | Yes, `http://localhost:5080/app.html` on the internal route                                                                                                                                                                               |
+| The service worker installs on the first launch and serves the gateway on later launches                                               | Yes; the first launch logged `page not controlled yet, service worker active`, and later ones `page served through the service worker`                                                                                                    |
+| `Application.restart()` restarts the platform at the gateway URL                                                                       | Yes, the new provider was running on the chosen route about 3 seconds after the switch was requested                                                                                                                                      |
+| The preference page rejects a client that is not the provider                                                                          | Yes; a node adapter client was rejected with `uuid ... is not this platform`                                                                                                                                                              |
+| The preference is cleared once read                                                                                                    | Yes; the next launch chose the internal route by health check                                                                                                                                                                             |
+| Public route down after a first launch, internal healthy                                                                               | The RVM used its cached manifest, the gateway came from the service worker cache, and the platform started on the internal route about 15 seconds after launch                                                                            |
+| Both routes down                                                                                                                       | The gateway (from the cache) showed "Support Network Fallback cannot start" with the reason for each route, and Retry and Close buttons                                                                                                   |
+| Switching with the in-app button to a route that is down                                                                               | Refused without a restart: `Not switching: app.example.com is not answering within 2000 ms. Staying on app.example.internal.`                                                                                                             |
+| The shortcut                                                                                                                           | The public manifest's `shortcut` block created "Network Fallback Provider-Based" and its uninstall entry in the Start menu                                                                                                                |
+| Init params at launch and while running                                                                                                | Both logged, at launch from `initialOptions.userAppConfigArgs` and while running from `run-requested`; they survived the gateway's navigation                                                                                             |
+| Custom scheme at launch and while running                                                                                              | Both logged, as `userRequestUri=here-sample-network-fallback://open/?sampleParam=...`; the scheme stayed registered to the public manifest after a switch                                                                                 |
+| Jump list                                                                                                                              | Set once `enableJumpList` was on. The task reached the running platform about 12 seconds after it was started; the jump list's app entry sends no params. A task whose `deepLink` was a custom scheme link was rejected as an invalid URL |
+| Launch params after a switch                                                                                                           | `Application.restart()` delivered the original launch params again                                                                                                                                                                        |
 
 Not observed here: a first install on a machine that has never run the sample, and the effect of Private Network Access, which the localhost simulator cannot reproduce.
 
@@ -288,7 +323,7 @@ None of the following is built into this sample. The [multi-manifest list](../mu
 | Shared     | [shared/route-config.ts](./shared/route-config.ts), [shared/health-contract.ts](./shared/health-contract.ts)                                                                    |
 | Deployment | [server/src/deployment/](./server/src/deployment/) (`create-route-server.ts`, `manifests.ts`, `health.ts`)                                                                      |
 | Gateway    | [client/src/gateway/](./client/src/gateway/) (`gateway.ts`, `decision.ts`, `preference.ts`) and [public/gateway/](./public/gateway/) (`index.html`, `preference.html`, `sw.js`) |
-| Provider   | [client/src/](./client/src/) (`provider.ts`, `routes.ts`, `health-check.ts`, `prompt.ts`, `switch.ts`)                                                                          |
+| Provider   | [client/src/](./client/src/) (`provider.ts`, `routes.ts`, `health-check.ts`, `prompt.ts`, `switch.ts`, `launch-params.ts`)                                                      |
 
 The test tooling, which you should not copy: [server/src/simulator/](./server/src/simulator/), [public/control/index.html](./public/control/index.html) and [server/src/index.ts](./server/src/index.ts). The app view ([client/src/app.ts](./client/src/app.ts)) and the status channel exist to make the decisions visible; your own UI would replace them.
 
@@ -313,4 +348,9 @@ The test tooling, which you should not copy: [server/src/simulator/](./server/sr
 
    The cache folder holds the gateway's service worker and the stored preference, as well as the rest of the platform's storage.
 
-3. Delete "Support Network Fallback (provider-based)" and its uninstall entry from the "Example Co" folder in `%APPDATA%\Microsoft\Windows\Start Menu\Programs`.
+3. Delete "Network Fallback Provider-Based" and its uninstall entry from the "Example Co" folder in `%APPDATA%\Microsoft\Windows\Start Menu\Programs`.
+4. Remove the custom scheme. The provider re-registers it on every start, so do this last. It is shared with the multi-manifest sample.
+
+   ```powershell
+   Remove-Item "HKCU:\Software\Classes\here-sample-network-fallback" -Recurse
+   ```

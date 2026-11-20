@@ -56,7 +56,15 @@ These steps assume you are in this folder (`how-to/use-a-manifest/support-networ
 
    `npm run client:public` launches from the public route instead.
 
-6. Close everything when you are done.
+6. Optionally, send launch params, whether or not the platform is running. Each one appears as a highlighted `LAUNCH PARAMS RECEIVED` line in the app view's log; see [Deep links, custom scheme and jump list](#deep-links-custom-scheme-and-jump-list).
+
+   ```shell
+   npm run deeplink -- init hello
+   npm run deeplink -- init hello public
+   npm run deeplink -- scheme hello
+   ```
+
+7. Close everything when you are done.
 
    ```shell
    npm run kill
@@ -321,6 +329,34 @@ The new provider reads the arrival details from that channel, if it exists, and 
 
 The switcher does not recover. If the platform does not close in time, or the destination launch fails, it shows and logs the failure and quits, and the user is left with nothing running. If the destination provider answers with an HTTP error, the launch reports success but the platform never initialises; the switcher only notes that the new platform did not read the switch details. That is deliberate in this sample; [Production hardening](#production-hardening) describes the ready signal and recovery a real deployment needs.
 
+## Deep links, custom scheme and jump list
+
+[client/src/launch-params.ts](./client/src/launch-params.ts) is the same file in both approaches, so they can be compared. The provider calls it once it has started:
+
+- **Init params at launch.** It logs `getInfo().initialOptions.userAppConfigArgs`. A `fin://` link or a manifest URL with `?$$name=value` parameters puts them there.
+- **Init params while running.** It listens for the application's `run-requested` event and logs `event.userAppConfigArgs`.
+- **On Windows only:**
+  - It registers the `here-sample-network-fallback` scheme with `System.registerCustomProtocol()`. Both manifests enable that API, and `getCustomProtocolState`, under `platform.permissions.System`. A scheme link arrives as a `userRequestUri` init param.
+  - It sets a jump list with `Application.setJumpList()` (with `enableJumpList: true`), whose task is a `fin://` link to the running manifest with `$$launchSource=jumplist`.
+- **On macOS and other systems,** it logs that the scheme and jump list are skipped. Launch fallback is Windows only in this approach anyway.
+
+Every set of params is logged as one highlighted `LAUNCH PARAMS RECEIVED (<source>, at launch|while running): ...` line. `npm run deeplink -- init|fin|scheme [value] [internal|public]` sends them; the route picks which manifest `init` and `fin` target.
+
+**The problem this approach has with them.** Each route's provider registers the scheme and sets the jump list for its own manifest, because `registerCustomProtocol()` and the jump list use the running manifest URL. Whichever route started last wins:
+
+- **The scheme follows the last route.** After a start from the public manifest, the log shows `here-sample-network-fallback:// was registered to http://localhost:5050/manifest.fin.json, now registered to http://127.0.0.1:5051/manifest.fin.json`. A later scheme link then started the platform **on the public route, with the internal route healthy and preferred**. Not registering from the public route avoids this, but then a user who has only ever reached the public route has no scheme.
+- **The jump list and taskbar pins follow the last route.** The jump list is rewritten for the public manifest after a fallback or switch, and a taskbar pin keeps whichever manifest URL was running when it was pinned.
+- **Which deep link to share.** A `fin://` link names one of the two manifests. Both manifests use the same uuid, so a link to the public manifest sent while the internal platform was running was delivered to the internal platform's `run-requested` listener. No second platform started, but the RVM loaded the public manifest into its own `apps` folder. The same link with nothing running starts the public route.
+
+Both samples register the same scheme name, so running the provider-based sample moves it too.
+
+**Observed on Windows:**
+
+- Init params were logged at launch and while running.
+- The scheme was logged at launch and while running, as `userRequestUri=here-sample-network-fallback://open/?sampleParam=...`.
+- The scheme moved between the two manifests as described above.
+- The jump list was set. Its task runs `openfin.exe` directly rather than through the RVM, and in the provider-based sample it took about 12 seconds to reach the running platform. The log shows a highlighted `LAUNCH PARAMS RECEIVED` entry when it does.
+
 ## What state to carry across a switch
 
 The switch is a restart, so anything the platform holds in memory is gone. The sample carries nothing except a small diagnostic record (`switchId`, `from`, `to`). You need to decide what your platform needs:
@@ -401,6 +437,7 @@ These were observed with RVM `20.0.1.4` and runtime `43.142.101.2`; see [Observe
 - **Private Network Access is not simulated.** Everything runs on localhost, so browser rules about public pages reaching internal addresses do not apply here. See [Production hardening](#production-hardening).
 - **Staying on the public route.** A user on the public route is only offered the internal route when the public route becomes unhealthy, so a user who fell back stays on the public route for the rest of the session, even after the internal route recovers. They return to the internal route at their next launch from the shortcut.
 - **Windows only.** Launch fallback is handled by the RVM, which is Windows only.
+- **The custom scheme, jump list and deep links follow the last route.** See [Deep links, custom scheme and jump list](#deep-links-custom-scheme-and-jump-list).
 - **A sign-in page at launch.** A sign-in page that returns HTTP 200 for the internal manifest URL blocks launch fallback. The RVM cannot read the page as a manifest, fails with `FailedToReadAppConfig`, and uses neither the cached manifest nor its fallback list.
 - **HTTP errors and hangs at launch.** If the internal route answers with an HTTP error, or the internal provider does, the RVM starts the platform and does not fall back. The provider never runs, so nothing appears. See [When the manifest is served but the provider fails](#when-the-manifest-is-served-but-the-provider-fails) for ways to make a broken provider fail as a connection instead. If the internal route accepts connections and never answers, the RVM waits 12 seconds for each of two manifest requests, starts the cached manifest, and the provider then hangs; no fallback had happened 6 minutes later.
 
@@ -425,12 +462,12 @@ A local bootstrap manifest installed by an MSI would also remove the gap on mach
 
 The pattern code, which a real deployment would have in some form:
 
-| Area       | Files                                                                                                                    |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Shared     | [shared/route-config.ts](./shared/route-config.ts), [shared/health-contract.ts](./shared/health-contract.ts)             |
-| Deployment | [server/src/deployment/](./server/src/deployment/) (`create-route-server.ts`, `manifests.ts`, `health.ts`)               |
-| Client     | [client/src/](./client/src/) (`routes.ts`, `health-check.ts`, `prompt.ts`, `switch.ts`, `provider.ts`)                   |
-| Switcher   | [client/src/switcher/](./client/src/switcher/) (`switcher.ts`, `handover.ts`) and [public/switcher/](./public/switcher/) |
+| Area       | Files                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Shared     | [shared/route-config.ts](./shared/route-config.ts), [shared/health-contract.ts](./shared/health-contract.ts)               |
+| Deployment | [server/src/deployment/](./server/src/deployment/) (`create-route-server.ts`, `manifests.ts`, `health.ts`)                 |
+| Client     | [client/src/](./client/src/) (`routes.ts`, `health-check.ts`, `prompt.ts`, `switch.ts`, `provider.ts`, `launch-params.ts`) |
+| Switcher   | [client/src/switcher/](./client/src/switcher/) (`switcher.ts`, `handover.ts`) and [public/switcher/](./public/switcher/)   |
 
 The test tooling, which you should not copy: [server/src/simulator/](./server/src/simulator/) (the fault layer, control panel API and state), [public/control/index.html](./public/control/index.html) and [server/src/index.ts](./server/src/index.ts), which joins the two. The app view ([client/src/app.ts](./client/src/app.ts)) and the status channel exist to make the checks visible; your own UI would replace them.
 
@@ -478,3 +515,9 @@ Get-Item "$env:LOCALAPPDATA\OpenFin\cache\support-network-fallback"
 ```
 
 Also delete the Start menu shortcuts the internal manifest created: the "Example Co" folder in `%APPDATA%\Microsoft\Windows\Start Menu\Programs`, which holds "Support Network Fallback" and "Uninstall Support Network Fallback". If an earlier version of this sample was used to remove shortcuts, also delete the sample's key under `HKCU\Software\OpenFin\RVM\AppSettings` (its name matches the number in the internal manifest's `apps` folder name), so the RVM creates the shortcut again; see [The shortcut](#the-shortcut).
+
+Finally, remove the custom scheme, which is shared with the provider-based sample and re-registered on every start:
+
+```powershell
+Remove-Item "HKCU:\Software\Classes\here-sample-network-fallback" -Recurse
+```

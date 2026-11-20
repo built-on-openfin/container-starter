@@ -33,7 +33,7 @@ function describeCheck(result: HealthResult | undefined): string {
  * @param status The status.
  */
 function render(status: StatusMessage): void {
-	const { current, other, lastChecks, manifestUrl, providerOrigin, preferred, log } = status;
+	const { current, other, lastChecks, manifestUrl, providerOrigin, preferred, launch, log } = status;
 	const badge = document.querySelector<HTMLElement>("#badge");
 	if (badge) {
 		badge.style.background = current?.color ?? "#666";
@@ -48,12 +48,18 @@ function render(status: StatusMessage): void {
 	setText("#check-current", describeCheck(lastChecks.current));
 	setText("#check-other", other ? describeCheck(lastChecks.other) : "-");
 
+	setText("#launch-os", launch?.os ?? "-");
+	setText("#launch-registration", launch?.registration ?? "-");
+	setText("#scheme-link", launch?.schemeLink ?? "-");
+	setText("#deep-link", launch?.deepLink ?? "-");
+
 	const list = document.querySelector("#log");
 	if (list) {
 		list.replaceChildren(
 			...[...log].reverse().map((entry) => {
 				const item = document.createElement("li");
 				item.textContent = `${new Date(entry.time).toLocaleTimeString()} ${entry.message}`;
+				item.classList.toggle("launch", entry.kind === "launch");
 				return item;
 			})
 		);
@@ -71,6 +77,13 @@ function render(status: StatusMessage): void {
 async function init(): Promise<void> {
 	client = await connectToStatusChannel(fin.me.identity.uuid, render);
 	render((await client.dispatch("get-status")) as StatusMessage);
+
+	for (const button of document.querySelectorAll<HTMLButtonElement>(".copy")) {
+		button.addEventListener("click", async () => {
+			const text = document.querySelector(button.dataset.copy ?? "")?.textContent ?? "";
+			await fin.Clipboard.writeText({ data: text });
+		});
+	}
 
 	document.querySelector("#manual-switch")?.addEventListener("click", async () => {
 		const offered = (await client?.dispatch("manual-switch")) as boolean;

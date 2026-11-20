@@ -8,6 +8,7 @@
 		"build": "npm run build-server && npm run build-client",
 		"start": "node ./server/build/server/src/index.js",
 		"client": "node ./scripts/launch.mjs",
+		"deeplink": "node ./scripts/deeplink.mjs",
 		"client:public": "node ./scripts/launch.mjs public",
 		"client:fresh": "node ./scripts/launch.mjs fresh",
 		"kill": "node ./scripts/kill.mjs",

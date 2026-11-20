@@ -8,6 +8,7 @@ import { HEALTH_TIMEOUT_MS, isRouteId, ROUTES } from "../../shared/route-config"
 import { createStatusChannel, type LogEntry, type StatusMessage } from "./channels";
 import { readGatewayDecision } from "./gateway/decision";
 import { checkHealth, startHealthLoop, type HealthResult } from "./health-check";
+import { startLaunchParams, type LaunchStatus } from "./launch-params";
 import { askUser } from "./prompt";
 import { resolveRoutes, type ResolvedRoutes, type RouteInfo } from "./routes";
 import { switchTo } from "./switch";
@@ -18,6 +19,7 @@ let routes: ResolvedRoutes | undefined;
 let channel: OpenFin.ChannelProvider | undefined;
 let manifestUrl = "";
 let switching = false;
+let launch: LaunchStatus | undefined;
 const gateway = readGatewayDecision(location.search);
 const lastChecks: StatusMessage["lastChecks"] = {};
 const logEntries: LogEntry[] = [];
@@ -25,9 +27,10 @@ const logEntries: LogEntry[] = [];
 /**
  * Add a line to the log, the console and the app view.
  * @param message What happened.
+ * @param kind "launch" for launch params, which the app view highlights.
  */
-function log(message: string): void {
-	const entry = { time: Date.now(), message };
+function log(message: string, kind?: LogEntry["kind"]): void {
+	const entry: LogEntry = { time: Date.now(), message, kind };
 	console.log(`[${new Date(entry.time).toLocaleTimeString()}] ${message}`);
 	logEntries.push(entry);
 	logEntries.splice(0, Math.max(0, logEntries.length - LOG_LIMIT));
@@ -57,6 +60,7 @@ function buildStatus(): StatusMessage {
 		gateway,
 		switching,
 		lastChecks,
+		launch,
 		log: logEntries
 	};
 }
@@ -162,7 +166,7 @@ async function openAppWindow(origin: string): Promise<void> {
 										name: "support-network-fallback-provider-app",
 										url: `${origin}/app.html`
 									},
-									title: "Support Network Fallback (provider-based)"
+									title: "Network Fallback Provider-Based"
 								}
 							]
 						}
@@ -212,6 +216,16 @@ async function init(): Promise<void> {
 	});
 
 	await logStartup(resolved.problem);
+
+	startLaunchParams({
+		manifestUrl,
+		appName: "Network Fallback Provider-Based",
+		log,
+		onStatus: (status) => {
+			launch = status;
+			publishStatus();
+		}
+	}).catch((error) => log(`Launch params failed: ${String(error)}`));
 
 	if (routes) {
 		const known = routes;

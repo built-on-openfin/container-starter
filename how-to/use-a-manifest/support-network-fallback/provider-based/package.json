@@ -8,6 +8,7 @@
 		"build": "npm run build-server && npm run build-client",
 		"start": "node ./server/build/server/src/index.js",
 		"client": "node ./scripts/launch.mjs",
+		"deeplink": "node ./scripts/deeplink.mjs",
 		"kill": "node ./scripts/kill.mjs",
 		"setup": "cd ../../../../ && npm install && cd how-to/use-a-manifest/support-network-fallback/provider-based && npm run build"
 	},

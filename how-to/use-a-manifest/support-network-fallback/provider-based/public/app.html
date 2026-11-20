@@ -47,6 +47,30 @@
 				<p class="hint">The other route is only checked while this route is unhealthy.</p>
 			</section>
 			<section>
+				<h2>Launch params</h2>
+				<dl>
+					<dt>Operating system</dt>
+					<dd id="launch-os">-</dd>
+					<dt>Scheme and jump list</dt>
+					<dd id="launch-registration">-</dd>
+					<dt>Custom scheme link</dt>
+					<dd>
+						<span id="scheme-link">-</span>
+						<button class="copy" data-copy="#scheme-link">Copy</button>
+					</dd>
+					<dt>Init params link</dt>
+					<dd>
+						<span id="deep-link">-</span>
+						<button class="copy" data-copy="#deep-link">Copy</button>
+					</dd>
+				</dl>
+				<p class="hint">
+					Open a link from the Run dialog (Win+R) or with
+					<code>npm run deeplink</code>
+					, or use the jump list. Params that reach the platform are highlighted in the log.
+				</p>
+			</section>
+			<section>
 				<h2>Log (newest first)</h2>
 				<ol id="log" class="log"></ol>
 			</section>

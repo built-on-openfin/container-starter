@@ -10,6 +10,17 @@ import {
 } from "../../../shared/route-config";
 
 /**
+ * The secured APIs the provider uses to register the custom scheme on Windows. Both routes' manifests
+ * ask for them, so whichever route runs last owns the scheme.
+ * client/src/launch-params.ts repeats the scheme name; keep them in step.
+ * @returns The platform permissions.
+ */
+function customSchemePermissions(): { [key: string]: unknown } {
+	const scheme = { enabled: true, protocols: ["here-sample-network-fallback"] };
+	return { System: { registerCustomProtocol: scheme, getCustomProtocolState: scheme } };
+}
+
+/**
  * Build the platform manifest for a route.
  *
  * Each route hosts its own provider and view. If a route is unreachable the platform cannot start from it,
@@ -26,7 +37,7 @@ export function buildPlatformManifest(
 	identity: Identity
 ): { [key: string]: unknown } {
 	const origin = routeOrigin(route);
-	const name = identity === "fresh" ? "Support Network Fallback (fresh)" : "Support Network Fallback";
+	const name = identity === "fresh" ? "Support Network Fallback - Fresh" : "Support Network Fallback";
 
 	const manifest: { [key: string]: unknown } = {
 		licenseKey: LICENSE_KEY,
@@ -41,7 +52,9 @@ export function buildPlatformManifest(
 			name,
 			icon: `${origin}/favicon.ico`,
 			providerUrl: `${origin}/provider.html`,
-			autoShow: false
+			autoShow: false,
+			enableJumpList: true,
+			permissions: customSchemePermissions()
 		},
 		snapshot: {
 			windows: [

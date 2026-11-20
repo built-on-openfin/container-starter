@@ -84,3 +84,16 @@ button {
 	color: #5b6170;
 	font-size: 12px;
 }
+
+.log li.launch {
+	background: #fff4cc;
+	border-left: 4px solid #e0a800;
+	padding: 4px 6px;
+	font-weight: 600;
+}
+
+button.copy {
+	padding: 1px 8px;
+	font-size: 11px;
+	margin-left: 6px;
+}

@@ -1,6 +1,7 @@
 import type OpenFin from "@openfin/core";
 import { STATUS_CHANNEL, type RouteId } from "../../shared/route-config";
 import type { HealthResult } from "./health-check";
+import type { LaunchStatus } from "./launch-params";
 
 /**
  * A short description of a route for display.
@@ -40,6 +41,11 @@ export interface LogEntry {
 	 * What happened.
 	 */
 	message: string;
+
+	/**
+	 * "launch" for launch params, which the app view highlights.
+	 */
+	kind?: "launch";
 }
 
 /**
@@ -75,6 +81,11 @@ export interface StatusMessage {
 	 * The last check of each route, if any.
 	 */
 	lastChecks: { current?: HealthResult; other?: HealthResult };
+
+	/**
+	 * The deep links to try and what happened to the custom scheme and jump list.
+	 */
+	launch?: LaunchStatus;
 
 	/**
 	 * The last 20 log entries, newest last.

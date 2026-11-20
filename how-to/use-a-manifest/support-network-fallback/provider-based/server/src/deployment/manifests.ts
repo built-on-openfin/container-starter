@@ -10,6 +10,16 @@ import {
 } from "../../../shared/route-config";
 
 /**
+ * The secured APIs the provider uses to register the custom scheme on Windows.
+ * client/src/launch-params.ts repeats the scheme name; keep them in step.
+ * @returns The platform permissions.
+ */
+function customSchemePermissions(): { [key: string]: unknown } {
+	const scheme = { enabled: true, protocols: ["here-sample-network-fallback"] };
+	return { System: { registerCustomProtocol: scheme, getCustomProtocolState: scheme } };
+}
+
+/**
  * Build the platform manifest. There is only one, served from the public route.
  *
  * The provider starts at the gateway page on the public route, which chooses the internal or public
@@ -21,7 +31,7 @@ import {
  */
 export function buildPlatformManifest(): { [key: string]: unknown } {
 	const origin = routeOrigin(GATEWAY_ROUTE);
-	const name = "Support Network Fallback (provider-based)";
+	const name = "Network Fallback Provider-Based";
 
 	return {
 		licenseKey: LICENSE_KEY,
@@ -35,7 +45,9 @@ export function buildPlatformManifest(): { [key: string]: unknown } {
 			name,
 			icon: `${origin}/favicon.ico`,
 			providerUrl: `${origin}${GATEWAY_PATH}`,
-			autoShow: false
+			autoShow: false,
+			enableJumpList: true,
+			permissions: customSchemePermissions()
 		},
 		shortcut: {
 			company: "Example Co",

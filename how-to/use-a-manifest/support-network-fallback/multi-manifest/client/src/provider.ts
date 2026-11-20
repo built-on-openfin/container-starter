@@ -5,6 +5,7 @@
 import type OpenFin from "@openfin/core";
 import { createStatusChannel, type LogEntry, type StatusMessage } from "./channels";
 import { startHealthLoop, type HealthLoop, type HealthResult } from "./health-check";
+import { startLaunchParams, type LaunchStatus } from "./launch-params";
 import { askUser } from "./prompt";
 import { resolveRoutes, type ManifestWithFallback, type ResolvedRoutes, type RouteInfo } from "./routes";
 import { startSwitch } from "./switch";
@@ -16,15 +17,17 @@ let routes: ResolvedRoutes | undefined;
 let loop: HealthLoop | undefined;
 let channel: OpenFin.ChannelProvider | undefined;
 let manifestUrl = "";
+let launch: LaunchStatus | undefined;
 const lastChecks: StatusMessage["lastChecks"] = {};
 const logEntries: LogEntry[] = [];
 
 /**
  * Add a line to the log, the console and the app view.
  * @param message What happened.
+ * @param kind "launch" for launch params, which the app view highlights.
  */
-function log(message: string): void {
-	const entry = { time: Date.now(), message };
+function log(message: string, kind?: LogEntry["kind"]): void {
+	const entry: LogEntry = { time: Date.now(), message, kind };
 	console.log(`[${new Date(entry.time).toLocaleTimeString()}] ${message}`);
 	logEntries.push(entry);
 	logEntries.splice(0, Math.max(0, logEntries.length - LOG_LIMIT));
@@ -52,6 +55,7 @@ function buildStatus(): StatusMessage {
 		providerOrigin: location.origin,
 		preferred: routes?.preferred ?? false,
 		lastChecks,
+		launch,
 		log: logEntries
 	};
 }
@@ -158,6 +162,16 @@ async function init(): Promise<void> {
 	});
 
 	await logStartup(info, manifest, resolved.problem);
+
+	startLaunchParams({
+		manifestUrl,
+		appName: manifest.platform?.name ?? "Support Network Fallback",
+		log,
+		onStatus: (status) => {
+			launch = status;
+			publishStatus();
+		}
+	}).catch((error) => log(`Launch params failed: ${String(error)}`));
 
 	if (routes) {
 		const known = routes;
