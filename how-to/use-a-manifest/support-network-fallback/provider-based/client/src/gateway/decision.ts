@@ -7,7 +7,7 @@ import { PROVIDER_PATH, ROUTES, routeOrigin, type RouteId } from "../../../share
  * Why the gateway chose a route.
  * - preference: the user chose this route with the in-app switcher before the last restart.
  * - health: the preferred route passed its health check.
- * - fallback: the preferred or stored route failed its health check, so the gateway used the public route.
+ * - fallback: the preferred or stored route failed its health check, so the gateway used the other route.
  */
 export type SelectedBy = "preference" | "health" | "fallback";
 

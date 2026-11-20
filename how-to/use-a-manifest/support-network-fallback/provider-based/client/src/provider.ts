@@ -4,10 +4,10 @@
  * health check, and switches by storing a preference for the gateway and restarting.
  */
 import type OpenFin from "@openfin/core";
-import { isRouteId, ROUTES } from "../../shared/route-config";
+import { HEALTH_TIMEOUT_MS, isRouteId, ROUTES } from "../../shared/route-config";
 import { createStatusChannel, type LogEntry, type StatusMessage } from "./channels";
 import { readGatewayDecision } from "./gateway/decision";
-import { startHealthLoop, type HealthResult } from "./health-check";
+import { checkHealth, startHealthLoop, type HealthResult } from "./health-check";
 import { askUser } from "./prompt";
 import { resolveRoutes, type ResolvedRoutes, type RouteInfo } from "./routes";
 import { switchTo } from "./switch";
@@ -71,7 +71,8 @@ function publishStatus(): void {
 }
 
 /**
- * Store the preference and restart. If that fails, the platform keeps running on its current route.
+ * Check the destination, store the preference and restart. If the destination is not healthy, or any step
+ * fails, the platform keeps running on its current route.
  * @param route The route to switch to.
  * @param reason Why, for the log.
  * @returns A message for the app view.
@@ -81,6 +82,14 @@ async function switchRoute(route: RouteInfo, reason: string): Promise<string> {
 		return "A switch is already in progress.";
 	}
 	switching = true;
+	publishStatus();
+	const target = await checkHealth(route.healthUrl, HEALTH_TIMEOUT_MS);
+	if (!target.healthy) {
+		switching = false;
+		const message = `Not switching: ${route.displayHost} is ${target.detail}. Staying on ${routes?.current.displayHost}.`;
+		log(message);
+		return message;
+	}
 	log(`Switching to ${route.displayHost} (${reason}). Storing the preference, then restarting.`);
 	try {
 		await switchTo(route.id);

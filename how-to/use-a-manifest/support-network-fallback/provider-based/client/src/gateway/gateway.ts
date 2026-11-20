@@ -3,19 +3,22 @@
  * worker. It chooses a route and navigates the provider window to that route's provider.
  *
  * Decision order:
- * 1. A stored preference, set by the in-app switcher before a restart. It is cleared once read.
- * 2. Otherwise the preferred (internal) route.
- * The chosen route is used if it is the public route, which is assumed to be available, or if its
- * /health check passes. Otherwise the gateway falls back to the public route.
+ * 1. The first choice is a stored preference, set by the in-app switcher before a restart, or otherwise
+ * the preferred (internal) route. The preference is cleared once read.
+ * 2. The first choice is used if its /health check passes. Otherwise the other route is used if its
+ * /health check passes.
+ * 3. If neither passes, the gateway does not navigate. It shows its own window with Retry and Close, so
+ * the user is not left with a provider page that cannot load.
  */
 import {
-	GATEWAY_ROUTE,
 	HEALTH_TIMEOUT_MS,
 	PREFERENCE_KEY,
 	ROUTES,
 	isRouteId,
+	otherRoute,
 	preferredRoute,
 	routeOrigin,
+	type RouteConfig,
 	type RouteId
 } from "../../../shared/route-config";
 import { checkHealth } from "../health-check";
@@ -24,6 +27,8 @@ import { providerUrlFor, type GatewayDecision } from "./decision";
 const SERVICE_WORKER_URL = "/gateway/sw.js";
 const SERVICE_WORKER_SCOPE = "/gateway/";
 const SERVICE_WORKER_WAIT_MS = 3000;
+const UNAVAILABLE_WIDTH = 480;
+const UNAVAILABLE_HEIGHT = 280;
 
 /**
  * Show a line of status on the page and in the console.
@@ -79,47 +84,99 @@ async function registerServiceWorker(): Promise<string> {
 }
 
 /**
- * Choose the route.
- * @returns The decision, without the service worker state.
+ * Check a route's /health.
+ * @param route The route.
+ * @returns Whether it is healthy, and what was found, for the log.
  */
-async function decide(): Promise<Omit<GatewayDecision, "serviceWorker">> {
-	const preference = takePreference();
-	const candidate = preference ? ROUTES[preference] : preferredRoute();
-	const selectedBy = preference ? "preference" : "health";
-
-	if (candidate.id === GATEWAY_ROUTE.id) {
-		return {
-			route: candidate.id,
-			selectedBy,
-			detail: preference
-				? `stored preference for ${candidate.displayHost}`
-				: `${candidate.displayHost} is the default`
-		};
-	}
-
-	setStatus(`Checking ${candidate.displayHost}...`);
-	const result = await checkHealth(`${routeOrigin(candidate)}/health`, HEALTH_TIMEOUT_MS);
-	const found = `${candidate.displayHost} is ${result.detail}`;
-	if (result.healthy) {
-		return {
-			route: candidate.id,
-			selectedBy,
-			detail: preference ? `stored preference for ${candidate.displayHost}, and ${found}` : found
-		};
-	}
-	return { route: GATEWAY_ROUTE.id, selectedBy: "fallback", detail: found };
+async function check(route: RouteConfig): Promise<{ healthy: boolean; found: string }> {
+	setStatus(`Checking ${route.displayHost}...`);
+	const result = await checkHealth(`${routeOrigin(route)}/health`, HEALTH_TIMEOUT_MS);
+	return { healthy: result.healthy, found: `${route.displayHost} is ${result.detail}` };
 }
 
 /**
- * Decide and navigate. The service worker is registered while the health check runs.
+ * Choose the route: the first choice if it is healthy, otherwise the other route if it is healthy.
+ * @param preference The stored preference, if there was one.
+ * @returns The decision, or undefined and what was found if neither route is healthy.
  */
-async function init(): Promise<void> {
-	const [decision, serviceWorker] = await Promise.all([decide(), registerServiceWorker()]);
-	const full: GatewayDecision = { ...decision, serviceWorker };
+async function decide(
+	preference: RouteId | undefined
+): Promise<{ decision?: Omit<GatewayDecision, "serviceWorker">; found: string }> {
+	const first = preference ? ROUTES[preference] : preferredRoute();
+	const firstCheck = await check(first);
+	if (firstCheck.healthy) {
+		const detail = preference
+			? `stored preference for ${first.displayHost}, and ${firstCheck.found}`
+			: firstCheck.found;
+		return {
+			decision: { route: first.id, selectedBy: preference ? "preference" : "health", detail },
+			found: detail
+		};
+	}
+
+	const second = otherRoute(first.id);
+	const secondCheck = await check(second);
+	const found = `${firstCheck.found}; ${secondCheck.found}`;
+	if (secondCheck.healthy) {
+		return { decision: { route: second.id, selectedBy: "fallback", detail: found }, found };
+	}
+	return { found };
+}
+
+/**
+ * Show the gateway window with a message, because neither route can be used.
+ * @param found What the checks found.
+ */
+async function showUnavailable(found: string): Promise<void> {
+	setStatus(`Neither route is available: ${found}.`);
+	const section = document.querySelector<HTMLElement>("#unavailable");
+	if (section) {
+		section.hidden = false;
+	}
+	const win = fin.Window.getCurrentSync();
+	await win.resizeTo(UNAVAILABLE_WIDTH, UNAVAILABLE_HEIGHT, "top-left");
+	await win.center();
+	await win.show();
+}
+
+/**
+ * Decide and navigate, or show the unavailable message.
+ * @param preference The stored preference, if there was one.
+ * @param serviceWorker The service worker state, for the log.
+ */
+async function run(preference: RouteId | undefined, serviceWorker: Promise<string>): Promise<void> {
+	const [{ decision, found }, serviceWorkerState] = await Promise.all([decide(preference), serviceWorker]);
+	if (!decision) {
+		await showUnavailable(found);
+		return;
+	}
+	const full: GatewayDecision = { ...decision, serviceWorker: serviceWorkerState };
 	setStatus(
-		`Using ${ROUTES[full.route].displayHost} (${full.selectedBy}: ${full.detail}). Service worker: ${serviceWorker}.`
+		`Using ${ROUTES[full.route].displayHost} (${full.selectedBy}: ${full.detail}). Service worker: ${serviceWorkerState}.`
 	);
 	location.replace(providerUrlFor(full));
+}
+
+/**
+ * Start the gateway. The service worker is registered while the health checks run.
+ */
+async function init(): Promise<void> {
+	const preference = takePreference();
+	const serviceWorker = registerServiceWorker();
+
+	document.querySelector("#retry")?.addEventListener("click", async () => {
+		const section = document.querySelector<HTMLElement>("#unavailable");
+		if (section) {
+			section.hidden = true;
+		}
+		await fin.Window.getCurrentSync().hide();
+		await run(preference, serviceWorker);
+	});
+	document.querySelector("#close")?.addEventListener("click", async () => {
+		await fin.Application.getCurrentSync().quit();
+	});
+
+	await run(preference, serviceWorker);
 }
 
 window.addEventListener("DOMContentLoaded", () => {

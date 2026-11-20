@@ -9,8 +9,8 @@ Some customers run the same HERE Core Container platform as two deployments: an 
 This approach uses **one manifest, on the public route**. Its provider does not start as the normal provider page. It starts as a small **gateway** page on the public route, which:
 
 1. reads a route preference the user may have stored with the in-app switcher, and clears it;
-2. otherwise checks the internal route's `/health`;
-3. navigates the provider window to the internal provider if the internal route is healthy or was chosen, and to the public provider if not.
+2. checks the `/health` of the chosen route, or of the internal route if none was chosen, and of the other route if that check fails;
+3. navigates the provider window to the first healthy route's provider, or shows its own "cannot start" message with **Retry** and **Close** if neither route is healthy.
 
 While running, the provider checks health as the multi-manifest approach does and offers a switch. A switch, whether offered or chosen in the app, stores a preference for the gateway and restarts the platform with `Application.restart()`.
 
@@ -19,7 +19,7 @@ The examples use `app.example.internal` for the internal route and `app.example.
 ## Assumptions
 
 - **Installing depends only on the public route.** The manifest, its `shortcut` block, the gateway, its service worker and the preference page are all served by the public route, so a first launch works anywhere the public route can be reached. The internal route is never needed to install. It is the preferred route, and the gateway navigates to it whenever its `/health` check passes.
-- **The public route is always available.** The gateway does not check it. The manifest has `offlineAccess: true` and the gateway is cached by a service worker, so a launch also survives the public route being briefly unreachable after a first launch; see [Observed results](#observed-results).
+- **The public route is normally available.** The gateway still checks it before navigating there, so a public outage gives a clear message instead of a provider that cannot load. The manifest has `offlineAccess: true` and the gateway is cached by a service worker, so a launch also survives the public route being briefly unreachable after a first launch; see [Observed results](#observed-results).
 - **Internal `/health` needs no sign-in** and allows cross-origin requests (CORS) from the public origin, because the gateway runs on the public origin.
 
 ## This is an example, not production code
@@ -117,24 +117,26 @@ flowchart LR
 
 ### The gateway
 
-[client/src/gateway/gateway.ts](./client/src/gateway/gateway.ts) runs in the provider window before the provider does. It does not call any `fin` API.
+[client/src/gateway/gateway.ts](./client/src/gateway/gateway.ts) runs in the provider window before the provider does. The provider window is hidden while it decides; it is only shown if neither route can be used.
 
 ```mermaid
 sequenceDiagram
   participant RVM
   participant Gateway as Gateway on public origin
-  participant Internal as Internal route
+  participant First as First choice route
+  participant Other as Other route
   participant Provider as Chosen provider.html
   RVM->>Gateway: load providerUrl (network, or service worker cache)
   Gateway->>Gateway: read and clear the stored preference
-  alt preference is public
-    Gateway->>Provider: location.replace(public provider)
-  else no preference, or preference is internal
-    Gateway->>Internal: GET /health (2 s timeout)
+  Gateway->>First: GET /health (2 s timeout)
+  alt healthy
+    Gateway->>Provider: location.replace(first choice provider)
+  else unreachable, timeout, HTTP error or unhealthy
+    Gateway->>Other: GET /health (2 s timeout)
     alt healthy
-      Gateway->>Provider: location.replace(internal provider)
-    else unreachable, timeout, HTTP error or unhealthy
-      Gateway->>Provider: location.replace(public provider)
+      Gateway->>Provider: location.replace(other provider)
+    else neither healthy
+      Gateway->>Gateway: show "cannot start" with Retry and Close
     end
   end
   Provider->>Provider: Platform.init, then applySnapshot from its own origin
@@ -142,9 +144,10 @@ sequenceDiagram
 
 The decision order:
 
-1. **A stored preference.** The in-app switcher stores one before a restart; see [The switch](#the-switch). The gateway removes it from storage as soon as it reads it, so it applies to one start only.
-2. **Otherwise the preferred route**, which is the internal route.
-3. **The public route needs no check.** It is assumed to be available. Any other route is used only if its `/health` returns HTTP 200 with `{ "status": "healthy" }`, using the same rule as the running check in [client/src/health-check.ts](./client/src/health-check.ts). If it fails, the gateway falls back to the public route, even when the user chose the internal route.
+1. **The first choice is a stored preference.** The in-app switcher stores one before a restart; see [The switch](#the-switch). The gateway removes it from storage as soon as it reads it, so it applies to one start only.
+2. **Otherwise the first choice is the preferred route**, which is the internal route.
+3. **The first choice is used only if it is healthy**: its `/health` returns HTTP 200 with `{ "status": "healthy" }`, using the same rule as the running check in [client/src/health-check.ts](./client/src/health-check.ts). If not, the gateway checks the other route the same way and uses it if it is healthy, even when the user chose the first route.
+4. **If neither route is healthy**, the gateway shows the provider window with the reason for each route. **Retry** hides the window and runs the checks again, and **Close** quits the platform.
 
 The gateway then calls `location.replace()` with the chosen route's `/provider.html`, adding its decision to the query string (`selectedBy` is `preference`, `health` or `fallback`, plus `detail` and the service worker state). The provider logs it and the app view shows it.
 
@@ -201,6 +204,8 @@ The gateway reads the preference from `localStorage` on the public origin. A pro
 
 Once connected, the provider calls `registerLocationPreference({ route })`. The page accepts only `internal` or `public`, writes the value, reads it back, and returns `{ route, written: true }`. Only then does the provider close the page and call `fin.Application.getCurrentSync().restart()`. The restart API is on `Application`; `fin.System` has none. If any step fails or takes more than 10 seconds, the provider logs `Switch failed: ...`, closes the page and keeps running on its current route. The page closes itself if no valid client connects within 10 seconds.
 
+Before any of this, the provider checks the destination route's `/health`. If it fails, nothing is stored, the platform is not restarted, and the provider logs `Not switching: <host> is <reason>. Staying on <current host>.` Without this check, a switch to a route that is down would restart into a gateway that has to fall back again.
+
 The switcher in the app view has a button for each route. It goes straight to the switch without the prompt, because the user has already chosen. The running health check uses the prompt first.
 
 ### Simpler on purpose
@@ -224,7 +229,7 @@ The restart closes every window and loses everything held in memory. That keeps 
 **What it costs:**
 
 - **The public route is on every launch's path.** The manifest and gateway come from it. The cached copies help when it is briefly unreachable, but it must be sized and kept available like the internal route.
-- **A health check on every launch.** Internal users wait for one `/health` request before the provider loads; about half a second in this sample.
+- **A health check on every launch.** Internal users wait for one `/health` request before the provider loads; about half a second in this sample. Public users wait for two, and the first may run to its 2-second timeout.
 - **Code you maintain.** The gateway, the service worker and the preference page are yours to write, test and update.
 - **The public page checks an internal host.** See Private Network Access in [Known gaps](#known-gaps).
 
@@ -241,7 +246,8 @@ These results were recorded on Windows with runtime `43.142.101.2` and `@openfin
 | The preference page rejects a client that is not the provider                                                                          | Yes; a node adapter client was rejected with `uuid ... is not this platform`                                                                                   |
 | The preference is cleared once read                                                                                                    | Yes; the next launch chose the internal route by health check                                                                                                  |
 | Public route down after a first launch, internal healthy                                                                               | The RVM used its cached manifest, the gateway came from the service worker cache, and the platform started on the internal route about 15 seconds after launch |
-| Both routes down                                                                                                                       | The gateway (from the cache) fell back to the public provider, which could not load, so nothing appeared                                                       |
+| Both routes down                                                                                                                       | The gateway (from the cache) showed "Support Network Fallback cannot start" with the reason for each route, and Retry and Close buttons                        |
+| Switching with the in-app button to a route that is down                                                                               | Refused without a restart: `Not switching: app.example.com is not answering within 2000 ms. Staying on app.example.internal.`                                  |
 | The shortcut                                                                                                                           | The public manifest's `shortcut` block created "Support Network Fallback (provider-based)" and its uninstall entry in the Start menu                           |
 
 Not observed here: a first install on a machine that has never run the sample, and the effect of Private Network Access, which the localhost simulator cannot reproduce.
@@ -250,10 +256,11 @@ Not observed here: a first install on a machine that has never run the sample, a
 
 - **Private Network Access.** The gateway is a page on a public origin that requests an internal address. Chromium increasingly restricts such requests; the internal route may need to answer preflight requests with `Access-Control-Allow-Private-Network: true`, and future runtimes may require more. Test this against your real hosts.
 - **A healthy `/health` does not guarantee the provider loads.** If the internal `/health` is open but the internal provider sits behind a sign-in page, the gateway navigates there anyway. Make `/health` reflect what the provider needs, or add a ready signal; see [Production hardening](#production-hardening).
-- **Both routes unavailable.** The gateway does not check the public route, so with both routes down it navigates to a public provider that cannot load, and nothing appears.
+- **Both routes unavailable.** The gateway can only say so and offer **Retry**. It needs either the network or the service worker cache to load at all; on a machine that has never launched the sample, the RVM's own error appears instead.
+- **A route can fail between the check and the navigation.** The gateway and the switch both check `/health` first, but if the route fails in the moment after, the runtime shows its own "Failed to load" error, which names the gateway URL because that is the manifest's `providerUrl`.
 - **Per-route storage and sign-in.** The routes are different origins, so storage and cookies are separate. A user who switches may need to sign in again.
 - **Service worker updates.** A new `sw.js` is picked up on the next registration, and a new gateway is fetched network-first, but a launch while the public route is unreachable uses whatever was cached last. Bump `CACHE_NAME` when the cached files change in a way that matters.
-- **A chosen internal route can be overridden silently.** If the user chose the internal route but it fails the gateway's check, the gateway uses the public route and the preference is gone, because it is cleared as soon as it is read. Only the app view's "Chosen by the gateway" row says why.
+- **A chosen route can be overridden silently.** If the user chose a route but it fails the gateway's check, the gateway uses the other route and the preference is gone, because it is cleared as soon as it is read. Only the app view's "Chosen by the gateway" row says why.
 - **Windows only, as tested.** The sample's launch script and observations are for Windows.
 
 ## Production hardening

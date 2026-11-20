@@ -4,4 +4,37 @@ body {
 	padding: 18px 20px;
 	color: #1d2330;
 	font-size: 13px;
+	overflow: hidden;
+}
+
+h1 {
+	font-size: 17px;
+	margin: 0 0 10px;
+}
+
+#status {
+	color: #5b6170;
+	font-size: 12px;
+}
+
+.buttons {
+	margin-top: 16px;
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+}
+
+button {
+	font-size: 13px;
+	padding: 6px 16px;
+	cursor: pointer;
+	background: #fff;
+	border: 1px solid #aab;
+	border-radius: 4px;
+}
+
+button.primary {
+	background: #2b6cd6;
+	color: #fff;
+	border-color: #2b6cd6;
 }

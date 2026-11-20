@@ -33,9 +33,9 @@ Check these first. Any one of them may rule the multi-manifest approach out befo
 | Switching while running               | a switcher app quits the platform and launches the other manifest     | store a preference for the gateway, then `Application.restart()`                         |
 | Code you maintain                     | health check, prompt, switcher app                                    | health check, prompt, gateway, service worker, preference page                           |
 
-Choose **multi-manifest** if your users are on Windows only, the internal deployment must not depend on the public one at all, every machine is guaranteed a first successful launch from the internal deployment (for example, an MSI-driven rollout inside the network), and you do not rely on deep links, jump lists or taskbar pins.
+Choose **multi-manifest** if you have two support two manifests and your users are on Windows only, the internal deployment must not depend on the public one at all, every machine is guaranteed a first successful launch from the internal deployment, and you do not rely on deep links, jump lists or taskbar pins.
 
-Choose **provider-based** if users may first launch from anywhere, the public deployment is always available, and you would rather own a small gateway than rely on which load errors the RVM treats as a fallback.
+Choose **provider-based** (generally recommended over multi-manifest) if users may first launch from anywhere, the public deployment is normally available, and you would rather own a small cached local gateway html setup than rely on which load errors the RVM treats as a fallback.
 
 ## This is an example, not production code
 

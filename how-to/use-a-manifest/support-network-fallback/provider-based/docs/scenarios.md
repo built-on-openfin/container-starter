@@ -54,7 +54,7 @@ sequenceDiagram
 - **Control panel settings:** internal `down`, public `healthy`. Ideally on a machine, or after [removing the sample](../README.md#removing-the-sample), where the sample has never run.
 - **Action:** `npm run client`. Then set the internal route to `healthy`, run `npm run kill` and `npm run client` again.
 - **What the user sees:** the first launch starts on the public route with an orange badge. The second starts on the internal route.
-- **Log lines to expect:** `[gateway] Using app.example.com (fallback: app.example.internal is not answering within 2000 ms)` or `... is unreachable`, then on the second launch `Gateway chose this route by health`.
+- **Log lines to expect:** `[gateway] Using app.example.com (fallback: app.example.internal is not answering within 2000 ms; app.example.com is healthy)` or `... is unreachable; ...`, then on the second launch `Gateway chose this route by health`.
 - **Observed on Windows:** the launch with the internal route down was run on a machine where the sample had already been installed (scenario 3); a clean first install was not run. Nothing in the gateway depends on a cached copy, and the manifest and gateway come only from the public route.
 
 ### 3. Internal down or unhealthy at launch
@@ -67,6 +67,7 @@ sequenceDiagram
     RVM ->> P: GET /manifest.fin.json
     RVM ->> P: load /gateway/index.html
     P -x I: GET /health (refused, timeout, error or unhealthy)
+    P ->> P: GET /health on the public route, healthy
     P ->> P: navigate to the public /provider.html
 ```
 
@@ -74,7 +75,7 @@ sequenceDiagram
 - **Control panel settings:** internal `down`, `unhealthy` or `server-error`; public `healthy`.
 - **Action:** `npm run client`.
 - **What the user sees:** the platform starts with an orange "PUBLIC route - app.example.com" badge. "Chosen by the gateway" shows `fallback: ...`.
-- **Log lines to expect:** `Gateway chose this route by fallback: app.example.internal is unhealthy.`, `... is not answering within 2000 ms.` or `... is returning HTTP 500.`
+- **Log lines to expect:** `Gateway chose this route by fallback: app.example.internal is unhealthy; app.example.com is healthy.`, with `is not answering within 2000 ms` or `is returning HTTP 500` in place of `is unhealthy`.
 - **Observed on Windows:** as expected for `unhealthy` and `down`. With `down`, the refused connection took the full 2-second timeout, as it does on Windows for local ports.
 
 ### 4. Public down after a first launch
@@ -103,11 +104,12 @@ sequenceDiagram
 
 ### 5. Both routes down
 
-- **Goal:** show the limit of the "public is always available" assumption.
+- **Goal:** show what the gateway does when it cannot use either route.
 - **Control panel settings:** both `down`, after scenario 1.
-- **Action:** `npm run client`.
-- **What the user sees:** nothing. The gateway loads from the cache, falls back to the public provider, which cannot load.
-- **Observed on Windows:** as expected. The gateway logged `Using app.example.com (fallback: app.example.internal is not answering within 2000 ms)` and no provider started. Run `npm run kill` afterwards.
+- **Action:** `npm run client`. Then set the internal route to `healthy` and click **Retry**.
+- **What the user sees:** after about 15 seconds of RVM retries and two 2-second checks, a small "Support Network Fallback cannot start" window with the reason for each route and **Close** and **Retry** buttons. After **Retry**, the window hides and the platform starts on the internal route. **Close** quits the platform.
+- **Log lines to expect:** `[gateway] Neither route is available: app.example.internal is not answering within 2000 ms; app.example.com is unreachable.`
+- **Observed on Windows:** the window appeared as described, loaded from the service worker cache. The **Retry** click was not automated.
 
 ## Scenarios while running
 
@@ -116,7 +118,7 @@ sequenceDiagram
 - **Goal:** show the running check offering a switch.
 - **Control panel settings:** both `healthy`. After the platform has started on the internal route, set the internal route to `unhealthy`.
 - **Action:** `npm run client`, change the state, then click **Switch** in the prompt.
-- **What the user sees:** within about 5 seconds, a "Switch to app.example.com?" prompt. On **Switch**, the platform closes and restarts with an orange badge, and "Chosen by the gateway" shows `preference: stored preference for app.example.com`.
+- **What the user sees:** within about 5 seconds, a "Switch to app.example.com?" prompt. On **Switch**, the platform closes and restarts with an orange badge, and "Chosen by the gateway" shows `preference: stored preference for app.example.com, and app.example.com is healthy`.
 - **Log lines to expect:**
   - `app.example.internal is unhealthy.`, `app.example.com is healthy.`
   - `Offering a switch: app.example.internal is unhealthy and app.example.com is healthy.`
@@ -133,28 +135,38 @@ sequenceDiagram
     participant H as Preference page (public)
     participant G as Gateway
     User ->> App: Use app.example.com
+    App ->> App: check app.example.com /health
     App ->> H: open hidden, connect, registerLocationPreference(public)
     H -->> App: written true
     App ->> App: Application.restart()
     G ->> G: read and clear the preference
-    G ->> G: navigate to the public provider
+    G ->> G: check app.example.com /health, then navigate to the public provider
 ```
 
 - **Goal:** show a user-chosen switch.
 - **Control panel settings:** both `healthy`.
 - **Action:** `npm run client`, then click **Use app.example.com** in the app view.
 - **What the user sees:** the platform restarts with an orange badge. The button for the current route is disabled.
-- **Log lines to expect:** `Switching to app.example.com (you chose app.example.com in the app). ...`, `Stored the preference for the public route.`, `[gateway] Using app.example.com (preference: stored preference for app.example.com)`.
+- **Log lines to expect:** `Switching to app.example.com (you chose app.example.com in the app). ...`, `Stored the preference for the public route.`, `[gateway] Using app.example.com (preference: stored preference for app.example.com, and app.example.com is healthy)`.
 - **Observed on Windows:** as expected, triggered through the status channel's `switch-to` request, which is what the button sends. The preference was stored 1.2 seconds after the request and the new provider was running on the public route 3 seconds after it.
 
-### 8. The preference is used once
+### 8. Switching to a route that is down
+
+- **Goal:** show that the switcher checks the destination before restarting.
+- **Control panel settings:** both `healthy`. After the platform has started on the internal route, set the public route to `down`.
+- **Action:** click **Use app.example.com** in the app view.
+- **What the user sees:** after about 2 seconds the buttons are enabled again and the platform keeps running on the internal route. Nothing is stored and nothing restarts.
+- **Log lines to expect:** `Not switching: app.example.com is not answering within 2000 ms. Staying on app.example.internal.`
+- **Observed on Windows:** as expected, through the `switch-to` request. Before this check was added, the switch stored the preference and restarted, and the runtime reported `Failed to load ... at http://127.0.0.1:5081/gateway/index.html`.
+
+### 9. The preference is used once
 
 - **Goal:** show that a stored preference applies to one start only.
 - **Action:** after scenario 7, run `npm run kill` and `npm run client`.
 - **What the user sees:** the platform starts on the internal route again.
 - **Observed on Windows:** as expected: `Gateway chose this route by health: app.example.internal is healthy.`
 
-### 9. The preference page rejects other clients
+### 10. The preference page rejects other clients
 
 - **Goal:** show that only the platform's provider can store a preference.
 - **Action:** this needs a second client, so it is not something you can click. With the preference page open, connect to the `support-network-fallback-provider/preference` channel from any other app, view or external connection.
