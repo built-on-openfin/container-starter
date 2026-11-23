@@ -44,6 +44,8 @@ Every scenario uses the normal identity (`support-network-fallback`, `/manifest.
 
 ### 1. Preferred healthy at launch
 
+![Animation of scenario 1: Preferred healthy at launch](assets/scenario-01-preferred-healthy.gif)
+
 ```mermaid
 sequenceDiagram
     participant RVM as RVM (shortcut)
@@ -75,6 +77,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The startup and `healthy` lines matched the lines above, and the control panel showed `internal` requests 5 seconds apart and no `public` requests. The Start menu shortcut was created (see scenario 14).
 
 ### 2. Internal down at launch, with a cached manifest
+
+![Animation of scenario 2: Internal down at launch, with a cached manifest](assets/scenario-02-internal-down-cached.gif)
 
 ```mermaid
 sequenceDiagram
@@ -111,6 +115,8 @@ sequenceDiagram
 
 ### 3. First-ever launch with internal down (the gap)
 
+![Animation of scenario 3: First-ever launch with internal down (the gap)](assets/scenario-03-first-launch-internal-down.gif)
+
 ```mermaid
 sequenceDiagram
     participant RVM as RVM (fresh identity)
@@ -138,6 +144,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The RVM logged `Failed to read the cached config file` and `FailedToReadAppConfig`, and exited with code 303 about 12 seconds after launch. No window appeared, and no folders were created under `%LOCALAPPDATA%\OpenFin` for the fresh identity, so it stayed fresh.
 
 ### 4. Internal server error at launch
+
+![Animation of scenario 4: Internal server error at launch](assets/scenario-04-internal-server-error-at-launch.gif)
 
 ```mermaid
 sequenceDiagram
@@ -169,6 +177,8 @@ sequenceDiagram
 
 ### 5. Both routes down at launch
 
+![Animation of scenario 5: Both routes down at launch](assets/scenario-05-both-routes-down.gif)
+
 ```mermaid
 sequenceDiagram
     participant RVM as RVM (shortcut)
@@ -196,6 +206,8 @@ sequenceDiagram
 ## Scenarios while running
 
 ### 6. Internal unhealthy while running
+
+![Animation of scenario 6: Internal unhealthy while running](assets/scenario-06-internal-unhealthy-while-running.gif)
 
 ```mermaid
 sequenceDiagram
@@ -240,6 +252,8 @@ sequenceDiagram
 
 ### 7. Internal down while running
 
+![Animation of scenario 7: Internal down while running](assets/scenario-07-internal-down-while-running.gif)
+
 ```mermaid
 sequenceDiagram
     participant App as Platform (internal)
@@ -270,6 +284,8 @@ sequenceDiagram
 
 ### 8. Internal server error while running
 
+![Animation of scenario 8: Internal server error while running](assets/scenario-08-internal-server-error-while-running.gif)
+
 ```mermaid
 sequenceDiagram
     participant App as Platform (internal)
@@ -298,6 +314,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The lines above appeared 3 seconds after the change, on the next check.
 
 ### 9. Other route also unhealthy, so no offer
+
+![Animation of scenario 9: Other route also unhealthy, so no offer](assets/scenario-09-other-route-unhealthy.gif)
 
 ```mermaid
 sequenceDiagram
@@ -330,6 +348,8 @@ sequenceDiagram
 
 ### 10. "Not now" asks again
 
+![Animation of scenario 10: Not now asks again](assets/scenario-10-not-now-asks-again.gif)
+
 ```mermaid
 sequenceDiagram
     participant App as Platform (internal)
@@ -360,6 +380,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected, run on the public route as part of scenario 11. `The user declined the switch.` was followed by a second `Offering a switch` line 4.3 seconds later.
 
 ### 11. On public, public unhealthy, so a move back is offered
+
+![Animation of scenario 11: On public, public unhealthy, so a move back is offered](assets/scenario-11-public-unhealthy-move-back.gif)
 
 ```mermaid
 sequenceDiagram
@@ -395,6 +417,8 @@ sequenceDiagram
 
 ### 12. Manual switch
 
+![Animation of scenario 12: Manual switch](assets/scenario-12-manual-switch.gif)
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -427,6 +451,8 @@ sequenceDiagram
 
 ### 13. Switch fails
 
+![Animation of scenario 13: Switch fails](assets/scenario-13-switch-fails.gif)
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -452,6 +478,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected, run from the public route with the internal route going down. The RVM logged `Failed to get app config from 'http://localhost:5050/switcher/switcher.fin.json'`, `launchManifest` failed 25 seconds after the click, and the platform kept running on the public route.
 
 ### 14. Start menu shortcut from the internal launch only
+
+![Animation of scenario 14: Start menu shortcut from the internal launch only](assets/scenario-14-start-menu-shortcut.gif)
 
 ```mermaid
 sequenceDiagram
@@ -486,6 +514,8 @@ sequenceDiagram
 ## Launch experiment
 
 ### 15. Manifest served, provider fails
+
+![Animation of scenario 15: Manifest served, provider fails](assets/scenario-15-manifest-served-provider-fails.gif)
 
 ```mermaid
 sequenceDiagram
@@ -532,6 +562,8 @@ Every set of params that reaches the platform is logged as a highlighted `LAUNCH
 
 ### 16. Init params at launch and while running
 
+![Animation of scenario 16: Init params at launch and while running](assets/scenario-16-init-params.gif)
+
 ```mermaid
 sequenceDiagram
     participant S as deeplink script
@@ -556,6 +588,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The RVM log showed the public manifest's `apps` folder being used for the second link.
 
 ### 17. The custom scheme follows the last route
+
+![Animation of scenario 17: The custom scheme follows the last route](assets/scenario-17-scheme-follows-last-route.gif)
 
 ```mermaid
 sequenceDiagram
@@ -582,6 +616,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected.
 
 ### 18. Jump list
+
+![Animation of scenario 18: Jump list](assets/scenario-18-jump-list.gif)
 
 ```mermaid
 sequenceDiagram

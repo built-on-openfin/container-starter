@@ -18,6 +18,22 @@ The starter has three parts: this guide and [the scenarios document](./docs/scen
 
 The examples use `app.example.internal` for the internal route and `app.example.com` for the public route.
 
+## The flows at a glance
+
+A normal launch: the shortcut starts the internal manifest, and the platform checks its route every 5 seconds.
+
+![Animation of scenario 1: preferred healthy at launch](docs/assets/scenario-01-preferred-healthy.gif)
+
+The internal route is down at launch, so the RVM uses its cached manifest and falls back to the public manifest.
+
+![Animation of scenario 2: internal down at launch, with a cached manifest](docs/assets/scenario-02-internal-down-cached.gif)
+
+The internal route turns unhealthy while running: the platform offers a switch, and the switcher restarts it on the public route.
+
+![Animation of scenario 6: internal unhealthy while running](docs/assets/scenario-06-internal-unhealthy-while-running.gif)
+
+Every scenario has its own animation in [the scenarios document](./docs/scenarios.md).
+
 ## This is an example, not production code
 
 This is an example of how to use HERE manifests to configure HERE Core Container. Its purpose is to provide an example and suggestions. **DO NOT** assume that it contains production-ready code. Please use this as a guide and provide feedback. Thanks!

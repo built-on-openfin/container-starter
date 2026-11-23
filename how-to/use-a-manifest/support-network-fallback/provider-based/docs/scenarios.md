@@ -23,6 +23,8 @@ The internal route is `localhost:5080` (standing in for `app.example.internal`) 
 
 ### 1. First launch with the internal route healthy
 
+![Animation of scenario 1: First launch with the internal route healthy](assets/scenario-01-first-launch.gif)
+
 ```mermaid
 sequenceDiagram
     participant RVM as RVM (shortcut)
@@ -49,6 +51,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The provider was running on the internal origin about 2 seconds after the gateway loaded. A "Network Fallback Provider-Based" Start menu shortcut and its uninstall entry were created.
 
 ### 2. First install with the internal route down
+
+![Animation of scenario 2: First install with the internal route down](assets/scenario-02-first-install-internal-down.gif)
 
 ```mermaid
 sequenceDiagram
@@ -80,6 +84,8 @@ sequenceDiagram
 
 ### 3. Internal down or unhealthy at launch
 
+![Animation of scenario 3: Internal down or unhealthy at launch](assets/scenario-03-internal-down-at-launch.gif)
+
 ```mermaid
 sequenceDiagram
     participant RVM
@@ -100,6 +106,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected for `unhealthy` and `down`. With `down`, the refused connection took the full 2-second timeout, as it does on Windows for local ports.
 
 ### 4. Public down after a first launch
+
+![Animation of scenario 4: Public down after a first launch](assets/scenario-04-public-down-after-first-launch.gif)
 
 ```mermaid
 sequenceDiagram
@@ -124,6 +132,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The RVM retried the manifest, used its cached copy, and the gateway loaded from the service worker cache 2 seconds later, once its network attempt failed. The provider was running on the internal route 15 seconds after launch.
 
 ### 5. Both routes down
+
+![Animation of scenario 5: Both routes down](assets/scenario-05-both-routes-down.gif)
 
 ```mermaid
 sequenceDiagram
@@ -158,6 +168,8 @@ sequenceDiagram
 
 ### 6. Internal unhealthy while running
 
+![Animation of scenario 6: Internal unhealthy while running](assets/scenario-06-internal-unhealthy-while-running.gif)
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -188,6 +200,8 @@ sequenceDiagram
 
 ### 7. The in-app switcher
 
+![Animation of scenario 7: The in-app switcher](assets/scenario-07-in-app-switcher.gif)
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -212,6 +226,8 @@ sequenceDiagram
 
 ### 8. Switching to a route that is down
 
+![Animation of scenario 8: Switching to a route that is down](assets/scenario-08-switch-to-route-down.gif)
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -233,6 +249,8 @@ sequenceDiagram
 
 ### 9. The preference is used once
 
+![Animation of scenario 9: The preference is used once](assets/scenario-09-preference-used-once.gif)
+
 ```mermaid
 sequenceDiagram
     participant RVM
@@ -252,6 +270,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected: `Gateway chose this route by health: app.example.internal is healthy.`
 
 ### 10. The preference page rejects other clients
+
+![Animation of scenario 10: The preference page rejects other clients](assets/scenario-10-preference-page-rejects-others.gif)
 
 ```mermaid
 sequenceDiagram
@@ -275,6 +295,8 @@ sequenceDiagram
 The app view's "Launch params" section shows the links, and every set of params that reaches the platform is logged as a highlighted `LAUNCH PARAMS RECEIVED (<source>, <when>): ...` line. See [Deep links, custom scheme and jump list](../README.md#deep-links-custom-scheme-and-jump-list).
 
 ### 11. Init params at launch and while running
+
+![Animation of scenario 11: Init params at launch and while running](assets/scenario-11-init-params.gif)
 
 ```mermaid
 sequenceDiagram
@@ -302,6 +324,8 @@ sequenceDiagram
 - **Observed on Windows:** as expected. The params were in `initialOptions.userAppConfigArgs` after the gateway had navigated to the internal provider. The `fin://` link to the HTTP manifest, opened through Windows, was delivered too.
 
 ### 12. Custom scheme
+
+![Animation of scenario 12: Custom scheme](assets/scenario-12-custom-scheme.gif)
 
 ```mermaid
 sequenceDiagram
@@ -332,6 +356,8 @@ sequenceDiagram
 
 ### 13. Jump list
 
+![Animation of scenario 13: Jump list](assets/scenario-13-jump-list.gif)
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -352,6 +378,8 @@ sequenceDiagram
 - **Observed on Windows:** the task runs `openfin.exe --startup-url=http://127.0.0.1:5081/manifest.fin.json --user-app-config-args=launchSource=jumplist&sampleParam=from-the-jump-list`, without the RVM and the params reached the running platform about 12 seconds later. Clicking the jump list's app entry at the bottom instead ran the RVM with `--config=fin://127.0.0.1:5081/manifest.fin.json` and logged `LAUNCH RECEIVED (while running) with no params`. A task whose `deepLink` was a custom scheme link was rejected with `invalid url`, so the sample has no such task.
 
 ### 14. Launch params after a switch
+
+![Animation of scenario 14: Launch params after a switch](assets/scenario-14-launch-params-after-switch.gif)
 
 ```mermaid
 sequenceDiagram

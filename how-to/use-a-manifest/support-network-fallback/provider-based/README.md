@@ -16,6 +16,22 @@ While running, the provider checks health as the multi-manifest approach does an
 
 The examples use `app.example.internal` for the internal route and `app.example.com` for the public route.
 
+## The flows at a glance
+
+A normal launch: the gateway finds the internal route healthy and moves the platform there.
+
+![Animation of scenario 1: first launch with the internal route healthy](docs/assets/scenario-01-first-launch.gif)
+
+The internal route is unhealthy at launch, so the gateway falls back to the public route.
+
+![Animation of scenario 3: internal down or unhealthy at launch](docs/assets/scenario-03-internal-down-at-launch.gif)
+
+The user switches route in the app: the provider stores a preference and restarts, and the gateway uses it once.
+
+![Animation of scenario 7: the in-app switcher](docs/assets/scenario-07-in-app-switcher.gif)
+
+Every scenario has its own animation in [the scenarios document](./docs/scenarios.md).
+
 ## Assumptions
 
 - **Installing depends only on the public route.** The manifest, its `shortcut` block, the gateway, its service worker and the preference page are all served by the public route, so a first launch works anywhere the public route can be reached. The internal route is never needed to install. It is the preferred route, and the gateway navigates to it whenever its `/health` check passes.
