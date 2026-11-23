@@ -1,0 +1,23 @@
+body {
+	font-family: 'Segoe UI', system-ui, sans-serif;
+	margin: 0;
+	padding: 16px 20px;
+	background: #f6f7f9;
+	color: #1d2330;
+}
+
+h1 {
+	font-size: 18px;
+	margin: 0 0 10px;
+}
+
+.steps {
+	font-family: Consolas, monospace;
+	font-size: 12px;
+	padding-left: 18px;
+}
+
+.steps .error {
+	color: #b42318;
+	font-weight: 600;
+}

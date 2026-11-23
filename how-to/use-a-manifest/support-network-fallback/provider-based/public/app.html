@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Support network fallback (provider-based)</title>
+		<link rel="stylesheet" href="./styles/app.css" />
+		<script src="./js/app.bundle.js"></script>
+	</head>
+	<body>
+		<header id="badge" class="badge">Connecting to the provider...</header>
+		<main>
+			<section>
+				<h2>Where this platform is running from</h2>
+				<dl>
+					<dt>Manifest URL</dt>
+					<dd id="manifest-url">-</dd>
+					<dt>Provider origin</dt>
+					<dd id="provider-origin">-</dd>
+					<dt>Preferred route</dt>
+					<dd id="preferred">-</dd>
+					<dt>Chosen by the gateway</dt>
+					<dd id="gateway-choice">-</dd>
+					<dt>Gateway service worker</dt>
+					<dd id="gateway-service-worker">-</dd>
+				</dl>
+			</section>
+			<section>
+				<h2>Switcher</h2>
+				<p class="hint">
+					Stores your choice for the gateway and restarts the platform. The choice applies to the next start
+					only.
+				</p>
+				<div class="buttons">
+					<button class="route-choice" data-route="internal">Use app.example.internal</button>
+					<button class="route-choice" data-route="public">Use app.example.com</button>
+				</div>
+				<pre id="action-result" class="result"></pre>
+			</section>
+			<section>
+				<h2>Health check</h2>
+				<dl>
+					<dt>This route</dt>
+					<dd id="check-current">-</dd>
+					<dt>Other route</dt>
+					<dd id="check-other">-</dd>
+				</dl>
+				<p class="hint">The other route is only checked while this route is unhealthy.</p>
+			</section>
+			<section>
+				<h2>Launch params</h2>
+				<dl>
+					<dt>Operating system</dt>
+					<dd id="launch-os">-</dd>
+					<dt>Scheme and jump list</dt>
+					<dd id="launch-registration">-</dd>
+					<dt>Custom scheme link</dt>
+					<dd>
+						<span id="scheme-link">-</span>
+						<button class="copy" data-copy="#scheme-link">Copy</button>
+					</dd>
+					<dt>Init params link</dt>
+					<dd>
+						<span id="deep-link">-</span>
+						<button class="copy" data-copy="#deep-link">Copy</button>
+					</dd>
+				</dl>
+				<p class="hint">
+					Open a link from the Run dialog (Win+R) or with
+					<code>npm run deeplink</code>
+					, or use the jump list. Params that reach the platform are highlighted in the log.
+				</p>
+			</section>
+			<section>
+				<h2>Log (newest first)</h2>
+				<ol id="log" class="log"></ol>
+			</section>
+		</main>
+	</body>
+</html>

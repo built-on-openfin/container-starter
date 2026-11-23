@@ -1,0 +1,224 @@
+import type OpenFin from "@openfin/core";
+import {
+	APP_PATH,
+	APP_VIEW_NAME,
+	ROUTES,
+	STATUS_CHANNEL,
+	routeOrigin,
+	type RouteId
+} from "../../shared/route-config";
+import type { GatewayDecision } from "./gateway/decision";
+import type { HealthResult } from "./health-check";
+import type { LaunchStatus } from "./launch-params";
+
+/**
+ * A short description of a route for display.
+ */
+export interface RouteSummary {
+	/**
+	 * The route id.
+	 */
+	id: RouteId;
+
+	/**
+	 * The host the route stands in for.
+	 */
+	displayHost: string;
+
+	/**
+	 * The route origin.
+	 */
+	origin: string;
+
+	/**
+	 * The badge colour.
+	 */
+	color: string;
+}
+
+/**
+ * One line of the provider's log.
+ */
+export interface LogEntry {
+	/**
+	 * When it happened.
+	 */
+	time: number;
+
+	/**
+	 * What happened.
+	 */
+	message: string;
+
+	/**
+	 * "launch" for launch params, which the app view highlights.
+	 */
+	kind?: "launch";
+}
+
+/**
+ * What the provider sends to the app view.
+ */
+export interface StatusMessage {
+	/**
+	 * The route the platform is running on, if known.
+	 */
+	current?: RouteSummary;
+
+	/**
+	 * The route that could be switched to, if known.
+	 */
+	other?: RouteSummary;
+
+	/**
+	 * The running manifest URL.
+	 */
+	manifestUrl: string;
+
+	/**
+	 * The provider origin.
+	 */
+	providerOrigin: string;
+
+	/**
+	 * Whether the current route is the preferred one.
+	 */
+	preferred: boolean;
+
+	/**
+	 * How the gateway chose this route, if the provider was opened by the gateway.
+	 */
+	gateway?: Omit<GatewayDecision, "route">;
+
+	/**
+	 * True while a switch is being made.
+	 */
+	switching: boolean;
+
+	/**
+	 * The last check of each route, if any.
+	 */
+	lastChecks: { current?: HealthResult; other?: HealthResult };
+
+	/**
+	 * The deep links to try and what happened to the custom scheme and jump list.
+	 */
+	launch?: LaunchStatus;
+
+	/**
+	 * The last 20 log entries, newest last.
+	 */
+	log: LogEntry[];
+}
+
+/**
+ * Requests the app view can send to the provider.
+ * - get-status: returns the StatusMessage.
+ * - switch-to: payload { route }, returns a message for the app view.
+ */
+export type ViewRequest = "get-status" | "switch-to";
+
+/**
+ * The channel name for a platform.
+ * @param platformUuid The platform uuid.
+ * @returns The channel name.
+ */
+export function statusChannelName(platformUuid: string): string {
+	return `${STATUS_CHANNEL}/${platformUuid}`;
+}
+
+const APP_URLS = Object.values(ROUTES).map((route) => `${routeOrigin(route)}${APP_PATH}`);
+
+/**
+ * Remove the query string and hash from a URL.
+ * @param url The URL.
+ * @returns The origin and path, or undefined if the URL cannot be parsed.
+ */
+function withoutQuery(url: string | undefined): string | undefined {
+	if (!url) {
+		return undefined;
+	}
+	try {
+		const parsed = new URL(url);
+		return `${parsed.origin}${parsed.pathname}`;
+	} catch {
+		return undefined;
+	}
+}
+
+/**
+ * Check a client connecting to the status channel.
+ * @param client The connecting client.
+ * @param platformUuid The platform uuid.
+ * @returns Why the client is rejected, or undefined if it is accepted.
+ */
+function rejectionReason(client: OpenFin.ClientConnectionPayload, platformUuid: string): string | undefined {
+	if (client.uuid !== platformUuid) {
+		return `uuid ${client.uuid} is not this platform`;
+	}
+	if (client.entityType !== "view" || client.name !== APP_VIEW_NAME) {
+		return `${client.entityType} ${client.name} is not the platform's app view`;
+	}
+	const url = withoutQuery(client.connectionUrl);
+	if (!url || !APP_URLS.includes(url)) {
+		return `connection URL ${client.connectionUrl} is not an app page`;
+	}
+	return undefined;
+}
+
+/**
+ * Create the status channel in the provider. Only the platform's own app view can connect: same uuid,
+ * the app view's name, and a connection URL that is one of the two app pages. Every other connection is
+ * rejected, and requests from anything but an accepted connection are refused.
+ * @param platformUuid The platform uuid.
+ * @param handlers What to do for each view request.
+ * @param onRejected Called with the reason when a connection is rejected.
+ * @returns The channel provider, used to publish status.
+ */
+export async function createStatusChannel(
+	platformUuid: string,
+	handlers: { [request in ViewRequest]: (payload: unknown) => Promise<unknown> },
+	onRejected: (reason: string) => void
+): Promise<OpenFin.ChannelProvider> {
+	const channel = await fin.InterApplicationBus.Channel.create(statusChannelName(platformUuid));
+	const acceptedEndpoints = new Set<string>();
+
+	// The listener is typed with ClientIdentity, but the runtime passes the full connection payload.
+	channel.onConnection((identity) => {
+		const reason = rejectionReason(identity as OpenFin.ClientConnectionPayload, platformUuid);
+		if (reason) {
+			onRejected(reason);
+			throw new Error(`Connection rejected: ${reason}`);
+		}
+		acceptedEndpoints.add(identity.endpointId);
+	});
+	channel.onDisconnection((identity) => acceptedEndpoints.delete(identity.endpointId));
+
+	for (const [request, handler] of Object.entries(handlers)) {
+		channel.register(request, async (payload: unknown, identity) => {
+			const endpointId = "endpointId" in identity ? identity.endpointId : undefined;
+			if (!endpointId || !acceptedEndpoints.has(endpointId)) {
+				throw new Error("Not an accepted connection");
+			}
+			return handler(payload);
+		});
+	}
+	return channel;
+}
+
+/**
+ * Connect to the status channel from the app view.
+ * @param platformUuid The platform uuid.
+ * @param onStatus Called with every status update.
+ * @returns The channel client, used to send requests.
+ */
+export async function connectToStatusChannel(
+	platformUuid: string,
+	onStatus: (status: StatusMessage) => void
+): Promise<OpenFin.ChannelClient> {
+	const client = await fin.InterApplicationBus.Channel.connect(statusChannelName(platformUuid), {
+		wait: true
+	});
+	client.register("status", (payload: unknown) => onStatus(payload as StatusMessage));
+	return client;
+}
