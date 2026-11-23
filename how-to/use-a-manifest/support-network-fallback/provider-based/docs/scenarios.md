@@ -50,6 +50,27 @@ sequenceDiagram
 
 ### 2. First install with the internal route down
 
+```mermaid
+sequenceDiagram
+    participant RVM as RVM (first install)
+    participant P as Public route
+    participant I as Internal route
+    Note over I: down
+    RVM ->> P: GET /manifest.fin.json
+    RVM ->> RVM: create Start menu shortcut
+    RVM ->> P: load /gateway/index.html
+    P ->> P: gateway registers the service worker
+    P -x I: GET /health (refused or timeout)
+    P ->> P: GET /health on the public route, healthy
+    P ->> P: navigate to the public /provider.html
+    Note over I: healthy again, npm run kill, npm run client
+    RVM ->> P: GET /manifest.fin.json
+    RVM ->> P: load /gateway/index.html
+    P ->> I: GET /health
+    I -->> P: healthy
+    P ->> I: navigate to /provider.html
+```
+
 - **Goal:** show that installing needs only the public route.
 - **Control panel settings:** internal `down`, public `healthy`. Ideally on a machine, or after [removing the sample](../README.md#removing-the-sample), where the sample has never run.
 - **Action:** `npm run client`. Then set the internal route to `healthy`, run `npm run kill` and `npm run client` again.
@@ -104,6 +125,28 @@ sequenceDiagram
 
 ### 5. Both routes down
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant RVM
+    participant P as Public route
+    participant SW as Service worker cache
+    participant I as Internal route
+    Note over P,I: both down
+    RVM -x P: GET /manifest.fin.json (refused)
+    RVM ->> RVM: use the cached manifest
+    RVM ->> SW: load /gateway/index.html
+    SW -->> RVM: cached gateway
+    SW -x I: GET /health (timeout)
+    SW -x P: GET /health (unreachable)
+    SW ->> User: show "cannot start" with Retry and Close
+    Note over I: set to healthy
+    User ->> SW: Retry
+    SW ->> I: GET /health
+    I -->> SW: healthy
+    SW ->> I: navigate to /provider.html
+```
+
 - **Goal:** show what the gateway does when it cannot use either route.
 - **Control panel settings:** both `down`, after scenario 1.
 - **Action:** `npm run client`. Then set the internal route to `healthy` and click **Retry**.
@@ -114,6 +157,23 @@ sequenceDiagram
 ## Scenarios while running
 
 ### 6. Internal unhealthy while running
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as Provider (internal)
+    participant I as Internal route
+    participant P as Public route
+    Note over I: set to unhealthy
+    App ->> I: GET /health (every few seconds)
+    I -->> App: unhealthy
+    App ->> P: GET /health
+    P -->> App: healthy
+    App ->> User: prompt "Switch to app.example.com?"
+    User ->> App: Switch
+    App ->> App: store the public preference, Application.restart()
+    Note over App,P: the gateway reads the preference and starts the public provider (scenario 7)
+```
 
 - **Goal:** show the running check offering a switch.
 - **Control panel settings:** both `healthy`. After the platform has started on the internal route, set the internal route to `unhealthy`.
@@ -152,6 +212,18 @@ sequenceDiagram
 
 ### 8. Switching to a route that is down
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as Provider (internal)
+    participant P as Public route
+    Note over P: down
+    User ->> App: Use app.example.com
+    App -x P: GET /health (timeout after 2000 ms)
+    App ->> User: buttons enabled again, stay on app.example.internal
+    Note over App: nothing stored, no restart
+```
+
 - **Goal:** show that the switcher checks the destination before restarting.
 - **Control panel settings:** both `healthy`. After the platform has started on the internal route, set the public route to `down`.
 - **Action:** click **Use app.example.com** in the app view.
@@ -161,12 +233,37 @@ sequenceDiagram
 
 ### 9. The preference is used once
 
+```mermaid
+sequenceDiagram
+    participant RVM
+    participant G as Gateway (public)
+    participant I as Internal route
+    Note over G: scenario 7 stored the public preference, the gateway used and cleared it
+    RVM ->> G: npm run client, load /gateway/index.html
+    G ->> G: read the preference, none stored
+    G ->> I: GET /health
+    I -->> G: healthy
+    G ->> I: navigate to /provider.html
+```
+
 - **Goal:** show that a stored preference applies to one start only.
 - **Action:** after scenario 7, run `npm run kill` and `npm run client`.
 - **What the user sees:** the platform starts on the internal route again.
 - **Observed on Windows:** as expected: `Gateway chose this route by health: app.example.internal is healthy.`
 
 ### 10. The preference page rejects other clients
+
+```mermaid
+sequenceDiagram
+    participant X as Other client
+    participant H as Preference page
+    participant App as Provider
+    X ->> H: connect to support-network-fallback-provider/preference
+    H ->> H: check uuid, window name and connection URL
+    H -->> X: Connection rejected
+    App ->> H: connect
+    H -->> App: accepted
+```
 
 - **Goal:** show that only the platform's provider can store a preference.
 - **Action:** this needs a second client, so it is not something you can click. With the preference page open, connect to the `support-network-fallback-provider/preference` channel from any other app, view or external connection.
@@ -178,6 +275,21 @@ sequenceDiagram
 The app view's "Launch params" section shows the links, and every set of params that reaches the platform is logged as a highlighted `LAUNCH PARAMS RECEIVED (<source>, <when>): ...` line. See [Deep links, custom scheme and jump list](../README.md#deep-links-custom-scheme-and-jump-list).
 
 ### 11. Init params at launch and while running
+
+```mermaid
+sequenceDiagram
+    participant S as deeplink script
+    participant RVM
+    participant G as Gateway (public)
+    participant App as Provider (internal)
+    S ->> RVM: --config=manifest?$$sampleParam=at-launch
+    RVM ->> G: start the platform with userAppConfigArgs
+    G ->> App: navigate, params kept
+    App ->> App: getInfo() initialOptions.userAppConfigArgs, log "at launch"
+    S ->> RVM: --config=manifest?$$sampleParam=while-running
+    RVM ->> App: run-requested with userAppConfigArgs
+    App ->> App: log "while running"
+```
 
 - **Goal:** show that init params reach the provider, through the gateway, whether or not the platform is running.
 - **Control panel settings:** both `healthy`.
@@ -191,6 +303,23 @@ The app view's "Launch params" section shows the links, and every set of params 
 
 ### 12. Custom scheme
 
+```mermaid
+sequenceDiagram
+    participant W as Windows
+    participant RVM
+    participant G as Gateway (public)
+    participant App as Provider (internal)
+    App ->> W: registerCustomProtocol (on every start)
+    Note over App: npm run kill
+    W ->> RVM: here-sample-network-fallback://open/?sampleParam=scheme-at-launch
+    RVM ->> G: start with userRequestUri
+    G ->> App: navigate to the internal provider
+    App ->> App: log "custom scheme, at launch"
+    W ->> RVM: here-sample-network-fallback://open/?sampleParam=via-scheme
+    RVM ->> App: run-requested with userRequestUri
+    App ->> App: log "custom scheme, while running"
+```
+
 - **Goal:** show the `here-sample-network-fallback` scheme starting the platform and reaching it while it runs.
 - **Control panel settings:** both `healthy`.
 - **Action:** start the platform once, so the scheme is registered. Run `npm run kill`, then `npm run deeplink -- scheme scheme-at-launch`. Once it is up, `npm run deeplink -- scheme via-scheme`. You can also paste the link from the app view into the Run dialog (Win+R).
@@ -203,13 +332,39 @@ The app view's "Launch params" section shows the links, and every set of params 
 
 ### 13. Jump list
 
+```mermaid
+sequenceDiagram
+    actor User
+    participant W as Windows taskbar
+    participant O as openfin.exe
+    participant App as Provider (running)
+    App ->> W: setJumpList (on every start)
+    User ->> W: Open with a jump list param
+    W ->> O: --startup-url=manifest --user-app-config-args=...
+    O ->> App: run-requested, about 12 seconds later
+    App ->> App: log "jump list, while running"
+```
+
 - **Goal:** show the jump list task reaching the platform.
 - **Action:** pin the running platform to the taskbar, or right-click its taskbar button, and choose **Open with a jump list param**.
 - **Log lines to expect:** `Jump list set; its tasks point at http://127.0.0.1:5081/manifest.fin.json.` at startup, then `LAUNCH PARAMS RECEIVED (jump list, while running): launchSource=jumplist; sampleParam=from-the-jump-list`.
 - **What the user sees:** after about 12 seconds, the highlighted launch entry in the log. Wait for it: nothing else shows that the click worked.
-- **Observed on Windows:** the task runs `openfin.exe --startup-url=http://127.0.0.1:5081/manifest.fin.json --user-app-config-args=launchSource=jumplist&sampleParam=from-the-jump-list`, without the RVM or the platform's realm, and the params reached the running platform about 12 seconds later. Clicking the jump list's app entry at the bottom instead ran the RVM with `--config=fin://127.0.0.1:5081/manifest.fin.json` and logged `LAUNCH RECEIVED (while running) with no params`. A task whose `deepLink` was a custom scheme link was rejected with `invalid url`, so the sample has no such task.
+- **Observed on Windows:** the task runs `openfin.exe --startup-url=http://127.0.0.1:5081/manifest.fin.json --user-app-config-args=launchSource=jumplist&sampleParam=from-the-jump-list`, without the RVM and the params reached the running platform about 12 seconds later. Clicking the jump list's app entry at the bottom instead ran the RVM with `--config=fin://127.0.0.1:5081/manifest.fin.json` and logged `LAUNCH RECEIVED (while running) with no params`. A task whose `deepLink` was a custom scheme link was rejected with `invalid url`, so the sample has no such task.
 
 ### 14. Launch params after a switch
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant App as Provider (internal)
+    participant G as Gateway
+    participant P as Provider (public)
+    Note over App: started by a scheme link with sampleParam=scheme-at-launch
+    User ->> App: Use app.example.com
+    App ->> App: store the preference, Application.restart()
+    G ->> P: navigate to the public provider
+    P ->> P: getInfo() returns the original params, log "at launch" again
+```
 
 - **Goal:** show what a switch does to the launch params and the scheme.
 - **Action:** run scenario 12's first step, then click **Use app.example.com**.

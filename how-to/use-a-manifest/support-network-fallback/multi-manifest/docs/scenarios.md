@@ -532,6 +532,20 @@ Every set of params that reaches the platform is logged as a highlighted `LAUNCH
 
 ### 16. Init params at launch and while running
 
+```mermaid
+sequenceDiagram
+    participant S as deeplink script
+    participant RVM
+    participant App as Platform (internal manifest)
+    S ->> RVM: --config=internal manifest?$$sampleParam=internal-while-running
+    RVM ->> App: run-requested with userAppConfigArgs
+    App ->> App: log "while running"
+    S ->> RVM: --config=public manifest?$$sampleParam=public-manifest-while-internal-runs
+    RVM ->> RVM: load the public manifest into its own apps folder
+    RVM ->> App: same uuid, so run-requested goes to the running platform
+    App ->> App: log "while running", still on the internal route
+```
+
 - **Goal:** show init params reaching the provider.
 - **Identity and cache state needed:** normal identity.
 - **Control panel settings:** both `healthy`.
@@ -568,6 +582,20 @@ sequenceDiagram
 - **Observed on Windows:** as expected.
 
 ### 18. Jump list
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant W as Windows taskbar
+    participant O as openfin.exe
+    participant App as Platform
+    App ->> W: setJumpList, tasks point at the manifest this start used
+    User ->> W: Open with a jump list param
+    W ->> O: --startup-url=that manifest --user-app-config-args=...
+    O ->> App: run-requested
+    App ->> App: log "jump list, while running"
+    Note over W,App: after npm run client:public the tasks point at the public manifest
+```
 
 - **Goal:** show the jump list task reaching the platform, and which manifest it targets.
 - **Action:** right-click the running platform's taskbar button and choose **Open with a jump list param**, once after `npm run client` and once after `npm run client:public`.

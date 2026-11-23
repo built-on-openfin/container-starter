@@ -1,6 +1,6 @@
 # Support network fallback: multi-manifest approach
 
-This is one of two approaches to the same problem. The other is the [provider-based approach](../provider-based/), and [the overview](../README.md) compares them.
+This is one of two approaches to the same problem. The other is the [provider-based approach (which should be reviewed first)](../provider-based/), and [the overview](../README.md) compares them.
 
 ## What this shows
 
@@ -29,45 +29,33 @@ In particular, the health check is deliberately bare. It exists to show the patt
 These steps assume you are in this folder (`how-to/use-a-manifest/support-network-fallback/multi-manifest`) on Windows. Launch fallback is handled by the RVM, which is Windows only.
 
 1. Install dependencies and do the initial build.
-
    ```shell
-   npm run setup
+    npm run setup
    ```
-
 2. Build the client bundles and the server.
-
    ```shell
-   npm run build
+    npm run build
    ```
-
 3. Start the two route servers and the control panel in a new terminal. Leave it running.
-
    ```shell
-   npm run start
+    npm run start
    ```
-
 4. Open the control panel at [http://localhost:5052](http://localhost:5052).
-
 5. Launch the platform from the internal route. This first launch caches the internal manifest and creates the Start menu shortcut.
-
    ```shell
-   npm run client
+    npm run client
    ```
 
-   `npm run client:public` launches from the public route instead.
-
+    `npm run client:public` launches from the public route instead.
 6. Optionally, send launch params, whether or not the platform is running. Each one appears as a highlighted `LAUNCH PARAMS RECEIVED` line in the app view's log; see [Deep links, custom scheme and jump list](#deep-links-custom-scheme-and-jump-list).
-
    ```shell
-   npm run deeplink -- init hello
-   npm run deeplink -- init hello public
-   npm run deeplink -- scheme hello
+    npm run deeplink -- init hello
+    npm run deeplink -- init hello public
+    npm run deeplink -- scheme hello
    ```
-
 7. Close everything when you are done.
-
    ```shell
-   npm run kill
+    npm run kill
    ```
 
 **The fresh identity.** One scenario needs a manifest the RVM has never cached. For that scenario only, set the internal route to `down` in the control panel and then run:
@@ -211,7 +199,7 @@ So to make a broken provider trigger the fallback, it must fail as a connection,
 - **Close the connection instead of sending an error page.** When the provider or the services behind it are unhealthy, have the web server or proxy drop the request without a response. With nginx, for example, `return 444` closes the connection; in the provider page's `location`, `proxy_intercept_errors on;` with `error_page 500 502 503 504 = @drop;` and a `location @drop { return 444; }` turns upstream errors into that (untested here). This is what `provider-reset` simulates. Keep the rule to the provider page: an HTML error page elsewhere is still useful to users.
 - **Give the provider its own host name, and take it away when unhealthy.** Serve `providerUrl` from a host such as `provider.app.example.internal` and use a health-checked DNS record or load balancer listener, so that host refuses or fails to resolve when the provider is unhealthy, while the manifest host stays up. This is close to `provider-refused`. DNS changes are only as fast as the record's time to live.
 
-The alternative is to handle it in your own code: serve the provider as a small page that is always available, check what it depends on before calling `fin.Platform.init()`, and if something is broken, launch the public manifest and quit, as the switcher does. That does not depend on which load errors the RVM counts, but you write and maintain it yourself.
+The alternative is to handle it in your own code: serve the provider as a small page that is always available, check what it depends on before calling `fin.Platform.init()`, and if something is broken, launch the public manifest and quit, as the switcher does. That does not depend on which load errors the RVM counts, but you write and maintain it yourself. **This is similar to the provider based pattern shown in the other example.**
 
 ### The cache prerequisite
 
@@ -225,8 +213,7 @@ These results were recorded on Windows with RVM `20.0.1.4`, runtime `43.142.101.
 - **Only a network-level failure falls back.** With the internal route refusing connections, the RVM used the cached manifest, the provider failed to load, and the RVM then started the public manifest. With the manifest still served, a provider whose connection was refused or closed without an answer also led to a fallback; see [When the manifest is served but the provider fails](#when-the-manifest-is-served-but-the-provider-fails). When the internal route answered with HTTP 404, with a provider returning 500, or with a sign-in page, it did not fall back. When the internal route accepted connections and never answered, it did not fall back either; see [Known gaps](#known-gaps).
 - **Fallback is slow on Windows.** A refused connection to a local port takes about 2 seconds on Windows, and the RVM tries the manifest twice, so the platform appeared 18 to 26 seconds after launch when the internal route was down.
 - **There is no API for the running case.** Nothing tells the RVM to close one manifest and start another, which is why Part 2 exists.
-- **`launchManifest` arguments do not reach a newly started app.** `userAppConfigArgs` passed to `fin.System.launchManifest` were not visible in the started app's `initialOptions`, `fin.desktop.main` or URL. The switch therefore hands its details over the InterApplicationBus; see [The switch](#the-switch).
-- **`fin://` links over plain HTTP are blocked.** The RVM refused the sample's `fin://` links with `FinProtocolInstallationBlocked`, because it requires `fins://` over HTTPS for links. `npm run client` therefore starts the RVM directly, as a shortcut does.
+- `launchManifest` **arguments do not reach a newly started app.** `userAppConfigArgs` passed to `fin.System.launchManifest` were not visible in the started app's `initialOptions`, `fin.desktop.main` or URL. The switch therefore hands its details over the InterApplicationBus; see [The switch](#the-switch).
 
 | Check                                                                                        | Result                                                                                                                                            |
 | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -243,8 +230,6 @@ These results were recorded on Windows with RVM `20.0.1.4`, runtime `43.142.101.
 A shortcut starts the RVM with a manifest URL, and the RVM fetches the manifest itself. That is the only path on which the RVM can use its cached copy and fallback list.
 
 [scripts/launch.mjs](./scripts/launch.mjs) does the same. On Windows it runs `%LOCALAPPDATA%\OpenFin\OpenFinRVM.exe --config=<manifest URL>`, which is what the Start menu shortcut runs. On other systems it opens the `fin://` link with `open`. It does not use the node adapter, because the node adapter fetches the manifest before the RVM starts, so it fails as soon as the route is unreachable and the RVM never gets the chance to fall back.
-
-The control panel shows the same RVM commands and `fin://` links. The RVM blocks `fin://` links to manifests served over plain HTTP, so on Windows use the RVM command; see [Moving to real hosts](#moving-to-real-hosts).
 
 ## Part 2: Health check and Switch
 
@@ -375,7 +360,7 @@ The sample deliberately has no state hooks, because every platform needs somethi
 Instead of restarting, the provider could keep running and move only the content: rewrite each view URL from the failing origin to the other one, by applying a modified snapshot or by navigating the views.
 
 - **For:** there is no switcher app and none of its hand-off risks, open windows stay where they are, and there is no dependency on matching runtime version and realm.
-- **Against:** the provider was loaded from the old route and may itself need reloading; state still has to be handled, because storage and sign-in are per origin; the running manifest remains the old route's, which confuses anything (rules, policies, logs) that uses the manifest as a guide; and there is more to configure.
+- **Against:** the provider was loaded from the old route and may itself need reloading; state still has to be handled, because storage and sign-in are per origin; the running manifest remains the old route's, which confuses anything (rules, policies, logs) that uses the manifest as a guide; and there is more to configure. It would also be loading in views against potentially different origin manifests. The provider based example only has one app so there is consistency but here you could have different manifest origins loading different content origins at different times which could make support harder.
 
 This sample restarts because it keeps the code simpler and keeps the running manifest consistent with the route. A redirect is a reasonable choice if keeping windows open matters more to you.
 
@@ -396,7 +381,7 @@ None of the following is built into this sample. Each is something a real deploy
 
 - **Jitter.** Add a random extra delay to every check, including the first. Thousands of clients that start together, for example after a network blip, would otherwise check in step.
 - **Backoff.** After a failed check, wait longer before the next one, up to a cap. A server that is already struggling should get fewer requests, not the same number.
-- **`Retry-After`.** On a 503 or 429, wait at least as long as the server's `Retry-After` header says; the server knows its own load. The header must be listed in `Access-Control-Expose-Headers` for the cross-origin check to read it.
+- `Retry-After`**.** On a 503 or 429, wait at least as long as the server's `Retry-After` header says; the server knows its own load. The header must be listed in `Access-Control-Expose-Headers` for the cross-origin check to read it.
 - **Server-supplied settings.** Let `/health` tell clients how often to check, with the client clamping each value to a safe range, so operators can slow clients down during an incident without a release.
 - **Load estimate and public capacity.** The health load on a route is roughly clients ÷ check interval. For example 10,000 clients checking every 30 seconds is about 333 requests per second. The public route must also be sized to carry every internal user during an internal outage.
 
@@ -448,8 +433,6 @@ These are untested here. They are listed for you to try against the first-launch
 - **A hosted bootstrap.** The shortcut targets a manifest on the public host. That manifest is always downloaded, so it doesn't need to be cached, and its provider is hosted on the internal route with the public manifest in its fallback list. This only works if machines that use the internal deployment can also reach the public host, and those users pay an extra hop at each launch.
 - **A public-default shortcut.** The shortcut targets the public manifest, and at start the platform checks the internal route and offers to move to it if it is healthy. Internal users pay a check at each launch, and they start on the public route every time.
 
-A local bootstrap manifest installed by an MSI would also remove the gap on machines where the MSI ran, but it needs an installer and a third manifest kept in step with the others, so it is not covered here.
-
 ## Moving to real hosts
 
 - **HTTPS.** The sample uses plain HTTP on localhost. Real deployments must serve the manifests, provider, views and `/health` over HTTPS, and use `fins://` links instead of `fin://`. RVM `20.0.1.4` blocks `fin://` links to `http://` manifests, which is why `npm run client` starts the RVM directly.
@@ -488,20 +471,16 @@ The sample uses two fixed identities: the normal one (`support-network-fallback`
 The fresh identity stays uncached only as long as you launch it with the internal route down. If it has launched successfully, reset it like this:
 
 1. Close everything:
-
    ```shell
-   npm run kill
+    npm run kill
    ```
 
-   This closes every OpenFin application you have running, not only this sample.
-
+    This closes every OpenFin application you have running, not only this sample.
 2. List the folders that belong to the fresh identity, and check the list before deleting anything:
-
    ```powershell
-   Get-ChildItem "$env:LOCALAPPDATA\OpenFin\apps" -Directory |
-     Where-Object { Select-String -Path "$($_.FullName)\config.json" -Pattern "support-network-fallback-fresh" -Quiet -ErrorAction SilentlyContinue }
+    Get-ChildItem "$env:LOCALAPPDATA\OpenFin\apps" -Directory |
+      Where-Object { Select-String -Path "$($_.FullName)\config.json" -Pattern "support-network-fallback-fresh" -Quiet -ErrorAction SilentlyContinue }
    ```
-
 3. Delete the folders that list shows.
 
 The RVM names `apps` folders after the manifest, not the uuid: platform manifests get a folder such as `Support_Network_Fallback_1998715998`, and the switcher manifests get numbered folders. Each holds the cached manifest as `config.json`, which is why the search above looks inside it. Each manifest URL gets its own folder, so the normal identity has one folder per route and so does the switcher. Runtime storage is in `cache\support-network-fallback`, named after the security realm and shared by every app in the sample; deleting only the fresh identity's `apps` folder is enough to make it fresh again.
