@@ -332,6 +332,7 @@ None of the following is built into this sample. The [multi-manifest list](../mu
 - **Host names.** Replace the hosts and ports in [shared/route-config.ts](./shared/route-config.ts). The provider URLs the preference page accepts are built from the same config.
 - **Health.** Pass your own `status()` source to `createRouteServer` in place of the simulator's.
 - **CORS.** The gateway checks the internal `/health` from the public origin, so it must send `Access-Control-Allow-Origin` for the public origin. The sample sends `*`; a real server should name the origin.
+- **Domain-based rules.** There is one manifest, but the provider and its views can run on either domain, depending on where the gateway sends them. Any domain-based rules in the manifest, such as `domainSettings` rules, must match both `app.example.internal` and `app.example.com`. Then the same permissions apply whichever route the gateway picks.
 - **Caching.** Keep `Cache-Control: no-store` on the manifest and `/health`, and `no-cache` on `sw.js`.
 
 ## What to take into your own app
