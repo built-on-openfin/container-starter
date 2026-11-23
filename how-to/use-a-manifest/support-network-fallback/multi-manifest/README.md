@@ -47,17 +47,23 @@ These steps assume you are in this folder (`how-to/use-a-manifest/support-networ
 **Not applicable on macOS.** `fallbackManifests` is handled by the RVM on Windows only, so there is no launch fallback on a Mac. `npm run client` and `npm run deeplink` stop with a message there. Use the [provider-based sample](../provider-based/README.md) instead, which runs on macOS too.
 
 1. Install dependencies and do the initial build.
+
    ```shell
     npm run setup
    ```
+
 2. Build the client bundles and the server.
+
    ```shell
     npm run build
    ```
+
 3. Start the two route servers and the control panel in a new terminal. Leave it running.
+
    ```shell
     npm run start
    ```
+
 4. Open the control panel at [http://localhost:5052](http://localhost:5052).
 5. Launch the platform from the internal route. This first launch caches the internal manifest and creates the Start menu shortcut.
 
@@ -68,12 +74,15 @@ These steps assume you are in this folder (`how-to/use-a-manifest/support-networ
    `npm run client:public` launches from the public route instead.
 
 6. Optionally, send launch params, whether or not the platform is running. Each one appears as a highlighted `LAUNCH PARAMS RECEIVED` line in the app view's log; see [Deep links, custom scheme and jump list](#deep-links-custom-scheme-and-jump-list).
+
    ```shell
     npm run deeplink -- init hello
     npm run deeplink -- init hello public
     npm run deeplink -- scheme hello
    ```
+
 7. Close everything when you are done.
+
    ```shell
     npm run kill
    ```
@@ -499,10 +508,12 @@ The fresh identity stays uncached only as long as you launch it with the interna
    This closes every OpenFin application you have running, not only this sample.
 
 2. List the folders that belong to the fresh identity, and check the list before deleting anything:
+
    ```powershell
     Get-ChildItem "$env:LOCALAPPDATA\OpenFin\apps" -Directory |
       Where-Object { Select-String -Path "$($_.FullName)\config.json" -Pattern "support-network-fallback-fresh" -Quiet -ErrorAction SilentlyContinue }
    ```
+
 3. Delete the folders that list shows.
 
 The RVM names `apps` folders after the manifest, not the uuid: platform manifests get a folder such as `Support_Network_Fallback_1998715998`, and the switcher manifests get numbered folders. Each holds the cached manifest as `config.json`, which is why the search above looks inside it. Each manifest URL gets its own folder, so the normal identity has one folder per route and so does the switcher. Runtime storage is in `cache\support-network-fallback`, named after the security realm and shared by every app in the sample; deleting only the fresh identity's `apps` folder is enough to make it fresh again.
