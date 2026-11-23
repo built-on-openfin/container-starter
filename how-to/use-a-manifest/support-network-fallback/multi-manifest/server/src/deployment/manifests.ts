@@ -5,6 +5,8 @@ import {
 	PROVIDER_PATH,
 	RUNTIME_ARGUMENTS,
 	RUNTIME_VERSION,
+	SWITCHER_PAGE_PATH,
+	SWITCHER_UUID,
 	manifestPathFor,
 	platformUuidFor,
 	routeOrigin,
@@ -102,4 +104,34 @@ export function buildPlatformManifest(
 	}
 
 	return manifest;
+}
+
+/**
+ * Build the switcher manifest for a route. It uses the same runtime version and arguments as the platform
+ * manifests, so it runs in the same runtime process and can reach the hand-over channels.
+ * @param route The route serving this manifest.
+ * @returns The manifest.
+ */
+export function buildSwitcherManifest(route: RouteConfig): { [key: string]: unknown } {
+	const origin = routeOrigin(route);
+	return {
+		licenseKey: LICENSE_KEY,
+		runtime: {
+			version: RUNTIME_VERSION,
+			arguments: RUNTIME_ARGUMENTS
+		},
+		// eslint-disable-next-line camelcase -- the runtime requires this manifest key name.
+		startup_app: {
+			uuid: SWITCHER_UUID,
+			name: SWITCHER_UUID,
+			url: `${origin}${SWITCHER_PAGE_PATH}`,
+			icon: `${origin}/favicon.ico`,
+			autoShow: true,
+			defaultWidth: 460,
+			defaultHeight: 300,
+			defaultCentered: true,
+			resizable: false,
+			saveWindowState: false
+		}
+	};
 }

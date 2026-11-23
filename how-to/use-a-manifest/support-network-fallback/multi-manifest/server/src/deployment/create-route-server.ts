@@ -1,14 +1,8 @@
 import express, { type Application, type Response } from "express";
-import { readFile } from "fs/promises";
 import path from "path";
-import {
-	otherRoute,
-	routeOrigin,
-	SWITCHER_MANIFEST_PATH,
-	type RouteConfig
-} from "../../../shared/route-config";
+import { otherRoute, SWITCHER_MANIFEST_PATH, type RouteConfig } from "../../../shared/route-config";
 import { createHealthHandler, type HealthSources } from "./health";
-import { buildPlatformManifest } from "./manifests";
+import { buildPlatformManifest, buildSwitcherManifest } from "./manifests";
 
 // Compiled to server/build/server/src/deployment, five levels below the sample folder.
 const PUBLIC_DIR = path.resolve(__dirname, "..", "..", "..", "..", "..", "public");
@@ -40,16 +34,7 @@ export function createRouteServer(route: RouteConfig, sources: HealthSources): A
 	app.get("/fresh/manifest.fin.json", (req, res) =>
 		sendManifest(res, buildPlatformManifest(route, other, "fresh"))
 	);
-	// The runtime rejects a relative startup_app url, so the file holds an {origin} token that each
-	// route replaces with its own origin.
-	app.get(SWITCHER_MANIFEST_PATH, async (req, res, next) => {
-		try {
-			const template = await readFile(path.join(PUBLIC_DIR, SWITCHER_MANIFEST_PATH), "utf8");
-			sendManifest(res, JSON.parse(template.replaceAll("{origin}", routeOrigin(route))));
-		} catch (error) {
-			next(error);
-		}
-	});
+	app.get(SWITCHER_MANIFEST_PATH, (req, res) => sendManifest(res, buildSwitcherManifest(route)));
 	app.get("/health", createHealthHandler(sources));
 	app.use(express.static(PUBLIC_DIR, { index: false }));
 

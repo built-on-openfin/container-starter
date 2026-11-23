@@ -2,6 +2,7 @@
  * The single place to change versions, ports, hosts and paths.
  * Both the server and the client import this file, so the two routes cannot drift apart.
  */
+import runtimeConfig from "./runtime.fin.json";
 
 /**
  * The two routes to the same platform.
@@ -74,7 +75,9 @@ export const GATEWAY_ROUTE: RouteConfig = ROUTES.public;
 
 export const PLATFORM_UUID = "support-network-fallback-provider";
 export const SECURITY_REALM = "support-network-fallback-provider";
-export const RUNTIME_VERSION = "43.142.101.2";
+// The version lives in runtime.fin.json because scripts/update-versions.js updates runtime.version in
+// every *.fin.json file.
+export const RUNTIME_VERSION = runtimeConfig.runtime.version;
 export const RUNTIME_ARGUMENTS = `--v=1 --inspect --enable-mesh --security-realm=${SECURITY_REALM}`;
 export const LICENSE_KEY = "openfin-demo-license-key";
 

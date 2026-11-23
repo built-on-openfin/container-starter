@@ -1,5 +1,5 @@
 /**
- * The switcher app (public/switcher/switcher.fin.json). It is launched by the platform that is closing,
+ * The switcher app (its manifest is built by server/src/deployment/manifests.ts). It is launched by the platform that is closing,
  * collects the switch request from it, waits for that platform to close, then launches the destination
  * manifest. It does not recover if something goes wrong; see "Production hardening" in the README.
  */

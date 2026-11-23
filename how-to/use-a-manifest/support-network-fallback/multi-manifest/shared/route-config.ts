@@ -2,6 +2,7 @@
  * The single place to change versions, ports, hosts and identities.
  * Both the server and the client import this file, so the two routes cannot drift apart.
  */
+import runtimeConfig from "./runtime.fin.json";
 
 /**
  * The two routes to the same platform.
@@ -72,9 +73,10 @@ export const CONTROL_PORT = 5052;
 export const PLATFORM_UUID = "support-network-fallback";
 export const FRESH_PLATFORM_UUID = "support-network-fallback-fresh";
 
-// public/switcher/switcher.fin.json repeats the runtime version, arguments and license key; keep them in step.
 export const SECURITY_REALM = "support-network-fallback";
-export const RUNTIME_VERSION = "43.142.101.2";
+// The version lives in runtime.fin.json because scripts/update-versions.js updates runtime.version in
+// every *.fin.json file. The platform and switcher manifests must use the same version to share a runtime.
+export const RUNTIME_VERSION = runtimeConfig.runtime.version;
 export const RUNTIME_ARGUMENTS = `--v=1 --inspect --enable-mesh --security-realm=${SECURITY_REALM}`;
 export const LICENSE_KEY = "openfin-demo-license-key";
 
@@ -84,7 +86,6 @@ export const APP_VIEW_NAME = "support-network-fallback-app";
 
 export const PROVIDER_PATH = "/provider.html";
 
-// public/switcher/switcher.fin.json repeats the switcher uuid and page; keep them in step.
 export const SWITCHER_UUID = "support-network-fallback-switcher";
 export const SWITCHER_MANIFEST_PATH = "/switcher/switcher.fin.json";
 export const SWITCHER_PAGE_PATH = "/switcher/switcher.html";

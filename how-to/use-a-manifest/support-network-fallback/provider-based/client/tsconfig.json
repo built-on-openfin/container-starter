@@ -9,6 +9,7 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "node",
+		"resolveJsonModule": true,
 		"types": ["./types/fin"]
 	},
 	"include": ["./src/**/*.ts", "../shared/**/*.ts"]

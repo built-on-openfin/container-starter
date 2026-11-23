@@ -132,7 +132,7 @@ flowchart LR
 
 ### The manifest
 
-[server/src/deployment/manifests.ts](./server/src/deployment/manifests.ts) builds the one manifest, served only by the public route at `/manifest.fin.json`. Shared values (runtime version, arguments, uuid, ports) are in [shared/route-config.ts](./shared/route-config.ts).
+[server/src/deployment/manifests.ts](./server/src/deployment/manifests.ts) builds the one manifest, served only by the public route at `/manifest.fin.json`. Shared values (runtime arguments, uuid, ports) are in [shared/route-config.ts](./shared/route-config.ts), which reads the runtime version from [shared/runtime.fin.json](./shared/runtime.fin.json), the file the repository's version update script changes.
 
 - `platform.providerUrl` is the public `/gateway/index.html`.
 - There is no `snapshot`. The view has to load from the route the gateway chose, which is not known when the manifest is written, so the provider builds the window from its own origin once it starts.
