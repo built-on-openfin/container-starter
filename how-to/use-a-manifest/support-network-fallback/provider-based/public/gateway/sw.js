@@ -6,7 +6,9 @@
  * Each cached file is fetched from the network first, with a short timeout, and the cache is used only
  * when the network fails. Every other request, including /health, goes to the network untouched.
  */
-const CACHE_NAME = 'support-network-fallback-provider-gateway-v1';
+// CacheStorage is shared by the whole origin, so activation only deletes older caches with this prefix.
+const CACHE_PREFIX = 'support-network-fallback-provider-gateway-';
+const CACHE_NAME = `${CACHE_PREFIX}v1`;
 const NETWORK_TIMEOUT_MS = 3000;
 const CACHED_PATHS = [
 	'/gateway/index.html',
@@ -30,7 +32,11 @@ self.addEventListener('activate', (event) => {
 		caches
 			.keys()
 			.then((names) =>
-				Promise.all(names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name)))
+				Promise.all(
+					names
+						.filter((name) => name.startsWith(CACHE_PREFIX) && name !== CACHE_NAME)
+						.map((name) => caches.delete(name))
+				)
 			)
 			.then(() => self.clients.claim())
 	);
