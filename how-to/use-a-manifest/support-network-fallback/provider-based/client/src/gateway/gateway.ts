@@ -54,7 +54,9 @@ function takePreference(): RouteId | undefined {
 
 /**
  * Register the service worker that caches the gateway, and wait briefly for it to be active.
- * It never throws, so a service worker problem never stops the gateway choosing a route.
+ * Registration and activation share one time limit, because a stalled fetch of the service worker script
+ * would otherwise leave registration pending. It never throws, so a service worker problem never stops
+ * the gateway choosing a route.
  * @returns A description of the service worker's state, for the log.
  */
 async function registerServiceWorker(): Promise<string> {
@@ -64,23 +66,25 @@ async function registerServiceWorker(): Promise<string> {
 	const servedBy = navigator.serviceWorker.controller
 		? "page served through the service worker"
 		: "page not controlled yet";
-	try {
-		await navigator.serviceWorker.register(SERVICE_WORKER_URL, { scope: SERVICE_WORKER_SCOPE });
-		let timer: number | undefined;
-		const state = await Promise.race([
-			navigator.serviceWorker.ready.then(() => "active"),
-			new Promise<string>((resolve) => {
-				timer = window.setTimeout(
-					() => resolve(`not active within ${SERVICE_WORKER_WAIT_MS} ms`),
-					SERVICE_WORKER_WAIT_MS
-				);
-			})
-		]);
-		window.clearTimeout(timer);
-		return `${servedBy}, service worker ${state}`;
-	} catch (error) {
-		return `${servedBy}, registration failed: ${error instanceof Error ? error.message : String(error)}`;
-	}
+	const setup = navigator.serviceWorker
+		.register(SERVICE_WORKER_URL, { scope: SERVICE_WORKER_SCOPE })
+		.then(async () => navigator.serviceWorker.ready)
+		.then(
+			() => "service worker active",
+			(error) => `registration failed: ${error instanceof Error ? error.message : String(error)}`
+		);
+	let timer: number | undefined;
+	const state = await Promise.race([
+		setup,
+		new Promise<string>((resolve) => {
+			timer = window.setTimeout(
+				() => resolve(`service worker not active within ${SERVICE_WORKER_WAIT_MS} ms`),
+				SERVICE_WORKER_WAIT_MS
+			);
+		})
+	]);
+	window.clearTimeout(timer);
+	return `${servedBy}, ${state}`;
 }
 
 /**
