@@ -17,14 +17,20 @@ const CONTROL_PAGE = path.resolve(__dirname, "..", "..", "..", "..", "..", "publ
 
 /**
  * Build the launch details for the one manifest, which is on the public route.
- * @returns The manifest URL, the fin:// link and the direct RVM command.
+ * @returns The manifest URL, the fin:// link and the direct RVM commands for Windows and macOS.
  */
-export function launchDetails(): { manifestUrl: string; finLink: string; rvmCommand: string } {
+export function launchDetails(): {
+	manifestUrl: string;
+	finLink: string;
+	rvmCommand: string;
+	macRvmCommand: string;
+} {
 	const manifestUrl = `${routeOrigin(GATEWAY_ROUTE)}${MANIFEST_PATH}`;
 	return {
 		manifestUrl,
 		finLink: `fin://${GATEWAY_ROUTE.host}:${GATEWAY_ROUTE.port}${MANIFEST_PATH}`,
-		rvmCommand: `"%LOCALAPPDATA%\\OpenFin\\OpenFinRVM.exe" --config=${manifestUrl}`
+		rvmCommand: `"%LOCALAPPDATA%\\OpenFin\\OpenFinRVM.exe" --config=${manifestUrl}`,
+		macRvmCommand: `/Applications/OpenFinRVM.app/Contents/MacOS/OpenFinRVM --config="${manifestUrl}"`
 	};
 }
 

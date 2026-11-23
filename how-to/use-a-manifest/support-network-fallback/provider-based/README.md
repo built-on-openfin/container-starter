@@ -30,7 +30,7 @@ The health check and the gateway's decision are deliberately bare. [Production h
 
 ## Quick start
 
-These steps assume you are in this folder (`how-to/use-a-manifest/support-network-fallback/provider-based`) on Windows.
+These steps assume you are in this folder (`how-to/use-a-manifest/support-network-fallback/provider-based`) on Windows or macOS. `npm run client` starts the RVM from its default install location: `%LOCALAPPDATA%\OpenFin\OpenFinRVM.exe` on Windows, and `/Applications/OpenFinRVM.app` (or `~/Applications/OpenFinRVM.app`) on macOS.
 
 1. Install dependencies and do the initial build.
 
@@ -64,6 +64,8 @@ These steps assume you are in this folder (`how-to/use-a-manifest/support-networ
    npm run deeplink -- init hello
    npm run deeplink -- scheme hello
    ```
+
+   The custom scheme is registered on Windows only, so on macOS use `init`.
 
 7. Close everything when you are done.
 
@@ -237,7 +239,7 @@ The restart closes every window and loses everything held in memory. That keeps 
 
 Every set of params goes through one function, `describeLaunch()`. It names the source (custom scheme, jump list or init params) and writes one `LAUNCH PARAMS RECEIVED (<source>, at launch|while running): ...` line, which the app view highlights. The app view's "Launch params" section shows the links to try, with **Copy** buttons.
 
-`npm run deeplink -- init|fin|scheme [value]` sends them. On Windows, `init` runs the RVM with `--config=<manifest>?$$sampleParam=<value>&$$launchSource=script`, which is what a `fin://` link becomes. The RVM ignores a separate `--user-app-config-args` argument.
+`npm run deeplink -- init|fin|scheme [value]` sends them. On Windows and macOS, `init` runs the RVM with `--config=<manifest>?$$sampleParam=<value>&$$launchSource=script`, which is what a `fin://` link becomes. The RVM ignores a separate `--user-app-config-args` argument.
 
 **Why this approach suits them.** There is one manifest URL, on the public route, whichever route the gateway picks. The scheme registration, the jump list task, a pinned taskbar item and any shared `fin://` link all point at it, and they stay the same after a switch. The params survive the gateway's navigation to the provider, because they belong to the application, not to the page.
 
@@ -296,7 +298,7 @@ Not observed here: a first install on a machine that has never run the sample, a
 - **Per-route storage and sign-in.** The routes are different origins, so storage and cookies are separate. A user who switches may need to sign in again.
 - **Service worker updates.** A new `sw.js` is picked up on the next registration, and a new gateway is fetched network-first, but a launch while the public route is unreachable uses whatever was cached last. Bump `CACHE_NAME` when the cached files change in a way that matters.
 - **A chosen route can be overridden silently.** If the user chose a route but it fails the gateway's check, the gateway uses the other route and the preference is gone, because it is cleared as soon as it is read. Only the app view's "Chosen by the gateway" row says why.
-- **Windows only, as tested.** The sample's launch script and observations are for Windows.
+- **Tested on Windows only.** `npm run client` and `npm run deeplink -- init` also start the RVM on macOS, but every observation here was recorded on Windows, and the log and cleanup paths below are the Windows ones.
 
 ## Production hardening
 

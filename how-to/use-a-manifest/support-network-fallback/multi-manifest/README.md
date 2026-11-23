@@ -28,6 +28,8 @@ In particular, the health check is deliberately bare. It exists to show the patt
 
 These steps assume you are in this folder (`how-to/use-a-manifest/support-network-fallback/multi-manifest`) on Windows. Launch fallback is handled by the RVM, which is Windows only.
 
+**Not applicable on macOS.** `fallbackManifests` is handled by the RVM on Windows only, so there is no launch fallback on a Mac. `npm run client` and `npm run deeplink` stop with a message there. Use the [provider-based sample](../provider-based/README.md) instead, which runs on macOS too.
+
 1. Install dependencies and do the initial build.
    ```shell
     npm run setup
@@ -42,11 +44,13 @@ These steps assume you are in this folder (`how-to/use-a-manifest/support-networ
    ```
 4. Open the control panel at [http://localhost:5052](http://localhost:5052).
 5. Launch the platform from the internal route. This first launch caches the internal manifest and creates the Start menu shortcut.
+
    ```shell
     npm run client
    ```
 
-    `npm run client:public` launches from the public route instead.
+   `npm run client:public` launches from the public route instead.
+
 6. Optionally, send launch params, whether or not the platform is running. Each one appears as a highlighted `LAUNCH PARAMS RECEIVED` line in the app view's log; see [Deep links, custom scheme and jump list](#deep-links-custom-scheme-and-jump-list).
    ```shell
     npm run deeplink -- init hello
@@ -229,7 +233,7 @@ These results were recorded on Windows with RVM `20.0.1.4`, runtime `43.142.101.
 
 A shortcut starts the RVM with a manifest URL, and the RVM fetches the manifest itself. That is the only path on which the RVM can use its cached copy and fallback list.
 
-[scripts/launch.mjs](./scripts/launch.mjs) does the same. On Windows it runs `%LOCALAPPDATA%\OpenFin\OpenFinRVM.exe --config=<manifest URL>`, which is what the Start menu shortcut runs. On other systems it opens the `fin://` link with `open`. It does not use the node adapter, because the node adapter fetches the manifest before the RVM starts, so it fails as soon as the route is unreachable and the RVM never gets the chance to fall back.
+[scripts/launch.mjs](./scripts/launch.mjs) does the same. On Windows it runs `%LOCALAPPDATA%\OpenFin\OpenFinRVM.exe --config=<manifest URL>`, which is what the Start menu shortcut runs. On other systems it stops with a message, because launch fallback is Windows only. It does not use the node adapter, because the node adapter fetches the manifest before the RVM starts, so it fails as soon as the route is unreachable and the RVM never gets the chance to fall back.
 
 ## Part 2: Health check and Switch
 
@@ -435,7 +439,7 @@ These are untested here. They are listed for you to try against the first-launch
 
 ## Moving to real hosts
 
-- **HTTPS.** The sample uses plain HTTP on localhost. Real deployments must serve the manifests, provider, views and `/health` over HTTPS, and use `fins://` links instead of `fin://`. RVM `20.0.1.4` blocks `fin://` links to `http://` manifests, which is why `npm run client` starts the RVM directly.
+- **HTTPS.** The sample uses plain HTTP on localhost. Real deployments must serve the manifests, provider, views and `/health` over HTTPS, and use `fins://` links instead of `fin://`. The RVM only installs an app (first run) from a `fin://` or `fins://` link if its manifest has the trusted application configuration. The sample's localhost manifests do not, which is why `npm run client` starts the RVM directly to install and launch them.
 - **Host names.** Replace the hosts and ports in [shared/route-config.ts](./shared/route-config.ts). The routes must keep the same paths (`/manifest.fin.json`, `/health`, `/switcher/switcher.fin.json`), because the client derives the other route's URLs from the origin of its fallback manifest.
 - **Health.** Pass your own `status()` source to `createRouteServer` in place of the simulator's, based on whatever you decide makes a route healthy.
 - **CORS.** The other route is checked cross-origin, so `/health` must send `Access-Control-Allow-Origin` for the other route's origin. The sample sends `*`; a real server should name the origin.
@@ -471,11 +475,13 @@ The sample uses two fixed identities: the normal one (`support-network-fallback`
 The fresh identity stays uncached only as long as you launch it with the internal route down. If it has launched successfully, reset it like this:
 
 1. Close everything:
+
    ```shell
     npm run kill
    ```
 
-    This closes every OpenFin application you have running, not only this sample.
+   This closes every OpenFin application you have running, not only this sample.
+
 2. List the folders that belong to the fresh identity, and check the list before deleting anything:
    ```powershell
     Get-ChildItem "$env:LOCALAPPDATA\OpenFin\apps" -Directory |

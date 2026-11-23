@@ -2,19 +2,18 @@
  * Send launch params to the sample, whether or not it is running. If it is running, the provider gets a
  * run-requested event; if not, it starts with the params. Either way the app view highlights them.
  *
- * On Windows, init starts the RVM with --config set to the manifest URL plus $$ params, which is what a fin://
- * link becomes, because the RVM blocks fin:// links to manifests served over plain HTTP. The RVM ignores a
- * separate --user-app-config-args argument. Elsewhere it opens the fin://
- * link with $$ params.
+ * On Windows and macOS, init starts the RVM with --config set to the manifest URL plus $$ params, which is
+ * what a fin:// link becomes. Starting the RVM directly also works on first run, when a fin:// link would
+ * not install the app because this localhost manifest has no trusted application configuration. The RVM
+ * ignores a separate --user-app-config-args argument.
  *
  * Usage:
  * - node ./scripts/deeplink.mjs init [value]: init params.
  * - node ./scripts/deeplink.mjs fin [value]: open the fin:// link with $$ params through the operating system.
- * - node ./scripts/deeplink.mjs scheme [value]: open a here-sample-network-fallback:// link.
+ * - node ./scripts/deeplink.mjs scheme [value]: open a here-sample-network-fallback:// link (Windows only).
  */
 import { spawn } from 'child_process';
-import { existsSync } from 'fs';
-import path from 'path';
+import { startRvm } from './rvm.mjs';
 
 const CONTROL_PANEL = 'http://localhost:5082';
 const CUSTOM_SCHEME = 'here-sample-network-fallback';
@@ -49,23 +48,6 @@ function openLink(link) {
 }
 
 /**
- * Start the RVM with a manifest URL that carries init params.
- * @param configUrl The manifest URL with $$ params.
- */
-function startRvm(configUrl) {
-	const rvm = path.join(process.env.LOCALAPPDATA ?? '', 'OpenFin', 'OpenFinRVM.exe');
-	if (!existsSync(rvm)) {
-		console.error(`The RVM was not found at ${rvm}.`);
-		return;
-	}
-	console.log(`Starting ${rvm} --config=${configUrl}`);
-	spawn(rvm, [`--config=${configUrl}`], {
-		detached: true,
-		stdio: 'ignore'
-	}).unref();
-}
-
-/**
  * Read the command line and send the params.
  */
 async function run() {
@@ -74,15 +56,18 @@ async function run() {
 	const args = `sampleParam=${encodeURIComponent(value)}&launchSource=script`;
 
 	if (kind === 'scheme') {
+		if (process.platform !== 'win32') {
+			console.error(`The ${CUSTOM_SCHEME}:// scheme is only registered on Windows.`);
+			return;
+		}
 		openLink(`${CUSTOM_SCHEME}://open?sampleParam=${encodeURIComponent(value)}`);
 		return;
 	}
 
 	const details = await getLaunchDetails();
 	const query = args.replace(/(^|&)/g, '$1$$$$');
-	const finLink = `${details.finLink}?${query}`;
-	if (kind === 'fin' || process.platform !== 'win32') {
-		openLink(finLink);
+	if (kind === 'fin') {
+		openLink(`${details.finLink}?${query}`);
 	} else {
 		startRvm(`${details.manifestUrl}?${query}`);
 	}

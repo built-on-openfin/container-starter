@@ -2,10 +2,11 @@
  * Send launch params to the sample, whether or not it is running. If it is running, the provider gets a
  * run-requested event; if not, it starts with the params. Either way the app view highlights them.
  *
- * On Windows, init starts the RVM with --config set to the manifest URL plus $$ params, which is what a fin://
- * link becomes, because the RVM blocks fin:// links to manifests served over plain HTTP. The RVM ignores a
- * separate --user-app-config-args argument. Elsewhere it opens the fin://
- * link with $$ params. A scheme link starts whichever manifest last registered the scheme.
+ * Windows only, like the rest of this sample. Init starts the RVM with --config set to the manifest URL plus
+ * $$ params, which is what a fin:// link becomes. Starting the RVM directly also works on first run, when a
+ * fin:// link would not install the app because these localhost manifests have no trusted application
+ * configuration. The RVM ignores a separate --user-app-config-args argument. A scheme link starts whichever
+ * manifest last registered the scheme.
  *
  * Usage:
  * - node ./scripts/deeplink.mjs init [value] [internal|public]: init params, for the internal manifest by default.
@@ -15,6 +16,7 @@
 import { spawn } from 'child_process';
 import { existsSync } from 'fs';
 import path from 'path';
+import { isWindowsOrExplain } from './windows-only.mjs';
 
 const CONTROL_PANEL = 'http://localhost:5052';
 const CUSTOM_SCHEME = 'here-sample-network-fallback';
@@ -38,15 +40,11 @@ async function getLaunchDetails(route) {
  */
 function openLink(link) {
 	console.log(`Opening ${link}`);
-	if (process.platform === 'win32') {
-		spawn('cmd', ['/c', 'start', '""', `"${link}"`], {
-			detached: true,
-			stdio: 'ignore',
-			windowsVerbatimArguments: true
-		}).unref();
-	} else {
-		spawn('open', [link], { detached: true, stdio: 'ignore' }).unref();
-	}
+	spawn('cmd', ['/c', 'start', '""', `"${link}"`], {
+		detached: true,
+		stdio: 'ignore',
+		windowsVerbatimArguments: true
+	}).unref();
 }
 
 /**
@@ -70,6 +68,9 @@ function startRvm(configUrl) {
  * Read the command line and send the params.
  */
 async function run() {
+	if (!isWindowsOrExplain()) {
+		return;
+	}
 	const kind = process.argv[2] ?? 'init';
 	const value = process.argv[3] ?? 'hello';
 	const args = `sampleParam=${encodeURIComponent(value)}&launchSource=script`;
@@ -82,9 +83,8 @@ async function run() {
 	const route = process.argv[4] === 'public' ? 'public' : 'internal';
 	const details = await getLaunchDetails(route);
 	const query = args.replace(/(^|&)/g, '$1$$$$');
-	const finLink = `${details.finLink}?${query}`;
-	if (kind === 'fin' || process.platform !== 'win32') {
-		openLink(finLink);
+	if (kind === 'fin') {
+		openLink(`${details.finLink}?${query}`);
 	} else {
 		startRvm(`${details.manifestUrl}?${query}`);
 	}

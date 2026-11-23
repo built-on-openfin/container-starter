@@ -1,7 +1,8 @@
 /**
  * Launch the sample the way a shortcut does: the RVM is started with the manifest URL and fetches the
- * manifest itself. On Windows the RVM is started directly, because it blocks fin:// links to manifests
- * served over plain HTTP. Elsewhere the operating system opens the fin:// link.
+ * manifest itself. The RVM is started directly, because the RVM only installs an app from a fin:// or
+ * fins:// link (first run) when its manifest has the trusted application configuration, which this
+ * localhost sample does not have. Windows only: launch fallback is handled by the Windows RVM.
  *
  * It does not use the node adapter, because the node adapter fetches the manifest before the RVM starts
  * and so fails before the RVM can use its fallback list.
@@ -14,6 +15,7 @@
 import { spawn } from 'child_process';
 import { existsSync } from 'fs';
 import path from 'path';
+import { isWindowsOrExplain } from './windows-only.mjs';
 
 const CONTROL_PANEL = 'http://localhost:5052';
 
@@ -32,29 +34,26 @@ async function getLaunchDetails(route, identity) {
 }
 
 /**
- * Start the RVM with the manifest URL. On Windows this runs the RVM directly, as a shortcut does;
- * elsewhere it opens the fin:// link with the operating system.
+ * Start the RVM with the manifest URL, as a shortcut does.
  * @param details The launch details.
  */
 function open(details) {
-	if (process.platform === 'win32') {
-		const rvm = path.join(process.env.LOCALAPPDATA ?? '', 'OpenFin', 'OpenFinRVM.exe');
-		if (!existsSync(rvm)) {
-			console.error(`The RVM was not found at ${rvm}.`);
-			return;
-		}
-		console.log(`Starting ${rvm} --config=${details.manifestUrl}`);
-		spawn(rvm, [`--config=${details.manifestUrl}`], { detached: true, stdio: 'ignore' }).unref();
-	} else {
-		console.log(`Opening ${details.finLink}`);
-		spawn('open', [details.finLink], { detached: true, stdio: 'ignore' }).unref();
+	const rvm = path.join(process.env.LOCALAPPDATA ?? '', 'OpenFin', 'OpenFinRVM.exe');
+	if (!existsSync(rvm)) {
+		console.error(`The RVM was not found at ${rvm}.`);
+		return;
 	}
+	console.log(`Starting ${rvm} --config=${details.manifestUrl}`);
+	spawn(rvm, [`--config=${details.manifestUrl}`], { detached: true, stdio: 'ignore' }).unref();
 }
 
 /**
  * Read the command line and launch.
  */
 async function run() {
+	if (!isWindowsOrExplain()) {
+		return;
+	}
 	const choice = process.argv[2];
 	const route = choice === 'public' ? 'public' : 'internal';
 	const identity = choice === 'fresh' ? 'fresh' : 'normal';

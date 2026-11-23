@@ -97,9 +97,9 @@
 				Use
 				<code>npm run client</code>
 				, or run the command below. There is one manifest, on the public route; the gateway chooses the route.
-				The link works only if your RVM allows
-				<code>fin://</code>
-				over plain HTTP.
+				The link installs the sample only if its manifest has the trusted application configuration, which
+				this localhost sample does not have. Use the RVM command to install it, after which the link can be
+				used to launch it.
 			</p>
 			<div id="launch"></div>
 
@@ -157,7 +157,8 @@
 			async function renderLaunch() {
 				const details = await api('/api/launch-url');
 				document.querySelector('#launch').innerHTML = `<h3>Public manifest</h3>
-					<div class="row">RVM: <code>${details.rvmCommand}</code></div>
+					<div class="row">RVM (Windows): <code>${details.rvmCommand}</code></div>
+					<div class="row">RVM (macOS): <code>${details.macRvmCommand}</code></div>
 					<div class="row">Link: <a href="${details.finLink}">${details.finLink}</a></div>`;
 			}
 
