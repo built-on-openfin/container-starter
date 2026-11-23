@@ -83,7 +83,7 @@ export async function checkHealth(route: RouteInfo, timeoutMs: number): Promise<
 	let healthy = false;
 	try {
 		const response = await fetch(route.healthUrl, { signal: controller.signal, cache: "no-store" });
-		if (response.ok) {
+		if (response.status === 200) {
 			let body: unknown;
 			try {
 				body = await response.json();

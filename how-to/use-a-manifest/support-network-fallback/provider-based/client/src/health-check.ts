@@ -51,6 +51,11 @@ export interface HealthLoopOptions {
 	 * Called to offer a switch. The loop does no checks until the returned promise settles.
 	 */
 	onOffer: (reason: string) => Promise<void>;
+
+	/**
+	 * True while a switch started outside the loop is in progress. The loop does no checks meanwhile.
+	 */
+	isSwitching: () => boolean;
 }
 
 /**
@@ -78,7 +83,7 @@ export async function checkHealth(healthUrl: string, timeoutMs: number): Promise
 	let healthy = false;
 	try {
 		const response = await fetch(healthUrl, { signal: controller.signal, cache: "no-store" });
-		if (response.ok) {
+		if (response.status === 200) {
 			let body: unknown;
 			try {
 				body = await response.json();
@@ -103,9 +108,17 @@ export async function checkHealth(healthUrl: string, timeoutMs: number): Promise
  * @returns Controls for the loop.
  */
 export function startHealthLoop(options: HealthLoopOptions): HealthLoop {
-	const { routes, onLog, onResult, onOffer } = options;
+	const { routes, onLog, onResult, onOffer, isSwitching } = options;
 	const { current, other } = routes;
 	let offerOpen = false;
+
+	/**
+	 * Whether the loop should hold off.
+	 * @returns True while an offer is open or a switch is in progress.
+	 */
+	function busy(): boolean {
+		return offerOpen || isSwitching();
+	}
 	let lastCurrentDetail: string | undefined;
 	let lastOtherDetail: string | undefined;
 
@@ -129,26 +142,32 @@ export function startHealthLoop(options: HealthLoopOptions): HealthLoop {
 	 * One round: check the current route, and the other route if the current one is unhealthy.
 	 */
 	async function tick(): Promise<void> {
-		if (offerOpen) {
+		if (busy()) {
 			return;
 		}
 		const result = await checkHealth(current.healthUrl, HEALTH_TIMEOUT_MS);
+		if (busy()) {
+			return;
+		}
 		onResult("current", result);
 		if (result.detail !== lastCurrentDetail) {
 			onLog(`${current.displayHost} is ${result.detail}.`);
 			lastCurrentDetail = result.detail;
 		}
-		if (result.healthy || offerOpen) {
+		if (result.healthy) {
 			return;
 		}
 
 		const otherResult = await checkHealth(other.healthUrl, HEALTH_TIMEOUT_MS);
+		if (busy()) {
+			return;
+		}
 		onResult("other", otherResult);
 		if (otherResult.detail !== lastOtherDetail) {
 			onLog(`${other.displayHost} is ${otherResult.detail}.`);
 			lastOtherDetail = otherResult.detail;
 		}
-		if (otherResult.healthy && !offerOpen) {
+		if (otherResult.healthy) {
 			await offer(`${current.displayHost} is ${result.detail} and ${other.displayHost} is healthy.`);
 		}
 	}

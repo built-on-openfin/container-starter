@@ -241,7 +241,8 @@ async function init(): Promise<void> {
 				lastChecks[target] = result;
 				publishStatus();
 			},
-			onOffer: async (reason: string) => offerSwitch(known, reason)
+			onOffer: async (reason: string) => offerSwitch(known, reason),
+			isSwitching: () => switching
 		});
 	}
 }
