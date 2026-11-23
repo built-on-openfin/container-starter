@@ -1,3 +1,5 @@
+import { SWITCHER_PAGE_PATH, SWITCHER_UUID } from "../../shared/route-config";
+import { createGuardedChannel } from "./channel-guard";
 import type { ResolvedRoutes } from "./routes";
 import { SWITCH_REQUEST_CHANNEL, type SwitchRequest } from "./switcher/handover";
 
@@ -11,14 +13,19 @@ const HANDOVER_TIMEOUT_MS = 15000;
  * manifest. It runs in the same runtime process, which keeps the runtime alive during the hand-over.
  *
  * The platform only quits once the switcher has collected the switch request, so a switcher that fails
- * to load leaves the platform running.
+ * to load leaves the platform running. Only the switcher window can collect the request.
  *
  * This sample has no ready signal and no recovery if the switcher fails after that. See
  * "Production hardening" in the README.
  * @param routes The resolved routes.
  * @param reason Why the switch is happening, for the logs.
+ * @param onRejected Called with the reason when a connection to the request channel is rejected.
  */
-export async function startSwitch(routes: ResolvedRoutes, reason: string): Promise<void> {
+export async function startSwitch(
+	routes: ResolvedRoutes,
+	reason: string,
+	onRejected: (reason: string) => void
+): Promise<void> {
 	const other = routes.other;
 	if (!other) {
 		throw new Error("No other route to switch to");
@@ -38,9 +45,15 @@ export async function startSwitch(routes: ResolvedRoutes, reason: string): Promi
 	const handedOver = new Promise<void>((resolve) => {
 		collected = resolve;
 	});
-	const provider = await fin.InterApplicationBus.Channel.create(SWITCH_REQUEST_CHANNEL);
-	provider.register("get-request", async () => request);
-	provider.register("collected", async () => collected?.());
+	const provider = await createGuardedChannel(
+		SWITCH_REQUEST_CHANNEL,
+		{ uuid: SWITCHER_UUID, entityType: "window", name: SWITCHER_UUID, path: SWITCHER_PAGE_PATH },
+		{
+			"get-request": async () => request,
+			collected: async () => collected?.()
+		},
+		onRejected
+	);
 
 	let timer: number | undefined;
 	try {

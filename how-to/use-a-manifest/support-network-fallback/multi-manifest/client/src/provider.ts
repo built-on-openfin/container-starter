@@ -85,7 +85,9 @@ async function offerSwitch(resolved: ResolvedRoutes, reason: string): Promise<vo
 		return;
 	}
 	try {
-		await startSwitch(resolved, reason);
+		await startSwitch(resolved, reason, (rejection) =>
+			log(`Rejected a switch request channel connection: ${rejection}.`)
+		);
 	} catch (error) {
 		log(`Switch failed to start: ${error instanceof Error ? error.message : String(error)}`);
 	}
@@ -156,10 +158,14 @@ async function init(): Promise<void> {
 	const resolved = resolveRoutes(manifest, location.origin, manifestUrl);
 	routes = resolved.routes;
 
-	channel = await createStatusChannel(manifest.platform?.uuid ?? fin.me.identity.uuid, {
-		"get-status": async () => buildStatus(),
-		"manual-switch": async () => loop?.requestSwitch() ?? false
-	});
+	channel = await createStatusChannel(
+		manifest.platform?.uuid ?? fin.me.identity.uuid,
+		{
+			"get-status": async () => buildStatus(),
+			"manual-switch": async () => loop?.requestSwitch() ?? false
+		},
+		(reason) => log(`Rejected a status channel connection: ${reason}.`)
+	);
 
 	await logStartup(info, manifest, resolved.problem);
 

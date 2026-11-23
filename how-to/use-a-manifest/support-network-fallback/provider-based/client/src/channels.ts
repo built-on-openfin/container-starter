@@ -1,5 +1,12 @@
 import type OpenFin from "@openfin/core";
-import { STATUS_CHANNEL, type RouteId } from "../../shared/route-config";
+import {
+	APP_PATH,
+	APP_VIEW_NAME,
+	ROUTES,
+	STATUS_CHANNEL,
+	routeOrigin,
+	type RouteId
+} from "../../shared/route-config";
 import type { GatewayDecision } from "./gateway/decision";
 import type { HealthResult } from "./health-check";
 import type { LaunchStatus } from "./launch-params";
@@ -120,19 +127,81 @@ export function statusChannelName(platformUuid: string): string {
 	return `${STATUS_CHANNEL}/${platformUuid}`;
 }
 
+const APP_URLS = Object.values(ROUTES).map((route) => `${routeOrigin(route)}${APP_PATH}`);
+
 /**
- * Create the status channel in the provider.
+ * Remove the query string and hash from a URL.
+ * @param url The URL.
+ * @returns The origin and path, or undefined if the URL cannot be parsed.
+ */
+function withoutQuery(url: string | undefined): string | undefined {
+	if (!url) {
+		return undefined;
+	}
+	try {
+		const parsed = new URL(url);
+		return `${parsed.origin}${parsed.pathname}`;
+	} catch {
+		return undefined;
+	}
+}
+
+/**
+ * Check a client connecting to the status channel.
+ * @param client The connecting client.
+ * @param platformUuid The platform uuid.
+ * @returns Why the client is rejected, or undefined if it is accepted.
+ */
+function rejectionReason(client: OpenFin.ClientConnectionPayload, platformUuid: string): string | undefined {
+	if (client.uuid !== platformUuid) {
+		return `uuid ${client.uuid} is not this platform`;
+	}
+	if (client.entityType !== "view" || client.name !== APP_VIEW_NAME) {
+		return `${client.entityType} ${client.name} is not the platform's app view`;
+	}
+	const url = withoutQuery(client.connectionUrl);
+	if (!url || !APP_URLS.includes(url)) {
+		return `connection URL ${client.connectionUrl} is not an app page`;
+	}
+	return undefined;
+}
+
+/**
+ * Create the status channel in the provider. Only the platform's own app view can connect: same uuid,
+ * the app view's name, and a connection URL that is one of the two app pages. Every other connection is
+ * rejected, and requests from anything but an accepted connection are refused.
  * @param platformUuid The platform uuid.
  * @param handlers What to do for each view request.
+ * @param onRejected Called with the reason when a connection is rejected.
  * @returns The channel provider, used to publish status.
  */
 export async function createStatusChannel(
 	platformUuid: string,
-	handlers: { [request in ViewRequest]: (payload: unknown) => Promise<unknown> }
+	handlers: { [request in ViewRequest]: (payload: unknown) => Promise<unknown> },
+	onRejected: (reason: string) => void
 ): Promise<OpenFin.ChannelProvider> {
 	const channel = await fin.InterApplicationBus.Channel.create(statusChannelName(platformUuid));
+	const acceptedEndpoints = new Set<string>();
+
+	// The listener is typed with ClientIdentity, but the runtime passes the full connection payload.
+	channel.onConnection((identity) => {
+		const reason = rejectionReason(identity as OpenFin.ClientConnectionPayload, platformUuid);
+		if (reason) {
+			onRejected(reason);
+			throw new Error(`Connection rejected: ${reason}`);
+		}
+		acceptedEndpoints.add(identity.endpointId);
+	});
+	channel.onDisconnection((identity) => acceptedEndpoints.delete(identity.endpointId));
+
 	for (const [request, handler] of Object.entries(handlers)) {
-		channel.register(request, handler);
+		channel.register(request, async (payload: unknown, identity) => {
+			const endpointId = "endpointId" in identity ? identity.endpointId : undefined;
+			if (!endpointId || !acceptedEndpoints.has(endpointId)) {
+				throw new Error("Not an accepted connection");
+			}
+			return handler(payload);
+		});
 	}
 	return channel;
 }

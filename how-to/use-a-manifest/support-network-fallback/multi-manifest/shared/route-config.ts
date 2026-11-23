@@ -79,8 +79,15 @@ export const RUNTIME_ARGUMENTS = `--v=1 --inspect --enable-mesh --security-realm
 export const LICENSE_KEY = "openfin-demo-license-key";
 
 export const STATUS_CHANNEL = "support-network-fallback/status";
+export const APP_PATH = "/app.html";
+export const APP_VIEW_NAME = "support-network-fallback-app";
 
+export const PROVIDER_PATH = "/provider.html";
+
+// public/switcher/switcher.fin.json repeats the switcher uuid and page; keep them in step.
+export const SWITCHER_UUID = "support-network-fallback-switcher";
 export const SWITCHER_MANIFEST_PATH = "/switcher/switcher.fin.json";
+export const SWITCHER_PAGE_PATH = "/switcher/switcher.html";
 
 export const HEALTH_POLL_INTERVAL_MS = 5000;
 export const HEALTH_TIMEOUT_MS = 2000;

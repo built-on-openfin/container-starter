@@ -1,5 +1,8 @@
 import {
+	APP_PATH,
+	APP_VIEW_NAME,
 	LICENSE_KEY,
+	PROVIDER_PATH,
 	RUNTIME_ARGUMENTS,
 	RUNTIME_VERSION,
 	manifestPathFor,
@@ -51,7 +54,7 @@ export function buildPlatformManifest(
 			uuid: platformUuidFor(identity),
 			name,
 			icon: `${origin}/favicon.ico`,
-			providerUrl: `${origin}/provider.html`,
+			providerUrl: `${origin}${PROVIDER_PATH}`,
 			autoShow: false,
 			enableJumpList: true,
 			permissions: customSchemePermissions()
@@ -71,8 +74,8 @@ export function buildPlatformManifest(
 										type: "component",
 										componentName: "view",
 										componentState: {
-											name: "support-network-fallback-app",
-											url: `${origin}/app.html`
+											name: APP_VIEW_NAME,
+											url: `${origin}${APP_PATH}`
 										},
 										title: name
 									}

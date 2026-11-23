@@ -3,6 +3,8 @@
  * collects the switch request from it, waits for that platform to close, then launches the destination
  * manifest. It does not recover if something goes wrong; see "Production hardening" in the README.
  */
+import { PROVIDER_PATH } from "../../../shared/route-config";
+import { createGuardedChannel } from "../channel-guard";
 import {
 	SWITCH_REQUEST_CHANNEL,
 	switchArrivalChannelName,
@@ -67,7 +69,7 @@ async function collectRequest(): Promise<SwitchRequest> {
 }
 
 /**
- * Offer the arrival details to the platform about to be launched.
+ * Offer the arrival details to the platform about to be launched. Only its provider window can read them.
  * @param request The switch request.
  * @returns Once the channel exists, a promise that resolves when the new platform has read the details.
  */
@@ -77,13 +79,17 @@ async function offerArrival(request: SwitchRequest): Promise<{ wasRead: Promise<
 	const wasRead = new Promise<void>((resolve) => {
 		read = resolve;
 	});
-	const provider = await fin.InterApplicationBus.Channel.create(
-		switchArrivalChannelName(request.platformUuid)
+	await createGuardedChannel(
+		switchArrivalChannelName(request.platformUuid),
+		{ uuid: request.platformUuid, entityType: "window", name: request.platformUuid, path: PROVIDER_PATH },
+		{
+			"get-arrival": async () => {
+				read?.();
+				return arrival;
+			}
+		},
+		(reason) => show(`Rejected an arrival channel connection: ${reason}.`, true)
 	);
-	provider.register("get-arrival", async () => {
-		read?.();
-		return arrival;
-	});
 	return { wasRead };
 }
 

@@ -4,7 +4,7 @@
  * health check, and switches by storing a preference for the gateway and restarting.
  */
 import type OpenFin from "@openfin/core";
-import { HEALTH_TIMEOUT_MS, isRouteId, ROUTES } from "../../shared/route-config";
+import { APP_PATH, APP_VIEW_NAME, HEALTH_TIMEOUT_MS, isRouteId, ROUTES } from "../../shared/route-config";
 import { createStatusChannel, type LogEntry, type StatusMessage } from "./channels";
 import { readGatewayDecision } from "./gateway/decision";
 import { checkHealth, startHealthLoop, type HealthResult } from "./health-check";
@@ -163,8 +163,8 @@ async function openAppWindow(origin: string): Promise<void> {
 									type: "component",
 									componentName: "view",
 									componentState: {
-										name: "support-network-fallback-provider-app",
-										url: `${origin}/app.html`
+										name: APP_VIEW_NAME,
+										url: `${origin}${APP_PATH}`
 									},
 									title: "Network Fallback Provider-Based"
 								}
@@ -210,10 +210,14 @@ async function init(): Promise<void> {
 	const resolved = resolveRoutes(location.origin);
 	routes = resolved.routes;
 
-	channel = await createStatusChannel(fin.me.identity.uuid, {
-		"get-status": async () => buildStatus(),
-		"switch-to": async (payload: unknown) => handleSwitchRequest(payload)
-	});
+	channel = await createStatusChannel(
+		fin.me.identity.uuid,
+		{
+			"get-status": async () => buildStatus(),
+			"switch-to": async (payload: unknown) => handleSwitchRequest(payload)
+		},
+		(reason) => log(`Rejected a status channel connection: ${reason}.`)
+	);
 
 	await logStartup(resolved.problem);
 

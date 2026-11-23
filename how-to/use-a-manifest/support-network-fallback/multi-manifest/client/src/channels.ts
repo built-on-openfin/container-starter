@@ -1,5 +1,6 @@
 import type OpenFin from "@openfin/core";
-import { STATUS_CHANNEL, type RouteId } from "../../shared/route-config";
+import { APP_PATH, APP_VIEW_NAME, STATUS_CHANNEL, type RouteId } from "../../shared/route-config";
+import { createGuardedChannel } from "./channel-guard";
 import type { HealthResult } from "./health-check";
 import type { LaunchStatus } from "./launch-params";
 
@@ -108,20 +109,25 @@ export function statusChannelName(platformUuid: string): string {
 }
 
 /**
- * Create the status channel in the provider.
+ * Create the status channel in the provider. Only the platform's own app view can connect: same uuid,
+ * the app view's name, and a connection URL that is one of the two app pages. Every other connection is
+ * rejected, and requests from anything but an accepted connection are refused.
  * @param platformUuid The platform uuid.
  * @param handlers What to do for each view request.
+ * @param onRejected Called with the reason when a connection is rejected.
  * @returns The channel provider, used to publish status.
  */
 export async function createStatusChannel(
 	platformUuid: string,
-	handlers: { [request in ViewRequest]: () => Promise<unknown> }
+	handlers: { [request in ViewRequest]: () => Promise<unknown> },
+	onRejected: (reason: string) => void
 ): Promise<OpenFin.ChannelProvider> {
-	const channel = await fin.InterApplicationBus.Channel.create(statusChannelName(platformUuid));
-	for (const [request, handler] of Object.entries(handlers)) {
-		channel.register(request, handler);
-	}
-	return channel;
+	return createGuardedChannel(
+		statusChannelName(platformUuid),
+		{ uuid: platformUuid, entityType: "view", name: APP_VIEW_NAME, path: APP_PATH },
+		handlers,
+		onRejected
+	);
 }
 
 /**
