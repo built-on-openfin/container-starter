@@ -9,6 +9,23 @@ Some customers run the same HERE Core Container platform as two deployments: an 
 
 Both include a simulator with a control panel, the same running health check and prompt, and a scenarios document, so you can try each and compare. The single manifest is the simpler option (one app folder, logs, entry point) but we list both options and it could be your approach takes aspects of both. This is a guide to discuss options and you should take your own requirements and patterns into account when planning your own approach.
 
+## Do you need either approach?
+
+```mermaid
+flowchart TD
+    Start["Which deployments can your users run?"] --> Q1{"Only one: internal only, or public only?"}
+    Q1 -- "Yes" --> One["One manifest for that deployment<br/>No gateway, no health check of another route<br/>A simpler manifest and less logic to maintain"]
+    Q1 -- "No, users can reach both" --> Q2{"Do you want both as options,<br/>with internal preferred?"}
+    Q2 -- "No, users launch the one they want" --> Two["Keep one manifest and shortcut per deployment<br/>Neither approach is needed"]
+    Q2 -- "Yes" --> Gateway["Review and consider the provider-based gateway approach"]
+    Gateway -. "Windows only, and the other conditions in Which approach" .-> Multi["The multi-manifest approach may also fit"]
+```
+
+- **Users can only run internal, or only public.** Neither approach is needed. There is only ever one manifest, internal or public, for the end user to use. So you need no gateway and no health check of an alternate route. The manifest is simpler and there is less logic to maintain.
+- **Users can reach both, and you want both as an option with internal preferred.** Review and consider the [provider-based](./provider-based/) gateway approach. [Which approach](#which-approach) lists when the multi-manifest approach may fit instead.
+
+Only you know your use case. These samples are examples to generate discussion and trigger ideas, not a recommendation for every platform.
+
 ## Points to know before you choose
 
 Check these first. Any one of them may rule the multi-manifest approach out before you read its README.

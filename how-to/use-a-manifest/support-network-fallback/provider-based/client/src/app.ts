@@ -4,6 +4,7 @@
 import type OpenFin from "@openfin/core";
 import { connectToStatusChannel, type StatusMessage } from "./channels";
 import type { HealthResult } from "./health-check";
+import { PRELOAD_MARKER_EVENT, readPreloadMarker } from "./preload/marker";
 
 let client: OpenFin.ChannelClient | undefined;
 
@@ -26,6 +27,19 @@ function setText(selector: string, text: string): void {
  */
 function describeCheck(result: HealthResult | undefined): string {
 	return result ? `${result.detail} at ${new Date(result.time).toLocaleTimeString()}` : "not checked yet";
+}
+
+/**
+ * Show what the preload recorded on this page.
+ */
+function renderPreload(): void {
+	const marker = readPreloadMarker();
+	setText(
+		"#preload",
+		marker
+			? `public part ${marker.publicPart ? "ran" : "did not run"}; destination part ${marker.destination}`
+			: "did not run on this page"
+	);
 }
 
 /**
@@ -108,7 +122,10 @@ async function init(): Promise<void> {
 	}
 }
 
+window.addEventListener(PRELOAD_MARKER_EVENT, renderPreload);
+
 window.addEventListener("DOMContentLoaded", async () => {
+	renderPreload();
 	try {
 		await init();
 	} catch (error) {

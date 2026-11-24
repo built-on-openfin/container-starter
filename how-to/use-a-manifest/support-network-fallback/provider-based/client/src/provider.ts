@@ -9,6 +9,7 @@ import { createStatusChannel, type LogEntry, type StatusMessage } from "./channe
 import { readGatewayDecision } from "./gateway/decision";
 import { checkHealth, startHealthLoop, type HealthResult } from "./health-check";
 import { startLaunchParams, type LaunchStatus } from "./launch-params";
+import { readPreloadMarker } from "./preload/marker";
 import { askUser } from "./prompt";
 import { resolveRoutes, type ResolvedRoutes, type RouteInfo } from "./routes";
 import { switchTo } from "./switch";
@@ -199,6 +200,16 @@ async function logStartup(problem: string | undefined): Promise<void> {
 }
 
 /**
+ * Log whether the preload ran on this page, so app.log records it as well as the app view.
+ */
+function logPreloadOnThisPage(): void {
+	const marker = readPreloadMarker();
+	log(
+		marker ? "Preload on the provider page: public part ran." : "Preload on the provider page: did not run."
+	);
+}
+
+/**
  * Start the platform, open the app window and start the health check.
  */
 async function init(): Promise<void> {
@@ -220,6 +231,7 @@ async function init(): Promise<void> {
 	);
 
 	await logStartup(resolved.problem);
+	logPreloadOnThisPage();
 
 	startLaunchParams({
 		manifestUrl,

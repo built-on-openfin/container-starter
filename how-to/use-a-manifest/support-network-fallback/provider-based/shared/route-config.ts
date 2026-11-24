@@ -87,6 +87,8 @@ export const PREFERENCE_PAGE_PATH = "/gateway/preference.html";
 export const PROVIDER_PATH = "/provider.html";
 export const APP_PATH = "/app.html";
 export const APP_VIEW_NAME = "support-network-fallback-provider-app";
+export const PRELOAD_PATH = "/js/preload.bundle.js";
+export const PRELOAD_DESTINATION_PATH = "/preload/destination.js";
 
 export const STATUS_CHANNEL = "support-network-fallback-provider/status";
 export const PREFERENCE_CHANNEL = "support-network-fallback-provider/preference";

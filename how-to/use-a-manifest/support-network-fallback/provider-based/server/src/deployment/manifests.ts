@@ -3,6 +3,7 @@ import {
 	GATEWAY_ROUTE,
 	LICENSE_KEY,
 	PLATFORM_UUID,
+	PRELOAD_PATH,
 	preferredRoute,
 	routeOrigin,
 	RUNTIME_ARGUMENTS,
@@ -27,11 +28,15 @@ function customSchemePermissions(): { [key: string]: unknown } {
  * route the gateway chose; the provider builds the window from its own origin.
  *
  * offlineAccess lets the RVM start from its cached copy if the public route is briefly unreachable.
+ *
+ * The preload is declared for the provider window and as the default for every window and view, always
+ * from the public route. Domain settings can only enable or disable a declared preload, not add one.
  * @returns The manifest.
  */
 export function buildPlatformManifest(): { [key: string]: unknown } {
 	const origin = routeOrigin(GATEWAY_ROUTE);
 	const name = "Network Fallback Provider-Based";
+	const preloadScripts = [{ url: `${origin}${PRELOAD_PATH}` }];
 
 	return {
 		licenseKey: LICENSE_KEY,
@@ -47,7 +52,10 @@ export function buildPlatformManifest(): { [key: string]: unknown } {
 			providerUrl: `${origin}${GATEWAY_PATH}`,
 			autoShow: false,
 			enableJumpList: true,
-			permissions: customSchemePermissions()
+			permissions: customSchemePermissions(),
+			preloadScripts,
+			defaultWindowOptions: { preloadScripts },
+			defaultViewOptions: { preloadScripts }
 		},
 		shortcut: {
 			company: "Example Co",

@@ -399,3 +399,86 @@ sequenceDiagram
 - **What the user sees:** the platform restarts on the public route. The scheme and jump list still point at the same public manifest.
 - **Log lines to expect:** after the restart, `LAUNCH PARAMS RECEIVED (custom scheme, at launch): sampleParam=scheme-at-launch ...` again.
 - **Observed on Windows:** `Application.restart()` delivered the original launch params again. An app that acts on a param must remember that it has handled it.
+
+## Preload scenarios
+
+These scenarios cover the preload script described in [Preload scripts](../README.md#preload-scripts). The preload's lines start with `[preload]` and go to the console of the page it runs on, not to the app view's log. Open a page's developer tools to see them; the runtime arguments include `--inspect`. The app view's "Preload" row shows what ran in the app view.
+
+Scenarios 15 to 17 cover the sample's preload, which has a public part and a destination part. If your preload can come from the public route, as the manifest and the gateway do, start with scenario 18: you only need the public part, and the setup is simpler.
+
+### 15. The preload on the internal and on the public route
+
+![Animation of scenario 15: The preload on the internal and on the public route](assets/scenario-15-preload-on-both-routes.gif)
+
+```mermaid
+sequenceDiagram
+    participant RT as Runtime
+    participant P as Public route
+    participant Page as Provider or app view
+    participant R as Page's own route
+    RT ->> P: GET /js/preload.bundle.js
+    RT ->> Page: run the preload before the page
+    Page ->> Page: public part, set the marker
+    Page ->> R: import /preload/destination.js
+    R -->> Page: destination part, loadedFrom = its origin
+```
+
+- **Goal:** show that one preload declared from the public route runs on the provider and the views, and loads its destination part from whichever route the page is on.
+- **Control panel settings:** both routes `healthy`. For the second run, set the internal route to `unhealthy`, so the gateway uses the public route.
+- **Action:** `npm run client`, then `npm run kill` and `npm run client` again for the second run.
+- **What the user sees:** the app view's "Preload" row shows `public part ran; destination part loaded from http://localhost:5080` on the internal route, and `loaded from http://127.0.0.1:5081` on the public route.
+- **Log lines to expect:** in the provider's and the app view's consoles:
+  - `[preload] Public part running on http://localhost:5080/... It is served from the public route, outside /gateway/: ...`
+  - `[preload] Loading the destination part from the internal route: http://localhost:5080/preload/destination.js. ...`
+  - `[preload] destination part from http://localhost:5080`
+- **Observed on macOS:** on the internal route, during scenario 17, the app view showed `public part ran; destination part loaded from http://localhost:5080`. The public route run and Windows are not yet recorded.
+
+### 16. The preload does nothing on the gateway
+
+![Animation of scenario 16: The preload does nothing on the gateway](assets/scenario-16-preload-on-gateway.gif)
+
+- **Goal:** show that the preload runs on the gateway page, because it is the provider window's first page, and does nothing there.
+- **Control panel settings:** both routes `healthy`.
+- **Action:** `npm run client`, then open the provider window's console. Its log starts with the gateway page's lines.
+- **What the user sees:** nothing different; the provider window stays hidden while the gateway decides.
+- **Log lines to expect:** `[preload] Gateway page, doing nothing.` before the `[gateway]` lines, then the public part's lines once the window has navigated to the chosen provider.
+- **Observed on Windows:** to be recorded.
+
+### 17. Public route down after a first launch
+
+![Animation of scenario 17: Public route down after a first launch](assets/scenario-17-preload-public-down.gif)
+
+- **Goal:** find out what the runtime does with the preload when the public route, which serves it, cannot be reached.
+- **Control panel settings:** internal `healthy`, public `down`. Run scenario 15 first, so the preload has been downloaded once.
+- **Action:** `npm run client`.
+- **What the user sees:** as in scenario 4, the platform starts on the internal route from the cached manifest and gateway. The "Preload" row shows whether the preload ran: `public part ran; destination part loaded from http://localhost:5080` if the runtime used an earlier download, or `did not run on this page` if it loaded the page without the preload. The preload is not `mandatory`, so the page loads either way.
+- **Log lines to expect:** the `[preload]` lines from scenario 15 if the runtime used an earlier download; none otherwise. The RVM and runtime logs may show the failed preload download.
+- **Observed on macOS:** the platform started on the internal route and the app view's "Preload" row showed `public part ran; destination part loaded from http://localhost:5080`. The runtime used its earlier download of the preload, and the preload's `import()` of the destination part from the internal route worked. A preload served only from the public route is therefore usable during a public outage once it has been downloaded.
+- **Observed on Windows:** the same result, once an older numbered folder under `%LOCALAPPDATA%\OpenFin\apps` had been removed. That folder dated from before the sample's name changed, and its cached manifest had no preloads. While it existed, the RVM started from it, and the "Preload" row showed `did not run on this page`; the runtime log showed an empty preload list. Without it, the runtime log showed `Could not download from http://127.0.0.1:5081/js/preload.bundle.js, reason: Error: net::ERR_CONNECTION_REFUSED` and `Trying disk cache`, and the preload ran from its `cached_resources` copy. The provider logs whether the preload ran on its page to `app.log`: `Preload on the provider page: public part ran.`
+
+### 18. A preload that can come from the public route
+
+![Animation of scenario 18: A preload that can come from the public route](assets/scenario-18-public-preload-only.gif)
+
+```mermaid
+sequenceDiagram
+    participant RT as Runtime
+    participant P as Public route
+    participant G as Gateway page
+    participant Page as Provider or app view (either route)
+    RT ->> P: GET /js/preload.bundle.js
+    RT ->> G: run the preload
+    G ->> G: gateway page, do nothing
+    RT ->> Page: run the preload again after the navigation
+    Page ->> Page: the preload's work, nothing else to load
+    Note over RT,P: public route down after a first launch
+    RT -x P: GET /js/preload.bundle.js
+    RT ->> Page: run the earlier download
+```
+
+- **Goal:** show the simpler case. Your preload needs nothing from the page's own route, so it can come from the public route, as the manifest and the gateway do. The manifest names the public preload, and nothing else is needed: no destination part, no `/preload/destination.js` on each route and no origin check. The preload only has to skip its work on the gateway pages, in the script or with a `domainSettings` rule (see [Preload scripts](../README.md#preload-scripts)).
+- **Control panel settings:** both routes `healthy`. For the second run, set the internal route to `unhealthy`. For the third, set the internal route to `healthy` and the public route to `down`.
+- **Action:** `npm run client`, then `npm run kill` and `npm run client` again for each run. The sample's preload also loads a destination part; for this scenario, look only at its public part.
+- **What the user sees:** the public part runs on the provider and the app view on both routes, and also during the public outage once the preload has been downloaded.
+- **Log lines to expect:** `[preload] Gateway page, doing nothing.`, then `[preload] Public part running on ...` with the internal or the public origin.
+- **Observed on Windows and macOS:** the public part ran on the internal route, and still ran with the public route down after a first launch (scenarios 15 and 17). A machine that has never downloaded the preload loads the page without it, because it is not `mandatory`; call `fin.System.downloadPreloadScripts()` in advance if that matters.
