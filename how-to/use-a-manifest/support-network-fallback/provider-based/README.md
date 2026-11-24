@@ -217,6 +217,33 @@ This only applies to the provider-based approach. With a single manifest, one pr
 }
 ```
 
+**Declaring it from the provider instead.** The provider is under the platform's control, so it does not need a preload: it can import the code it needs directly. The platform's windows and views can then be given the same script by the provider, not the manifest. `fin.Platform.init()` does not take default window or view options; its options are only `overrideCallback` and `interopOverride`. The defaults are manifest options (`platform.defaultWindowOptions` and `platform.defaultViewOptions`). A platform override can add the script instead:
+
+```ts
+const preload = { url: 'https://app.example.com/js/preload.bundle.js' };
+const withPreload = <T extends { preloadScripts?: OpenFin.PreloadScript[] }>(options: T): T => ({
+  ...options,
+  preloadScripts: [...(options.preloadScripts ?? []), preload]
+});
+
+await fin.Platform.init({
+  overrideCallback: async (Provider) =>
+    new (class extends Provider {
+      public async createWindow(options: OpenFin.PlatformWindowCreationOptions, identity?: OpenFin.Identity) {
+        return super.createWindow(withPreload(options), identity);
+      }
+
+      public async createView(payload: OpenFin.CreateViewPayload, identity: OpenFin.Identity) {
+        return super.createView({ ...payload, opts: withPreload(payload.opts) }, identity);
+      }
+    })()
+});
+```
+
+A Workspace Platform does this for you. `WorkspacePlatform.init()` from `@openfin/workspace-platform` takes `browser.defaultWindowOptions` and `browser.defaultViewOptions`, so `preloadScripts` can be set there. The package applies them through its own platform override, which fills them in when a Browser window or view is created. Its `defaultWindowOptions` take precedence over the manifest's, and only apply to Browser windows, not to other windows the platform creates. This was read from the package's types (version 21.0.16), not run in this sample.
+
+The plain override above was checked on Windows with a test script added this way. `createWindow` was called for the platform window, and `createView` was called for the app view in the window's layout, so both got the script and it ran. The provider window and the gateway were not affected, because the override only starts after the provider has started. In that setup the manifest would not declare the preload at all, and the gateway pages would never run it. The sample keeps the manifest declaration, so the same script also runs on the provider window.
+
 **Where it runs.** The provider window loads the gateway first and is then navigated to the chosen route's provider, and the preload runs again on each page. [client/src/preload/preload.ts](./client/src/preload/preload.ts) therefore:
 
 1. **On the gateway or preference page**, logs `[preload] Gateway page, doing nothing.` and stops.
