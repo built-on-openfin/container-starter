@@ -97,7 +97,7 @@ One Node process (`npm run start`) runs three HTTP servers. The ports differ fro
 
 | Piece          | Local address           | Stands in for                  | Serves                                                                                        |
 | -------------- | ----------------------- | ------------------------------ | --------------------------------------------------------------------------------------------- |
-| Internal route | `http://localhost:5080` | `https://app.example.internal` | `/provider.html`, `/app.html`, `/js`, `/health`                                               |
+| Internal route | `http://localhost:5080` | `https://app.example.internal` | `/provider.html`, `/app.html`, `/js`, `/preload/`, `/health`                                  |
 | Public route   | `http://127.0.0.1:5081` | `https://app.example.com`      | the same, plus `/manifest.fin.json` and `/gateway/`                                           |
 | Control panel  | `http://localhost:5082` | nothing (test only)            | sets each route to `healthy`, `unhealthy`, `server-error` or `down`; shows `/health` requests |
 
@@ -138,6 +138,7 @@ flowchart LR
 - There is no `snapshot`. The view has to load from the route the gateway chose, which is not known when the manifest is written, so the provider builds the window from its own origin once it starts.
 - There are no `fallbackManifests`. The gateway makes the choice instead of the RVM.
 - `offlineAccess: true` lets the RVM start from its cached copy if the public route is briefly unreachable.
+- `platform.preloadScripts`, `platform.defaultWindowOptions.preloadScripts` and `platform.defaultViewOptions.preloadScripts` all name the same preload script on the public route; see [Preload scripts](#preload-scripts).
 - The `shortcut` block (`target: ["start-menu"]`) creates a "Network Fallback Provider-Based" Start menu shortcut in an "Example Co" folder, pointing at the public manifest.
 
 ### The gateway
@@ -194,6 +195,37 @@ On a first launch the gateway page is not yet controlled by the service worker, 
 ### The provider
 
 [client/src/provider.ts](./client/src/provider.ts) calls `fin.Platform.init()` and then applies a snapshot whose view URL is `${location.origin}/app.html`, so the view always comes from the route the gateway chose. [client/src/routes.ts](./client/src/routes.ts) works out the current route from `location.origin`; the other route is simply the other entry in [shared/route-config.ts](./shared/route-config.ts).
+
+### Preload scripts
+
+This only applies to the provider-based approach. With a single manifest, one preload declaration has to work for a provider and views that can run on either route.
+
+**Where it is declared.** The manifest names one script, the public `/js/preload.bundle.js`, in three places:
+
+- `platform.preloadScripts`, for the provider window;
+- `platform.defaultWindowOptions.preloadScripts`, for every platform window;
+- `platform.defaultViewOptions.preloadScripts`, for every view.
+
+**Domain settings cannot add a preload.** A `domainSettings` rule's `options.preloadScripts` is a list of full script URLs, each with `{ "enabled": true }` or `{ "enabled": false }`. It can switch a declared preload on or off for the pages a rule matches, but cannot declare a new one. The sample does not use it, but a rule like this would switch the preload off on the gateway pages, instead of the script checking its own URL:
+
+```json
+{
+  "match": ["http://127.0.0.1:5081/gateway/*"],
+  "options": {
+    "preloadScripts": { "http://127.0.0.1:5081/js/preload.bundle.js": { "enabled": false } }
+  }
+}
+```
+
+**Where it runs.** The provider window loads the gateway first and is then navigated to the chosen route's provider, and the preload runs again on each page. [client/src/preload/preload.ts](./client/src/preload/preload.ts) therefore:
+
+1. **On the gateway or preference page**, logs `[preload] Gateway page, doing nothing.` and stops.
+2. **Everywhere else, runs its public part.** This covers a preload whose code can come from the public route. Its log line explains why it is served from the public route rather than from `/gateway/`; see the caching note below.
+3. **Then loads a destination part from the page's own route.** This covers a preload whose code has to come from the route the page was loaded from. A real deployment would need a reason for that constraint; the sample shows it in case it is a requirement. The script imports `location.origin` + `/preload/destination.js`, which both routes serve ([public/preload/destination.js](./public/preload/destination.js)). It only does so when `location.origin` is the internal or the public route. A page on any other origin would not have the file, so the destination part is skipped and logged. The rule is that the page's origin must be one of the two routes.
+
+The script records what ran on the page, and the app view's "Preload" row shows it, for example `public part ran; destination part loaded from http://localhost:5080`.
+
+**Caching.** The runtime downloads preload scripts itself, not the page, so the gateway's service worker never sees those requests. Putting the script in `/gateway/` would not get it cached by the service worker. The runtime does fall back to an earlier download: on macOS, with the public route down after a first launch, the preload's public part still ran on the internal route (scenario 17 in [the scenarios document](./docs/scenarios.md)). So a preload served only from the public route survives a public outage once it has been downloaded, but not on a machine that has never downloaded it. `fin.System.downloadPreloadScripts()` can fetch preloads in advance. The destination part is fetched by the page with `import()`, so only the browser's HTTP cache applies to it. The preload is not `mandatory`, so a preload that fails to download never stops a window or view from loading.
 
 ### The health check while running
 
@@ -302,6 +334,7 @@ These results were recorded on Windows with runtime `43.142.101.2` and `@openfin
 | Custom scheme at launch and while running                                                                                              | Both logged, as `userRequestUri=here-sample-network-fallback://open/?sampleParam=...`; the scheme stayed registered to the public manifest after a switch                                                                                 |
 | Jump list                                                                                                                              | Set once `enableJumpList` was on. The task reached the running platform about 12 seconds after it was started; the jump list's app entry sends no params. A task whose `deepLink` was a custom scheme link was rejected as an invalid URL |
 | Launch params after a switch                                                                                                           | `Application.restart()` delivered the original launch params again                                                                                                                                                                        |
+| Preload with the public route down after a first launch (macOS)                                                                        | The preload still ran: the app view showed `public part ran; destination part loaded from http://localhost:5080`, so the runtime used its earlier download and the preload's `import()` worked                                            |
 
 Not observed here: a first install on a machine that has never run the sample, and the effect of Private Network Access, which the localhost simulator cannot reproduce.
 
@@ -343,6 +376,7 @@ None of the following is built into this sample. The [multi-manifest list](../mu
 | Deployment | [server/src/deployment/](./server/src/deployment/) (`create-route-server.ts`, `manifests.ts`, `health.ts`)                                                                      |
 | Gateway    | [client/src/gateway/](./client/src/gateway/) (`gateway.ts`, `decision.ts`, `preference.ts`) and [public/gateway/](./public/gateway/) (`index.html`, `preference.html`, `sw.js`) |
 | Provider   | [client/src/](./client/src/) (`provider.ts`, `routes.ts`, `health-check.ts`, `prompt.ts`, `switch.ts`, `launch-params.ts`)                                                      |
+| Preload    | [client/src/preload/](./client/src/preload/) (`preload.ts`, `marker.ts`) and [public/preload/destination.js](./public/preload/destination.js)                                   |
 
 The test tooling, which you should not copy: [server/src/simulator/](./server/src/simulator/), [public/control/index.html](./public/control/index.html) and [server/src/index.ts](./server/src/index.ts). The app view ([client/src/app.ts](./client/src/app.ts)) and the status channel exist to make the decisions visible; your own UI would replace them.
 
@@ -350,7 +384,8 @@ The test tooling, which you should not copy: [server/src/simulator/](./server/sr
 
 - **Provider log:** the gateway's lines start with `[gateway]` and are followed by the provider's lines, because both run in the same window. They are written to `app.log` in the sample's folder under `%LOCALAPPDATA%\OpenFin\apps`, and to the provider's console (the runtime arguments include `--inspect`).
 - **Preference page:** its `Stored the preference ...` and `Rejected a connection: ...` lines are in the same `app.log`.
-- **App view:** the route badge, how the gateway chose the route, the service worker state, the switcher, the last check of each route and the last 20 log lines.
+- **Preload:** its lines start with `[preload]`, in the console of each page it runs on, including the provider window's gateway and provider pages.
+- **App view:** the route badge, how the gateway chose the route, the service worker state, what the preload ran, the switcher, the last check of each route and the last 20 log lines.
 - **RVM log:** `%LOCALAPPDATA%\OpenFin\logs\rvm.log`, for whether the manifest came from the network or the cache.
 - **Control panel log:** every `/health` request each route received.
 

@@ -399,3 +399,50 @@ sequenceDiagram
 - **What the user sees:** the platform restarts on the public route. The scheme and jump list still point at the same public manifest.
 - **Log lines to expect:** after the restart, `LAUNCH PARAMS RECEIVED (custom scheme, at launch): sampleParam=scheme-at-launch ...` again.
 - **Observed on Windows:** `Application.restart()` delivered the original launch params again. An app that acts on a param must remember that it has handled it.
+
+## Preload scenarios
+
+These scenarios cover the preload script described in [Preload scripts](../README.md#preload-scripts). The preload's lines start with `[preload]` and go to the console of the page it runs on, not to the app view's log. Open a page's developer tools to see them; the runtime arguments include `--inspect`. The app view's "Preload" row shows what ran in the app view.
+
+### 15. The preload on the internal and on the public route
+
+```mermaid
+sequenceDiagram
+    participant RT as Runtime
+    participant P as Public route
+    participant Page as Provider or app view
+    participant R as Page's own route
+    RT ->> P: GET /js/preload.bundle.js
+    RT ->> Page: run the preload before the page
+    Page ->> Page: public part, set the marker
+    Page ->> R: import /preload/destination.js
+    R -->> Page: destination part, loadedFrom = its origin
+```
+
+- **Goal:** show that one preload declared from the public route runs on the provider and the views, and loads its destination part from whichever route the page is on.
+- **Control panel settings:** both routes `healthy`. For the second run, set the internal route to `unhealthy`, so the gateway uses the public route.
+- **Action:** `npm run client`, then `npm run kill` and `npm run client` again for the second run.
+- **What the user sees:** the app view's "Preload" row shows `public part ran; destination part loaded from http://localhost:5080` on the internal route, and `loaded from http://127.0.0.1:5081` on the public route.
+- **Log lines to expect:** in the provider's and the app view's consoles:
+  - `[preload] Public part running on http://localhost:5080/... It is served from the public route, outside /gateway/: ...`
+  - `[preload] Loading the destination part from the internal route: http://localhost:5080/preload/destination.js. ...`
+  - `[preload] destination part from http://localhost:5080`
+- **Observed on macOS:** on the internal route, during scenario 17, the app view showed `public part ran; destination part loaded from http://localhost:5080`. The public route run and Windows are not yet recorded.
+
+### 16. The preload does nothing on the gateway
+
+- **Goal:** show that the preload runs on the gateway page, because it is the provider window's first page, and does nothing there.
+- **Control panel settings:** both routes `healthy`.
+- **Action:** `npm run client`, then open the provider window's console. Its log starts with the gateway page's lines.
+- **What the user sees:** nothing different; the provider window stays hidden while the gateway decides.
+- **Log lines to expect:** `[preload] Gateway page, doing nothing.` before the `[gateway]` lines, then the public part's lines once the window has navigated to the chosen provider.
+- **Observed on Windows:** to be recorded.
+
+### 17. Public route down after a first launch
+
+- **Goal:** find out what the runtime does with the preload when the public route, which serves it, cannot be reached.
+- **Control panel settings:** internal `healthy`, public `down`. Run scenario 15 first, so the preload has been downloaded once.
+- **Action:** `npm run client`.
+- **What the user sees:** as in scenario 4, the platform starts on the internal route from the cached manifest and gateway. The "Preload" row shows whether the preload ran: `public part ran; destination part loaded from http://localhost:5080` if the runtime used an earlier download, or `did not run on this page` if it loaded the page without the preload. The preload is not `mandatory`, so the page loads either way.
+- **Log lines to expect:** the `[preload]` lines from scenario 15 if the runtime used an earlier download; none otherwise. The RVM and runtime logs may show the failed preload download.
+- **Observed on macOS:** the platform started on the internal route and the app view's "Preload" row showed `public part ran; destination part loaded from http://localhost:5080`. The runtime used its earlier download of the preload, and the preload's `import()` of the destination part from the internal route worked. A preload served only from the public route is therefore usable during a public outage once it has been downloaded. Not yet recorded on Windows.

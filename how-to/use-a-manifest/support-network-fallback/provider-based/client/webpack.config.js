@@ -37,5 +37,6 @@ module.exports = [
 	entry('provider', 'provider.ts'),
 	entry('app', 'app.ts'),
 	entry('gateway', 'gateway/gateway.ts'),
-	entry('preference', 'gateway/preference.ts')
+	entry('preference', 'gateway/preference.ts'),
+	entry('preload', 'preload/preload.ts')
 ];
